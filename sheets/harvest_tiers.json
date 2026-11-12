@@ -1,0 +1,33 @@
+{
+ "_comment": "QUE PICO HACE FALTA PARA SACAR MATERIAL DE CADA ROCA, como en Minecraft. Si tu pico no llega al nivel, el bloque se rompe mas lento (speed_without_tier) y NO suelta nada, igual que picar hierro con pico de madera en Minecraft. Solo se aplica a rocas, menas, ladrillo y concreto: madera, tierra, metal de coches (llave inglesa), cristal y plantas siguen las reglas de 7 Days. tools/build_config.py genera src/Generated/HarvestTable.cs y comprueba que cada patron exista en blocks.xml.",
+ "_tiers": "0 = madera u oro, 1 = piedra o cobre, 2 = hierro, 3 = diamante, 4 = netherite (los niveles de Minecraft)",
+ "speed_without_tier": 0.3,
+ "_speed_note": "Minecraft: sin el pico correcto se pica unas 3.3 veces mas lento (1/3.33 = 0.3)",
+
+ "blocks": [
+  {"key": "stone",      "block": "^(terrStone|terrStoneHelper|terrDestroyedStone)$", "material": "^(Mstone|Mboulder|MstoneNoGlue|Mstone_shapes|MtwitchHordeStone)$", "minecraft": "stone",        "min_tier": 0, "note": "piedra: cualquier pico (madera ya sirve)"},
+  {"key": "sandstone",  "block": "^terrSandStone$",           "material": "^Msandstone$",                         "minecraft": "sandstone",    "min_tier": 0, "note": "arenisca: cualquier pico"},
+  {"key": "cobble",     "block": "",                          "material": "^(Mcobblestone|Mcobblestone_shapes)$", "minecraft": "cobblestone",  "min_tier": 0, "note": "roca labrada: cualquier pico"},
+  {"key": "brick",      "block": "",                          "material": "^(Mbrick|Mbrick_shapes)$",             "minecraft": "bricks",       "min_tier": 0, "note": "ladrillo: cualquier pico"},
+  {"key": "concrete",   "block": "^terrConcrete$",            "material": "^(Mconcrete|Mconcrete_shapes|Mbridge_concrete)$", "minecraft": "gray_concrete", "min_tier": 0, "note": "concreto: cualquier pico"},
+  {"key": "asphalt",    "block": "^terrAsphalt$",             "material": "^Mbridge_asphalt$",                    "minecraft": "blackstone",   "min_tier": 0, "note": "asfalto = piedra negra: cualquier pico"},
+  {"key": "ore_coal",   "block": "^(terrOreCoal|terrOreStoneCoalRandom|oreCoalBoulder)$", "material": "", "minecraft": "coal_ore",     "min_tier": 0, "note": "carbon: cualquier pico (como el carbon de Minecraft)"},
+  {"key": "rconcrete",  "block": "",                          "material": "^(MrConcrete|MrConcrete_shapes)$",     "minecraft": "deepslate_bricks", "min_tier": 1, "note": "concreto reforzado: minimo pico de piedra"},
+  {"key": "ore_iron",   "block": "^(terrOreIron|terrOreStoneIronRandom|oreIronBoulder)$", "material": "", "minecraft": "iron_ore",     "min_tier": 1, "note": "hierro: minimo pico de piedra (igual que Minecraft)"},
+  {"key": "ore_lead",   "block": "^(terrOreLead|terrOreStoneLeadRandom|oreLeadBoulder)$", "material": "", "minecraft": "copper_ore",   "min_tier": 1, "note": "plomo = cobre de Minecraft: minimo pico de piedra"},
+  {"key": "ore_shale",  "block": "^(terrOreOilDeposit|terrOreStoneOilRandom|oreShaleBoulder)$", "material": "", "minecraft": "lapis_ore", "min_tier": 1, "note": "esquisto bituminoso = lapislazuli: minimo pico de piedra"},
+  {"key": "ore_nitrate","block": "^(terrOrePotassiumNitrate|terrOreStonePotassiumRandom|orePotassiumNitrateBoulder)$", "material": "", "minecraft": "redstone_ore", "min_tier": 2, "note": "nitrato = redstone: minimo pico de hierro"}
+ ],
+
+ "tools": [
+  {"key": "stone_axe_7d", "item": "^(meleeToolRepairT0StoneAxe|meleeToolRepairT0TazasStoneAxe)$", "tier": 1, "note": "el hacha de piedra de 7 Days es su herramienta de minar inicial: cuenta como pico de piedra (si no, no habria forma de empezar a minar hasta tener pico de hierro)"},
+  {"key": "iron_pick_7d",  "item": "^meleeToolPickT1IronPickaxe$",  "tier": 2, "note": "pico de hierro = pico de hierro"},
+  {"key": "steel_pick_7d", "item": "^meleeToolPickT2SteelPickaxe$", "tier": 3, "note": "pico de acero = pico de diamante"},
+  {"key": "auger_7d",      "item": "^meleeToolPickT3Auger$",        "tier": 4, "note": "taladro = pico de netherite"},
+  {"key": "mc_wood_gold",  "item": "^(wooden_pickaxe|golden_pickaxe)$", "tier": 0, "note": "picos de Minecraft (cuando existan como objeto o por su par)"},
+  {"key": "mc_stone",      "item": "^(stone_pickaxe|copper_pickaxe)$",  "tier": 1, "note": ""},
+  {"key": "mc_iron",       "item": "^iron_pickaxe$",       "tier": 2, "note": ""},
+  {"key": "mc_diamond",    "item": "^diamond_pickaxe$",    "tier": 3, "note": ""},
+  {"key": "mc_netherite",  "item": "^netherite_pickaxe$",  "tier": 4, "note": ""}
+ ]
+}

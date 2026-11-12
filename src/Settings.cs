@@ -30,6 +30,8 @@ namespace SteveDaysToDie
             "doble_w_corre=si",
             "tecla_adelante=W",
 
+            "# picos_minecraft: si/no - niveles de pico de Minecraft: sin el pico adecuado la roca o mena no suelta nada (sheets/harvest_tiers.json)",
+            "picos_minecraft=si",
             "# sed: si/no - la sed de 7 Days (apagada por defecto)",
             "sed=no",
             "# skin: auto, steve, o el nombre de un archivo de la carpeta skins (lo cambia el boton Skins del menu)",
