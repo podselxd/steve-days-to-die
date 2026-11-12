@@ -43,7 +43,7 @@ namespace SteveVsZombiesLauncher
         public static readonly KeyBind[] Keys =
         {
             new KeyBind { Key = "tecla_alternar", Label = "Alternar objeto 7 Days / Minecraft", Default = "Alpha0" },
-            new KeyBind { Key = "tecla_vista_frontal", Label = "Espejo (verte de frente)", Default = "Insert" },
+            new KeyBind { Key = "tecla_vista_frontal", Label = "Cámara (como F5 de Minecraft)", Default = "F5" },
             new KeyBind { Key = "tecla_adelante", Label = "Avanzar (para el doble toque)", Default = "W" },
         };
 
@@ -156,7 +156,7 @@ namespace SteveVsZombiesLauncher
 
         // 7 Days' own default keys: a warning, not a block (the player may have moved them)
         static readonly HashSet<string> GameKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        { "W", "A", "S", "D", "E", "R", "F", "C", "Q", "Tab", "Space", "Alpha1", "Alpha2", "Alpha3", "Alpha4", "Alpha5", "Alpha6", "Alpha7", "Alpha8", "Alpha9", "Escape", "BackQuote", "T", "B", "I", "M", "J", "N", "U", "Z", "X", "G", "H", "Y", "V", "F1", "F5" };
+        { "W", "A", "S", "D", "E", "R", "F", "C", "Q", "Tab", "Space", "Alpha1", "Alpha2", "Alpha3", "Alpha4", "Alpha5", "Alpha6", "Alpha7", "Alpha8", "Alpha9", "Escape", "BackQuote", "T", "B", "I", "M", "J", "N", "U", "Z", "X", "G", "H", "Y", "V", "F1" };
 
         public static bool MayClash(string bindKey, string unity) =>
             bindKey != "tecla_adelante" && GameKeys.Contains(unity);

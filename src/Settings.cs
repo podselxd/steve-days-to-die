@@ -34,8 +34,8 @@ namespace SteveDaysToDie
             "sed=no",
             "# skin: auto, steve, o el nombre de un archivo de la carpeta skins (lo cambia el boton Skins del menu)",
             "skin=auto",
-            "# tecla_vista_frontal: tecla del espejo (una ventana pequena que te muestra a Steve de frente)",
-            "tecla_vista_frontal=Insert",
+            "# tecla_vista_frontal: la camara, como F5 en Minecraft: primera persona, tercera por detras, de frente",
+            "tecla_vista_frontal=F5",
             "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (Alpha0 = la tecla 0)",
             "tecla_alternar=Alpha0",
         });
@@ -77,6 +77,11 @@ namespace SteveDaysToDie
                 {
                     int i = lines.FindIndex(x => x.Trim().StartsWith("tecla_alternar", StringComparison.OrdinalIgnoreCase));
                     if (i >= 0) { lines[i] = "tecla_alternar=Alpha0"; added = true; }
+                }
+                if (_values.TryGetValue("tecla_vista_frontal", out var fk) && fk.Equals("Insert", StringComparison.OrdinalIgnoreCase))
+                {
+                    int i = lines.FindIndex(x => x.Trim().StartsWith("tecla_vista_frontal", StringComparison.OrdinalIgnoreCase));
+                    if (i >= 0) { lines[i] = "tecla_vista_frontal=F5"; added = true; }
                 }
                 if (added)
                 {

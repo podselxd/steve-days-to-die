@@ -11,9 +11,15 @@ namespace SteveVsZombiesLauncher
     /// </summary>
     static class Program
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetProcessDPIAware();
+
         [STAThread]
         static void Main()
         {
+            // sharp at 125/150/200% Windows scaling: the window scales itself (LauncherForm.S) instead of
+            // Windows stretching a 100% picture of it, which looked blurry
+            try { SetProcessDPIAware(); } catch { }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LauncherForm());

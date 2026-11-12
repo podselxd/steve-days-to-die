@@ -50,11 +50,10 @@ namespace SteveVsZombiesLauncher
         public LauncherForm()
         {
             Text = "Steve Days to Die";
-            ClientSize = new Size(1060, 720);
+            ClientSize = new Size(1060, 650);
             // can be resized, maximized and minimized; F11 = full screen (no borders), F11 or Esc again = back
             FormBorderStyle = FormBorderStyle.Sizable;
             MaximizeBox = true; MinimizeBox = true;
-            MinimumSize = new Size(1000, 700);
             KeyPreview = true;
             KeyDown += (s, e) =>
             {
@@ -72,11 +71,11 @@ namespace SteveVsZombiesLauncher
             BackColor = Bg;
             ForeColor = Color.White;
             Font = new Font("Segoe UI", 10f);
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;      // scaled by hand with S (see the end of the constructor)
             DoubleBuffered = true;
 
             _side.Dock = DockStyle.Left; _side.Width = 240; _side.BackColor = Side;
-            _bottom.Dock = DockStyle.Bottom; _bottom.Height = 128; _bottom.BackColor = Bar;
+            _bottom.Dock = DockStyle.Bottom; _bottom.Height = 112; _bottom.BackColor = Bar;
             _content.Dock = DockStyle.Fill; _content.BackColor = Bg;
             _tabs.Dock = DockStyle.Top; _tabs.Height = 52; _tabs.BackColor = Color.FromArgb(26, 26, 26);
             foreach (var p in new[] { _side, _bottom, _content, _home, _tabs }) Buffered(p);
@@ -92,7 +91,7 @@ namespace SteveVsZombiesLauncher
             };
 
             Style(_play, "JUGAR", 22f);
-            _play.Size = new Size(320, 66);
+            _play.Size = new Size(320, 62);
             _play.Click += async (s, e) => await Play();
             _bottom.Controls.Add(_play);
 
@@ -106,6 +105,7 @@ namespace SteveVsZombiesLauncher
 
             // the old toggle key was the Spanish keyboard's Ñ, which also switches 7 Days to third person
             try { if (LauncherSettings.Get("tecla_alternar", "Alpha0").Equals("BackQuote", StringComparison.OrdinalIgnoreCase)) LauncherSettings.Set("tecla_alternar", "Alpha0"); } catch { }
+            try { if (LauncherSettings.Get("tecla_vista_frontal", "F5").Equals("Insert", StringComparison.OrdinalIgnoreCase)) LauncherSettings.Set("tecla_vista_frontal", "F5"); } catch { }
 
             BuildHome();
             BuildSkinPage();
@@ -118,12 +118,28 @@ namespace SteveVsZombiesLauncher
                 l.Click += (s, e) => ShowPage(name);
                 _tabs.Controls.Add(l);
                 _tabLabels.Add(l);
-                x += TextRenderer.MeasureText(name, l.Font).Width + 30;
+                x += (int)(TextRenderer.MeasureText(name, l.Font).Width / S) + 30;
             }
             _content.Controls.Add(_tabs);
             ShowPage("Inicio");
 
+            // everything above is laid out at 100%: grow it to the screen's scaling (fonts already are)
+            if (Math.Abs(S - 1f) > 0.01f) Scale(new SizeF(S, S));
+            MinimumSize = new Size(D(940), D(600));
+            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
+            if (Height > area.Height || Width > area.Width) WindowState = FormWindowState.Maximized;
+
             Load += async (s, e) => { Refresh(false); await CheckOnline(); };
+        }
+
+        /// <summary>Windows' display scaling (1 = 100%, 1.5 = 150%); layout numbers are written at 100% and go through D().</summary>
+        internal static readonly float S = ScreenScale();
+        internal static int D(float v) => (int)Math.Round(v * S);
+
+        static float ScreenScale()
+        {
+            try { using (var g = Graphics.FromHwnd(IntPtr.Zero)) return Math.Max(1f, g.DpiX / 96f); }
+            catch { return 1f; }
         }
 
         static readonly Bitmap Banner = Resource<Bitmap>("logo_banner.png", s => new Bitmap(s));
@@ -190,26 +206,27 @@ namespace SteveVsZombiesLauncher
             };
             l.LinkClicked += (s, e) => { try { act(); } catch (Exception ex) { Status(ex.Message, Bad); } };
             _side.Controls.Add(l);
-            _side.Resize += (s, e) => l.Location = new Point(24, _side.Height - 100 + row * 26);
-            l.Location = new Point(24, ClientSize.Height - 100 + row * 26);
+            _side.Resize += (s, e) => l.Location = new Point(D(24), _side.Height - D(92 - row * 26));
+            l.Location = new Point(24, ClientSize.Height - 92 + row * 26);
         }
 
         void LayoutBottom()
         {
-            _play.Location = new Point((_bottom.Width - _play.Width) / 2, 46);
-            _status.SetBounds(0, 10, _bottom.Width, 26);
+            _play.Location = new Point((_bottom.Width - _play.Width) / 2, D(38));
+            _status.SetBounds(0, D(6), _bottom.Width, D(26));
         }
 
+        // for painting inside g.ScaleTransform(S, S): the font in 100%-pixels, so the transform alone sizes it
         internal static void Draw(Graphics g, string s, float size, FontStyle st, Color c, float x, float y)
         {
-            using (var f = new Font("Segoe UI", size, st))
+            using (var f = new Font("Segoe UI", size * 96f / 72f, st, GraphicsUnit.Pixel))
             using (var b = new SolidBrush(c)) g.DrawString(s, f, b, x, y);
         }
 
         static Label Words(string s, float size, FontStyle st, Color c, int x, int y, int w = 0)
         {
             var l = new Label { Text = s, Font = new Font("Segoe UI", size, st), ForeColor = c, BackColor = Color.Transparent, Location = new Point(x, y) };
-            if (w > 0) { l.AutoSize = false; l.Size = new Size(w, TextRenderer.MeasureText(s, l.Font, new Size(w, 999), TextFormatFlags.WordBreak).Height + 4); }
+            if (w > 0) { l.AutoSize = false; l.Size = new Size(w, (int)(TextRenderer.MeasureText(s, l.Font, new Size(D(w), 999), TextFormatFlags.WordBreak).Height / S) + 4); }
             else l.AutoSize = true;
             return l;
         }
@@ -218,6 +235,7 @@ namespace SteveVsZombiesLauncher
         {
             var g = e.Graphics;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            g.ScaleTransform(S, S);
             if (Banner != null)
             {
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -254,18 +272,19 @@ namespace SteveVsZombiesLauncher
             _home.Paint += PaintHome;
             _homeSkin.Size = new Size(220, 330);
             _home.Controls.Add(_homeSkin);
-            _home.Resize += (s, e) => _homeSkin.Location = new Point(_home.Width - 250, 24);
+            _home.Resize += (s, e) => _homeSkin.Location = new Point(_home.Width - D(250), D(24));
             var b = new Button(); Style(b, "Cambiar skin…", 10.5f); b.Size = new Size(180, 38);
             b.Click += (s, e) => ShowPage("Skin");
             _home.Controls.Add(b);
-            _home.Resize += (s, e) => b.Location = new Point(_home.Width - 230, _home.Height - 56);
+            _home.Resize += (s, e) => b.Location = new Point(_home.Width - D(230), _home.Height - D(56));
         }
 
         void PaintHome(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            int w = _home.Width, h = _home.Height;
+            g.ScaleTransform(S, S);
+            int w = (int)Math.Ceiling(_home.Width / S), h = (int)Math.Ceiling(_home.Height / S);
             using (var bg = new LinearGradientBrush(new Rectangle(0, 0, w, h + 1), Color.FromArgb(38, 48, 36), Bg, 90f)) g.FillRectangle(bg, 0, 0, w, h);
             using (var dot = new SolidBrush(Color.FromArgb(10, 255, 255, 255)))       // a faint pixel grid
                 for (int yy = 0; yy < h; yy += 16)
@@ -294,7 +313,7 @@ namespace SteveVsZombiesLauncher
         {
             var p = Page("Skin");
             p.AutoScroll = false;
-            _bigSkin.SetBounds(30, 14, 300, 380);
+            _bigSkin.SetBounds(30, 14, 300, 360);
             p.Controls.Add(_bigSkin);
             _skinTitle.SetBounds(30, 398, 300, 24); _skinTitle.TextAlign = ContentAlignment.MiddleCenter;
             _skinTitle.Font = new Font("Segoe UI", 11f, FontStyle.Bold); _skinTitle.ForeColor = Color.White;
@@ -317,13 +336,14 @@ namespace SteveVsZombiesLauncher
             p.Resize += (s, e) =>
             {
                 // the 3D Steve grows with the window (full screen shows him big)
-                int h = Math.Max(300, p.Height - 70), w = Math.Min(h * 3 / 4, Math.Max(300, p.Width / 2 - 60));
-                _bigSkin.SetBounds(30, 14, w, h - 44);
-                _skinTitle.SetBounds(30, h - 28, w, 24);
-                hint.SetBounds(30, h - 4, w, 20);
+                int ph = (int)(p.Height / S), pw = (int)(p.Width / S);         // in 100% units
+                int h = Math.Max(260, ph - 30), w = Math.Min(h * 3 / 4, Math.Max(260, pw / 2 - 60));
+                _bigSkin.SetBounds(D(30), D(10), D(w), D(h - 50));
+                _skinTitle.SetBounds(D(30), D(h - 38), D(w), D(24));
+                hint.SetBounds(D(30), D(h - 14), D(w), D(20));
                 int lx = w + 60;
-                biblio.Left = lx; add.Left = lx; folder.Left = lx + 200;
-                _skinList.SetBounds(lx, 108, Math.Max(200, p.Width - lx - 20), Math.Max(120, p.Height - 120));
+                biblio.Left = D(lx); add.Left = D(lx); folder.Left = D(lx + 200);
+                _skinList.SetBounds(D(lx), D(108), D(Math.Max(200, pw - lx - 20)), D(Math.Max(120, ph - 118)));
             };
         }
 
@@ -347,15 +367,19 @@ namespace SteveVsZombiesLauncher
             {
                 bool sel = string.Equals(en.setting, current, StringComparison.OrdinalIgnoreCase)
                         || (current.Equals("auto", StringComparison.OrdinalIgnoreCase) && en.name == _skinName);
-                var tile = new Panel { Size = new Size(118, 168), Margin = new Padding(0, 0, 12, 12), BackColor = sel ? Color.FromArgb(52, 70, 46) : Card, Cursor = Cursors.Hand };
+                var tile = new Panel { Size = new Size(D(118), D(168)), Margin = new Padding(0, 0, D(12), D(12)), BackColor = sel ? Color.FromArgb(52, 70, 46) : Card, Cursor = Cursors.Hand };
                 Buffered(tile);
                 var pic = en.pic; string setting = en.setting, name = en.name;
                 tile.Paint += (s, e) =>
                 {
                     var g = e.Graphics;
+                    g.ScaleTransform(S, S);
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
                     if (pic != null) SkinView.DrawFront(g, pic, (118 - 16 * 4.2f) / 2f, 8, 4.2f);
-                    using (var f = new Font("Segoe UI", 9f, FontStyle.Bold))
-                        TextRenderer.DrawText(g, name, f, new Rectangle(4, 145, 110, 20), Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.EndEllipsis);
+                    using (var f = new Font("Segoe UI", 12f, FontStyle.Bold, GraphicsUnit.Pixel))
+                    using (var sf = new StringFormat { Alignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap })
+                    using (var br = new SolidBrush(Color.White))
+                        g.DrawString(name, f, br, new RectangleF(4, 146, 110, 18), sf);
                     if (sel) using (var pen = new Pen(Ok, 2)) g.DrawRectangle(pen, 1, 1, 115, 165);
                 };
                 tile.Click += (s, e) =>
@@ -378,7 +402,7 @@ namespace SteveVsZombiesLauncher
             var p = Page("Efectos");
             int y = 18;
             p.Controls.Add(Words("Efectos del jugador", 16, FontStyle.Bold, Color.White, 30, y)); y += 40;
-            p.Controls.Add(Words("Por defecto juegas como en Minecraft. Enciende los efectos de 7 Days si quieres una experiencia más 7 Days. Se aplica la próxima vez que pulses JUGAR.", 9.5f, FontStyle.Regular, Grey, 32, y, 700)); y += 46;
+            p.Controls.Add(Words("Por defecto juegas como en Minecraft. Enciende los efectos de 7 Days si quieres una experiencia más 7 Days. Se aplica la próxima vez que pulses JUGAR.", 9.5f, FontStyle.Regular, Grey, 32, y, 700)); y += 42;
 
             Switch Row(LauncherSettings.Toggle t, int x, int yy)
             {
@@ -395,8 +419,8 @@ namespace SteveVsZombiesLauncher
             var ruleRows = new List<Switch>(); var fxRows = new List<(Switch sw, LauncherSettings.Toggle t)>();
             for (int i = 0; i < Math.Max(rules.Length, fx.Length); i++)
             {
-                if (i < rules.Length) ruleRows.Add(Row(rules[i], 30, y + i * 52));
-                if (i < fx.Length) fxRows.Add((Row(fx[i], 418, y + i * 52), fx[i]));
+                if (i < rules.Length) ruleRows.Add(Row(rules[i], 30, y + i * 49));
+                if (i < fx.Length) fxRows.Add((Row(fx[i], 418, y + i * 49), fx[i]));
             }
             y = 16;     // the three quick buttons sit at the top, next to the title
             var mc = Plain("Todo como Minecraft"); mc.SetBounds(30, y, 190, 36);
@@ -465,9 +489,9 @@ namespace SteveVsZombiesLauncher
         {
             if (_progress < 0) return;
             var g = e.Graphics;
-            int bw = 420, x = (_bottom.Width - bw) / 2, y = 38;
-            using (var b = new SolidBrush(Color.FromArgb(50, 50, 50))) g.FillRectangle(b, x, y, bw, 5);
-            using (var b = new SolidBrush(Ok)) g.FillRectangle(b, x, y, (int)(bw * _progress), 5);
+            int bw = D(420), x = (_bottom.Width - bw) / 2, y = D(31);
+            using (var b = new SolidBrush(Color.FromArgb(50, 50, 50))) g.FillRectangle(b, x, y, bw, D(5));
+            using (var b = new SolidBrush(Ok)) g.FillRectangle(b, x, y, (int)(bw * _progress), D(5));
         }
 
         // ---- state ----
@@ -617,7 +641,7 @@ namespace SteveVsZombiesLauncher
         public Switch()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-            Height = 48; Cursor = Cursors.Hand; BackColor = LauncherForm.Card;
+            Height = 45; Cursor = Cursors.Hand; BackColor = LauncherForm.Card;
         }
 
         public bool Checked
@@ -633,12 +657,21 @@ namespace SteveVsZombiesLauncher
             var g = e.Graphics;
             g.Clear(BackColor);
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var f = new Font("Segoe UI", 10f, FontStyle.Bold))
-                TextRenderer.DrawText(g, Label, f, new Rectangle(12, Hint == null ? 13 : 5, Width - 80, 22), Color.White, TextFormatFlags.EndEllipsis);
-            if (Hint != null)
-                using (var f = new Font("Segoe UI", 8f))
-                    TextRenderer.DrawText(g, Hint, f, new Rectangle(12, 26, Width - 80, 18), LauncherForm.Grey, TextFormatFlags.EndEllipsis);
-            int w = 44, h = 22, x = Width - w - 12, y = (Height - h) / 2;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            float S = LauncherForm.S;
+            g.ScaleTransform(S, S);                                 // drawn in 100% units
+            int W = (int)(Width / S), H = (int)(Height / S);
+            using (var sf = new StringFormat { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap })
+            {
+                using (var f = new Font("Segoe UI", 13.3f, FontStyle.Bold, GraphicsUnit.Pixel))
+                using (var b = new SolidBrush(Color.White))
+                    g.DrawString(Label, f, b, new RectangleF(12, Hint == null ? 13 : 5, W - 80, 22), sf);
+                if (Hint != null)
+                    using (var f = new Font("Segoe UI", 10.7f, GraphicsUnit.Pixel))
+                    using (var b = new SolidBrush(LauncherForm.Grey))
+                        g.DrawString(Hint, f, b, new RectangleF(12, 26, W - 80, 18), sf);
+            }
+            int w = 44, h = 22, x = W - w - 12, y = (H - h) / 2;
             using (var path = new GraphicsPath())
             {
                 path.AddArc(x, y, h, h, 90, 180); path.AddArc(x + w - h, y, h, h, 270, 180); path.CloseFigure();

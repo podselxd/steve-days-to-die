@@ -38,18 +38,92 @@ namespace SteveDaysToDie.HUD
             if (!on) Release();
         }
 
+        // Minecraft's F5: first person -> third person from behind (the game's own) -> from the front -> first person
+        bool _full;
+        public bool FullFront => _full;
+
         void Update()
         {
             if (_player == null) return;
-            if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_vista_frontal", KeyCode.Insert)))
-                Toggle(!_on);
+            if (_full && (_player.bFirstPersonView || !_player.IsAlive())) StopFull();   // the game's own camera key, or death
+            if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_vista_frontal", KeyCode.F5)))
+                CycleCamera();
+        }
+
+        public void CycleCamera()
+        {
+            try
+            {
+                if (_player.bFirstPersonView)
+                {
+                    _player.SwitchFirstPersonViewFromInput();               // to third person, from behind
+                }
+                else if (!_full)
+                {
+                    _full = true;                                           // from the front
+                    Toggle(false);
+                }
+                else
+                {
+                    StopFull();
+                    _player.SwitchFirstPersonViewFromInput();               // back to first person
+                }
+            }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] Camera F5: " + ex.Message); StopFull(); }
+        }
+
+        void StopFull()
+        {
+            _full = false;
+            if (_cam != null) { _cam.enabled = false; _cam.targetTexture = null; }
+            Release();
         }
 
         void LateUpdate()
         {
-            if (!_on || _player == null || !_player.IsAlive()) return;
+            if (_player == null || !_player.IsAlive()) return;
+            if (_full) { RenderFull(); return; }
+            if (!_on) return;
             if (++_frame % EveryNthFrame != 0 && _rt != null) return;
             RenderOnce();
+        }
+
+        /// <summary>The front camera drawn straight on the screen, over the game's own view, every frame.</summary>
+        void RenderFull()
+        {
+            var root = SteveModel.LocalRoot;
+            var main = _player.playerCamera;
+            if (root == null || main == null) return;
+            try
+            {
+                if (_cam == null)
+                {
+                    _camGo = new GameObject("SVD_FrontCamera");
+                    _cam = _camGo.AddComponent<Camera>();
+                }
+                if (!_cam.enabled)
+                {
+                    _cam.CopyFrom(main);
+                    _cam.targetTexture = null;
+                    _cam.rect = new Rect(0f, 0f, 1f, 1f);
+                    _cam.depth = main.depth + 0.5f;                     // over the game's view, under its menus
+                    _cam.nearClipPlane = 0.05f;
+                    int heldLayer = LayerMask.NameToLayer("HoldingItem");
+                    if (heldLayer >= 0) _cam.cullingMask &= ~(1 << heldLayer);
+                    _cam.enabled = true;
+                }
+                _cam.fieldOfView = main.fieldOfView;
+
+                // Minecraft puts the camera 4 blocks in front, looking back at the head; closer when a wall is in the way
+                Vector3 head = root.position + Vector3.up * 1.5f;
+                Vector3 look = _player.GetLookVector();
+                Vector3 dir = new Vector3(look.x, look.y, look.z).normalized;
+                float dist = 4f;
+                if (Physics.Raycast(head, dir, out RaycastHit hit, dist + 0.3f)) dist = Mathf.Max(0.6f, hit.distance - 0.3f);
+                _camGo.transform.position = head + dir * dist;
+                _camGo.transform.LookAt(head);
+            }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] Front camera: " + ex.Message); StopFull(); }
         }
 
         void RenderOnce()
