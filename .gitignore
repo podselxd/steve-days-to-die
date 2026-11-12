@@ -16,3 +16,6 @@ sheets/items.json
 sheets/items_v0_manual.bak
 sheets/freq_*.json
 sheets/preflight_report.json
+
+# local launcher for this PC
+jugar-con-mod.cmd

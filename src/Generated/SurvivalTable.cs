@@ -29,5 +29,7 @@ namespace SteveDaysToDie.Generated
         public const float RegenFastSeconds = 0.5f;
         /// <summary>saturacion maxima que usa cada pulso de regeneracion rapida (puntos de saturacion)</summary>
         public const float RegenFastMaxSaturation = 6.0f;
+        /// <summary>salto como Minecraft (1.25 bloques): el propio juego anota que 0.16 da unos 1.6 m y la altura crece con el cuadrado, asi que 0.16 x raiz(1.25/1.6) = 0.1414; agachado salta igual, como en Minecraft (JumpStrength de 7 Days)</summary>
+        public const float JumpStrength7days = 0.1414f;
     }
 }

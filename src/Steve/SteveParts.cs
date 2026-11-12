@@ -13,6 +13,13 @@ namespace SteveDaysToDie.Steve
 
         public static bool Legacy => SteveCharacter.SkinTexture != null && SteveCharacter.SkinTexture.height < 64;
 
+        /// <summary>Forget the material so the next part is made with the new skin.</summary>
+        public static void ResetMaterial()
+        {
+            if (_material != null) UnityEngine.Object.Destroy(_material);
+            _material = null;
+        }
+
         public static Material Material
         {
             get
@@ -71,12 +78,118 @@ namespace SteveDaysToDie.Steve
         // Skin rectangles (u, v) of each part's box, sizes in skin pixels (w, h, d).
         public static Mesh Head(float px) => Box(0, 0, 8, 8, 8, px, new Vector3(0, 4, 0), false);
         public static Mesh Body(float px) => Box(16, 16, 8, 12, 4, px, new Vector3(0, -6, 0), false);
-        public static Mesh RightArm(float px) => Box(40, 16, 4, 12, 4, px, new Vector3(0, -5, 0), false);
+        // Slim ("Alex") skins have 3-pixel arms, which sit half a pixel closer to the body.
+        public static Mesh RightArm(float px) => Slim ? Box(40, 16, 3, 12, 4, px, new Vector3(-0.5f, -5, 0), false)
+                                                      : Box(40, 16, 4, 12, 4, px, new Vector3(0, -5, 0), false);
         public static Mesh RightLeg(float px) => Box(0, 16, 4, 12, 4, px, new Vector3(0, -6, 0), false);
         public static Mesh LeftArm(float px) => Legacy ? Box(40, 16, 4, 12, 4, px, new Vector3(0, -5, 0), true)
-                                                       : Box(32, 48, 4, 12, 4, px, new Vector3(0, -5, 0), false);
+                                              : Slim ? Box(32, 48, 3, 12, 4, px, new Vector3(0.5f, -5, 0), false)
+                                                     : Box(32, 48, 4, 12, 4, px, new Vector3(0, -5, 0), false);
+
+        static Texture2D _slimFor;
+        static bool _slim;
+
+        /// <summary>The skin in use is a slim one.</summary>
+        public static bool Slim
+        {
+            get
+            {
+                var t = SteveCharacter.SkinTexture;
+                if (t != _slimFor) { _slimFor = t; _slim = IsSlim(t); }
+                return _slim;
+            }
+        }
+
+        /// <summary>
+        /// A slim skin leaves empty the columns where a classic arm's 4th pixel would be (x 54-55 of the
+        /// right arm's sides); a classic skin always paints them. Old 64x32 skins are never slim.
+        /// </summary>
+        public static bool IsSlim(Texture2D t)
+        {
+            if (t == null || t.height < 64) return false;
+            try
+            {
+                for (int y = 20; y < 32; y++)
+                    for (int x = 54; x < 56; x++)
+                        if (t.GetPixel(x, t.height - 1 - y).a > 0.01f) return false;
+                return true;
+            }
+            catch { return false; }
+        }
         public static Mesh LeftLeg(float px) => Legacy ? Box(0, 16, 4, 12, 4, px, new Vector3(0, -6, 0), true)
                                                        : Box(16, 48, 4, 12, 4, px, new Vector3(0, -6, 0), false);
+
+        // Second layer (hat, jacket, sleeves, trousers), slightly outside the base box as in Minecraft
+        // (0.5 px for the head, 0.25 px for the rest). Only the painted pixels become geometry, so the
+        // see-through parts stay see-through with the same opaque material. Old 64x32 skins only have the hat.
+        public static Mesh HeadLayer(float px) => Layer(32, 0, 8, 8, 8, px, new Vector3(0, 4, 0), 0.5f, false);
+        public static Mesh BodyLayer(float px) => Legacy ? null : Layer(16, 32, 8, 12, 4, px, new Vector3(0, -6, 0), 0.25f, false);
+        public static Mesh RightArmLayer(float px) => Legacy ? null
+            : Slim ? Layer(40, 32, 3, 12, 4, px, new Vector3(-0.5f, -5, 0), 0.25f, false)
+                   : Layer(40, 32, 4, 12, 4, px, new Vector3(0, -5, 0), 0.25f, false);
+        public static Mesh LeftArmLayer(float px) => Legacy ? null
+            : Slim ? Layer(48, 48, 3, 12, 4, px, new Vector3(0.5f, -5, 0), 0.25f, false)
+                   : Layer(48, 48, 4, 12, 4, px, new Vector3(0, -5, 0), 0.25f, false);
+        public static Mesh RightLegLayer(float px) => Legacy ? null : Layer(0, 32, 4, 12, 4, px, new Vector3(0, -6, 0), 0.25f, false);
+        public static Mesh LeftLegLayer(float px) => Legacy ? null : Layer(0, 48, 4, 12, 4, px, new Vector3(0, -6, 0), 0.25f, false);
+
+        static Mesh Layer(int u, int v, int w, int h, int d, float px, Vector3 centre, float inflate, bool mirror)
+        {
+            var tex = SteveCharacter.SkinTexture;
+            if (tex == null) return null;
+            int tw = tex.width, th = tex.height;
+            Color32[] pixels;
+            try { pixels = tex.GetPixels32(); }
+            catch { return null; }      // a texture that cannot be read: no second layer
+            var verts = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var tris = new List<int>();
+            var half = new Vector3(w, h, d) * 0.5f + Vector3.one * inflate;
+
+            void Face(Vector3 n, Vector3 up, int ru, int rv, int rw, int rh)
+            {
+                Vector3 right = Vector3.Cross(up, -n);
+                float hw = Mathf.Abs(Vector3.Dot(right, half)), hh = Mathf.Abs(Vector3.Dot(up, half));
+                Vector3 c = centre + Vector3.Scale(n, half);
+                float cw = 2f * hw / rw, ch = 2f * hh / rh;
+                for (int j = 0; j < rh; j++)
+                    for (int i = 0; i < rw; i++)
+                    {
+                        int sx = ru + i, sy = rv + j;      // skin pixel, counted from the top-left
+                        if (sx >= tw || sy >= th) continue;
+                        if (pixels[(th - 1 - sy) * tw + sx].a < 128) continue;
+                        float x0 = -hw + i * cw, x1 = x0 + cw, y1 = hh - j * ch, y0 = y1 - ch;
+                        float uL = sx / (float)tw, uR = (sx + 1) / (float)tw, vT = 1f - sy / (float)th, vB = 1f - (sy + 1) / (float)th;
+                        int k = verts.Count;
+                        verts.Add((c + right * x0 + up * y0) * px); uvs.Add(new Vector2(uL, vB));
+                        verts.Add((c + right * x0 + up * y1) * px); uvs.Add(new Vector2(uL, vT));
+                        verts.Add((c + right * x1 + up * y1) * px); uvs.Add(new Vector2(uR, vT));
+                        verts.Add((c + right * x1 + up * y0) * px); uvs.Add(new Vector2(uR, vB));
+                        tris.AddRange(new[] { k, k + 1, k + 2, k, k + 2, k + 3 });
+                    }
+            }
+
+            Face(Vector3.up, Vector3.back, u + d, v, w, d);
+            Face(Vector3.down, Vector3.forward, u + d + w, v, w, d);
+            Face(Vector3.right, Vector3.up, u, v + d, d, h);
+            Face(Vector3.forward, Vector3.up, u + d, v + d, w, h);
+            Face(Vector3.left, Vector3.up, u + d + w, v + d, d, h);
+            Face(Vector3.back, Vector3.up, u + d + w + d, v + d, w, h);
+            if (verts.Count == 0) return null;
+
+            if (mirror)
+            {
+                for (int i = 0; i < verts.Count; i++) verts[i] = new Vector3(-verts[i].x, verts[i].y, verts[i].z);
+                for (int i = 0; i < tris.Count; i += 3) { int t = tris[i + 1]; tris[i + 1] = tris[i + 2]; tris[i + 2] = t; }
+            }
+            var m = new Mesh { name = "SVD_layer" };
+            m.SetVertices(verts);
+            m.SetUVs(0, uvs);
+            m.SetTriangles(tris, 0);
+            m.RecalculateNormals();
+            m.RecalculateBounds();
+            return m;
+        }
 
         /// <summary>A w x h x d box; centre is its centre relative to the pivot, in skin pixels. +z is the front.</summary>
         static Mesh Box(int u, int v, int w, int h, int d, float px, Vector3 centre, bool mirror)

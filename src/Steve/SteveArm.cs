@@ -46,8 +46,14 @@ namespace SteveDaysToDie.Steve
         void OnSwing() { _swingStart = Time.time; }
 
         // Hide the game's own first-person arms right before every frame is drawn (see SteveModel.HideNow).
-        void OnEnable() { Application.onBeforeRender += HideNow; }
-        void OnDisable() { Application.onBeforeRender -= HideNow; }
+        void OnEnable() { Application.onBeforeRender += HideNow; SteveCharacter.SkinChanged += OnSkinChanged; }
+        void OnDisable() { Application.onBeforeRender -= HideNow; SteveCharacter.SkinChanged -= OnSkinChanged; }
+
+        void OnSkinChanged()
+        {
+            if (_arm != null) { Destroy(_arm); _arm = null; }
+            _rigFP = null;
+        }
 
         void HideNow()
         {
@@ -97,9 +103,17 @@ namespace SteveDaysToDie.Steve
                     if (_arm != null) Destroy(_arm);
                     int layer = LayerMask.NameToLayer("HoldingItem");
                     _arm = SteveParts.Create("armFP", SteveParts.RightArm(Pixel), layer < 0 ? rig.layer : layer);
-                    var mr = _arm.GetComponent<MeshRenderer>();
-                    mr.shadowCastingMode = ShadowCastingMode.Off;      // a floating arm must not drop a shadow
-                    mr.receiveShadows = false;
+                    var sleeve = SteveParts.RightArmLayer(Pixel);         // the skin's second layer (sleeve)
+                    if (sleeve != null)
+                    {
+                        var sl = SteveParts.Create("armFPLayer", sleeve, _arm.layer);
+                        sl.transform.SetParent(_arm.transform, false);
+                    }
+                    foreach (var mr in _arm.GetComponentsInChildren<MeshRenderer>(true))
+                    {
+                        mr.shadowCastingMode = ShadowCastingMode.Off;      // a floating arm must not drop a shadow
+                        mr.receiveShadows = false;
+                    }
                     // Hang it on the camera that actually draws held items, so it is always in view.
                     Camera cam = null;
                     int bit = 1 << _arm.layer;

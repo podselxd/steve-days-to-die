@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v0.3.5 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v0.4.5 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
@@ -62,6 +62,12 @@ namespace SteveDaysToDie
                 MinecraftAssets.Init(MinecraftPath, MinecraftVersion);
 
             SteveCharacter.Init(MinecraftPath);
+            Sound.MinecraftSounds.Init(MinecraftPath, MinecraftVersion);
+
+            // the Skins button and screen live in one object that survives every scene
+            var skinMenu = new GameObject("SVD_SkinMenu");
+            UnityEngine.Object.DontDestroyOnLoad(skinMenu);
+            skinMenu.AddComponent<Skins.SkinMenu>();
             SteveDaysToDie.HUD.HUDTextures.Load();
             if (SteveDaysToDie.HUD.HUDTextures.Loaded && SteveCharacter.SkinTexture != null)
                 MeltyTest.Pass("minecraft-files");

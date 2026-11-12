@@ -24,8 +24,12 @@ namespace SteveDaysToDie
             "cansancio_minecraft=si",
             "# regeneracion_minecraft: si/no - con la comida casi llena la vida vuelve sola (y da hambre)",
             "regeneracion_minecraft=si",
+            "# sonidos_minecraft: si/no - sin las voces de 7 Days; al recibir dano suena el golpe de Minecraft",
+            "sonidos_minecraft=si",
             "# sed: si/no - la sed de 7 Days (apagada por defecto)",
             "sed=no",
+            "# skin: auto, steve, o el nombre de un archivo de la carpeta skins (lo cambia el boton Skins del menu)",
+            "skin=auto",
             "# tecla_vista_frontal: tecla del espejo (una ventana pequena que te muestra a Steve de frente)",
             "tecla_vista_frontal=Insert",
             "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft",
@@ -73,6 +77,33 @@ namespace SteveDaysToDie
                 if (l.Length == 0 || l[0] == '#' || eq <= 0) continue;
                 _values[l.Substring(0, eq).Trim()] = l.Substring(eq + 1).Trim();
             }
+        }
+
+        /// <summary>Writes one setting back to ajustes.cfg, keeping every other line as it is.</summary>
+        public static void Set(string key, string value)
+        {
+            try
+            {
+                if (FilePath == null) return;
+                var lines = new List<string>(File.Exists(FilePath) ? File.ReadAllLines(FilePath) : new string[0]);
+                bool done = false;
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    string l = lines[i].Trim();
+                    int eq = l.IndexOf('=');
+                    if (l.Length > 0 && l[0] != '#' && eq > 0 &&
+                        string.Equals(l.Substring(0, eq).Trim(), key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        lines[i] = key + "=" + value;
+                        done = true;
+                        break;
+                    }
+                }
+                if (!done) lines.Add(key + "=" + value);
+                File.WriteAllLines(FilePath, lines.ToArray());
+                _values[key] = value;
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] Settings.Set: " + ex.Message); }
         }
 
         public static string Get(string key, string def)

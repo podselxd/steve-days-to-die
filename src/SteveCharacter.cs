@@ -2,50 +2,67 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using SteveDaysToDie.Skins;
 
 namespace SteveDaysToDie
 {
     /// <summary>
-    /// Which skin the player wears. Order: the player's own file (skin.png beside the settings),
-    /// the skin chosen in the Minecraft launcher, and otherwise Steve from the player's Minecraft.
+    /// Which skin the player wears. The "skin" setting says: a file from the skins folder (the Skins
+    /// button writes it), "steve", or "auto": skin.png beside the settings, the skin chosen in the
+    /// Minecraft launcher, and otherwise Steve from the player's Minecraft.
     /// (The launcher's assets/skins folder is NOT used: it caches other people's skins.)
     /// </summary>
     public static class SteveCharacter
     {
         public static Texture2D SkinTexture;
+        public static string SkinName = "Steve";
+
+        /// <summary>Raised when the skin changes while playing: Steve is rebuilt with the new one.</summary>
+        public static event Action SkinChanged;
 
         public static void Init(string mcPath)
         {
-            string source = "Steve (Minecraft)";
-            SkinTexture = LoadOwnFile(ref source) ?? LoadLauncherSkin(mcPath, ref source) ?? MinecraftAssets.LoadSteveDefaultSkin();
-
-            if (SkinTexture != null)
+            string name = "Steve (Minecraft)";
+            Texture2D tex = null;
+            string pick = Settings.Get("skin", "auto");
+            if (pick.Equals("steve", StringComparison.OrdinalIgnoreCase))
+                tex = SkinLibrary.SteveTexture();
+            else if (!pick.Equals("auto", StringComparison.OrdinalIgnoreCase))
             {
-                SkinTexture.filterMode = FilterMode.Point;
-                Debug.Log($"[SVD] Skin loaded: {SkinTexture.width}x{SkinTexture.height} from {source}");
+                tex = SkinLibrary.LoadFile(SkinLibrary.PathFor(pick));
+                if (tex != null) name = Path.GetFileNameWithoutExtension(pick);
+                else Debug.LogWarning("[SVD] The skin '" + pick + "' from the settings is missing or not a 64x64 / 64x32 skin; using the automatic one.");
+            }
+            if (tex == null) tex = LoadOwnFile(ref name) ?? LoadLauncherSkin(mcPath, ref name) ?? SkinLibrary.SteveTexture();
+
+            if (tex != null)
+            {
+                tex.filterMode = FilterMode.Point;
+                SkinTexture = tex;
+                SkinName = name;
+                Debug.Log($"[SVD] Skin loaded: {tex.width}x{tex.height} ({name})");
             }
             else
                 Debug.LogWarning("[SVD] Skin not loaded: the 7 Days character stays.");
         }
 
-        static Texture2D FromBytes(byte[] bytes)
+        /// <summary>Changes the skin while playing (the Skins button).</summary>
+        public static void SetSkin(Texture2D tex, string name)
         {
-            var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            return tex.LoadImage(bytes) && tex.width == 64 && (tex.height == 64 || tex.height == 32) ? tex : null;
+            if (tex == null) return;
+            tex.filterMode = FilterMode.Point;
+            SkinTexture = tex;
+            SkinName = name;
+            Steve.SteveParts.ResetMaterial();
+            Debug.Log($"[SVD] Skin changed to '{name}' ({tex.width}x{tex.height}).");
+            SkinChanged?.Invoke();
         }
 
         static Texture2D LoadOwnFile(ref string source)
         {
-            try
-            {
-                string p = Path.Combine(Path.GetDirectoryName(Settings.FilePath) ?? "", "skin.png");
-                if (!File.Exists(p)) return null;
-                var t = FromBytes(File.ReadAllBytes(p));
-                if (t != null) source = "skin.png";
-                else Debug.LogWarning("[SVD] skin.png must be a 64x64 or 64x32 Minecraft skin; ignored.");
-                return t;
-            }
-            catch { return null; }
+            var t = SkinLibrary.LoadFile(SkinLibrary.PathFor("skin.png"));
+            if (t != null) source = "skin.png";
+            return t;
         }
 
         // launcher_custom_skins.json keeps the skins the player made in the launcher, as base64 PNGs.
@@ -60,11 +77,10 @@ namespace SteveDaysToDie
                 string bestDate = "";
                 foreach (Match m in Regex.Matches(json, "\"skinImage\"\\s*:\\s*\"data:image/png;base64,([A-Za-z0-9+/=]+)\""))
                 {
-                    // the entry's "updated" date, when it follows in the same object
                     var d = Regex.Match(json.Substring(m.Index, Math.Min(600, json.Length - m.Index)), "\"updated\"\\s*:\\s*\"([^\"]+)\"");
                     string date = d.Success ? d.Groups[1].Value : "";
                     if (best != null && string.CompareOrdinal(date, bestDate) <= 0) continue;
-                    var t = FromBytes(Convert.FromBase64String(m.Groups[1].Value));
+                    var t = SkinLibrary.Decode(Convert.FromBase64String(m.Groups[1].Value));
                     if (t != null) { best = t; bestDate = date; }
                 }
                 if (best != null) source = "Minecraft launcher";

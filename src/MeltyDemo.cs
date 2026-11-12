@@ -140,10 +140,24 @@ namespace SteveDaysToDie
             yield return Selfie(p, "selfie-agachado", new Vector3(3.0f, 1.0f, 0.2f));
             SteveModel.TestSneak = false;
 
+            // the axe must sit in Steve's fist in third person (not where the 7 Days hand was)
+            Hold(p, 0);
+            yield return Wait(2f);
+            var sm = SteveModel.LocalModel;
+            float held = sm != null ? sm.HeldDistance : -1f;
+            yield return Selfie(p, "selfie-hacha", new Vector3(2.2f, 1.1f, 2.0f));
+            yield return Selfie(p, "selfie-hacha-lado", new Vector3(3.0f, 1.0f, 0.2f));
+            if (held >= 0f && held < 0.6f) MeltyTest.Pass("held-item");
+            else MeltyTest.Fail("held-item", held < 0f ? "no item was placed in the hand" : $"the item is {held:0.00} m from the fist");
+            Hold(p, 5);
+            yield return Wait(0.5f);
+
             yield return Shot("espejo-tercera-persona");
             if (fv != null) fv.Toggle(false);
             if (FrontView.RenderedFrames >= 5) MeltyTest.Pass("front-view");
             else MeltyTest.Fail("front-view", "the mirror drew " + FrontView.RenderedFrames + " pictures");
+
+            yield return SkinsCheck(p);
 
             // ---- checks inside the real game ----
             MeltyTest.SetPhase("comprobaciones");
@@ -168,6 +182,88 @@ namespace SteveDaysToDie
             Hunger.Spend(ref ex, ref sat, ref food);       // 8.1 tiredness: 1 saturation, then 1 food
             bool hunger = sat == 0f && food == 19f && ex > 0.05f && ex < 0.15f;
             if (hunger) MeltyTest.Pass("hunger-rule"); else MeltyTest.Fail("hunger-rule", $"sat {sat} food {food} left {ex}");
+        }
+
+        // ---- the skins screen: open it, put a different skin on in the middle of the game, restore the player's own ----
+
+        static IEnumerator SkinsCheck(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("skins");
+            var menu = Skins.SkinMenu.Instance;
+            var before = SteveCharacter.SkinTexture;
+            string nameBefore = SteveCharacter.SkinName;
+            string settingBefore = Settings.Get("skin", "auto");
+            string testFile = null;
+            bool ok = false;
+            string why = "";
+            if (menu == null || before == null) { MeltyTest.Fail("skin-menu", "no skin screen or no skin"); yield break; }
+
+            // a green copy of the current skin, saved in the skins folder like a player would add one
+            try
+            {
+                var px = before.GetPixels32();
+                for (int i = 0; i < px.Length; i++)
+                {
+                    if (px[i].a == 0) continue;
+                    px[i].r = (byte)(px[i].r * 0.35f);
+                    px[i].g = (byte)Mathf.Min(255, px[i].g * 1.4f + 50);
+                    px[i].b = (byte)(px[i].b * 0.35f);
+                }
+                var tint = new Texture2D(before.width, before.height, TextureFormat.RGBA32, false);
+                tint.SetPixels32(px);
+                tint.Apply();
+                testFile = Skins.SkinLibrary.SaveTexture(tint, "prueba-verde");
+                UnityEngine.Object.Destroy(tint);
+            }
+            catch (Exception ex) { why = "could not make the test skin: " + ex.Message; }
+
+            if (testFile != null)
+            {
+                menu.OpenForTest();
+                yield return Wait(1f);
+                yield return Shot("skins-pantalla");
+                var entry = Skins.SkinLibrary.Entries.Find(e => e.Key == testFile);
+                if (entry == null) why = "the new skin is not in the library";
+                else if (Skins.SkinLibrary.Entries.Count < 2) why = "the library has only " + Skins.SkinLibrary.Entries.Count + " skin";
+                else
+                {
+                    Skins.SkinLibrary.Apply(entry);
+                    yield return Wait(0.8f);
+                    yield return Shot("skins-pantalla-usada");
+                    menu.Close();
+                    yield return Wait(0.5f);
+                    yield return Selfie(p, "selfie-skin-verde", new Vector3(0f, 1.0f, 3.0f));
+                    ok = !ReferenceEquals(SteveCharacter.SkinTexture, before) && SteveCharacter.SkinName == "prueba-verde"
+                         && Settings.Get("skin", "auto") == testFile;
+                    if (!ok) why = $"skin in use is '{SteveCharacter.SkinName}', setting '{Settings.Get("skin", "auto")}'";
+                }
+                menu.Close();
+            }
+
+            // put the player's own skin and setting back, remove the test file
+            SteveCharacter.SetSkin(before, nameBefore);
+            Settings.Set("skin", settingBefore);
+            if (testFile != null) Skins.SkinLibrary.Delete(testFile);
+            Skins.SkinLibrary.Refresh();
+
+            if (ok) MeltyTest.Pass("skin-menu"); else MeltyTest.Fail("skin-menu", why);
+
+            // the Skins button must show in the pause menu (that is how a skin is changed during a game)
+            bool opened = false;
+            try
+            {
+                p.PlayerUI.windowManager.Open(XUiC_InGameMenuWindow.ID, true);
+                opened = true;
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo pause menu: " + ex.Message); }
+            yield return Wait(1.2f);
+            bool shown = Skins.SkinMenu.ButtonVisible;
+            yield return Shot("skins-boton-menu-pausa");
+            try { p.PlayerUI.windowManager.Close(XUiC_InGameMenuWindow.ID); } catch { }
+            yield return Wait(0.6f);
+            if (!opened) MeltyTest.Fail("skin-button", "the test could not open the pause menu");
+            else if (shown) MeltyTest.Pass("skin-button");
+            else MeltyTest.Fail("skin-button", "the Skins button did not show with the pause menu open");
         }
 
         // ---- hunger, sprint and regeneration in the running game ----
