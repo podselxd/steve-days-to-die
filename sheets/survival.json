@@ -109,11 +109,11 @@
   },
   {
    "id": "jump_strength_7days",
-   "value": 0.1414,
+   "value": 0.152,
    "unit": "JumpStrength de 7 Days",
    "rule": "salto como Minecraft (1.25 bloques): el propio juego anota que 0.16 da unos 1.6 m y la altura crece con el cuadrado, asi que 0.16 x raiz(1.25/1.6) = 0.1414; agachado salta igual, como en Minecraft",
    "source": "aproximado: comentario del propio entityclasses.xml",
-   "verified": "aproximado_falta_probar_en_juego"
+   "verified": "ajustado: con 0.1414 el creador no subia limpio a un bloque (el juego lo subia por el borde); 0.152 da margen como en Minecraft"
   }
  ]
 }
