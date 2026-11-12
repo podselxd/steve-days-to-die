@@ -51,8 +51,23 @@ namespace SteveVsZombiesLauncher
         {
             Text = "Steve Days to Die";
             ClientSize = new Size(1060, 720);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
+            // can be resized, maximized and minimized; F11 = full screen (no borders), F11 or Esc again = back
+            FormBorderStyle = FormBorderStyle.Sizable;
+            MaximizeBox = true; MinimizeBox = true;
+            MinimumSize = new Size(1000, 700);
+            KeyPreview = true;
+            KeyDown += (s, e) =>
+            {
+                if ((ActiveControl as Button)?.Tag as string == "wait") return;     // the Teclas tab is waiting for a key
+                if (e.KeyCode == Keys.F11 || (e.KeyCode == Keys.Escape && FormBorderStyle == FormBorderStyle.None))
+                {
+                    e.Handled = true;
+                    bool full = FormBorderStyle != FormBorderStyle.None;
+                    WindowState = FormWindowState.Normal;
+                    FormBorderStyle = full ? FormBorderStyle.None : FormBorderStyle.Sizable;
+                    WindowState = full ? FormWindowState.Maximized : FormWindowState.Normal;
+                }
+            };
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Bg;
             ForeColor = Color.White;
@@ -287,7 +302,8 @@ namespace SteveVsZombiesLauncher
             var hint = Words("Arrastra para girarlo", 9, FontStyle.Italic, Grey, 30, 422, 300); hint.TextAlign = ContentAlignment.TopCenter;
             p.Controls.Add(hint);
 
-            p.Controls.Add(Words("Biblioteca", 14, FontStyle.Bold, Color.White, 360, 18));
+            var biblio = Words("Biblioteca", 14, FontStyle.Bold, Color.White, 360, 18);
+            p.Controls.Add(biblio);
             var add = new Button(); Style(add, "+  Nuevo aspecto…", 10.5f); add.SetBounds(360, 56, 190, 38);
             add.Click += (s, e) => ChangeSkin();
             p.Controls.Add(add);
@@ -298,7 +314,17 @@ namespace SteveVsZombiesLauncher
             _skinList.SetBounds(360, 108, 420, 340);
             _skinList.AutoScroll = true; _skinList.BackColor = Bg;
             p.Controls.Add(_skinList);
-            p.Resize += (s, e) => { _skinList.Width = Math.Max(200, p.Width - 380); _skinList.Height = Math.Max(120, p.Height - 120); };
+            p.Resize += (s, e) =>
+            {
+                // the 3D Steve grows with the window (full screen shows him big)
+                int h = Math.Max(300, p.Height - 70), w = Math.Min(h * 3 / 4, Math.Max(300, p.Width / 2 - 60));
+                _bigSkin.SetBounds(30, 14, w, h - 44);
+                _skinTitle.SetBounds(30, h - 28, w, 24);
+                hint.SetBounds(30, h - 4, w, 20);
+                int lx = w + 60;
+                biblio.Left = lx; add.Left = lx; folder.Left = lx + 200;
+                _skinList.SetBounds(lx, 108, Math.Max(200, p.Width - lx - 20), Math.Max(120, p.Height - 120));
+            };
         }
 
         void FillSkinList()
