@@ -1,0 +1,78 @@
+{
+ "_comment": "Crafting station equivalence table.",
+ "_columns": "id_7days | id_minecraft | name_en | name_es | opens_7days_ui | craft_grid | v1 | verified | notes",
+ "_opens_7days_ui": "which 7 Days UI window opens when player interacts",
+ "_data_source": "entityclasses.xml, XUi_InGame (7Days UI names)",
+ "_coverage_v1": "2/2 V1 stations (workbench, forge)",
+ "stations": [
+  {
+   "id_7days": "workbench",
+   "id_minecraft": "crafting_table",
+   "name_en": "Workbench / Crafting Table",
+   "name_es": "Mesa trabajo / Mesa crafteo",
+   "opens_7days_ui": "workbench",
+   "craft_grid": "3x3",
+   "stack_7days": 1,
+   "stack_mc": 64,
+   "relation": "exact",
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "Interacting opens 7Days workbench UI; Minecraft recipes valid here"
+  },
+  {
+   "id_7days": "forge",
+   "id_minecraft": "furnace",
+   "name_en": "Forge / Furnace",
+   "name_es": "Forja / Horno",
+   "opens_7days_ui": "forge",
+   "craft_grid": "1-slot smelting",
+   "stack_7days": 1,
+   "stack_mc": 64,
+   "relation": "approximate",
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "7Days forge is multi-output; MC furnace is 1-in 1-out. V1: open 7Days forge UI; MC recipes shown as overlay."
+  },
+  {
+   "id_7days": "campfire",
+   "id_minecraft": "campfire",
+   "name_en": "Campfire",
+   "name_es": "Hoguera",
+   "opens_7days_ui": "campfire",
+   "craft_grid": "cooking",
+   "stack_7days": 1,
+   "stack_mc": 64,
+   "relation": "exact",
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "chemistryStation",
+   "id_minecraft": "brewing_stand",
+   "name_en": "Chemistry Station / Brewing Stand",
+   "name_es": "Alambique / Soporte pociones",
+   "opens_7days_ui": "chemistryStation",
+   "craft_grid": "brewing",
+   "stack_7days": 1,
+   "stack_mc": 64,
+   "relation": "approximate",
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: potions. Nether ingredients (blaze_rod for stand, nether_wart) not available in survival."
+  },
+  {
+   "id_7days": "combineStation",
+   "id_minecraft": "anvil",
+   "name_en": "Repair Station / Anvil",
+   "name_es": "Yunque / Reparar",
+   "opens_7days_ui": "combineStation",
+   "craft_grid": "repair+enchant",
+   "stack_7days": 1,
+   "stack_mc": 64,
+   "relation": "approximate",
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: enchantments. Enchanting table also maps here (enchanting_table → combineStation)."
+  }
+ ]
+}

@@ -1,0 +1,201 @@
+{
+ "_comment": "Mob replacement table. Each row = one 7 Days entity replaced by a Minecraft mob.",
+ "_columns": "id_7days | id_minecraft | name_en | name_es | type | v1_replace | v1_keep_7days | biome_7days | biome_mc | spawn_time | notes | v1 | verified",
+ "_type_values": "passive=never attacks, neutral=attacks if provoked, hostile=always attacks, predator=7Days hostile animal kept as-is",
+ "_v1_replace": "true = V1 replaces 7Days model with MC model",
+ "_v1_keep_7days": "true = V1 keeps as 7Days animal (predators)",
+ "_data_source": "entityclasses.xml, spawning.xml, entitygroups.xml",
+ "_coverage_v1": "4/4 V1 target mobs (cow, pig, chicken, rabbit); 7 predators kept as-is",
+ "passive_v1": [
+  {
+   "id_7days": "animalDoe",
+   "id_minecraft": "cow",
+   "name_en": "Doe → Cow",
+   "name_es": "Cierva → Vaca",
+   "type": "passive",
+   "v1_replace": true,
+   "v1_keep_7days": false,
+   "biome_7days": "pine_forest (night, WildGameForestNight)",
+   "biome_mc": "plains, forest, meadow",
+   "spawn_time": "Night",
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "animalDoe and animalStag both map to cow; use cow model for both in V1"
+  },
+  {
+   "id_7days": "animalStag",
+   "id_minecraft": "cow",
+   "name_en": "Stag → Cow",
+   "name_es": "Ciervo → Vaca",
+   "type": "passive",
+   "v1_replace": true,
+   "v1_keep_7days": false,
+   "biome_7days": "pine_forest (night, WildGameStagNight)",
+   "biome_mc": "plains, forest, meadow",
+   "spawn_time": "Night",
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalBoar",
+   "id_minecraft": "pig",
+   "name_en": "Boar → Pig",
+   "name_es": "Jabalí → Cerdo",
+   "type": "neutral",
+   "v1_replace": true,
+   "v1_keep_7days": false,
+   "biome_7days": "pine_forest (EnemyAnimalsForest, technically neutral — IsEnemyEntity=false)",
+   "biome_mc": "plains, forest, village",
+   "spawn_time": "Any",
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalChicken",
+   "id_minecraft": "chicken",
+   "name_en": "Chicken → Chicken",
+   "name_es": "Gallina → Gallina",
+   "type": "passive",
+   "v1_replace": true,
+   "v1_keep_7days": false,
+   "biome_7days": "pine_forest (day, WildGameForest)",
+   "biome_mc": "plains, forest, village",
+   "spawn_time": "Day",
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalRabbit",
+   "id_minecraft": "rabbit",
+   "name_en": "Rabbit → Rabbit",
+   "name_es": "Conejo → Conejo",
+   "type": "passive",
+   "v1_replace": true,
+   "v1_keep_7days": false,
+   "biome_7days": "pine_forest (day, WildGameForest)",
+   "biome_mc": "plains, forest, tundra",
+   "spawn_time": "Day",
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "predators_kept": [
+  {
+   "id_7days": "animalBear",
+   "id_minecraft": "no_match",
+   "name_en": "Bear",
+   "name_es": "Oso",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "stays as 7Days bear; no MC equivalent"
+  },
+  {
+   "id_7days": "animalBearSmall",
+   "id_minecraft": "no_match",
+   "name_en": "Bear (small)",
+   "name_es": "Oso pequeño",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalWolf",
+   "id_minecraft": "wolf",
+   "name_en": "Wolf",
+   "name_es": "Lobo",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "V2 candidate; wolf in MC is tameable"
+  },
+  {
+   "id_7days": "animalDireWolf",
+   "id_minecraft": "no_match",
+   "name_en": "Dire Wolf",
+   "name_es": "Lobo terrible",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalMountainLion",
+   "id_minecraft": "no_match",
+   "name_en": "Mountain Lion",
+   "name_es": "León montaña",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalCoyote",
+   "id_minecraft": "no_match",
+   "name_en": "Coyote",
+   "name_es": "Coyote",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "animalSnake",
+   "id_minecraft": "no_match",
+   "name_en": "Snake",
+   "name_es": "Serpiente",
+   "type": "predator",
+   "v1_replace": false,
+   "v1_keep_7days": true,
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "passive_v2": [
+  {
+   "id_7days": "no_match",
+   "id_minecraft": "sheep",
+   "name_en": "Sheep",
+   "name_es": "Oveja",
+   "type": "passive",
+   "v1_replace": false,
+   "v1_keep_7days": false,
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: add sheep; no 7Days equivalent; spawn in grassland biomes"
+  },
+  {
+   "id_7days": "no_match",
+   "id_minecraft": "pig",
+   "name_en": "Pig (domestic)",
+   "name_es": "Cerdo (doméstico)",
+   "type": "passive",
+   "v1_replace": false,
+   "v1_keep_7days": false,
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: animalPig in 7Days is different from animalBoar"
+  },
+  {
+   "id_7days": "no_match",
+   "id_minecraft": "horse",
+   "name_en": "Horse",
+   "name_es": "Caballo",
+   "type": "passive",
+   "v1_replace": false,
+   "v1_keep_7days": false,
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: no 7Days equivalent; needs mount system"
+  }
+ ]
+}

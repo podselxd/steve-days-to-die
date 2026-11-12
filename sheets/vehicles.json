@@ -1,0 +1,85 @@
+{
+ "_comment": "Vehicle equivalence table.",
+ "_columns": "id_7days | id_minecraft | name_en | name_es | relation | v1 | verified | notes",
+ "_data_source": "entityclasses.xml (vehicle entries, LootList vehicle*)",
+ "_coverage_v1": "1/1 V1 vehicles (bicycle=minecart)",
+ "vehicles": [
+  {
+   "id_7days": "vehicleBicyclePlaceable",
+   "id_minecraft": "minecart",
+   "name_en": "Bicycle / Minecart",
+   "name_es": "Bicicleta / Vagoneta",
+   "relation": "approximate",
+   "stack_7days": 1,
+   "stack_mc": 1,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "V1: bicycle uses MC minecart texture and sound. Speed kept as 7Days bicycle speed."
+  },
+  {
+   "id_7days": "vehicleMinibikePlaceable",
+   "id_minecraft": "no_match",
+   "name_en": "Minibike",
+   "name_es": "Moto pequeña",
+   "relation": "no_match",
+   "stack_7days": 1,
+   "stack_mc": 0,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "vehicleMotorcyclePlaceable",
+   "id_minecraft": "no_match",
+   "name_en": "Motorcycle",
+   "name_es": "Motocicleta",
+   "relation": "no_match",
+   "stack_7days": 1,
+   "stack_mc": 0,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "vehicleTruck4x4Placeable",
+   "id_minecraft": "no_match",
+   "name_en": "4x4 Truck",
+   "name_es": "Camioneta 4x4",
+   "relation": "no_match",
+   "stack_7days": 1,
+   "stack_mc": 0,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "vehicleGyrocopterPlaceable",
+   "id_minecraft": "no_match",
+   "name_en": "Gyrocopter",
+   "name_es": "Girocóptero",
+   "relation": "no_match",
+   "stack_7days": 1,
+   "stack_mc": 0,
+   "v1": false,
+   "verified": "datos_ok"
+  }
+ ],
+ "v2_additions": [
+  {
+   "id_7days": "no_match",
+   "id_minecraft": "boat",
+   "name_en": "Boat",
+   "name_es": "Barca",
+   "relation": "approximate",
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "V2: MC boat visual on 7Days raft or new entity"
+  },
+  {
+   "id_7days": "no_match",
+   "id_minecraft": "chest_minecart",
+   "name_en": "Chest Minecart",
+   "name_es": "Vagoneta cofre",
+   "relation": "no_match",
+   "v1": false,
+   "verified": "datos_ok"
+  }
+ ]
+}

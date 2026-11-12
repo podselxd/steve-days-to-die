@@ -1,0 +1,298 @@
+{
+ "_comment": "RITMO DE ATAQUE Y PICADO estilo Minecraft para TODO lo que Steve puede empunar. rows = objetos con par exacto (mandan). classes = regla por tipo para el resto de armas y herramientas de 7 Days. tools/build_config.py lee los objetos cuerpo a cuerpo de 7 Days, aplica rows y luego classes, y falla si alguno queda sin ritmo.",
+ "_columns": "id_7days | id_minecraft | attack_speed (golpes por segundo de Minecraft) | cooldown_s = 1/attack_speed | apm = 60*attack_speed | v2_enchant_damage | v2_enchant_speed | source | verified",
+ "_rules": "Dano = base x (0.2 + 0.8 x carga^2). Critico: carga > 0.9 y cayendo => base x 1.5. El dano de encantamientos se suma aparte, x carga (regla de Minecraft).",
+ "_v2_enchantments": "Los encantamientos NO cambian el ritmo de ataque ni la barra: un pico encantado recarga igual que uno normal (1.2 golpes/s). Filo (sharpness): +0.5 x nivel + 0.5 de dano, multiplicado por la carga. Eficiencia (efficiency): + nivel^2 + 1 a la velocidad de PICADO. Lo que si cambia el ritmo son los efectos: Prisa (haste) +10% por nivel, Fatiga minera -10% por nivel. Enganches en el codigo: ItemModifiers.ExtraDamage, MiningSpeedBonus y AttackSpeedMultiplier.",
+ "rows": [
+  {
+   "id_7days": "meleeHandPlayer",
+   "id_minecraft": "ninguno",
+   "attack_speed": 4.0,
+   "cooldown_s": 0.25,
+   "apm": 240,
+   "v2_enchant_damage": "no aplica",
+   "v2_enchant_speed": "no aplica",
+   "source": "valor conocido de Minecraft (puno)",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolRepairT0StoneAxe",
+   "id_minecraft": "stone_axe",
+   "attack_speed": 0.8,
+   "cooldown_s": 1.25,
+   "apm": 48,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolAxeT1IronFireaxe",
+   "id_minecraft": "iron_axe",
+   "attack_speed": 0.9,
+   "cooldown_s": 1.11,
+   "apm": 54,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolAxeT2SteelAxe",
+   "id_minecraft": "diamond_axe",
+   "attack_speed": 1.0,
+   "cooldown_s": 1.0,
+   "apm": 60,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolPickT1IronPickaxe",
+   "id_minecraft": "iron_pickaxe",
+   "attack_speed": 1.2,
+   "cooldown_s": 0.83,
+   "apm": 72,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolPickT2SteelPickaxe",
+   "id_minecraft": "diamond_pickaxe",
+   "attack_speed": 1.2,
+   "cooldown_s": 0.83,
+   "apm": 72,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolShovelT0StoneShovel",
+   "id_minecraft": "stone_shovel",
+   "attack_speed": 1.0,
+   "cooldown_s": 1.0,
+   "apm": 60,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolShovelT1IronShovel",
+   "id_minecraft": "iron_shovel",
+   "attack_speed": 1.0,
+   "cooldown_s": 1.0,
+   "apm": 60,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeToolShovelT2SteelShovel",
+   "id_minecraft": "diamond_shovel",
+   "attack_speed": 1.0,
+   "cooldown_s": 1.0,
+   "apm": 60,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "eficiencia",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnClubT0WoodenClub",
+   "id_minecraft": "wooden_sword",
+   "attack_speed": 1.6,
+   "cooldown_s": 0.625,
+   "apm": 96,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnBladeT0BoneKnife",
+   "id_minecraft": "stone_sword",
+   "attack_speed": 1.6,
+   "cooldown_s": 0.625,
+   "apm": 96,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnBladeT1HuntingKnife",
+   "id_minecraft": "iron_sword",
+   "attack_speed": 1.6,
+   "cooldown_s": 0.625,
+   "apm": 96,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnBladeT3Machete",
+   "id_minecraft": "diamond_sword",
+   "attack_speed": 1.6,
+   "cooldown_s": 0.625,
+   "apm": 96,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "valor conocido de Minecraft",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnSpearT0StoneSpear",
+   "id_minecraft": "stone_spear",
+   "attack_speed": 1.33,
+   "cooldown_s": 0.75,
+   "apm": 80,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "aproximado: la lanza es nueva y su ritmo no esta en los archivos de datos",
+   "verified": "aproximado_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnSpearT1IronSpear",
+   "id_minecraft": "iron_spear",
+   "attack_speed": 1.05,
+   "cooldown_s": 0.95,
+   "apm": 63,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "aproximado: la lanza es nueva y su ritmo no esta en los archivos de datos",
+   "verified": "aproximado_falta_probar_en_juego"
+  },
+  {
+   "id_7days": "meleeWpnSpearT3SteelSpear",
+   "id_minecraft": "diamond_spear",
+   "attack_speed": 0.95,
+   "cooldown_s": 1.05,
+   "apm": 57,
+   "v2_enchant_damage": "filo",
+   "v2_enchant_speed": "no aplica",
+   "source": "aproximado: la lanza es nueva y su ritmo no esta en los archivos de datos",
+   "verified": "aproximado_falta_probar_en_juego"
+  }
+ ],
+ "classes": [
+  {
+   "class": "mano",
+   "match": "^meleeHandPlayer$",
+   "mc_reference": "puno",
+   "attack_speed": 4.0,
+   "note": "sin nada en la mano",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "nudillos",
+   "match": "^meleeWpnKnuckles",
+   "mc_reference": "puno",
+   "attack_speed": 4.0,
+   "note": "nudillos = golpe de puno",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "espada",
+   "match": "^meleeWpn(Blade|Club|Baton)",
+   "mc_reference": "sword",
+   "attack_speed": 1.6,
+   "note": "cuchillos, machete, garrotes, bates y bastones",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "mazo",
+   "match": "^meleeWpnSledge",
+   "mc_reference": "mace",
+   "attack_speed": 0.6,
+   "note": "mazos = maza de Minecraft (lenta y fuerte)",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "lanza_piedra",
+   "match": "^meleeWpnSpearT0",
+   "mc_reference": "stone_spear",
+   "attack_speed": 1.33,
+   "note": "aproximado",
+   "verified": "aproximado_falta_probar_en_juego"
+  },
+  {
+   "class": "lanza_hierro",
+   "match": "^meleeWpnSpearT1",
+   "mc_reference": "iron_spear",
+   "attack_speed": 1.05,
+   "note": "aproximado",
+   "verified": "aproximado_falta_probar_en_juego"
+  },
+  {
+   "class": "lanza_acero",
+   "match": "^meleeWpnSpearT[23]",
+   "mc_reference": "diamond_spear",
+   "attack_speed": 0.95,
+   "note": "aproximado",
+   "verified": "aproximado_falta_probar_en_juego"
+  },
+  {
+   "class": "hacha_piedra",
+   "match": "^meleeToolRepairT0.*StoneAxe$",
+   "mc_reference": "stone_axe",
+   "attack_speed": 0.8,
+   "note": "-",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "hacha_hierro",
+   "match": "^meleeToolAxeT1",
+   "mc_reference": "iron_axe",
+   "attack_speed": 0.9,
+   "note": "-",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "hacha_acero",
+   "match": "^meleeToolAxeT[23]",
+   "mc_reference": "diamond_axe",
+   "attack_speed": 1.0,
+   "note": "-",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "pico",
+   "match": "^meleeToolPick",
+   "mc_reference": "pickaxe",
+   "attack_speed": 1.2,
+   "note": "todos los picos, encantados o no",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "pala",
+   "match": "^meleeToolShovel",
+   "mc_reference": "shovel",
+   "attack_speed": 1.0,
+   "note": "-",
+   "verified": "valor_conocido_falta_probar_en_juego"
+  },
+  {
+   "class": "antorcha",
+   "match": "^meleeTool(Torch|Flashlight)",
+   "mc_reference": "sword",
+   "attack_speed": 1.6,
+   "note": "en Minecraft un objeto cualquiera pega a ritmo de puno (4.0); aqui queman o aturden, asi que van a ritmo de espada para no romper el balance",
+   "verified": "decision_de_diseno_falta_probar_en_juego"
+  },
+  {
+   "class": "herramienta_de_trabajo",
+   "match": "^meleeTool(Repair|Salvage)",
+   "mc_reference": "shovel",
+   "attack_speed": 1.0,
+   "note": "martillo, llave, trinquete: su golpe es su ritmo de trabajo; a 4.0 desarmarian 5 veces mas rapido",
+   "verified": "decision_de_diseno_falta_probar_en_juego"
+  }
+ ]
+}

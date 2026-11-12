@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <GAME7DTD Condition="'$(GAME7DTD)'==''">C:\Program Files (x86)\Steam\steamapps\common\7 Days To Die</GAME7DTD>
+  </PropertyGroup>
+</Project>

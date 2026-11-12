@@ -1,0 +1,18 @@
+# build output
+bin/
+obj/
+dist/
+SteveDaysToDie/SteveDaysToDie.dll
+
+# local notes, pictures and scratch files
+HANDOFF.md
+shots/
+attachments/
+.claude/
+tmp_*
+
+# generated from the player's own game files: never published (rebuilt with tools/*.py)
+sheets/items.json
+sheets/items_v0_manual.bak
+sheets/freq_*.json
+sheets/preflight_report.json

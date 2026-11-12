@@ -1,0 +1,20 @@
+{
+  "_comment": "HAMBRE Y CANSANCIO estilo Minecraft. Una fila = una regla con su numero. tools/build_config.py genera de aqui src/Generated/SurvivalTable.cs; el codigo (src/Survival/Hunger.cs) solo usa esos numeros.",
+  "_columns": "id | value | unit | rule | source | verified",
+  "_how_it_works": "No hay barra de resistencia. Cada accion suma 'cansancio'. Cada 4 puntos de cansancio se gasta 1 punto de saturacion; si ya no hay saturacion, 1 punto de comida (medio muslo). La saturacion no se ve: se llena al comer y es la razon de que la barra no baje enseguida. Con 6 puntos de comida o menos ya no se puede correr. Con 18 o mas la vida se regenera.",
+  "rows": [
+    {"id": "exhaustion_sprint_per_metre", "value": 0.1, "unit": "cansancio por metro", "rule": "correr", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "exhaustion_jump", "value": 0.05, "unit": "cansancio por salto", "rule": "saltar", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "exhaustion_sprint_jump", "value": 0.2, "unit": "cansancio por salto", "rule": "saltar mientras corres", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "exhaustion_attack_hit", "value": 0.1, "unit": "cansancio por golpe", "rule": "golpe que acierta a un ser vivo (golpear al aire no cansa)", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "exhaustion_per_point", "value": 4.0, "unit": "cansancio", "rule": "cansancio que cuesta 1 punto de saturacion o de comida", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "exhaustion_regen_per_hp", "value": 6.0, "unit": "cansancio por punto de vida", "rule": "regenerar vida da hambre", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "start_saturation", "value": 5.0, "unit": "puntos de saturacion", "rule": "saturacion al empezar", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "saturation_per_food_point_eaten", "value": 1.2, "unit": "saturacion por punto de comida", "rule": "al comer algo de 7 Days; nunca pasa del nivel de comida", "source": "aproximado (pan de Minecraft = 1.2) hasta que la hoja de comidas de el valor de cada alimento", "verified": "aproximado_falta_probar_en_juego"},
+    {"id": "sprint_min_food", "value": 6.0, "unit": "puntos de comida (de 20)", "rule": "con esto o menos no se puede correr", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "regen_min_food", "value": 18.0, "unit": "puntos de comida (de 20)", "rule": "con esto o mas la vida se regenera", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "regen_slow_seconds", "value": 4.0, "unit": "segundos por punto de vida", "rule": "regeneracion normal (1 punto de vida = medio corazon)", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "regen_fast_seconds", "value": 0.5, "unit": "segundos por punto de vida", "rule": "regeneracion rapida: comida llena y con saturacion", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id": "regen_fast_max_saturation", "value": 6.0, "unit": "puntos de saturacion", "rule": "saturacion maxima que usa cada pulso de regeneracion rapida", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"}
+  ]
+}

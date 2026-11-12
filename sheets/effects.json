@@ -1,0 +1,93 @@
+{
+ "_comment": "Effects/potions/buffs equivalence table. Mostly V2.",
+ "_columns": "id_7days_buff | id_minecraft_effect | name_en | name_es | v1 | available_survival | verified | notes",
+ "_available_survival": "false = requires Nether ingredient → not available in survival mode; true = creative mode only OR survival alternative",
+ "_data_source": "buffs.xml (7Days), Minecraft jar assets/minecraft/data/effect (MC effects)",
+ "positive": [
+  {
+   "id_7days_buff": "buffHealHealth",
+   "id_minecraft_effect": "regeneration",
+   "name_en": "Regeneration",
+   "name_es": "Regeneración",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok",
+   "_note": "Nether wart needed for base potion"
+  },
+  {
+   "id_7days_buff": "buffDrugSteroids",
+   "id_minecraft_effect": "strength",
+   "name_en": "Strength",
+   "name_es": "Fuerza",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "no_match",
+   "id_minecraft_effect": "speed",
+   "name_en": "Speed",
+   "name_es": "Velocidad",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "no_match",
+   "id_minecraft_effect": "jump_boost",
+   "name_en": "Jump Boost",
+   "name_es": "Salto potenciado",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "no_match",
+   "id_minecraft_effect": "night_vision",
+   "name_en": "Night Vision",
+   "name_es": "Visión nocturna",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "no_match",
+   "id_minecraft_effect": "water_breathing",
+   "name_en": "Water Breathing",
+   "name_es": "Respiración acuática",
+   "v1": false,
+   "available_survival": false,
+   "verified": "datos_ok"
+  }
+ ],
+ "negative": [
+  {
+   "id_7days_buff": "buffDysenteryCatchFood",
+   "id_minecraft_effect": "hunger",
+   "name_en": "Hunger (from raw food)",
+   "name_es": "Hambre (carne cruda)",
+   "v1": true,
+   "available_survival": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "buffInfectionMain",
+   "id_minecraft_effect": "poison",
+   "name_en": "Poison",
+   "name_es": "Veneno",
+   "v1": false,
+   "available_survival": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days_buff": "buffBurningElement",
+   "id_minecraft_effect": "no_match",
+   "name_en": "Burning",
+   "name_es": "Ardiendo",
+   "v1": true,
+   "available_survival": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "v2_flag": "_note: Enchantments (sharpness, protection, efficiency, etc.) and experience system are V2. Potions require Nether ingredients — not available in survival V1 or V2. Creative mode only."
+}

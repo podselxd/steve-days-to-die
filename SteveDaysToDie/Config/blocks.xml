@@ -1,0 +1,10 @@
+<configs>
+    <!-- V1: Stone yields cobblestone when mined with pickaxe (Minecraft behavior).
+         Original drop was resourceRockSmall x55 — changed to resourceCobblestones 1-4. -->
+    <set xpath="/blocks/block[@name='terrStone']/drop[@event='Harvest']/@name">resourceCobblestones</set>
+    <set xpath="/blocks/block[@name='terrStone']/drop[@event='Harvest']/@count">1,4</set>
+
+    <!-- Coal ore already drops resourceCoal — no change needed.                   -->
+    <!-- Iron ore already drops resourceScrapIron (iron nugget equiv) — no change. -->
+    <!-- Dirt already drops resourceClayLump (clay ball equiv) — no change.        -->
+</configs>

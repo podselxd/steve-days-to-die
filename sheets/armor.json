@@ -1,0 +1,27 @@
+{
+  "_comment": "PUNTOS DE ARMADURA de Minecraft por pieza. Una fila = una pieza. Los valores de defensa no estan en los archivos de datos de Minecraft (viven en su codigo), asi que son valores conocidos. tools/build_config.py los une con sheets/pairs.json y genera src/Generated/ArmorTable.cs: cada pieza de 7 Days con pareja suma los puntos de su pareja de Minecraft.",
+  "_columns": "id_minecraft | points | slot | tier | source | verified",
+  "_rules": "Barra de pantalla: 1 punto = media armadura, maximo 20 (10 iconos). Las piezas de 7 Days que no tienen pareja valen 0 en la barra (conservan su proteccion propia).",
+  "rows": [
+    {"id_minecraft": "leather_helmet", "points": 1, "slot": "casco", "tier": "cuero", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "leather_chestplate", "points": 3, "slot": "peto", "tier": "cuero", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "leather_leggings", "points": 2, "slot": "pantalones", "tier": "cuero", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "leather_boots", "points": 1, "slot": "botas", "tier": "cuero", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "copper_helmet", "points": 2, "slot": "casco", "tier": "cobre", "source": "aproximado: el cobre es nuevo y su valor no esta en los archivos de datos", "verified": "aproximado_falta_confirmar"},
+    {"id_minecraft": "copper_chestplate", "points": 4, "slot": "peto", "tier": "cobre", "source": "aproximado: el cobre es nuevo y su valor no esta en los archivos de datos", "verified": "aproximado_falta_confirmar"},
+    {"id_minecraft": "copper_leggings", "points": 3, "slot": "pantalones", "tier": "cobre", "source": "aproximado: el cobre es nuevo y su valor no esta en los archivos de datos", "verified": "aproximado_falta_confirmar"},
+    {"id_minecraft": "copper_boots", "points": 1, "slot": "botas", "tier": "cobre", "source": "aproximado: el cobre es nuevo y su valor no esta en los archivos de datos", "verified": "aproximado_falta_confirmar"},
+    {"id_minecraft": "chainmail_helmet", "points": 2, "slot": "casco", "tier": "malla", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "chainmail_chestplate", "points": 5, "slot": "peto", "tier": "malla", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "chainmail_leggings", "points": 4, "slot": "pantalones", "tier": "malla", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "chainmail_boots", "points": 1, "slot": "botas", "tier": "malla", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "iron_helmet", "points": 2, "slot": "casco", "tier": "hierro", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "iron_chestplate", "points": 6, "slot": "peto", "tier": "hierro", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "iron_leggings", "points": 5, "slot": "pantalones", "tier": "hierro", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "iron_boots", "points": 2, "slot": "botas", "tier": "hierro", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "diamond_helmet", "points": 3, "slot": "casco", "tier": "diamante", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "diamond_chestplate", "points": 8, "slot": "peto", "tier": "diamante", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "diamond_leggings", "points": 6, "slot": "pantalones", "tier": "diamante", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"},
+    {"id_minecraft": "diamond_boots", "points": 3, "slot": "botas", "tier": "diamante", "source": "valor conocido de Minecraft", "verified": "valor_conocido_falta_probar_en_juego"}
+  ]
+}

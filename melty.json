@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    { "slug": "7-days-to-die", "role": "primary" },
+    { "slug": "minecraft-java", "role": "companion" }
+  ],
+  "components": [
+    { "id": "main", "fileName": "SteveVsZombies-*.zip", "label": "Steve vs Zombies", "kind": "main", "required": true }
+  ],
+  "requirements": [],
+  "mappings": [
+    { "component": "main", "from": "SteveDaysToDie/", "to": "{game}/Mods/SteveDaysToDie" }
+  ],
+  "launch": {
+    "kind": "exe",
+    "path": "{game}/7DaysToDie.exe",
+    "cwd": "{game}",
+    "args": ["-force-d3d11", "-nogs"],
+    "env": { "STEVEDAYS_MC": "{game:minecraft-java}" }
+  },
+  "runtimeData": ["{localappdata}/SteveDaysToDie"],
+  "test": {
+    "checks": ["minecraft-files", "in-world", "minecraft-hud", "hotbar-icons", "steve-model", "steve-arm", "attack-bar", "crit-rule", "hunger-rule"],
+    "minutes": 5
+  }
+}

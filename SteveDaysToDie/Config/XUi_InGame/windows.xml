@@ -1,0 +1,7 @@
+<configs>
+    <!-- The Minecraft HUD shows hearts and hunger, so the 7 Days stat bars (health, stamina, food,
+         water) are kept alive (their controllers still run) but moved out of sight.
+         The toolbelt is NOT moved here: the mod hides it only while its own bar is on screen and
+         brings it back when a menu is open (src/HUD/XUiHider.cs). -->
+    <setattribute xpath="/windows/window[@name='HUDLeftStatBars']/rect[@name='hud']" name="pos">-4000,156</setattribute>
+</configs>

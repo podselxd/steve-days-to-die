@@ -1,0 +1,178 @@
+{
+ "_comment": "Mob drop table. Each row = one drop from one mob. The 'alternates' key means pressing the toggle key switches between drop_7days and drop_mc.",
+ "_columns": "mob_id_7days | mob_id_minecraft | drop_7days | drop_mc | count_min | count_max | drop_event | prob | v1 | verified | notes",
+ "_drop_event": "on_death=always when mob dies, on_harvest=requires knife/butcher, rare=low probability",
+ "_alternates": "true = pressing the item toggle key switches between 7Days and MC versions",
+ "_data_source": "blocks.xml (goreBlockAnimal, cntBirdnest), items.xml, entity class PickupItem property",
+ "_coverage_v1": "14/14 drops for V1 mobs (cow/pig/chicken/rabbit)",
+ "cow_drops": [
+  {
+   "mob_id_7days": "animalStag",
+   "mob_id_minecraft": "cow",
+   "drop_7days": "foodRottingFlesh",
+   "drop_mc": "beef",
+   "count_min": 1,
+   "count_max": 3,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "foodRottingFlesh is generic animal flesh; maps to raw beef"
+  },
+  {
+   "mob_id_7days": "animalDoe",
+   "mob_id_minecraft": "cow",
+   "drop_7days": "foodRottingFlesh",
+   "drop_mc": "beef",
+   "count_min": 1,
+   "count_max": 3,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "mob_id_7days": "animalStag",
+   "mob_id_minecraft": "cow",
+   "drop_7days": "resourceLeather",
+   "drop_mc": "leather",
+   "count_min": 0,
+   "count_max": 2,
+   "drop_event": "on_harvest",
+   "prob": 0.5,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "leather listed as butcherHarvest drop indirectly via resourceAnimalFat → proxy for leather"
+  },
+  {
+   "mob_id_7days": "animalDoe",
+   "mob_id_minecraft": "cow",
+   "drop_7days": "resourceLeather",
+   "drop_mc": "leather",
+   "count_min": 0,
+   "count_max": 2,
+   "drop_event": "on_harvest",
+   "prob": 0.5,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "pig_drops": [
+  {
+   "mob_id_7days": "animalBoar",
+   "mob_id_minecraft": "pig",
+   "drop_7days": "foodRottingFlesh",
+   "drop_mc": "porkchop",
+   "count_min": 1,
+   "count_max": 3,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "chicken_drops": [
+  {
+   "mob_id_7days": "animalChicken",
+   "mob_id_minecraft": "chicken",
+   "drop_7days": "foodRottingFlesh",
+   "drop_mc": "chicken",
+   "count_min": 1,
+   "count_max": 2,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "mob_id_7days": "animalChicken",
+   "mob_id_minecraft": "chicken",
+   "drop_7days": "resourceFeather",
+   "drop_mc": "feather",
+   "count_min": 1,
+   "count_max": 5,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "resourceFeather confirmed in cntBirdnest; chickens also drop via same pool"
+  },
+  {
+   "mob_id_7days": "animalChicken",
+   "mob_id_minecraft": "chicken",
+   "drop_7days": "foodEgg",
+   "drop_mc": "egg",
+   "count_min": 1,
+   "count_max": 1,
+   "drop_event": "on_death",
+   "prob": 0.5,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "live chicken can be picked up (PickupItem=wildChicken); egg on death is estimated, verify"
+  }
+ ],
+ "rabbit_drops": [
+  {
+   "mob_id_7days": "animalRabbit",
+   "mob_id_minecraft": "rabbit",
+   "drop_7days": "foodRottingFlesh",
+   "drop_mc": "rabbit",
+   "count_min": 1,
+   "count_max": 2,
+   "drop_event": "on_harvest",
+   "prob": 1.0,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "mob_id_7days": "animalRabbit",
+   "mob_id_minecraft": "rabbit",
+   "drop_7days": "resourceLeather",
+   "drop_mc": "rabbit_hide",
+   "count_min": 0,
+   "count_max": 1,
+   "drop_event": "on_harvest",
+   "prob": 0.33,
+   "alternates": true,
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "v2_additions": [
+  {
+   "mob_id_7days": "no_match",
+   "mob_id_minecraft": "sheep",
+   "drop_7days": "no_match",
+   "drop_mc": "mutton",
+   "count_min": 1,
+   "count_max": 2,
+   "drop_event": "on_death",
+   "prob": 1.0,
+   "alternates": false,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "mob_id_7days": "no_match",
+   "mob_id_minecraft": "sheep",
+   "drop_7days": "no_match",
+   "drop_mc": "white_wool",
+   "count_min": 1,
+   "count_max": 3,
+   "drop_event": "on_shear",
+   "prob": 1.0,
+   "alternates": false,
+   "v1": false,
+   "verified": "datos_ok"
+  }
+ ]
+}

@@ -1,0 +1,140 @@
+{
+ "_comment": "Food equivalence table. Hunger values: 7Days uses 0-100 scale (food stat), Minecraft uses 0-20 (hunger bar = 2 per shank).",
+ "_columns": "id_7days | id_minecraft | name_en | name_es | hunger_7days | hunger_mc | saturation_mc | cooked | v1 | verified | notes",
+ "_hunger_7days": "value added to food stat (0-100). Source: items.xml triggered_effect foodAmountAdd. Marked with ? if unverified.",
+ "_hunger_mc": "hunger points restored (each = 0.5 shanks shown on bar). Source: MC wiki / jar data.",
+ "_data_source": "items.xml (7Days food items), Minecraft jar assets/minecraft/data/recipe (MC values)",
+ "_coverage_v1": "3/3 raw meats covered; cooked variants V2",
+ "_creative_note": "In creative mode all food items available including V2+",
+ "raw_meats": [
+  {
+   "id_7days": "foodRottingFlesh",
+   "id_minecraft": "beef",
+   "name_en": "Rotting Flesh / Raw Beef",
+   "name_es": "Carne / Res cruda",
+   "hunger_7days": "2",
+   "hunger_mc": 3,
+   "saturation_mc": 1.8,
+   "cooked": false,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "7Days: adds 2 food, risk of dysentery. MC: raw beef. 1-to-1 on kill but flavor differs."
+  },
+  {
+   "id_7days": "foodRottingFlesh",
+   "id_minecraft": "porkchop",
+   "name_en": "Rotting Flesh / Raw Pork",
+   "name_es": "Carne / Chuleta cruda",
+   "hunger_7days": "2",
+   "hunger_mc": 3,
+   "saturation_mc": 1.8,
+   "cooked": false,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "Same 7Days item, different MC equivalent depending on source mob"
+  },
+  {
+   "id_7days": "foodRottingFlesh",
+   "id_minecraft": "chicken",
+   "name_en": "Rotting Flesh / Raw Chicken",
+   "name_es": "Carne / Pollo crudo",
+   "hunger_7days": "2",
+   "hunger_mc": 2,
+   "saturation_mc": 1.2,
+   "cooked": false,
+   "v1": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "foodRottingFlesh",
+   "id_minecraft": "rabbit",
+   "name_en": "Rotting Flesh / Raw Rabbit",
+   "name_es": "Carne / Conejo crudo",
+   "hunger_7days": "2",
+   "hunger_mc": 3,
+   "saturation_mc": 1.8,
+   "cooked": false,
+   "v1": true,
+   "verified": "datos_ok"
+  }
+ ],
+ "cooked_meats": [
+  {
+   "id_7days": "foodCharredMeat",
+   "id_minecraft": "cooked_beef",
+   "name_en": "Charred Meat / Steak",
+   "name_es": "Carne chamuscada / Filete",
+   "hunger_7days": "?",
+   "hunger_mc": 8,
+   "saturation_mc": 12.8,
+   "cooked": true,
+   "v1": false,
+   "verified": "datos_ok",
+   "_note": "7Days hunger value unverified — read from items.xml FoodValue CVar chain"
+  },
+  {
+   "id_7days": "foodCharredMeat",
+   "id_minecraft": "cooked_porkchop",
+   "name_en": "Charred Meat / Cooked Pork",
+   "name_es": "Carne chamuscada / Chuleta asada",
+   "hunger_7days": "?",
+   "hunger_mc": 8,
+   "saturation_mc": 12.8,
+   "cooked": true,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "foodBakedPotato",
+   "id_minecraft": "baked_potato",
+   "name_en": "Baked Potato",
+   "name_es": "Patata asada",
+   "hunger_7days": "?",
+   "hunger_mc": 5,
+   "saturation_mc": 6.0,
+   "cooked": true,
+   "v1": false,
+   "verified": "datos_ok"
+  }
+ ],
+ "eggs_and_misc": [
+  {
+   "id_7days": "foodEgg",
+   "id_minecraft": "egg",
+   "name_en": "Egg",
+   "name_es": "Huevo",
+   "hunger_7days": "?",
+   "hunger_mc": 0,
+   "saturation_mc": 0,
+   "cooked": false,
+   "v1": true,
+   "verified": "datos_ok",
+   "_note": "MC egg is thrown, not eaten. 7Days foodEgg IS eaten. Treat as: throw=MC behavior, eat=7Days behavior."
+  },
+  {
+   "id_7days": "foodCanBeef",
+   "id_minecraft": "cooked_beef",
+   "name_en": "Canned Beef",
+   "name_es": "Carne enlatada",
+   "hunger_7days": "?",
+   "hunger_mc": 8,
+   "saturation_mc": 12.8,
+   "cooked": true,
+   "v1": false,
+   "verified": "datos_ok"
+  },
+  {
+   "id_7days": "foodHoney",
+   "id_minecraft": "honey_bottle",
+   "name_en": "Honey",
+   "name_es": "Miel",
+   "hunger_7days": "?",
+   "hunger_mc": 6,
+   "saturation_mc": 1.2,
+   "cooked": false,
+   "v1": false,
+   "verified": "datos_ok"
+  }
+ ],
+ "v2_flag": "_note: V2 adds crops (wheat, carrot, potato, beetroot, melon, pumpkin, sugarcane) with farm mechanics. Cooked meats also move to V2 (requires furnace cooking chain)."
+}
