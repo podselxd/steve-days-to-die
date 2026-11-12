@@ -11,7 +11,8 @@ namespace SteveDaysToDie.Generated
             { "resourceForgedIron", "iron_ingot" },   // exacto
             { "resourceScrapIron", "iron_nugget" },   // aproximado
             { "resourceGoldNugget", "gold_nugget" },   // exacto
-            { "resourceRawDiamond", "diamond" },   // exacto
+            { "resourceRawDiamond", "emerald" },   // aproximado
+            { "resourceForgedSteel", "diamond" },   // aproximado
             { "resourceCoal", "coal" },   // exacto
             { "resourceLeather", "leather" },   // exacto
             { "resourceFeather", "feather" },   // exacto
@@ -97,6 +98,10 @@ namespace SteveDaysToDie.Generated
             { "resourceElectricParts", "redstone" },   // aproximado
             { "resourceGlue", "slime_ball" },   // aproximado
             { "medicalFirstAidKit", "golden_apple" },   // aproximado
+            { "terrBurntForestGround", "netherrack" },   // aproximado
+            { "burntWoodBlock1", "crimson_planks" },   // aproximado
+            { "burntWoodBlock2", "warped_planks" },   // aproximado
+            { "resourceSilverNugget", "quartz" },   // aproximado
         };
 
         /// <summary>Pairs whose category may switch game with the toggle key and come back (materials only; tools, weapons and armour stay 7 Days).</summary>
@@ -106,6 +111,7 @@ namespace SteveDaysToDie.Generated
             "resourceScrapIron",
             "resourceGoldNugget",
             "resourceRawDiamond",
+            "resourceForgedSteel",
             "resourceCoal",
             "resourceLeather",
             "resourceFeather",
@@ -133,6 +139,10 @@ namespace SteveDaysToDie.Generated
             "resourceBeeswax",
             "resourceElectricParts",
             "resourceGlue",
+            "terrBurntForestGround",
+            "burntWoodBlock1",
+            "burntWoodBlock2",
+            "resourceSilverNugget",
         };
     }
 }

@@ -11,6 +11,7 @@
   {"key": "brick",      "block": "",                          "material": "^(Mbrick|Mbrick_shapes)$",             "minecraft": "bricks",       "min_tier": 0, "note": "ladrillo: cualquier pico"},
   {"key": "concrete",   "block": "^terrConcrete$",            "material": "^(Mconcrete|Mconcrete_shapes|Mbridge_concrete)$", "minecraft": "gray_concrete", "min_tier": 0, "note": "concreto: cualquier pico"},
   {"key": "asphalt",    "block": "^terrAsphalt$",             "material": "^Mbridge_asphalt$",                    "minecraft": "blackstone",   "min_tier": 0, "note": "asfalto = piedra negra: cualquier pico"},
+  {"key": "burnt_ground", "block": "^terrBurntForestGround$",  "material": "",                                      "minecraft": "netherrack",   "min_tier": 0, "note": "suelo del bosque quemado = netherrack: hace falta un pico (cualquiera), no pala"},
   {"key": "ore_coal",   "block": "^(terrOreCoal|terrOreStoneCoalRandom|oreCoalBoulder)$", "material": "", "minecraft": "coal_ore",     "min_tier": 0, "note": "carbon: cualquier pico (como el carbon de Minecraft)"},
   {"key": "rconcrete",  "block": "",                          "material": "^(MrConcrete|MrConcrete_shapes)$",     "minecraft": "deepslate_bricks", "min_tier": 1, "note": "concreto reforzado: minimo pico de piedra"},
   {"key": "ore_iron",   "block": "^(terrOreIron|terrOreStoneIronRandom|oreIronBoulder)$", "material": "", "minecraft": "iron_ore",     "min_tier": 1, "note": "hierro: minimo pico de piedra (igual que Minecraft)"},

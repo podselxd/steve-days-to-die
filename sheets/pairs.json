@@ -8,7 +8,8 @@
     {"id_7days": "resourceForgedIron", "id_minecraft": "iron_ingot", "relation": "exacto", "category": "material", "note": "lingote de hierro"},
     {"id_7days": "resourceScrapIron", "id_minecraft": "iron_nugget", "relation": "aproximado", "category": "material", "note": "10 chatarras = 1 hierro forjado; 9 pepitas = 1 lingote"},
     {"id_7days": "resourceGoldNugget", "id_minecraft": "gold_nugget", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceRawDiamond", "id_minecraft": "diamond", "relation": "exacto", "category": "material", "note": ""},
+    {"id_7days": "resourceRawDiamond", "id_minecraft": "emerald", "relation": "aproximado", "category": "material", "note": "equilibrio: en 7 Days es raro (0.5% con Golpe de Suerte) y casi no tiene recetas = la esmeralda"},
+    {"id_7days": "resourceForgedSteel", "id_minecraft": "diamond", "relation": "aproximado", "category": "material", "note": "equilibrio: el acero hace las herramientas top de 7 Days (pico de acero = pico de diamante). Netherite NO tiene material: solo el taladro y la motosierra T3 llegan a ese nivel"},
     {"id_7days": "resourceCoal", "id_minecraft": "coal", "relation": "exacto", "category": "material", "note": ""},
     {"id_7days": "resourceLeather", "id_minecraft": "leather", "relation": "exacto", "category": "material", "note": ""},
     {"id_7days": "resourceFeather", "id_minecraft": "feather", "relation": "exacto", "category": "material", "note": ""},
@@ -98,6 +99,10 @@
     {"id_7days": "resourceBeeswax", "id_minecraft": "honeycomb", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
     {"id_7days": "resourceElectricParts", "id_minecraft": "redstone", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
     {"id_7days": "resourceGlue", "id_minecraft": "slime_ball", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "medicalFirstAidKit", "id_minecraft": "golden_apple", "relation": "aproximado", "category": "curacion", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"}
+    {"id_7days": "medicalFirstAidKit", "id_minecraft": "golden_apple", "relation": "aproximado", "category": "curacion", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
+    {"id_7days": "terrBurntForestGround", "id_minecraft": "netherrack", "relation": "aproximado", "category": "bloque", "note": "bosque quemado = Nether; pide pico como el netherrack (harvest_tiers.json)"},
+    {"id_7days": "burntWoodBlock1", "id_minecraft": "crimson_planks", "relation": "aproximado", "category": "bloque", "note": "madera quemada = madera del Nether"},
+    {"id_7days": "burntWoodBlock2", "id_minecraft": "warped_planks", "relation": "aproximado", "category": "bloque", "note": "madera quemada = madera del Nether"},
+    {"id_7days": "resourceSilverNugget", "id_minecraft": "quartz", "relation": "aproximado", "category": "material", "note": "mineral blanco y brillante = cuarzo del Nether"}
   ]
 }

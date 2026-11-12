@@ -13,6 +13,7 @@ namespace SteveDaysToDie.Generated
             ("brick", "", "^(Mbrick|Mbrick_shapes)$", "bricks", 0),
             ("concrete", "^terrConcrete$", "^(Mconcrete|Mconcrete_shapes|Mbridge_concrete)$", "gray_concrete", 0),
             ("asphalt", "^terrAsphalt$", "^Mbridge_asphalt$", "blackstone", 0),
+            ("burnt_ground", "^terrBurntForestGround$", "", "netherrack", 0),
             ("ore_coal", "^(terrOreCoal|terrOreStoneCoalRandom|oreCoalBoulder)$", "", "coal_ore", 0),
             ("rconcrete", "", "^(MrConcrete|MrConcrete_shapes)$", "deepslate_bricks", 1),
             ("ore_iron", "^(terrOreIron|terrOreStoneIronRandom|oreIronBoulder)$", "", "iron_ore", 1),
