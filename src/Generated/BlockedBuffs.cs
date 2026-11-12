@@ -15,9 +15,9 @@ namespace SteveDaysToDie.Generated
             // fatiga: buffFatigueGetsWorse, buffFatigued, buffFatiguedTrigger, triggerFatigued
             new Group { Setting = "efecto_fatiga", Default = "no", Label = "Fatiga", Exact = new[] { "buffFatigued", "triggerFatigued" }, Prefixes = new string[] { "buffFatigue" } },
             // infeccion: buffInfection01GetBetter, buffInfection01Untreated, buffInfection02GetBetter, buffInfection02Untreated, buffInfection03GetBetter, buffInfection03Untreated, buffInfection04, buffInfectionAddCure, buffInfectionCatch, buffInfectionCureDisplay, buffInfectionGetsWorse, buffInfectionImmunity, buffInfectionMain, triggerInfection
-            new Group { Setting = "efecto_infeccion", Default = "si", Label = "Infeccion zombi", Exact = new[] { "buffInfectionCatch", "triggerInfection" }, Prefixes = new string[] { "buffInfection" } },
+            new Group { Setting = "efecto_infeccion", Default = "no", Label = "Infeccion zombi", Exact = new[] { "buffInfectionCatch", "triggerInfection" }, Prefixes = new string[] { "buffInfection" } },
             // disenteria: buffDysentery01GetBetter, buffDysentery01GetBetterDiarrhea, buffDysentery01Untreated, buffDysentery01UntreatedDiarrhea, buffDysenteryAddCure, buffDysenteryCatchDrink, buffDysenteryCatchFood, buffDysenteryCureDisplay, buffDysenteryMain
-            new Group { Setting = "efecto_disenteria", Default = "si", Label = "Disenteria (comida o agua sucia)", Exact = new[] { "buffDysenteryMain" }, Prefixes = new string[] { "buffDysentery" } },
+            new Group { Setting = "efecto_disenteria", Default = "no", Label = "Disenteria (comida o agua sucia)", Exact = new[] { "buffDysenteryMain" }, Prefixes = new string[] { "buffDysentery" } },
         };
     }
 }

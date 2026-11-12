@@ -6,8 +6,8 @@
   {"group": "golpes", "default": "no", "label": "Aturdimiento y lentitud por golpes"},
   {"group": "huesos", "default": "no", "label": "Piernas y brazos rotos o torcidos"},
   {"group": "fatiga", "default": "no", "label": "Fatiga"},
-  {"group": "infeccion", "default": "si", "label": "Infeccion zombi"},
-  {"group": "disenteria", "default": "si", "label": "Disenteria (comida o agua sucia)"}
+  {"group": "infeccion", "default": "no", "label": "Infeccion zombi"},
+  {"group": "disenteria", "default": "no", "label": "Disenteria (comida o agua sucia)"}
  ],
  "rows": [
   {"group": "sangrado", "id_7days_buff": "buffInjuryBleeding", "prefix": "buffInjuryBleeding", "reason": "desangrado (y sus variantes)", "verified": "datos_ok"},
