@@ -48,7 +48,20 @@ namespace SteveDaysToDie.McInv
         bool _blocking;
 
         enum Kind { Belt, Bag, Armor, Craft, Result }
-        readonly ItemStack[] _craft = { ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone() };
+        readonly ItemStack[] _craft = { ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(),
+                                        ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone() };
+        bool _table;                                // Minecraft's crafting table window (3x3) instead of the inventory
+        int GridSize => _table ? 3 : 2;
+        Texture2D _invTex, _tableTex;
+
+        /// <summary>A crafting table was used: open Minecraft's 3x3 window (an empty 7 Days window gives the cursor).</summary>
+        public static void OpenTable(EntityPlayerLocal p)
+        {
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
+            catch (Exception ex) { Debug.LogWarning("[SVD] crafting table: " + ex.Message); }
+        }
+
+        bool TableOpen() { try { return UI != null && UI.windowManager.IsWindowOpen("mcScreen"); } catch { return false; } }
         Crafting.McRecipes.Recipe _recipe;
         struct Slot { public Kind kind; public int idx; public float x, y; }
         readonly List<Slot> _slots = new List<Slot>();
@@ -59,7 +72,7 @@ namespace SteveDaysToDie.McInv
         /// <summary>For the automatic test: put these in the 2x2 grid, take the result like a click. Returns what you carry.</summary>
         public string TestCraft(ItemStack[] four)
         {
-            for (int i = 0; i < 4; i++) _craft[i] = four[i] != null ? four[i].Clone() : ItemStack.Empty.Clone();
+            for (int i = 0; i < _craft.Length; i++) _craft[i] = i < four.Length && four[i] != null ? four[i].Clone() : ItemStack.Empty.Clone();
             _recipe = Match();
             string made = _recipe?.result;
             TakeResult(false);
@@ -78,10 +91,12 @@ namespace SteveDaysToDie.McInv
         {
             if (_p == null) return;
             // ours shows only in the plain inventory view (Tab); any 7 Days page from the column shows 7 Days' own screen
-            bool want = Enabled && Ryan.Mc.Ready && BackpackOpen() && _p.IsAlive() && InventoryViewOn;
+            bool table = Ryan.Mc.Ready && _p.IsAlive() && TableOpen();
+            bool want = table || (Enabled && Ryan.Mc.Ready && BackpackOpen() && _p.IsAlive() && InventoryViewOn);
+            if (IsOpen && table != _table) OnClose();           // switching window: the grid goes back first
             if (want && !IsOpen) OnOpen();
             else if (!want && IsOpen) OnClose();
-            if (IsOpen) KeepAway();
+            if (IsOpen && !_table) KeepAway();
             if (!AnyPageOpen()) _show7dCrafting = false;     // closed: next time Tab opens the inventory again
         }
 
@@ -100,7 +115,8 @@ namespace SteveDaysToDie.McInv
                 return;
             }
             GUI.depth = -50;
-            int s = _s > 0 ? _s : 4;
+            // same size as the inventory window, never taller than the screen
+            int s = Mathf.Clamp(Mathf.Min(MinecraftHUD.CalcScale(), Screen.height / (H + 20)), 1, 6);
             var e = Event.current;
             float px = (Btn + 4) * s, py = Mathf.Round((Screen.height - H * s) / 2f);
             bool over = new Rect(px - (Btn + 2) * s, py, (Btn + 2) * s, H * s).Contains(e.mousePosition);
@@ -114,13 +130,17 @@ namespace SteveDaysToDie.McInv
             IsOpen = true;
             _openedAt = Time.time;
             _row = 0;
-            if (_tex == null) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/inventory.png");
+            _table = TableOpen();
+            if (_invTex == null) _invTex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/inventory.png");
+            if (_tableTex == null) _tableTex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/crafting_table.png");
+            _tex = _table ? _tableTex : _invTex;
         }
 
         void OnClose()
         {
             IsOpen = false;
             for (int i = 0; i < _craft.Length; i++) { if (!_craft[i].IsEmpty()) { _cursorBackup(i); } }
+            if (_table) { try { if (TableOpen()) UI.windowManager.Close("mcScreen"); } catch { } _table = false; }
             ReturnCursor();
             RestoreWindows();
             if (_blocking) { UICamera.ignoreAllEvents = false; _blocking = false; }
@@ -331,14 +351,15 @@ namespace SteveDaysToDie.McInv
 
         Crafting.McRecipes.Recipe Match()
         {
-            var ids = new string[4];
-            for (int i = 0; i < 4; i++)
+            int n = GridSize * GridSize;
+            var ids = new string[n];
+            for (int i = 0; i < n; i++)
             {
                 if (_craft[i].IsEmpty()) continue;
                 ids[i] = Crafting.McRecipes.McId(_craft[i]);
                 if (ids[i] == null) return null;              // something with no Minecraft version: no recipe
             }
-            return Crafting.McRecipes.Match(ids, 2);
+            return Crafting.McRecipes.Match(ids, GridSize);
         }
 
         ItemStack ResultStack() => _recipe != null ? Crafting.McItems.Stack(_recipe.result, _recipe.count) : null;
@@ -361,7 +382,7 @@ namespace SteveDaysToDie.McInv
                     else if (Same(_cursor, res) && _cursor.count + res.count <= Max(res)) _cursor.count += res.count;
                     else return;
                 }
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < GridSize * GridSize; i++)
                 {
                     if (_craft[i].IsEmpty()) continue;
                     _craft[i].count--;
@@ -458,7 +479,7 @@ namespace SteveDaysToDie.McInv
             // as big as fits in the right part of the screen, leaving 7 Days' own windows on the left visible
             _s = Mathf.Clamp(Mathf.Min(MinecraftHUD.CalcScale(), Mathf.Min(Mathf.FloorToInt(Screen.height / 190f), Mathf.FloorToInt(Screen.width * 0.42f / W))), 1, 6);
             int s = _s;
-            float px = InventoryViewOn ? Mathf.Round((Screen.width - (W + Btn + 2) * s) / 2f) + (Btn + 2) * s   /* window + column, centred together */      // just the inventory: centred
+            float px = _table ? Mathf.Round((Screen.width - W * s) / 2f) : InventoryViewOn ? Mathf.Round((Screen.width - (W + Btn + 2) * s) / 2f) + (Btn + 2) * s   /* window + column, centred together */      // just the inventory: centred
                                        : Screen.width - W * s - Mathf.Max(16, Screen.width / 30);  // next to 7 Days' windows
             float py = Mathf.Round((Screen.height - H * s) / 2f);
             _panel = new Rect(px, py, W * s, H * s);
@@ -474,8 +495,8 @@ namespace SteveDaysToDie.McInv
             if (e.type == EventType.Repaint)
             {
                 GUI.DrawTextureWithTexCoords(_panel, _tex, new Rect(0, 1f - H / 256f, W / 256f, H / 256f));
-                DrawSteve(px + 26 * s, py + 8 * s, s);
-                Label(px + 97 * s, py + 6 * s, s, Ryan.Mc.T("container.crafting", "Crafting"), new Color(0.25f, 0.25f, 0.25f));
+                if (!_table) DrawSteve(px + 26 * s, py + 8 * s, s);
+                Label(px + (_table ? 28 : 97) * s, py + 6 * s, s, Ryan.Mc.T("container.crafting", "Crafting"), new Color(0.25f, 0.25f, 0.25f));
                 if (BagRows > 3)
                 {
                     // a slim scrollbar just right of the backpack rows (the wheel moves it)
@@ -484,7 +505,7 @@ namespace SteveDaysToDie.McInv
                     float h = track.height * 3f / BagRows, y = track.y + (track.height - h) * _row / Mathf.Max(1, BagRows - 3);
                     Fill(new Rect(track.x, y, track.width, h), new Color(0.78f, 0.78f, 0.78f, 1f));
                 }
-                DrawPages(px, py, s, e);
+                if (!_table) DrawPages(px, py, s, e);
             }
 
             Slot? hover = null;
@@ -516,7 +537,8 @@ namespace SteveDaysToDie.McInv
             }
 
             if (Time.time - _openedAt < 0.15f) return;
-            if (e.type == EventType.MouseDown && e.button == 0 && PageClick(px, py, s, e.mousePosition)) { e.Use(); return; }
+            if (_table && e.type == EventType.KeyDown && (e.keyCode == KeyCode.E || e.keyCode == KeyCode.Escape || e.keyCode == KeyCode.Tab)) { e.Use(); OnClose(); return; }
+            if (e.type == EventType.MouseDown && e.button == 0 && !_table && PageClick(px, py, s, e.mousePosition)) { e.Use(); return; }
             if (e.type == EventType.MouseDown && (e.button == 0 || e.button == 1))
             {
                 if (hover.HasValue)
@@ -557,13 +579,21 @@ namespace SteveDaysToDie.McInv
         void BuildSlots()
         {
             _slots.Clear();
-            for (int i = 0; i < 4; i++) _slots.Add(new Slot { kind = Kind.Armor, idx = i, x = 8, y = 8 + i * 18 });
+            if (!_table) for (int i = 0; i < 4; i++) _slots.Add(new Slot { kind = Kind.Armor, idx = i, x = 8, y = 8 + i * 18 });
             for (int r = 0; r < 3; r++)
                 for (int c = 0; c < 9; c++)
                     _slots.Add(new Slot { kind = Kind.Bag, idx = (_row + r) * 9 + c, x = 8 + c * 18, y = 84 + r * 18 });
             for (int c = 0; c < 9; c++) _slots.Add(new Slot { kind = Kind.Belt, idx = c, x = 8 + c * 18, y = 142 });
-            for (int n = 0; n < 4; n++) _slots.Add(new Slot { kind = Kind.Craft, idx = n, x = 98 + n % 2 * 18, y = 18 + n / 2 * 18 });
-            _slots.Add(new Slot { kind = Kind.Result, idx = 0, x = 154, y = 28 });
+            if (_table)
+            {
+                for (int n = 0; n < 9; n++) _slots.Add(new Slot { kind = Kind.Craft, idx = n, x = 30 + n % 3 * 18, y = 17 + n / 3 * 18 });
+                _slots.Add(new Slot { kind = Kind.Result, idx = 0, x = 124, y = 35 });
+            }
+            else
+            {
+                for (int n = 0; n < 4; n++) _slots.Add(new Slot { kind = Kind.Craft, idx = n, x = 98 + n % 2 * 18, y = 18 + n / 2 * 18 });
+                _slots.Add(new Slot { kind = Kind.Result, idx = 0, x = 154, y = 28 });
+            }
         }
 
         void DrawStack(ItemStack st, Rect r, int s)

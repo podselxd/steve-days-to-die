@@ -274,7 +274,7 @@ namespace SteveDaysToDie.Generated
             ("cracked_polished_blackstone_bricks", "item"),
             ("cracked_stone_bricks", "item"),
             ("crafter", "item"),
-            ("crafting_table", "item"),
+            ("crafting_table", "block"),
             ("creaking_heart", "item"),
             ("creeper_banner_pattern", "item"),
             ("creeper_head", "item"),

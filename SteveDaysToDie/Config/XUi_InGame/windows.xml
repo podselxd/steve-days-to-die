@@ -4,4 +4,10 @@
          The toolbelt is NOT moved here: the mod hides it only while its own bar is on screen and
          brings it back when a menu is open (src/HUD/XUiHider.cs). -->
     <setattribute xpath="/windows/window[@name='HUDLeftStatBars']/rect[@name='hud']" name="pos">-4000,156</setattribute>
+    <!-- the empty window of the "mcScreen" group (see xui.xml) -->
+    <append xpath="/windows">
+        <window name="windowMcScreen" anchor="Center" width="4" height="4" cursor_area="true">
+            <rect depth="0" width="4" height="4"/>
+        </window>
+    </append>
 </configs>

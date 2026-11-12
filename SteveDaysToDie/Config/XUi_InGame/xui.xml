@@ -1,0 +1,9 @@
+<configs>
+  <!-- An empty modal window group: while it is open the game gives the cursor and stops the player.
+       The mod draws Minecraft's crafting table window on top (src/Inventory/McInventory.cs, table mode). -->
+  <append xpath="/xui">
+    <window_group name="mcScreen" actionset="false">
+      <window name="windowMcScreen"/>
+    </window_group>
+  </append>
+</configs>

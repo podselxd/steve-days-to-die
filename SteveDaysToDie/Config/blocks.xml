@@ -7,4 +7,20 @@
     <!-- Coal ore already drops resourceCoal — no change needed.                   -->
     <!-- Iron ore already drops resourceScrapIron (iron nugget equiv) — no change. -->
     <!-- Dirt already drops resourceClayLump (clay ball equiv) — no change.        -->
+    <!-- Minecraft's crafting table: a real block (src/Crafting/McStations.cs). Looks like Minecraft's via the mod. -->
+    <append xpath="/blocks">
+        <block name="mc_crafting_table">
+            <property name="Class" value="McCraftingTable, SteveDaysToDie"/>
+            <property name="Material" value="Mwood_weak"/>
+            <property name="Texture" value="241"/>
+            <property name="CustomIcon" value="mc_crafting_table"/>
+            <property name="CustomIconTint" value="ffffff"/>
+            <property name="CreativeMode" value="Player"/>
+            <property name="Group" value="Building,Minecraft"/>
+            <property name="DescriptionKey" value="mcItemDesc"/>
+            <property name="Stacknumber" value="64"/>
+            <property name="EconomicValue" value="1"/>
+            <drop event="Destroy" name="mc_crafting_table" count="1"/>
+        </block>
+    </append>
 </configs>

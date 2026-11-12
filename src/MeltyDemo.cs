@@ -216,6 +216,45 @@ namespace SteveDaysToDie
             try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
             yield return Wait(1f);
 
+            // ---- Minecraft's crafting table: a real block, with Minecraft's look, opening the 3x3 window ----
+            MeltyTest.SetPhase("mesa");
+            ThirdPerson(p, false);
+            Vector3i tablePos = World.worldToBlockPos(p.position + p.GetLookVector() * 2f);
+            tablePos.y = World.worldToBlockPos(p.position).y;
+            bool placed = false;
+            try
+            {
+                var bv = Block.GetBlockValue("mc_crafting_table");
+                GameManager.Instance.World.SetBlockRPC(tablePos, bv);
+                placed = !bv.isair;
+            }
+            catch (System.Exception tex) { Debug.LogWarning("[SVD] demo table: " + tex.Message); }
+            yield return Wait(1.5f);
+            yield return Shot("mesa-en-el-mundo");
+            SteveDaysToDie.McInv.McInventory.OpenTable(p);
+            for (int i = 0; i < 12 && !SteveDaysToDie.McInv.McInventory.IsOpen; i++) yield return Wait(0.25f);
+            yield return Wait(0.5f);
+            string pick = null;
+            if (inv != null && SteveDaysToDie.McInv.McInventory.IsOpen)
+            {
+                var planks = ItemClass.GetItem("woodShapes:VariantHelper");
+                var wood = ItemClass.GetItem("resourceWood");
+                var g = new ItemStack[9];
+                g[0] = new ItemStack(planks, 1); g[1] = new ItemStack(planks, 1); g[2] = new ItemStack(planks, 1);
+                g[4] = new ItemStack(wood, 1); g[7] = new ItemStack(wood, 1);
+                pick = inv.TestCraft(g);
+                yield return Wait(0.4f);
+                yield return Shot("mesa-crafteo");
+            }
+            try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
+            yield return Wait(1f);
+            int picks = 0;
+            try { var t = ItemClass.GetItem("mc_wooden_pickaxe"); picks = p.bag.GetItemCount(t) + p.inventory.GetItemCount(t); } catch { }
+            Debug.Log($"[SVD] demo table: placed {placed} at {tablePos}, window {(pick != null)}, made {pick}, wooden pickaxes {picks}");
+            if (placed && pick == "mc_wooden_pickaxe" && picks > 0) MeltyTest.Pass("crafting-table");
+            else MeltyTest.Fail("crafting-table", $"placed {placed}, made {pick ?? "nothing"}, pickaxes {picks}");
+            try { GameManager.Instance.World.SetBlockRPC(tablePos, BlockValue.Air); } catch { }
+
             // ---- Minecraft things in the hand: a block (crafting table) and a flat item (stick) ----
             MeltyTest.SetPhase("mano-minecraft");
             foreach (var (slot, id) in new[] { (7, "mc_crafting_table"), (8, "mc_stick") })

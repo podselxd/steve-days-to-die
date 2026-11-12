@@ -22,6 +22,7 @@
     <EmbeddedResource Include="payload.zip" LogicalName="payload.zip" />
     <EmbeddedResource Include="logo_banner.png" LogicalName="logo_banner.png" />
     <EmbeddedResource Include="logo.ico" LogicalName="logo.ico" />
+    <EmbeddedResource Include="home_bg.jpg" LogicalName="home_bg.jpg" />
     <!-- the groups of 7 Days effects, generated from sheets/blocked_buffs.json (same list the mod uses) -->
     <Compile Include="..\src\Generated\BlockedBuffs.cs" Link="Generated\BlockedBuffs.cs" />
   </ItemGroup>

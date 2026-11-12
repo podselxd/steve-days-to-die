@@ -144,6 +144,7 @@ namespace SteveVsZombiesLauncher
 
         static readonly Bitmap Banner = Resource<Bitmap>("logo_banner.png", s => new Bitmap(s));
         static readonly Icon Logo = Resource<Icon>("logo.ico", s => new Icon(s));
+        static readonly Bitmap HomeBg = Resource<Bitmap>("home_bg.jpg", s => new Bitmap(s));
 
         static T Resource<T>(string name, Func<Stream, T> make) where T : class
         {
@@ -285,25 +286,22 @@ namespace SteveVsZombiesLauncher
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             g.ScaleTransform(S, S);
             int w = (int)Math.Ceiling(_home.Width / S), h = (int)Math.Ceiling(_home.Height / S);
-            using (var bg = new LinearGradientBrush(new Rectangle(0, 0, w, h + 1), Color.FromArgb(38, 48, 36), Bg, 90f)) g.FillRectangle(bg, 0, 0, w, h);
-            using (var dot = new SolidBrush(Color.FromArgb(10, 255, 255, 255)))       // a faint pixel grid
-                for (int yy = 0; yy < h; yy += 16)
-                    for (int xx = ((yy / 16) % 2) * 8; xx < w; xx += 16) g.FillRectangle(dot, xx, yy, 8, 8);
-
-            Draw(g, "Sobrevive como Steve", 24, FontStyle.Bold, Color.White, 40, 24);
-            Draw(g, "7 Days to Die jugado con las reglas de Minecraft.", 11, FontStyle.Regular, Grey, 42, 70);
-            string[] lines =
+            if (HomeBg != null)
             {
-                "■  Eres Steve, con tu propia skin (capas 3D y skins slim)",
-                "■  Corazones, hambre, barra de 9 casillas y ataque de Minecraft",
-                "■  Golpe crítico al caer, y el ritmo de cada arma",
-                "■  Sin sangrado ni huesos rotos (en Efectos los puedes encender)",
-                "■  Tu skin, efectos y teclas se eligen aquí, en las pestañas de arriba",
-                "■  Todo lo de Minecraft se lee de tu propio Minecraft",
-            };
-            float y = 112;
-            foreach (var l in lines) { Draw(g, l, 11, FontStyle.Regular, Color.White, 42, y); y += 30; }
-            Draw(g, "Para jugar 7 Days normal, ábrelo desde Steam como siempre.", 9, FontStyle.Italic, Grey, 42, y + 10);
+                // the picture fills the page (cropped, never stretched), darker on the left where the text is
+                float k = Math.Max(w / (float)HomeBg.Width, h / (float)HomeBg.Height);
+                float bw = HomeBg.Width * k, bh = HomeBg.Height * k;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(HomeBg, (w - bw) / 2f, (h - bh) / 2f, bw, bh);
+            }
+            else
+            {
+                using (var bg = new LinearGradientBrush(new Rectangle(0, 0, w, h + 1), Color.FromArgb(38, 48, 36), Bg, 90f)) g.FillRectangle(bg, 0, 0, w, h);
+                using (var dot = new SolidBrush(Color.FromArgb(10, 255, 255, 255)))       // a faint pixel grid
+                    for (int yy = 0; yy < h; yy += 16)
+                        for (int xx = ((yy / 16) % 2) * 8; xx < w; xx += 16) g.FillRectangle(dot, xx, yy, 8, 8);
+            }
+
             Draw(g, _skinName ?? "", 10, FontStyle.Bold, Grey, w - 230, h - 82);
         }
 

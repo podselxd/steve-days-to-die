@@ -75,6 +75,7 @@ namespace SteveDaysToDie.HUD
             // Minecraft's first-person hand and the look of mining (from Ryan Ussery's mod, MIT)
             try { Ryan.FirstPerson.LateUpdate(_player); } catch (System.Exception ex) { Debug.LogWarning("[SVD] Hand: " + ex.Message); }
             Ryan.MiningLook.LateUpdate(_player);
+            Crafting.McBlockLook.Tick();
             if (_player == null || !_player.IsAlive()) return;
             if (Mode != 0) return;      // the third person is drawn by the game's own camera (PreCull below)
             if (!_on) return;
