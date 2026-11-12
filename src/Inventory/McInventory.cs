@@ -102,8 +102,8 @@ namespace SteveDaysToDie.McInv
             GUI.depth = -50;
             int s = _s > 0 ? _s : 4;
             var e = Event.current;
-            float px = 26 * s, py = Mathf.Round((Screen.height - Pages.Length * 23 * s) / 2f);
-            bool over = new Rect(px - 26 * s, py, 26 * s, Pages.Length * 23 * s + 8 * s).Contains(e.mousePosition);
+            float px = (Btn + 4) * s, py = Mathf.Round((Screen.height - H * s) / 2f);
+            bool over = new Rect(px - (Btn + 2) * s, py, (Btn + 2) * s, H * s).Contains(e.mousePosition);
             if (over != _blocking) { UICamera.ignoreAllEvents = over; _blocking = over; }
             if (e.type == EventType.Repaint) DrawPages(px, py, s, e);
             if (e.type == EventType.MouseDown && e.button == 0 && PageClick(px, py, s, e.mousePosition)) e.Use();
@@ -382,7 +382,9 @@ namespace SteveDaysToDie.McInv
 
         // ---------- 7 Days' page buttons, as a column left of the window ----------
 
-        Rect PageRect(float px, float py, int s, int i) => new Rect(px - 24 * s, py + 4 * s + i * 23 * s, 22 * s, 22 * s);
+        const int Btn = 19, Step = 20;
+        Rect PageRect(float px, float py, int s, int i) =>
+            new Rect(px - (Btn + 2) * s, py + ((H - Pages.Length * Step + 1) / 2f + i * Step) * s, Btn * s, Btn * s);
 
         void DrawPages(float px, float py, int s, Event e)
         {
@@ -395,7 +397,7 @@ namespace SteveDaysToDie.McInv
                 Fill(new Rect(r.x, r.y, r.width, s), new Color(1f, 1f, 1f, 0.6f));
                 Fill(new Rect(r.x, r.yMax - s, r.width, s), new Color(0.2f, 0.2f, 0.2f, 0.8f));
                 if (r.Contains(e.mousePosition)) Fill(r, new Color(1f, 1f, 1f, 0.25f));
-                var ir = new Rect(r.x + 3 * s, r.y + 3 * s, 16 * s, 16 * s);
+                var ir = new Rect(r.x + 1.5f * s, r.y + 1.5f * s, 16 * s, 16 * s);
                 if (Pages[i].page == "inventory") { var chest = Ryan.Icons.Get("bundle"); if (chest != null) GUI.DrawTexture(ir, chest); }   // Minecraft's chest
                 else DrawUiSprite(xui, Pages[i].sprite, ir, on ? Color.white : new Color(0.15f, 0.15f, 0.15f));
             }
@@ -456,7 +458,7 @@ namespace SteveDaysToDie.McInv
             // as big as fits in the right part of the screen, leaving 7 Days' own windows on the left visible
             _s = Mathf.Clamp(Mathf.Min(MinecraftHUD.CalcScale(), Mathf.Min(Mathf.FloorToInt(Screen.height / 190f), Mathf.FloorToInt(Screen.width * 0.42f / W))), 1, 6);
             int s = _s;
-            float px = InventoryViewOn ? Mathf.Round((Screen.width - W * s) / 2f) + 12 * s      // just the inventory: centred
+            float px = InventoryViewOn ? Mathf.Round((Screen.width - (W + Btn + 2) * s) / 2f) + (Btn + 2) * s   /* window + column, centred together */      // just the inventory: centred
                                        : Screen.width - W * s - Mathf.Max(16, Screen.width / 30);  // next to 7 Days' windows
             float py = Mathf.Round((Screen.height - H * s) / 2f);
             _panel = new Rect(px, py, W * s, H * s);
@@ -464,7 +466,7 @@ namespace SteveDaysToDie.McInv
 
             // the game's own menus must not take clicks that land on our window
             bool over = _panel.Contains(e.mousePosition) || !_cursor.IsEmpty()
-                        || new Rect(_panel.x - 26 * _s, _panel.y, 26 * _s, Pages.Length * 23 * _s + 8 * _s).Contains(e.mousePosition);
+                        || new Rect(_panel.x - (Btn + 2) * _s, _panel.y, (Btn + 2) * _s, H * _s).Contains(e.mousePosition);
             if (over != _blocking) { UICamera.ignoreAllEvents = over; _blocking = over; }
 
             BuildSlots();
