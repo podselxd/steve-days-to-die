@@ -37,5 +37,8 @@ dotnet build SteveDaysToDie.csproj -c Release
 ```
 `melty.json` es la receta de instalación que lee Melty. Cada versión nueva se publica adjuntando `SteveVsZombies-<versión>.zip` a un release de GitHub.
 
+## Créditos / Credits
+- La mano de Minecraft en primera persona, la grieta al picar y el contorno del bloque, y el lector de modelos de Minecraft vienen de **"Steve Days to Die" de Ryan Ussery** (Melty, licencia MIT; aviso en `src/Ryan/LICENSE-SteveDaysToDie-RyanUssery.txt`). The first-person Minecraft hand, the mining crack and block outline, and the Minecraft model reader come from Ryan Ussery's "Steve Days to Die" (MIT).
+
 ## Licencia / License
 Pendiente: el autor aún no ha elegido licencia. Until the author picks a license, all rights are reserved.

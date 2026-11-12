@@ -87,7 +87,7 @@ namespace SteveDaysToDie.Steve
 
             // first person: keep only Steve's shadow on the ground
             var local = _player as EntityPlayerLocal;
-            bool shadowOnly = local != null && local.bFirstPersonView;
+            bool shadowOnly = local != null && local.bFirstPersonView && HUD.FrontView.Mode == 0;   // F5 third person shows him whole
             SetShadowOnly(shadowOnly);
             Animate();
         }

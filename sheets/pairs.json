@@ -33,10 +33,6 @@
     {"id_7days": "bedroll", "id_minecraft": "white_bed", "relation": "aproximado", "category": "bloque", "note": "saco de dormir = cama"},
     {"id_7days": "cntWoodWritableCrate", "id_minecraft": "chest", "relation": "aproximado", "category": "bloque", "note": "caja de madera = cofre"},
     {"id_7days": "meleeToolTorch", "id_minecraft": "torch", "relation": "exacto", "category": "bloque", "note": ""},
-    {"id_7days": "workbench", "id_minecraft": "crafting_table", "relation": "aproximado", "category": "estacion", "note": "ver stations.json"},
-    {"id_7days": "forge", "id_minecraft": "furnace", "relation": "aproximado", "category": "estacion", "note": "ver stations.json"},
-    {"id_7days": "campfire", "id_minecraft": "campfire", "relation": "exacto", "category": "estacion", "note": "ver stations.json"},
-    {"id_7days": "chemistryStation", "id_minecraft": "brewing_stand", "relation": "aproximado", "category": "estacion", "note": "ver stations.json"},
 
     {"id_7days": "foodRottingFlesh", "id_minecraft": "rotten_flesh", "relation": "exacto", "category": "comida", "note": ""},
     {"id_7days": "foodRawMeat", "id_minecraft": "beef", "relation": "aproximado", "category": "comida", "note": ""},
@@ -95,6 +91,11 @@
     {"id_7days": "armorRaiderHelmet", "id_minecraft": "diamond_helmet", "relation": "aproximado", "category": "armadura", "note": "pesada = diamante (nivel maximo)"},
     {"id_7days": "armorRaiderOutfit", "id_minecraft": "diamond_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
     {"id_7days": "armorRaiderGloves", "id_minecraft": "diamond_leggings", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorRaiderBoots", "id_minecraft": "diamond_boots", "relation": "aproximado", "category": "armadura", "note": ""}
+    {"id_7days": "armorRaiderBoots", "id_minecraft": "diamond_boots", "relation": "aproximado", "category": "armadura", "note": ""},
+    {"id_7days": "resourceSnowBall", "id_minecraft": "snowball", "relation": "exacto", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
+    {"id_7days": "resourceBeeswax", "id_minecraft": "honeycomb", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
+    {"id_7days": "resourceElectricParts", "id_minecraft": "redstone", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
+    {"id_7days": "resourceGlue", "id_minecraft": "slime_ball", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
+    {"id_7days": "medicalFirstAidKit", "id_minecraft": "golden_apple", "relation": "aproximado", "category": "curacion", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"}
   ]
 }

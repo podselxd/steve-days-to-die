@@ -38,92 +38,99 @@ namespace SteveDaysToDie.HUD
             if (!on) Release();
         }
 
-        // Minecraft's F5: first person -> third person from behind (the game's own) -> from the front -> first person
-        bool _full;
-        public bool FullFront => _full;
+        // Minecraft's F5, with our own camera (never 7 Days' third person):
+        // 0 = first person, 1 = third person from behind, 2 = from the front. The game's own camera key does the same.
+        public static int Mode { get; private set; }
+        public bool FullFront => Mode == 2;
 
         void Update()
         {
             if (_player == null) return;
-            if (_full && (_player.bFirstPersonView || !_player.IsAlive())) StopFull();   // the game's own camera key, or death
+            if (Mode != 0 && !_player.IsAlive()) SetMode(0);
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_vista_frontal", KeyCode.F5)))
                 CycleCamera();
         }
 
-        public void CycleCamera()
+        public void CycleCamera() => SetMode((Mode + 1) % 3);
+
+        public void SetMode(int mode)
         {
             try
             {
-                if (_player.bFirstPersonView)
-                {
-                    _player.SwitchFirstPersonViewFromInput();               // to third person, from behind
-                }
-                else if (!_full)
-                {
-                    _full = true;                                           // from the front
-                    Toggle(false);
-                }
-                else
-                {
-                    StopFull();
-                    _player.SwitchFirstPersonViewFromInput();               // back to first person
-                }
+                if (_player != null && !_player.bFirstPersonView) _player.SetFirstPersonView(true, false);   // ours replaces the game's
+                Mode = mode;
+                if (mode != 0) Toggle(false);
+                else if (_cam != null) { _cam.enabled = false; Release(); }
             }
-            catch (System.Exception ex) { Debug.LogWarning("[SVD] Camera F5: " + ex.Message); StopFull(); }
-        }
-
-        void StopFull()
-        {
-            _full = false;
-            if (_cam != null) { _cam.enabled = false; _cam.targetTexture = null; }
-            Release();
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] Camera F5: " + ex.Message); Mode = 0; Release(); }
         }
 
         void LateUpdate()
         {
+            // Minecraft's first-person hand and the look of mining (from Ryan Ussery's mod, MIT)
+            try { Ryan.FirstPerson.LateUpdate(_player); } catch (System.Exception ex) { Debug.LogWarning("[SVD] Hand: " + ex.Message); }
+            Ryan.MiningLook.LateUpdate(_player);
             if (_player == null || !_player.IsAlive()) return;
-            if (_full) { RenderFull(); return; }
+            if (Mode != 0) { RenderThirdPerson(); return; }
             if (!_on) return;
             if (++_frame % EveryNthFrame != 0 && _rt != null) return;
             RenderOnce();
         }
 
-        /// <summary>The front camera drawn straight on the screen, over the game's own view, every frame.</summary>
-        void RenderFull()
+        /// <summary>Our third-person camera, drawn straight on the screen over the game's first-person view.</summary>
+        void RenderThirdPerson()
         {
-            var root = SteveModel.LocalRoot;
             var main = _player.playerCamera;
-            if (root == null || main == null) return;
+            if (SteveModel.LocalRoot == null || main == null) return;
             try
             {
                 if (_cam == null)
                 {
-                    _camGo = new GameObject("SVD_FrontCamera");
+                    _camGo = new GameObject("SVD_ThirdPersonCamera");
                     _cam = _camGo.AddComponent<Camera>();
+                    _cam.enabled = false;
                 }
                 if (!_cam.enabled)
                 {
                     _cam.CopyFrom(main);
                     _cam.targetTexture = null;
                     _cam.rect = new Rect(0f, 0f, 1f, 1f);
-                    _cam.depth = main.depth + 0.5f;                     // over the game's view, under its menus
+                    // over every game camera that draws the world or the hand, under the menus (NGUI cameras)
+                    float depth = main.depth;
+                    foreach (var c in Camera.allCameras)
+                        if (c != _cam && c.targetTexture == null && c.GetComponent<UICamera>() == null) depth = Mathf.Max(depth, c.depth);
+                    _cam.depth = depth + 0.1f;
                     _cam.nearClipPlane = 0.05f;
                     int heldLayer = LayerMask.NameToLayer("HoldingItem");
-                    if (heldLayer >= 0) _cam.cullingMask &= ~(1 << heldLayer);
+                    if (heldLayer >= 0) _cam.cullingMask &= ~(1 << heldLayer);       // the first-person hand stays out
                     _cam.enabled = true;
                 }
                 _cam.fieldOfView = main.fieldOfView;
 
-                // Minecraft puts the camera 4 blocks in front, looking back at the head; closer when a wall is in the way
-                Vector3 head = root.position + Vector3.up * 1.5f;
-                Vector3 look = _player.GetLookVector();
-                Vector3 dir = new Vector3(look.x, look.y, look.z).normalized;
+                // Minecraft: 4 blocks from the eyes along the look, behind (looking the same way) or in front
+                // (looking back at you); closer when a wall is in the way
+                Vector3 eye = main.transform.position;
+                Vector3 look = main.transform.forward;
+                Vector3 dir = Mode == 1 ? -look : look;
                 float dist = 4f;
-                if (Physics.Raycast(head, dir, out RaycastHit hit, dist + 0.3f)) dist = Mathf.Max(0.6f, hit.distance - 0.3f);
-                _camGo.transform.position = head + dir * dist;
-                _camGo.transform.LookAt(head);
+                if (Physics.Raycast(eye, dir, out RaycastHit hit, dist + 0.3f)) dist = Mathf.Max(0.5f, hit.distance - 0.3f);
+                _camGo.transform.position = eye + dir * dist;
+                if (Mode == 1) _camGo.transform.rotation = main.transform.rotation;
+                else _camGo.transform.rotation = Quaternion.LookRotation(-look, main.transform.up);
             }
-            catch (System.Exception ex) { Debug.LogWarning("[SVD] Front camera: " + ex.Message); StopFull(); }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] Third-person camera: " + ex.Message); SetMode(0); }
+        }
+
+        /// <summary>The game's own camera key (7 Days' third person) runs our F5 cycle instead.</summary>
+        [HarmonyLib.HarmonyPatch(typeof(EntityPlayerLocal), "SwitchFirstPersonViewFromInput")]
+        static class GameCameraKeyPatch
+        {
+            static bool Prefix(EntityPlayerLocal __instance)
+            {
+                if (!SteveModel.Enabled || Instance == null) return true;
+                Instance.CycleCamera();
+                return false;
+            }
         }
 
         void RenderOnce()

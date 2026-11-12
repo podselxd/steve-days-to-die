@@ -1,5 +1,5 @@
 {
- "_comment": "Crafting station equivalence table.",
+ "_comment": "Crafting stations. RULE (the creator, 2026-11-12): each game keeps its OWN stations as separate objects. A Minecraft station is crafted with its Minecraft recipe (furnace = 8 cobblestone) and opens the Minecraft window with Minecraft recipes; a 7 Days station is made with 7 Days materials and opens its own 7 Days window with 7 Days recipes. They are never converted into each other (no station pairs in pairs.json). Rows below only say which station of the other game plays the same role.",
  "_columns": "id_7days | id_minecraft | name_en | name_es | opens_7days_ui | craft_grid | v1 | verified | notes",
  "_opens_7days_ui": "which 7 Days UI window opens when player interacts",
  "_data_source": "entityclasses.xml, XUi_InGame (7Days UI names)",
@@ -14,10 +14,10 @@
    "craft_grid": "3x3",
    "stack_7days": 1,
    "stack_mc": 64,
-   "relation": "exact",
+   "relation": "same role, separate objects",
    "v1": true,
    "verified": "datos_ok",
-   "_note": "Interacting opens 7Days workbench UI; Minecraft recipes valid here"
+   "_note": "7 Days workbench: own 7 Days recipe and window. Minecraft crafting_table: Minecraft recipe and Minecraft window."
   },
   {
    "id_7days": "forge",
@@ -28,10 +28,10 @@
    "craft_grid": "1-slot smelting",
    "stack_7days": 1,
    "stack_mc": 64,
-   "relation": "approximate",
+   "relation": "same role, separate objects",
    "v1": true,
    "verified": "datos_ok",
-   "_note": "7Days forge is multi-output; MC furnace is 1-in 1-out. V1: open 7Days forge UI; MC recipes shown as overlay."
+   "_note": "7 Days forge: own 7 Days recipe and window. Minecraft furnace: Minecraft recipe and Minecraft window."
   },
   {
    "id_7days": "campfire",
@@ -42,9 +42,10 @@
    "craft_grid": "cooking",
    "stack_7days": 1,
    "stack_mc": 64,
-   "relation": "exact",
+   "relation": "same role, separate objects",
    "v1": false,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "_note": "7 Days campfire: own 7 Days recipe and window. Minecraft campfire: Minecraft recipe and Minecraft window."
   },
   {
    "id_7days": "chemistryStation",
@@ -55,10 +56,10 @@
    "craft_grid": "brewing",
    "stack_7days": 1,
    "stack_mc": 64,
-   "relation": "approximate",
+   "relation": "same role, separate objects",
    "v1": false,
    "verified": "datos_ok",
-   "_note": "V2: potions. Nether ingredients (blaze_rod for stand, nether_wart) not available in survival."
+   "_note": "7 Days chemistryStation: own 7 Days recipe and window. Minecraft brewing_stand: Minecraft recipe and Minecraft window."
   },
   {
    "id_7days": "combineStation",
@@ -69,10 +70,10 @@
    "craft_grid": "repair+enchant",
    "stack_7days": 1,
    "stack_mc": 64,
-   "relation": "approximate",
+   "relation": "same role, separate objects",
    "v1": false,
    "verified": "datos_ok",
-   "_note": "V2: enchantments. Enchanting table also maps here (enchanting_table → combineStation)."
+   "_note": "7 Days combineStation: own 7 Days recipe and window. Minecraft anvil: Minecraft recipe and Minecraft window."
   }
  ]
 }

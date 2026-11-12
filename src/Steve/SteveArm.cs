@@ -126,7 +126,7 @@ namespace SteveDaysToDie.Steve
 
                 HideNow();
 
-                bool show = _player.bFirstPersonView && _player.IsAlive() && BareHanded(_player);
+                bool show = _player.bFirstPersonView && _player.IsAlive() && BareHanded(_player) && !Ryan.Mc.Ready;   // Ryan's Minecraft hand replaces this one
                 if (_arm.activeSelf != show) _arm.SetActive(show);
                 if (!show) return;
 

@@ -37,10 +37,6 @@ namespace SteveDaysToDie.Generated
             { "bedroll", "white_bed" },   // aproximado
             { "cntWoodWritableCrate", "chest" },   // aproximado
             { "meleeToolTorch", "torch" },   // exacto
-            { "workbench", "crafting_table" },   // aproximado
-            { "forge", "furnace" },   // aproximado
-            { "campfire", "campfire" },   // exacto
-            { "chemistryStation", "brewing_stand" },   // aproximado
             { "foodRottingFlesh", "rotten_flesh" },   // exacto
             { "foodRawMeat", "beef" },   // aproximado
             { "foodGrilledMeat", "cooked_beef" },   // aproximado
@@ -96,6 +92,11 @@ namespace SteveDaysToDie.Generated
             { "armorRaiderOutfit", "diamond_chestplate" },   // aproximado
             { "armorRaiderGloves", "diamond_leggings" },   // aproximado
             { "armorRaiderBoots", "diamond_boots" },   // aproximado
+            { "resourceSnowBall", "snowball" },   // exacto
+            { "resourceBeeswax", "honeycomb" },   // aproximado
+            { "resourceElectricParts", "redstone" },   // aproximado
+            { "resourceGlue", "slime_ball" },   // aproximado
+            { "medicalFirstAidKit", "golden_apple" },   // aproximado
         };
     }
 }

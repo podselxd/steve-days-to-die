@@ -6,7 +6,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>disable</Nullable>
     <Optimize>true</Optimize>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>bin\Release\</OutputPath>
     <Configuration>Release</Configuration>
@@ -51,6 +51,10 @@
     </Reference>
     <Reference Include="NGUI">
       <HintPath>$(GAME7DTD)\7DaysToDie_Data\Managed\NGUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(GAME7DTD)\7DaysToDie_Data\Managed\Newtonsoft.Json.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
