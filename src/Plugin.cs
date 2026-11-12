@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using HarmonyLib;
 using UnityEngine;
@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v0.4.7 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v0.4.8 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
@@ -52,7 +52,7 @@ namespace SteveDaysToDie
             Debug.Log(versionMsg);
             if (versionStatus == VersionHelper.VersionStatus.TooOld)
             {
-                Debug.LogError("[SVD] Minecraft version too old â€” mod will not load. " + versionMsg);
+                Debug.LogError("[SVD] Minecraft version too old — mod will not load. " + versionMsg);
                 return;
             }
             if (versionStatus == VersionHelper.VersionStatus.NewerThanTested)
@@ -64,10 +64,8 @@ namespace SteveDaysToDie
             SteveCharacter.Init(MinecraftPath);
             Sound.MinecraftSounds.Init(MinecraftPath, MinecraftVersion);
 
-            // the Skins button and screen live in one object that survives every scene
-            var skinMenu = new GameObject("SVD_SkinMenu");
-            UnityEngine.Object.DontDestroyOnLoad(skinMenu);
-            skinMenu.AddComponent<Skins.SkinMenu>();
+            // skins are chosen in the launcher only (the creator's call): no Skins button in the game's menus.
+            // Skins/SkinMenu.cs stays in the project, unused, in case it comes back.
             SteveDaysToDie.HUD.HUDTextures.Load();
             if (SteveDaysToDie.HUD.HUDTextures.Loaded && SteveCharacter.SkinTexture != null)
                 MeltyTest.Pass("minecraft-files");

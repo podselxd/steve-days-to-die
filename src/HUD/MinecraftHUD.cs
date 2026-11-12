@@ -11,7 +11,7 @@ namespace SteveDaysToDie
     /// </summary>
     public class MinecraftHUD : MonoBehaviour
     {
-        const KeyCode DefaultToggleKey = KeyCode.BackQuote;
+        const KeyCode DefaultToggleKey = KeyCode.Alpha0;   // the 0 key: it belonged to the removed 10th slot
 
         EntityPlayerLocal _player;
         GUIStyle _countStyle, _countShadowStyle, _badgeStyle, _nameStyle, _nameShadowStyle;
@@ -35,6 +35,7 @@ namespace SteveDaysToDie
             Survival.Hunger.Tick(_player);
             Survival.DoubleTapSprint.Tick(_player);
             Patches.NineSlots.Tick(_player);
+            Patches.NoHitInjuries.Tick(_player);
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {

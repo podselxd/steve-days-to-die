@@ -11,7 +11,7 @@ namespace SteveDaysToDie
         static readonly Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public static string FilePath { get; private set; }
 
-        static readonly string[] Defaults =
+        static readonly string[] Defaults = WithEffects(new[]
         {
             "# Steve vs Zombies - ajustes / settings",
             "# version_minecraft: 'auto' usa la mas reciente instalada, o escribe una (ejemplo 26.2)",
@@ -29,17 +29,28 @@ namespace SteveDaysToDie
             "# doble_w_corre: si/no - tocar dos veces la tecla de avanzar para correr, como en Minecraft",
             "doble_w_corre=si",
             "tecla_adelante=W",
-            "# heridas_7days: si/no - sangrado, aturdimiento y lentitud por golpes de 7 Days (apagados: Minecraft no los tiene)",
-            "heridas_7days=no",
+
             "# sed: si/no - la sed de 7 Days (apagada por defecto)",
             "sed=no",
             "# skin: auto, steve, o el nombre de un archivo de la carpeta skins (lo cambia el boton Skins del menu)",
             "skin=auto",
             "# tecla_vista_frontal: tecla del espejo (una ventana pequena que te muestra a Steve de frente)",
             "tecla_vista_frontal=Insert",
-            "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft",
-            "tecla_alternar=BackQuote",
-        };
+            "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (Alpha0 = la tecla 0)",
+            "tecla_alternar=Alpha0",
+        });
+
+        // one efecto_<group> line per group of 7 Days effects (sheets/blocked_buffs.json)
+        static string[] WithEffects(string[] baseLines)
+        {
+            var l = new List<string>(baseLines);
+            foreach (var g in Generated.BlockedBuffs.Groups)
+            {
+                l.Add("# " + g.Setting + ": si/no - " + g.Label + " de 7 Days (no = como en Minecraft)");
+                l.Add(g.Setting + "=" + g.Default);
+            }
+            return l.ToArray();
+        }
 
         public static void Load()
         {
@@ -61,6 +72,11 @@ namespace SteveDaysToDie
                     if (i > 0 && Defaults[i - 1].StartsWith("#")) lines.Add(Defaults[i - 1]);
                     lines.Add(d);
                     added = true;
+                }
+                if (_values.TryGetValue("tecla_alternar", out var tk) && tk.Equals("BackQuote", StringComparison.OrdinalIgnoreCase))
+                {
+                    int i = lines.FindIndex(x => x.Trim().StartsWith("tecla_alternar", StringComparison.OrdinalIgnoreCase));
+                    if (i >= 0) { lines[i] = "tecla_alternar=Alpha0"; added = true; }
                 }
                 if (added)
                 {

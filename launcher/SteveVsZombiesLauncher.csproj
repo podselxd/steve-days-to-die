@@ -10,6 +10,7 @@
     <Nullable>disable</Nullable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Product>Steve vs Zombies</Product>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
     <Description>Instala el mod Steve vs Zombies y abre 7 Days to Die con el.</Description>
   </PropertyGroup>
   <ItemGroup>
@@ -19,5 +20,9 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <EmbeddedResource Include="payload.zip" LogicalName="payload.zip" />
+    <EmbeddedResource Include="logo_banner.png" LogicalName="logo_banner.png" />
+    <EmbeddedResource Include="logo.ico" LogicalName="logo.ico" />
+    <!-- the groups of 7 Days effects, generated from sheets/blocked_buffs.json (same list the mod uses) -->
+    <Compile Include="..\src\Generated\BlockedBuffs.cs" Link="Generated\BlockedBuffs.cs" />
   </ItemGroup>
 </Project>

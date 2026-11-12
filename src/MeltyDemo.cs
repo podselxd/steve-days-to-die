@@ -157,7 +157,7 @@ namespace SteveDaysToDie
             if (FrontView.RenderedFrames >= 5) MeltyTest.Pass("front-view");
             else MeltyTest.Fail("front-view", "the mirror drew " + FrontView.RenderedFrames + " pictures");
 
-            yield return SkinsCheck(p);
+            // skins are chosen in the launcher only now (no Skins button in the game), so no skins check here
 
             // ---- checks inside the real game ----
             MeltyTest.SetPhase("comprobaciones");

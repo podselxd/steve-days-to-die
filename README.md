@@ -1,4 +1,6 @@
-# Steve vs Zombies
+<p align="center"><img src="docs/logo.png" width="360" alt="Steve Days to Die"></p>
+
+# Steve Days to Die
 
 **ES —** 7 Days to Die jugado con las reglas de Minecraft: eres Steve (con tu propia skin), tu barra de pantalla es la de Minecraft, te cansas con el hambre y no con la resistencia, y pegar tiene barra de ataque y golpe crítico. Todo lo de Minecraft se lee de **tu propia copia instalada**; este proyecto no incluye ningún archivo de ninguno de los dos juegos.
 
@@ -11,7 +13,7 @@ Necesitas **7 Days to Die** y **Minecraft: Java Edition** instalados (abre Minec
 
 You need **7 Days to Die** and **Minecraft: Java Edition** installed (start Minecraft once from its launcher). Install it from [Melty](https://melty.gg) and press **Play**: Melty installs it, updates it by itself and starts 7 Days with the mod loaded. To play plain 7 Days, start it from Steam as usual.
 
-**Sin Melty / Without Melty:** descarga `SteveVsZombies.exe` del [último release](https://github.com/podselxd/steve-days-to-die/releases) y ábrelo: pulsa **JUGAR** y él instala o actualiza el mod y abre el juego (deja un acceso directo en el escritorio). Windows puede avisar con SmartScreen la primera vez: "Más información" → "Ejecutar de todas formas". Download `SteveVsZombies.exe` from the latest release, open it and press **JUGAR**; it installs or updates the mod and starts the game.
+**Sin Melty / Without Melty:** descarga `SteveVsZombies.exe` del [último release](https://github.com/podselxd/steve-days-to-die/releases) y ábrelo: pulsa **JUGAR** y él instala o actualiza el mod y abre el juego (deja un acceso directo en el escritorio). En sus pestañas eliges tu **skin** (en 3D), los **efectos** de 7 Days que quieras (sangrado, huesos rotos, infección… apagados por defecto) y tus **teclas**. Windows puede avisar con SmartScreen la primera vez: "Más información" → "Ejecutar de todas formas". Download `SteveVsZombies.exe` from the latest release, open it and press **JUGAR**; it installs or updates the mod and starts the game.
 ## Qué trae hoy / What it does today
 - Steve construido con tu skin (o `skin.png`, o el Steve de tu Minecraft), con la animación de caminar de Minecraft; brazo derecho en primera persona.
 - Corazones, comida, barra de 9 casillas (la 10ª de 7 Days no existe), mira y nombre del objeto, con las texturas de tu Minecraft.
@@ -19,7 +21,8 @@ You need **7 Days to Die** and **Minecraft: Java Edition** installed (start Mine
 - Hambre de Minecraft: saturación, no correr con 6 de comida o menos, la vida vuelve con la comida llena.
 - Espejo: una ventana pequeña que te muestra a Steve de frente (tecla `Insert`).
 - Puntos de armadura sobre los corazones.
-- Sin heridas de 7 Days: nada de sangrado, aturdimiento, lentitud por golpes ni piernas o brazos rotos.
+- Sin heridas de 7 Days: nada de sangrado, aturdimiento, lentitud por golpes ni piernas o brazos rotos (se pueden encender en el launcher, pestaña Efectos).
+- La tecla 0 alterna un objeto entre 7 Days y Minecraft.
 - Doble toque de W para correr; solo suena el golpe de Minecraft al recibir daño.
 
 ## Ajustes / Settings

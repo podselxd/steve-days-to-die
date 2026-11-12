@@ -81,17 +81,50 @@ namespace SteveDaysToDie.Patches
     /// </summary>
     public static class NoHitInjuries
     {
-        static readonly HashSet<string> _exact = new HashSet<string>(BlockedBuffs.Exact, StringComparer.OrdinalIgnoreCase);
+        // each group is a setting efecto_<group>=si/no (the launcher's Efectos tab); "no" = never on players
+        static readonly Dictionary<string, bool> _cache = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        static float _nextClean;
 
-        public static bool Enabled => !Settings.GetBool("heridas_7days", false);
+        public static bool Enabled => true;
 
         public static bool Blocked(string name)
         {
             if (string.IsNullOrEmpty(name)) return false;
-            if (_exact.Contains(name)) return true;
-            foreach (var p in BlockedBuffs.Prefixes)
-                if (name.StartsWith(p, StringComparison.OrdinalIgnoreCase)) return true;
+            if (_cache.TryGetValue(name, out bool b)) return b;
+            b = false;
+            foreach (var g in BlockedBuffs.Groups)
+            {
+                if (!Match(g, name)) continue;
+                b = !Settings.GetBool(g.Setting, g.Default == "si");
+                break;
+            }
+            _cache[name] = b;
+            return b;
+        }
+
+        static bool Match(BlockedBuffs.Group g, string name)
+        {
+            foreach (var e in g.Exact) if (string.Equals(e, name, StringComparison.OrdinalIgnoreCase)) return true;
+            foreach (var p in g.Prefixes) if (name.StartsWith(p, StringComparison.OrdinalIgnoreCase)) return true;
             return false;
+        }
+
+        /// <summary>Takes off a turned-off effect the player already had (from a save made before, or with the setting on).</summary>
+        public static void Tick(EntityPlayerLocal p)
+        {
+            if (p == null || p.Buffs == null || Time.time < _nextClean) return;
+            _nextClean = Time.time + 1f;
+            try
+            {
+                var list = p.Buffs.ActiveBuffs;
+                if (list == null) return;
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    string n = list[i]?.BuffName;
+                    if (Blocked(n)) { p.Buffs.RemoveBuff(n); Debug.Log("[SVD] Removed 7 Days effect " + n + "."); }
+                }
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] NoHitInjuries.Tick: " + ex.Message); _nextClean = Time.time + 30f; }
         }
 
         static bool OnPlayer(EntityBuffs buffs)

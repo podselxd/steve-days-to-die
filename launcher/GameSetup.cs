@@ -174,7 +174,7 @@ namespace SteveVsZombiesLauncher
             try
             {
                 string exe = Assembly.GetExecutingAssembly().Location;
-                string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Steve vs Zombies.lnk");
+                string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Steve Days to Die.lnk");
                 if (File.Exists(lnk)) return;
                 var shellType = Type.GetTypeFromProgID("WScript.Shell");
                 object shell = Activator.CreateInstance(shellType);
@@ -182,7 +182,7 @@ namespace SteveVsZombiesLauncher
                 var t = sc.GetType();
                 t.InvokeMember("TargetPath", BindingFlags.SetProperty, null, sc, new object[] { exe });
                 t.InvokeMember("WorkingDirectory", BindingFlags.SetProperty, null, sc, new object[] { Path.GetDirectoryName(exe) });
-                t.InvokeMember("Description", BindingFlags.SetProperty, null, sc, new object[] { "Steve vs Zombies: 7 Days to Die con las reglas de Minecraft" });
+                t.InvokeMember("Description", BindingFlags.SetProperty, null, sc, new object[] { "Steve Days to Die: 7 Days to Die con las reglas de Minecraft" });
                 t.InvokeMember("Save", BindingFlags.InvokeMethod, null, sc, null);
             }
             catch { }

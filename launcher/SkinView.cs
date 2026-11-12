@@ -74,6 +74,8 @@ namespace SteveVsZombiesLauncher
             return null;
         }
 
+        public static Bitmap SteveSkin() => Steve();
+
         static Bitmap Steve()
         {
             try
