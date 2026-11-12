@@ -54,6 +54,11 @@ public static class ItemMeshes
 		else
 		{
 			value = MeshKit.ExtrudedSprite(Icons.Get(id), 1f, 0.0625f);
+			// Unity is left-handed and the hand mirrors Minecraft's space: mirror the item back so it faces like Minecraft's
+			Vector3[] mv = value.vertices;
+			for (int i = 0; i < mv.Length; i++) mv[i].x = -mv[i].x;
+			value.vertices = mv;
+			value.RecalculateBounds();
 		}
 		meshes[id] = value;
 		return value;

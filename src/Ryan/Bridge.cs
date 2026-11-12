@@ -61,7 +61,12 @@ namespace SteveDaysToDie.Ryan
             {
                 var ic = p.inventory?.holdingItem;
                 if (ic == null || ic.Name.StartsWith("meleeHand")) return "";
-                if (PairsTable.ToMinecraft.TryGetValue(ic.Name, out var mc) && Icons.ItemModelName(mc) != null) return mc;
+                // the hand shows what the hotbar shows: a Minecraft item, or a material switched to Minecraft (key 0);
+                // 7 Days things (tools, weapons...) keep their 7 Days model, as their icon does
+                if (Crafting.McItems.IsMc(ic.Name)) return Crafting.McItems.IdOf(ic.Name);
+                int slot = p.inventory.holdingItemIdx;
+                if (ItemModeManager.IsMCMode(slot) && ItemModeManager.CanToggle(ic.Name)
+                    && PairsTable.ToMinecraft.TryGetValue(ic.Name, out var mc) && Icons.ItemModelName(mc) != null) return mc;
             }
             catch { }
             return null;

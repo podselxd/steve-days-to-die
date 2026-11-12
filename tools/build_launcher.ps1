@@ -17,7 +17,8 @@ Copy-Item (Join-Path $root "bin\Release\SteveDaysToDie.dll") $dll -Force
 # 2. the version, in ModInfo.xml and inside the DLL (Plugin.cs log line "v<ver> loading")
 $info = [IO.File]::ReadAllText((Join-Path $root "SteveDaysToDie\ModInfo.xml"))
 if ($info -notmatch ('Version value="' + [regex]::Escape($Version) + '"')) { throw "ModInfo.xml does not say version $Version" }
-$text = [Text.Encoding]::Unicode.GetString([IO.File]::ReadAllBytes($dll))
+$bytes = [IO.File]::ReadAllBytes($dll)
+$text = [Text.Encoding]::Unicode.GetString($bytes) + [Text.Encoding]::Unicode.GetString($bytes, 1, $bytes.Length - 1)   # both byte alignments
 if (-not $text.Contains("v$Version loading")) { throw "the DLL in SteveDaysToDie\ is not version $Version (Plugin.cs log line?)" }
 
 # 3. the zip

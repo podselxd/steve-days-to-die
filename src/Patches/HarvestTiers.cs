@@ -64,7 +64,7 @@ namespace SteveDaysToDie.Patches
             if (string.IsNullOrEmpty(name)) return -1;
             if (_tier.TryGetValue(name, out int t)) return t;
             Build();
-            t = Match(name);
+            t = Match(Crafting.McItems.IsMc(name) ? Crafting.McItems.IdOf(name) : name);
             if (t < 0 && PairsTable.ToMinecraft.TryGetValue(name, out var mc)) t = Match(mc);
             _tier[name] = t;
             return t;

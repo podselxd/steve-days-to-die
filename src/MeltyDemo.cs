@@ -164,6 +164,70 @@ namespace SteveDaysToDie
             yield return HungerChecks(p);
             yield return CritCheck(p);
 
+            // ---- F5: our own third person, behind and in front ----
+            MeltyTest.SetPhase("f5");
+            try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
+            for (int i = 0; i < 10 && SteveDaysToDie.McInv.McInventory.IsOpen; i++) yield return Wait(0.3f);
+            ThirdPerson(p, false);
+            Hold(p, 5);
+            if (fv != null)
+            {
+                fv.SetMode(1); yield return Wait(1f); yield return Shot("f5-detras");
+                AttackCharge.Swing(); yield return Wait(0.12f); yield return Shot("f5-golpe");
+                fv.SetMode(2); yield return Wait(1f); yield return Shot("f5-frente");
+                fv.SetMode(0); yield return Wait(0.5f);
+            }
+
+            // ---- Minecraft inventory and its 2x2 crafting ----
+            MeltyTest.SetPhase("inventario");
+            bool invOpened = false;
+            if (!SteveDaysToDie.McInv.McInventory.IsOpen)
+                try { XUiC_WindowSelector.OpenSelectorAndWindow(p, "crafting"); invOpened = true; } catch (System.Exception oex) { Debug.LogWarning("[SVD] demo inventory: " + oex.Message); }
+            else invOpened = true;
+            for (int i = 0; i < 20 && !SteveDaysToDie.McInv.McInventory.IsOpen; i++) yield return Wait(0.25f);
+            yield return Wait(0.5f);
+            var inv = SteveDaysToDie.McInv.McInventory.Instance;
+            bool shown = SteveDaysToDie.McInv.McInventory.IsOpen;
+            yield return Shot("inventario");
+            string made = null;
+            if (inv != null)
+            {
+                var planks = ItemClass.GetItem("woodShapes:VariantHelper");
+                var four = new ItemStack[4];
+                for (int i = 0; i < 4; i++) four[i] = planks != null && !planks.IsEmpty() ? new ItemStack(planks, 1) : null;
+                made = inv.TestCraft(four);
+                yield return Wait(0.5f);
+                yield return Shot("inventario-crafteo");
+            }
+            try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
+            yield return Wait(1f);
+            int tables = 0;
+            try { var t = ItemClass.GetItem("mc_crafting_table"); tables = p.bag.GetItemCount(t) + p.inventory.GetItemCount(t); } catch { }
+            Debug.Log($"[SVD] demo inventory: opened {invOpened}, Minecraft screen {shown}, crafted {made}, crafting tables in backpack {tables}");
+            if (shown) MeltyTest.Pass("mc-inventory"); else MeltyTest.Fail("mc-inventory", "the Minecraft inventory did not show (opened " + invOpened + ")");
+            if (made == "mc_crafting_table" && tables > 0) MeltyTest.Pass("craft-2x2");
+            else MeltyTest.Fail("craft-2x2", "made " + (made ?? "nothing") + ", tables in backpack " + tables);
+
+            // ---- 7 Days' Character page: Steve with your skin ----
+            MeltyTest.SetPhase("personaje");
+            try { XUiC_WindowSelector.OpenSelectorAndWindow(p, "character"); } catch (System.Exception cex2) { Debug.LogWarning("[SVD] demo character: " + cex2.Message); }
+            yield return Wait(2.5f);
+            yield return Shot("personaje");
+            try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
+            yield return Wait(1f);
+
+            // ---- Minecraft things in the hand: a block (crafting table) and a flat item (stick) ----
+            MeltyTest.SetPhase("mano-minecraft");
+            foreach (var (slot, id) in new[] { (7, "mc_crafting_table"), (8, "mc_stick") })
+            {
+                var iv = ItemClass.GetItem(id);
+                if (iv == null || iv.IsEmpty()) continue;
+                p.inventory.SetItem(slot, new ItemStack(iv, 1));
+                Hold(p, slot);
+                yield return Wait(1.5f);
+                yield return Shot("mano-" + id);
+            }
+
             ThirdPerson(p, false);
             Hold(p, 5);
             MeltyTest.SetPhase("fin");
@@ -174,6 +238,22 @@ namespace SteveDaysToDie
 
         static void RuleChecks()
         {
+            // Minecraft crafting: the items exist, the recipes load, and 7 Days things count as their pairs
+            try
+            {
+                var stick = ItemClass.GetItem("mc_stick");
+                bool items = stick != null && !stick.IsEmpty();
+                int n = Crafting.McRecipes.All.Count;
+                var table = Crafting.McRecipes.Match(new[] { "oak_planks", "oak_planks", "oak_planks", "oak_planks" }, 2);
+                var wood = ItemClass.GetItem("resourceWood");
+                string woodAs = wood != null ? Crafting.McRecipes.McId(new ItemStack(wood, 1)) : null;
+                var res = table != null ? Crafting.McItems.Stack(table.result, table.count) : null;
+                Debug.Log($"[SVD] crafting check: mc items {items}, recipes {n}, 4 planks -> {table?.result} x{table?.count}, 7 Days wood counts as {woodAs}, result item {res?.itemValue?.ItemClass?.Name}");
+                if (items && n > 500 && table?.result == "crafting_table" && woodAs == "stick" && res != null) MeltyTest.Pass("mc-crafting");
+                else MeltyTest.Fail("mc-crafting", $"items {items}, recipes {n}, planks -> {table?.result}, wood -> {woodAs}");
+            }
+            catch (System.Exception cex) { MeltyTest.Fail("mc-crafting", cex.Message); }
+
             bool crit = AttackCharge.Damage(10, 1f, false, 0f) == 10 && AttackCharge.Damage(10, 1f, true, 0f) == 15
                      && AttackCharge.Damage(10, 0f, false, 0f) == 2 && AttackCharge.Damage(10, 1f, true, 3f) == 18;
             if (crit) MeltyTest.Pass("crit-rule"); else MeltyTest.Fail("crit-rule", "damage formula gave wrong numbers");

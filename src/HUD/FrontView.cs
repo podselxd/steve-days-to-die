@@ -57,10 +57,15 @@ namespace SteveDaysToDie.HUD
         {
             try
             {
-                if (_player != null && !_player.bFirstPersonView) _player.SetFirstPersonView(true, false);   // ours replaces the game's
+                int prev = Mode;
                 Mode = mode;
                 if (mode != 0) Toggle(false);
-                else if (_cam != null) { _cam.enabled = false; Release(); }
+                if (_cam != null) { _cam.enabled = false; Release(); }
+                HookCamera();
+                // the game's own third person underneath (the held item goes to Steve's hand), our camera spot on top
+                if (_player != null && _player.bFirstPersonView != (mode == 0)) _player.SetFirstPersonView(mode == 0, false);
+                if (prev == 0 && mode != 0) SetHandCameras(false);       // only on the way into / out of F5
+                else if (prev != 0 && mode == 0) SetHandCameras(true);
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] Camera F5: " + ex.Message); Mode = 0; Release(); }
         }
@@ -71,54 +76,80 @@ namespace SteveDaysToDie.HUD
             try { Ryan.FirstPerson.LateUpdate(_player); } catch (System.Exception ex) { Debug.LogWarning("[SVD] Hand: " + ex.Message); }
             Ryan.MiningLook.LateUpdate(_player);
             if (_player == null || !_player.IsAlive()) return;
-            if (Mode != 0) { RenderThirdPerson(); return; }
+            if (Mode != 0) return;      // the third person is drawn by the game's own camera (PreCull below)
             if (!_on) return;
             if (++_frame % EveryNthFrame != 0 && _rt != null) return;
             RenderOnce();
         }
 
-        /// <summary>Our third-person camera, drawn straight on the screen over the game's first-person view.</summary>
-        void RenderThirdPerson()
+        // Third person with the game's OWN camera: right before it culls and draws, it is moved to Minecraft's
+        // third-person spot, and right after it has drawn it goes back. The game decides what of the world to
+        // draw from where the camera really is (a second camera left holes in the map), and aiming, digging
+        // and everything else still use the first-person position, because the camera is back by then.
+        static bool _hooked;
+        static Vector3 _savedPos;
+        static Quaternion _savedRot;
+        static bool _moved;
+        readonly System.Collections.Generic.List<Camera> _handCams = new System.Collections.Generic.List<Camera>();
+
+        void HookCamera()
         {
-            var main = _player.playerCamera;
-            if (SteveModel.LocalRoot == null || main == null) return;
+            if (_hooked) return;
+            _hooked = true;
+            Camera.onPreCull += PreCull;
+            Camera.onPostRender += PostRender;
+        }
+
+        static void PreCull(Camera cam)
+        {
+            var self = Instance;
+            if (Mode == 0 || self == null || self._player == null || cam != self._player.playerCamera || !self._player.IsAlive()) return;
             try
             {
-                if (_cam == null)
-                {
-                    _camGo = new GameObject("SVD_ThirdPersonCamera");
-                    _cam = _camGo.AddComponent<Camera>();
-                    _cam.enabled = false;
-                }
-                if (!_cam.enabled)
-                {
-                    _cam.CopyFrom(main);
-                    _cam.targetTexture = null;
-                    _cam.rect = new Rect(0f, 0f, 1f, 1f);
-                    // over every game camera that draws the world or the hand, under the menus (NGUI cameras)
-                    float depth = main.depth;
-                    foreach (var c in Camera.allCameras)
-                        if (c != _cam && c.targetTexture == null && c.GetComponent<UICamera>() == null) depth = Mathf.Max(depth, c.depth);
-                    _cam.depth = depth + 0.1f;
-                    _cam.nearClipPlane = 0.05f;
-                    int heldLayer = LayerMask.NameToLayer("HoldingItem");
-                    if (heldLayer >= 0) _cam.cullingMask &= ~(1 << heldLayer);       // the first-person hand stays out
-                    _cam.enabled = true;
-                }
-                _cam.fieldOfView = main.fieldOfView;
-
-                // Minecraft: 4 blocks from the eyes along the look, behind (looking the same way) or in front
-                // (looking back at you); closer when a wall is in the way
-                Vector3 eye = main.transform.position;
-                Vector3 look = main.transform.forward;
+                var t = cam.transform;
+                _savedPos = t.position; _savedRot = t.rotation; _moved = true;
+                Vector3 eye = self._player.transform.position + Vector3.up * 1.62f, look = t.forward;     // Steve's eyes
                 Vector3 dir = Mode == 1 ? -look : look;
-                float dist = 4f;
-                if (Physics.Raycast(eye, dir, out RaycastHit hit, dist + 0.3f)) dist = Mathf.Max(0.5f, hit.distance - 0.3f);
-                _camGo.transform.position = eye + dir * dist;
-                if (Mode == 1) _camGo.transform.rotation = main.transform.rotation;
-                else _camGo.transform.rotation = Quaternion.LookRotation(-look, main.transform.up);
+                float dist = 4f;                                   // Minecraft: 4 blocks, closer when a wall is in the way
+                // walls only: the player's own body has colliders in third person and must not stop the camera
+                var me = self._player.transform;
+                foreach (var hit in Physics.RaycastAll(eye, dir, dist + 0.3f, ~0, QueryTriggerInteraction.Ignore))
+                    if (!hit.collider.transform.IsChildOf(me) && hit.distance - 0.3f < dist) dist = Mathf.Max(0.5f, hit.distance - 0.3f);
+                t.position = eye + dir * dist;
+                // always level, like Minecraft (no roll from the game's own camera shake)
+                t.rotation = Mode == 2 ? Quaternion.LookRotation(-look, Vector3.up) : Quaternion.LookRotation(look, Vector3.up);
             }
-            catch (System.Exception ex) { Debug.LogWarning("[SVD] Third-person camera: " + ex.Message); SetMode(0); }
+            catch { }
+        }
+
+        static void PostRender(Camera cam)
+        {
+            if (!_moved || Instance == null || Instance._player == null || cam != Instance._player.playerCamera) return;
+            cam.transform.position = _savedPos;
+            cam.transform.rotation = _savedRot;
+            _moved = false;
+        }
+
+        // 7 Days draws the first-person arm and weapon with cameras hanging from the player's camera: off in F5
+        void SetHandCameras(bool on)
+        {
+            try
+            {
+                var main = _player != null ? _player.playerCamera : null;
+                if (main == null) return;
+                if (!on)
+                {
+                    _handCams.Clear();
+                    foreach (var c in main.GetComponentsInChildren<Camera>(true))
+                        if (c != main && c.enabled) { c.enabled = false; _handCams.Add(c); }
+                }
+                else
+                {
+                    foreach (var c in _handCams) if (c != null) c.enabled = true;
+                    _handCams.Clear();
+                }
+            }
+            catch { }
         }
 
         /// <summary>The game's own camera key (7 Days' third person) runs our F5 cycle instead.</summary>

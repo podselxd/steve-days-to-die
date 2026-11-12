@@ -298,7 +298,18 @@ namespace SteveDaysToDie
         // ---- helpers ----
 
         // A notch larger than Minecraft's default so the HUD reads clearly: 720p = 3, 1080p = 5, 1440p and up = 6.
-        public static int CalcScale() => Mathf.Clamp(Mathf.FloorToInt(Screen.height / 200f), 3, 6);
+        /// <summary>
+        /// Minecraft's GUI scale: the biggest whole number at which a 320x240 screen still fits ("Auto"), so the
+        /// bar is as big as in Minecraft at any resolution. tamano_hud: chico = that, mediano = +1, grande = +2.
+        /// </summary>
+        public static int CalcScale()
+        {
+            int auto = Mathf.Max(1, Mathf.Min(Screen.width / 320, Screen.height / 240));
+            string size = Settings.Get("tamano_hud", "chico").ToLowerInvariant();
+            int extra = size == "grande" ? 2 : size == "mediano" ? 1 : 0;
+            // never so big that the bar (182 px) does not fit across the screen
+            return Mathf.Clamp(auto + extra, 1, Mathf.Max(1, Screen.width / 190));
+        }
 
         static void DrawTex(Texture2D t, int x, int y, int w, int h)
         {

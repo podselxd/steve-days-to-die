@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v1.4.0 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v1.5.5 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
@@ -64,7 +64,7 @@ namespace SteveDaysToDie
             SteveCharacter.Init(MinecraftPath);
             Sound.MinecraftSounds.Init(MinecraftPath, MinecraftVersion);
             // Minecraft models and textures for the first-person hand (Ryan Ussery's reader, MIT)
-            try { Ryan.Mc.Init(); Combat.AttackCharge.OnSwing += Ryan.FirstPerson.Swing; }
+            try { Ryan.Mc.Init(); Combat.AttackCharge.OnSwing += Ryan.FirstPerson.Swing; Crafting.McItems.Prepare(_modInstance.Path, MinecraftPath, MinecraftVersion); }
             catch (Exception ex) { Debug.LogWarning("[SVD] Minecraft model reader: " + ex.Message); }
 
             // skins are chosen in the launcher only (the creator's call): no Skins button in the game's menus.

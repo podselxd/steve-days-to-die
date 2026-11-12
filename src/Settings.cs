@@ -38,6 +38,8 @@ namespace SteveDaysToDie
             "sed=no",
             "# skin: auto, steve, o el nombre de un archivo de la carpeta skins (lo cambia el boton Skins del menu)",
             "skin=auto",
+            "# tamano_hud: chico / mediano / grande - tamano de la barra, corazones e inventario (chico = como en Minecraft)",
+            "tamano_hud=chico",
             "# tecla_vista_frontal: la camara, como F5 en Minecraft: primera persona, tercera por detras, de frente",
             "tecla_vista_frontal=F5",
             "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (Alpha0 = la tecla 0)",

@@ -476,6 +476,30 @@ namespace SteveVsZombiesLauncher
                 buttons.Add((b, kb));
                 y += 56;
             }
+            // the size of the Minecraft bar, hearts and inventory in the game
+            y += 14;
+            p.Controls.Add(Words("Tamaño de la interfaz (barra, corazones, inventario)", 11, FontStyle.Regular, Color.White, 30, y + 8));
+            var sizes = new[] { ("chico", "Chico"), ("mediano", "Mediano"), ("grande", "Grande") };
+            var sizeButtons = new List<Button>();
+            string cur = LauncherSettings.Get("tamano_hud", "chico").ToLowerInvariant();
+            for (int i = 0; i < sizes.Length; i++)
+            {
+                var (key, label) = sizes[i];
+                var sb = Plain(label);
+                sb.SetBounds(400 + i * 115, y, 108, 40);
+                sb.Tag = key;
+                sizeButtons.Add(sb);
+                sb.Click += (s2, e2) =>
+                {
+                    LauncherSettings.Set("tamano_hud", key);
+                    foreach (var b2 in sizeButtons) b2.BackColor = (string)b2.Tag == key ? Green : Card;
+                    Status("Tamaño de la interfaz: " + label, Ok);
+                };
+                sb.BackColor = key == cur ? Green : Card;
+                p.Controls.Add(sb);
+            }
+            y += 56;
+
             var reset = Plain("Restablecer teclas"); reset.SetBounds(30, y + 10, 180, 36);
             reset.Click += (s, e) =>
             {

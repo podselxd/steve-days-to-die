@@ -136,6 +136,9 @@ public static class FirstPerson
 				TickHand(p, held);
 			}
 			Pose(p, Mathf.Clamp01(tickAcc / 0.05f));
+			Vector3 camPos = handCam != null ? handCam.transform.position : p.cameraTransform.position;
+			FaceCull.Apply(arm.GetComponent<MeshFilter>(), camPos);
+			FaceCull.Apply(item.GetComponent<MeshFilter>(), camPos);
 			Light(p);
 		}
 	}
@@ -216,11 +219,15 @@ public static class FirstPerson
 		if (rescan <= 0f)
 		{
 			rescan = 1f;
-			hiddenRenderers.Clear();
+			// keep everything hidden so far (the game pools its models; dropping them here left them hidden for good)
+			hiddenRenderers.RemoveAll((Renderer r) => r == null);
 			GameObject gameObject = ((p.emodel != null) ? (p.emodel.avatarController as AvatarLocalPlayerController) : null)?.FPSArms?.Parts?.BodyObj;
 			if (gameObject != null)
 			{
-				hiddenRenderers.AddRange(gameObject.GetComponentsInChildren<Renderer>(includeInactive: true));
+				foreach (Renderer r in gameObject.GetComponentsInChildren<Renderer>(includeInactive: true))
+				{
+					if (!hiddenRenderers.Contains(r)) hiddenRenderers.Add(r);
+				}
 			}
 			Renderer[] componentsInChildren = p.cameraTransform.GetComponentsInChildren<Renderer>(includeInactive: true);
 			foreach (Renderer renderer in componentsInChildren)
@@ -266,7 +273,7 @@ public static class FirstPerson
 				layer = handLayer
 			};
 			arm.transform.SetParent(root.transform, worldPositionStays: false);
-			arm.AddComponent<MeshFilter>().sharedMesh = ArmMesh();
+			FaceCull.Own(arm.AddComponent<MeshFilter>(), ArmMesh());
 			MeshRenderer meshRenderer = arm.AddComponent<MeshRenderer>();
 			meshRenderer.sharedMaterial = armMat;
 			meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
@@ -324,7 +331,7 @@ public static class FirstPerson
 			item.SetActive(id != "");
 			if (!(id == ""))
 			{
-				item.GetComponent<MeshFilter>().sharedMesh = ItemMeshes.Mesh(id);
+				FaceCull.Own(item.GetComponent<MeshFilter>(), ItemMeshes.Mesh(id));
 				item.GetComponent<MeshRenderer>().sharedMaterial = ItemMeshes.Material(id, litInWorld: false);
 			}
 		}

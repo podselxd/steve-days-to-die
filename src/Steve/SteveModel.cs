@@ -246,16 +246,31 @@ namespace SteveDaysToDie.Steve
             float age = Time.time * 20f;
             float swayZ = (Mathf.Cos(age * 0.09f) * 0.05f + 0.05f) * Mathf.Rad2Deg;
             float swayX = Mathf.Sin(age * 0.067f) * 0.05f * Mathf.Rad2Deg;
-            float attack = 0f;
+            // the punch, exactly Minecraft's (HumanoidModel.setupAttackAnimation): the arm comes forward and
+            // across, not down from above, and the body twists a little with it
+            float attack = 0f, bodyYaw = 0f, armYaw = 0f, armRoll = 0f;
             float t = (Time.time - _attackStart) / AttackSeconds;
-            if (t >= 0f && t < 1f) attack = Mathf.Sin(t * Mathf.PI) * 80f;      // punch: right arm forward
+            if (t >= 0f && t < 1f)
+            {
+                Vector3 lk = _root.InverseTransformDirection(_player.GetLookVector());
+                float headX = -Mathf.Atan2(lk.y, Mathf.Sqrt(lk.x * lk.x + lk.z * lk.z));          // Minecraft: looking down > 0
+                float f1 = 1f - Mathf.Pow(1f - t, 4f);
+                float f2 = Mathf.Sin(f1 * Mathf.PI);
+                float f3 = Mathf.Sin(t * Mathf.PI) * -(headX - 0.7f) * 0.75f;
+                bodyYaw = Mathf.Sin(Mathf.Sqrt(t) * Mathf.PI * 2f) * 0.2f * Mathf.Rad2Deg;
+                attack = (f2 * 1.2f + f3) * Mathf.Rad2Deg;                                        // forward
+                armYaw = bodyYaw * 2f;
+                armRoll = Mathf.Sin(t * Mathf.PI) * -0.4f * Mathf.Rad2Deg;                         // a little across
+            }
             // holding something: Minecraft raises the arm a little and halves its walking swing
             bool holding = HoldingSomething();
             float armSwing = holding ? swing * 0.5f : swing;
             float armX = -armSwing - attack + swayX + (holding ? HoldArmForward : 0f);
-            _armR.localRotation = Quaternion.Euler(armX, 0f, swayZ);
+            var twist = Quaternion.Euler(0f, -bodyYaw, 0f);
+            _upper.localRotation = twist * _upper.localRotation;
+            _armR.localRotation = Quaternion.Euler(armX, -armYaw, swayZ + armRoll);
             LastArmR = new Vector3(armX, swing, attack);     // x total, walk swing, punch (for the test log)
-            _armL.localRotation = Quaternion.Euler(swing - swayX, 0f, -swayZ);
+            _armL.localRotation = Quaternion.Euler(swing - swayX - bodyYaw, 0f, -swayZ);
 
             // head: steady, turned to where the player looks
             Vector3 look = _root.InverseTransformDirection(_player.GetLookVector());
