@@ -11,13 +11,16 @@ Necesitas **7 Days to Die** y **Minecraft: Java Edition** instalados (abre Minec
 
 You need **7 Days to Die** and **Minecraft: Java Edition** installed (start Minecraft once from its launcher). Install it from [Melty](https://melty.gg) and press **Play**: Melty installs it, updates it by itself and starts 7 Days with the mod loaded. To play plain 7 Days, start it from Steam as usual.
 
+**Sin Melty / Without Melty:** descarga `SteveVsZombies.exe` del [último release](https://github.com/podselxd/steve-days-to-die/releases) y ábrelo: pulsa **JUGAR** y él instala o actualiza el mod y abre el juego (deja un acceso directo en el escritorio). Windows puede avisar con SmartScreen la primera vez: "Más información" → "Ejecutar de todas formas". Download `SteveVsZombies.exe` from the latest release, open it and press **JUGAR**; it installs or updates the mod and starts the game.
 ## Qué trae hoy / What it does today
 - Steve construido con tu skin (o `skin.png`, o el Steve de tu Minecraft), con la animación de caminar de Minecraft; brazo derecho en primera persona.
-- Corazones, comida, barra de 10 casillas, mira y nombre del objeto, con las texturas de tu Minecraft.
+- Corazones, comida, barra de 9 casillas (la 10ª de 7 Days no existe), mira y nombre del objeto, con las texturas de tu Minecraft.
 - Barra de ataque con el ritmo de cada arma (35 armas y herramientas), golpe crítico al caer.
 - Hambre de Minecraft: saturación, no correr con 6 de comida o menos, la vida vuelve con la comida llena.
 - Espejo: una ventana pequeña que te muestra a Steve de frente (tecla `Insert`).
 - Puntos de armadura sobre los corazones.
+- Sin heridas de 7 Days: nada de sangrado, aturdimiento, lentitud por golpes ni piernas o brazos rotos.
+- Doble toque de W para correr; solo suena el golpe de Minecraft al recibir daño.
 
 ## Ajustes / Settings
 `%LOCALAPPDATA%\SteveDaysToDie\ajustes.cfg` (se crea solo): versión de Minecraft, Steve sí/no, ataque de Minecraft, cansancio por hambre, regeneración, sed, teclas.

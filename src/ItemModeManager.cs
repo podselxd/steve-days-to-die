@@ -7,7 +7,7 @@ namespace SteveDaysToDie
     /// </summary>
     public static class ItemModeManager
     {
-        public const int SLOTS = 10;   // 7 Days has 10 toolbelt slots; the Minecraft bar is extended by one
+        public const int SLOTS = 9;    // Minecraft's 9; the game's 10th slot is taken out (Patches/MinecraftRules.cs)
 
         static readonly bool[] _isMC = new bool[SLOTS];
         static readonly string[] _slotItem = new string[SLOTS];

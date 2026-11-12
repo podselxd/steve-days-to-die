@@ -1,0 +1,33 @@
+{
+ "_comment": "EFECTOS DE 7 DAYS QUE STEVE NO RECIBE (Minecraft no los tiene): los que deja un golpe. Una fila = un efecto. prefix: si no es '-', tambien se bloquean todos los efectos cuyo nombre empieza asi. tools/build_config.py genera src/Generated/BlockedBuffs.cs. Solo afecta a jugadores; los zombis siguen sangrando con tus armas.",
+ "_columns": "id_7days_buff | prefix | reason | verified",
+ "rows": [
+  {"id_7days_buff": "buffInjuryBleeding", "prefix": "buffInjuryBleeding", "reason": "desangrado (y sus variantes: uno, dos, alambre de puas, particulas)", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInternalBleeding", "prefix": "-", "reason": "sangrado interno", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerBleeding", "prefix": "-", "reason": "lo que dispara el desangrado al recibir un golpe", "verified": "datos_ok"},
+  {"id_7days_buff": "buffLaceration", "prefix": "buffLaceration", "reason": "laceracion (corte que sangra)", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerLaceration", "prefix": "-", "reason": "lo que dispara la laceracion", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryStunned01", "prefix": "buffInjuryStunned", "reason": "aturdido por un golpe (te deja lento)", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerStun", "prefix": "-", "reason": "lo que dispara el aturdimiento", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryKnockdown01", "prefix": "buffInjuryKnockdown", "reason": "derribado al suelo por un golpe", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjurySlow", "prefix": "-", "reason": "lentitud por herida", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerConcussion", "prefix": "-", "reason": "lo que dispara la conmocion", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryConcussion", "prefix": "buffInjuryConcussion", "reason": "conmocion (vision borrosa)", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerAbrasion", "prefix": "-", "reason": "lo que dispara el raspon", "verified": "datos_ok"},
+  {"id_7days_buff": "buffAbrasionCatch", "prefix": "-", "reason": "raspon", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryAbrasion", "prefix": "-", "reason": "raspon", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerSprainedLeg", "prefix": "-", "reason": "lo que dispara la pierna torcida", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerBrokenLeg", "prefix": "-", "reason": "lo que dispara la pierna rota", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerSprainedArm", "prefix": "-", "reason": "lo que dispara el brazo torcido", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerBrokenArm", "prefix": "-", "reason": "lo que dispara el brazo roto", "verified": "datos_ok"},
+  {"id_7days_buff": "buffLegSprained", "prefix": "buffLegSprained", "reason": "pierna torcida (tambien por caidas)", "verified": "datos_ok"},
+  {"id_7days_buff": "buffLegBroken", "prefix": "-", "reason": "pierna rota (en Minecraft la caida solo quita vida)", "verified": "datos_ok"},
+  {"id_7days_buff": "buffLegGetsWorse", "prefix": "-", "reason": "la pierna empeora", "verified": "datos_ok"},
+  {"id_7days_buff": "buffArmSprained", "prefix": "buffArmSprained", "reason": "brazo torcido", "verified": "datos_ok"},
+  {"id_7days_buff": "buffArmBroken", "prefix": "-", "reason": "brazo roto", "verified": "datos_ok"},
+  {"id_7days_buff": "buffArmGetsWorse", "prefix": "-", "reason": "el brazo empeora", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryCrippled01", "prefix": "buffInjuryCrippled", "reason": "lisiado (cojear)", "verified": "datos_ok"},
+  {"id_7days_buff": "buffInjuryUnconscious", "prefix": "-", "reason": "inconsciente", "verified": "datos_ok"},
+  {"id_7days_buff": "triggerFatigued", "prefix": "-", "reason": "fatiga de 7 Days (Minecraft solo tiene hambre)", "verified": "datos_ok"}
+ ]
+}

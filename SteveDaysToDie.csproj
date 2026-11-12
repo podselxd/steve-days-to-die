@@ -12,6 +12,13 @@
     <Configuration>Release</Configuration>
   </PropertyGroup>
 
+  <!-- the launcher (SteveVsZombies.exe) is its own project -->
+  <ItemGroup>
+    <Compile Remove="launcher/**" />
+    <EmbeddedResource Remove="launcher/**" />
+    <None Remove="launcher/**" />
+  </ItemGroup>
+
   <!-- 7 Days to Die game references — not shipped with the mod -->
   <ItemGroup>
     <Reference Include="Assembly-CSharp">

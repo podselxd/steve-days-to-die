@@ -19,3 +19,6 @@ sheets/preflight_report.json
 
 # local launcher for this PC
 jugar-con-mod.cmd
+launcher/payload.zip
+launcher/bin/
+launcher/obj/

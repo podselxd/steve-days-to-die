@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- SteveVsZombies.exe: one double-click installs the mod and starts 7 Days to Die with it.
+       Built by tools/build_launcher.ps1, which first puts the mod's zip here as payload.zip. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>SteveVsZombies</AssemblyName>
+    <RootNamespace>SteveVsZombiesLauncher</RootNamespace>
+    <LangVersion>9</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Product>Steve vs Zombies</Product>
+    <Description>Instala el mod Steve vs Zombies y abre 7 Days to Die con el.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <EmbeddedResource Include="payload.zip" LogicalName="payload.zip" />
+  </ItemGroup>
+</Project>

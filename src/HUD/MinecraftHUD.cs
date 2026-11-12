@@ -33,6 +33,8 @@ namespace SteveDaysToDie
             if (_player == null || !_player.IsAlive()) return;
             Combat.AttackCharge.Tick(_player);
             Survival.Hunger.Tick(_player);
+            Survival.DoubleTapSprint.Tick(_player);
+            Patches.NineSlots.Tick(_player);
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {
@@ -300,9 +302,15 @@ namespace SteveDaysToDie
             if (t != null) GUI.DrawTexture(new Rect(x, y, w, h), t);
         }
 
+        // The slot the wheel or number keys point at, at once (the game changes the item in hand only
+        // after its holster animation; Minecraft's bar moves instantly).
         static int GetSelectedSlot(EntityPlayerLocal p)
         {
-            try { return p.inventory.SelectedSlot; }
+            try
+            {
+                int f = p.inventory.GetFocusedItemIdx();
+                return f >= 0 && f < ItemModeManager.SLOTS ? f : p.inventory.SelectedSlot;
+            }
             catch { return 0; }
         }
 

@@ -12,6 +12,31 @@ namespace SteveDaysToDie.Survival
     /// With 6 food points or fewer you can no longer sprint; with 18 or more, health comes back.
     /// Thirst is off by default.
     /// </summary>
+    /// <summary>
+    /// Minecraft's sprint: tap forward twice quickly and keep holding it. Letting go of forward,
+    /// sneaking or opening a menu ends it; hunger still stops it (6 food points or fewer).
+    /// The game's own sprint key keeps working too.
+    /// </summary>
+    public static class DoubleTapSprint
+    {
+        const float Window = 0.3f;      // Minecraft: 7 ticks
+        static float _lastPress = -10f;
+        public static bool Active { get; private set; }
+
+        public static void Tick(EntityPlayerLocal p)
+        {
+            if (p == null || !Settings.GetBool("doble_w_corre", true)) { Active = false; return; }
+            KeyCode forward = Settings.GetKey("tecla_adelante", KeyCode.W);
+            bool playing = Cursor.lockState == CursorLockMode.Locked;
+            if (playing && Input.GetKeyDown(forward))
+            {
+                if (Time.time - _lastPress < Window) Active = true;
+                _lastPress = Time.time;
+            }
+            if (!playing || !Input.GetKey(forward) || p.IsCrouching || !p.IsAlive()) Active = false;
+        }
+    }
+
     public static class Hunger
     {
         static float _exhaustion, _saturation = SurvivalTable.StartSaturation, _lastFood = -1f, _regenTimer;
@@ -139,6 +164,7 @@ namespace SteveDaysToDie.Survival
         {
             static void Prefix(EntityPlayerLocal __instance)
             {
+                if (DoubleTapSprint.Active) __instance.movementInput.running = true;
                 if (SprintBlocked && Enabled)
                 {
                     __instance.bExhausted = true;
