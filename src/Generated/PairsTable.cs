@@ -98,5 +98,41 @@ namespace SteveDaysToDie.Generated
             { "resourceGlue", "slime_ball" },   // aproximado
             { "medicalFirstAidKit", "golden_apple" },   // aproximado
         };
+
+        /// <summary>Pairs whose category may switch game with the toggle key and come back (materials only; tools, weapons and armour stay 7 Days).</summary>
+        public static readonly HashSet<string> Reversible = new HashSet<string>
+        {
+            "resourceForgedIron",
+            "resourceScrapIron",
+            "resourceGoldNugget",
+            "resourceRawDiamond",
+            "resourceCoal",
+            "resourceLeather",
+            "resourceFeather",
+            "resourceBone",
+            "resourceGunPowder",
+            "resourcePaper",
+            "resourceCloth",
+            "resourceYuccaFibers",
+            "resourceWood",
+            "resourceClayLump",
+            "resourceRockSmall",
+            "resourceCrushedSand",
+            "cobweb",
+            "drinkJarEmpty",
+            "woodShapes:VariantHelper",
+            "cobblestoneShapes:VariantHelper",
+            "glassBlockVariantHelper",
+            "ironBars",
+            "candle",
+            "ladderWood",
+            "bedroll",
+            "cntWoodWritableCrate",
+            "meleeToolTorch",
+            "resourceSnowBall",
+            "resourceBeeswax",
+            "resourceElectricParts",
+            "resourceGlue",
+        };
     }
 }

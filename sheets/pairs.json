@@ -2,6 +2,8 @@
   "_comment": "FUENTE DE VERDAD de los emparejamientos 7 Days <-> Minecraft. Una fila = un par. Se edita aqui; tools/build_items.py genera sheets/items.json a partir de esta hoja y de los datos de los dos juegos.",
   "_rules": "Conversion SIEMPRE 1 a 1. Cada id aparece en un solo par (biyectivo), para que alternar y volver regrese el mismo objeto. Si dos cosas no valen lo mismo, no se emparejan.",
   "_columns": "id_7days | id_minecraft | relation (exacto/aproximado) | category | note",
+  "reversible_categories": ["material", "bloque"],
+  "_reversible_note": "REGLA del creador (2026-11-12): solo los MATERIALES (y bloques de construccion) pueden cambiar de juego con la tecla 0 y volver. Armaduras, herramientas (picos, hachas) y armas NO: se quedan como objeto de 7 Days con su icono de 7 Days, para no romper el equilibrio. Comida, semillas, municion y curacion tampoco por ahora; anade su categoria aqui si un dia se quiere.",
   "pairs": [
     {"id_7days": "resourceForgedIron", "id_minecraft": "iron_ingot", "relation": "exacto", "category": "material", "note": "lingote de hierro"},
     {"id_7days": "resourceScrapIron", "id_minecraft": "iron_nugget", "relation": "aproximado", "category": "material", "note": "10 chatarras = 1 hierro forjado; 9 pepitas = 1 lingote"},

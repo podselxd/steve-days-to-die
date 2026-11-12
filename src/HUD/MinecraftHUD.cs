@@ -41,7 +41,9 @@ namespace SteveDaysToDie
             {
                 // Until the real conversion exists (step 6) this only previews the paired Minecraft icon.
                 int sel = GetSelectedSlot(_player);
-                ItemModeManager.Toggle(sel);
+                string held = null;
+                try { held = _player.inventory.GetItem(sel)?.itemValue?.ItemClass?.Name; } catch { }
+                ItemModeManager.Toggle(sel, held);
             }
         }
 
@@ -144,7 +146,7 @@ namespace SteveDaysToDie
                     int sy = hbY + border;
                     var iconRect = new Rect(sx + pad, sy + pad, iconW, iconH);
 
-                    Texture2D mcIcon = ItemModeManager.IsMCMode(i) ? ItemIconManager.GetIcon(name) : null;
+                    Texture2D mcIcon = ItemModeManager.IsMCMode(i) && ItemModeManager.CanToggle(name) ? ItemIconManager.GetIcon(name) : null;
                     if (mcIcon != null)
                     {
                         GUI.DrawTexture(iconRect, mcIcon);
@@ -175,7 +177,7 @@ namespace SteveDaysToDie
         }
 
         // The item's own 7 Days icon, straight from the game's icon atlas (nothing is copied).
-        void DrawGameIcon(EntityPlayerLocal p, ItemStack stack, ItemClass ic, Rect r)
+        public static void DrawGameIcon(EntityPlayerLocal p, ItemStack stack, ItemClass ic, Rect r)
         {
             string iconName = ic.GetIconName();
             if (string.IsNullOrEmpty(iconName)) return;

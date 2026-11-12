@@ -26,6 +26,7 @@ namespace SteveVsZombiesLauncher
             new Toggle { Key = "cansancio_minecraft", Label = "Hambre de Minecraft", Hint = "Sin resistencia: correr, saltar y pegar gastan comida", Default = true },
             new Toggle { Key = "regeneracion_minecraft", Label = "Regeneración", Hint = "Con la comida casi llena la vida vuelve sola", Default = true },
             new Toggle { Key = "sonidos_minecraft", Label = "Sonidos de Minecraft", Hint = "Sin las voces de 7 Days; el golpe de Minecraft al recibir daño", Default = true },
+            new Toggle { Key = "inventario_minecraft", Label = "Inventario de Minecraft", Hint = "Tu mochila como la de Minecraft; lo de 7 Days sigue a la izquierda", Default = true },
             new Toggle { Key = "picos_minecraft", Label = "Niveles de pico", Hint = "Sin el pico adecuado, rocas y menas no sueltan nada", Default = true },
             new Toggle { Key = "doble_w_corre", Label = "Doble toque para correr", Hint = "Toca dos veces la tecla de avanzar", Default = true },
         };

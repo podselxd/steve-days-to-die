@@ -30,6 +30,9 @@ namespace SteveDaysToDie.Patches
                 if (player.GetComponent<FrontView>() == null)
                     player.gameObject.AddComponent<FrontView>();
 
+                if (player.GetComponent<McInv.McInventory>() == null)
+                    player.gameObject.AddComponent<McInv.McInventory>();
+
                 if (player.GetComponent<NativeToolbelt>() == null)
                     player.gameObject.AddComponent<NativeToolbelt>();
 

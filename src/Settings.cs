@@ -30,6 +30,8 @@ namespace SteveDaysToDie
             "doble_w_corre=si",
             "tecla_adelante=W",
 
+            "# inventario_minecraft: si/no - la mochila de 7 Days se ve y se usa como el inventario de Minecraft (lo demas de 7 Days sigue a la izquierda)",
+            "inventario_minecraft=si",
             "# picos_minecraft: si/no - niveles de pico de Minecraft: sin el pico adecuado la roca o mena no suelta nada (sheets/harvest_tiers.json)",
             "picos_minecraft=si",
             "# sed: si/no - la sed de 7 Days (apagada por defecto)",

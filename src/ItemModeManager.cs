@@ -14,9 +14,14 @@ namespace SteveDaysToDie
 
         public static bool IsMCMode(int slot) => slot >= 0 && slot < SLOTS && _isMC[slot];
 
-        public static void Toggle(int slot)
+        /// <summary>Only materials may switch game (sheets/pairs.json reversible_categories); tools, weapons and armour keep their 7 Days icon.</summary>
+        public static bool CanToggle(string itemName) => itemName != null && Generated.PairsTable.Reversible.Contains(itemName);
+
+        public static void Toggle(int slot, string itemName)
         {
-            if (slot >= 0 && slot < SLOTS) _isMC[slot] = !_isMC[slot];
+            if (slot < 0 || slot >= SLOTS) return;
+            if (!CanToggle(itemName)) { _isMC[slot] = false; return; }
+            _isMC[slot] = !_isMC[slot];
         }
 
         // Call each frame per slot: a different item in the slot goes back to its 7 Days look.
