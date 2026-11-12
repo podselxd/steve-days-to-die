@@ -61,7 +61,7 @@ namespace SteveDaysToDie.HUD
                 Mode = mode;
                 if (mode != 0) Toggle(false);
                 if (_cam != null) { _cam.enabled = false; Release(); }
-                HookCamera();
+                ApplyCameraDistance(mode);
                 // the game's own third person underneath (the held item goes to Steve's hand), our camera spot on top
                 if (_player != null && _player.bFirstPersonView != (mode == 0)) _player.SetFirstPersonView(mode == 0, false);
                 if (prev == 0 && mode != 0) SetHandCameras(false);       // only on the way into / out of F5
@@ -77,58 +77,57 @@ namespace SteveDaysToDie.HUD
             Ryan.MiningLook.LateUpdate(_player);
             Crafting.McBlockLook.Tick();
             if (_player == null || !_player.IsAlive()) return;
-            if (Mode != 0) return;      // the third person is drawn by the game's own camera (PreCull below)
+            if (Mode != 0) return;      // the third person is the game's own camera (ApplyCameraDistance / FrontCamera)
             if (!_on) return;
             if (++_frame % EveryNthFrame != 0 && _rt != null) return;
             RenderOnce();
         }
 
-        // Third person with the game's OWN camera: right before it culls and draws, it is moved to Minecraft's
-        // third-person spot, and right after it has drawn it goes back. The game decides what of the world to
-        // draw from where the camera really is (a second camera left holes in the map), and aiming, digging
-        // and everything else still use the first-person position, because the camera is back by then.
-        static bool _hooked;
-        static Vector3 _savedPos;
-        static Quaternion _savedRot;
-        static bool _moved;
+        // Third person = the game's OWN third-person camera (vp_FPCamera), told Minecraft's distance: 4 blocks,
+        // centred (7 Days puts it over the shoulder). The game places it, avoids walls with its own collision and
+        // decides what of the world to draw from where it really is. (Moving the camera only while drawing broke
+        // the map while walking: the game culls from the camera's position during its own update.)
+        static Vector3? _gameOffset;
         readonly System.Collections.Generic.List<Camera> _handCams = new System.Collections.Generic.List<Camera>();
 
-        void HookCamera()
+        void ApplyCameraDistance(int mode)
         {
-            if (_hooked) return;
-            _hooked = true;
-            Camera.onPreCull += PreCull;
-            Camera.onPostRender += PostRender;
-        }
-
-        static void PreCull(Camera cam)
-        {
-            var self = Instance;
-            if (Mode == 0 || self == null || self._player == null || cam != self._player.playerCamera || !self._player.IsAlive()) return;
             try
             {
-                var t = cam.transform;
-                _savedPos = t.position; _savedRot = t.rotation; _moved = true;
-                Vector3 eye = self._player.transform.position + Vector3.up * 1.62f, look = t.forward;     // Steve's eyes
-                Vector3 dir = Mode == 1 ? -look : look;
-                float dist = 4f;                                   // Minecraft: 4 blocks, closer when a wall is in the way
-                // walls only: the player's own body has colliders in third person and must not stop the camera
-                var me = self._player.transform;
-                foreach (var hit in Physics.RaycastAll(eye, dir, dist + 0.3f, ~0, QueryTriggerInteraction.Ignore))
-                    if (!hit.collider.transform.IsChildOf(me) && hit.distance - 0.3f < dist) dist = Mathf.Max(0.5f, hit.distance - 0.3f);
-                t.position = eye + dir * dist;
-                // always level, like Minecraft (no roll from the game's own camera shake)
-                t.rotation = Mode == 2 ? Quaternion.LookRotation(-look, Vector3.up) : Quaternion.LookRotation(look, Vector3.up);
+                var cam = _player != null ? _player.vp_FPCamera : null;
+                if (cam == null) return;
+                if (_gameOffset == null) _gameOffset = cam.Position3rdPersonOffset;
+                cam.Position3rdPersonOffset = mode == 0 ? _gameOffset.Value : new Vector3(0f, 0.1f, 4f);
             }
-            catch { }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] F5 distance: " + ex.Message); }
         }
 
-        static void PostRender(Camera cam)
+        /// <summary>
+        /// F5 (both views): runs AFTER the game has placed its third-person camera (execution order) and sets it at
+        /// Minecraft's spot, 4 blocks behind or in front looking back (7 Days keeps resetting its own distance). It stays there for the whole frame (no putting back),
+        /// so the game culls and draws from the right place.
+        /// </summary>
+        [DefaultExecutionOrder(32000)]
+        public class FrontCamera : MonoBehaviour
         {
-            if (!_moved || Instance == null || Instance._player == null || cam != Instance._player.playerCamera) return;
-            cam.transform.position = _savedPos;
-            cam.transform.rotation = _savedRot;
-            _moved = false;
+            EntityPlayerLocal _p;
+            void Start() { _p = GetComponent<EntityPlayerLocal>(); }
+
+            void LateUpdate()
+            {
+                if (Mode == 0 || _p == null || _p.playerCamera == null || _p.bFirstPersonView) return;
+                var t = _p.playerCamera.transform;
+                Vector3 eye = _p.transform.position + Vector3.up * 1.62f;
+                Vector3 look = t.forward;                              // the game's camera follows the mouse: where Steve looks
+                // Minecraft: 4 blocks behind (F5 1) or in front looking back (F5 2); closer when a wall is in the way
+                Vector3 dir = Mode == 1 ? -look : look;
+                float dist = 4f;
+                foreach (var hit in Physics.RaycastAll(eye, dir, dist + 0.3f, ~0, QueryTriggerInteraction.Ignore))
+                    if (!hit.collider.isTrigger && !hit.collider.transform.IsChildOf(_p.transform) && hit.distance - 0.3f < dist)
+                        dist = Mathf.Max(0.5f, hit.distance - 0.3f);
+                t.position = eye + dir * dist;
+                t.rotation = Mode == 1 ? Quaternion.LookRotation(look, Vector3.up) : Quaternion.LookRotation(-look, Vector3.up);
+            }
         }
 
         // 7 Days draws the first-person arm and weapon with cameras hanging from the player's camera: off in F5

@@ -29,6 +29,8 @@ namespace SteveDaysToDie.Patches
 
                 if (player.GetComponent<FrontView>() == null)
                     player.gameObject.AddComponent<FrontView>();
+                if (player.GetComponent<FrontView.FrontCamera>() == null)
+                    player.gameObject.AddComponent<FrontView.FrontCamera>();
 
                 if (player.GetComponent<McInv.McInventory>() == null)
                     player.gameObject.AddComponent<McInv.McInventory>();

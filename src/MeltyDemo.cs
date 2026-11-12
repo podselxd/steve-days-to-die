@@ -174,7 +174,9 @@ namespace SteveDaysToDie
             {
                 fv.SetMode(1); yield return Wait(1f); yield return Shot("f5-detras");
                 AttackCharge.Swing(); yield return Wait(0.12f); yield return Shot("f5-golpe");
+                yield return Walk(p, 1.2f); yield return Shot("f5-detras-caminando");
                 fv.SetMode(2); yield return Wait(1f); yield return Shot("f5-frente");
+                yield return Walk(p, 1.2f); yield return Shot("f5-frente-caminando");
                 fv.SetMode(0); yield return Wait(0.5f);
             }
 
@@ -498,6 +500,23 @@ namespace SteveDaysToDie
         static void Hold(EntityPlayerLocal p, int slot)
         {
             try { p.inventory.SetHoldingItemIdx(slot); } catch (Exception ex) { Debug.LogWarning("[SVD] demo hold: " + ex.Message); }
+        }
+
+        // walks forward for a moment (the controller works in scene coordinates), for pictures while moving
+        static IEnumerator Walk(EntityPlayerLocal p, float seconds)
+        {
+            float end = Time.time + seconds;
+            while (Time.time < end && p != null)
+            {
+                try
+                {
+                    var c = p.vp_FPController;
+                    Vector3 f = p.transform.forward; f.y = 0f;
+                    c.SetPosition(p.transform.position + f.normalized * 3f * Time.deltaTime);
+                }
+                catch { }
+                yield return null;
+            }
         }
 
         static void ThirdPerson(EntityPlayerLocal p, bool on)
