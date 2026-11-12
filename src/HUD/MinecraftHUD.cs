@@ -36,6 +36,7 @@ namespace SteveDaysToDie
             Survival.DoubleTapSprint.Tick(_player);
             Patches.NineSlots.Tick(_player);
             Patches.NoHitInjuries.Tick(_player);
+            Crafting.McItems.FixHeld(_player);
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {

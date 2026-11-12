@@ -19,6 +19,23 @@ namespace SteveDaysToDie.Crafting
         public const string Prefix = "mc_";
         static Dictionary<string, string> _kind;
 
+        public const int ToolQuality = 3;
+
+        /// <summary>Tools made before 1.8.5 came out with quality 0 (useless): give them a quality when held.</summary>
+        public static void FixHeld(EntityPlayerLocal p)
+        {
+            try
+            {
+                int slot = p.inventory.holdingItemIdx;
+                var st = p.inventory.GetItem(slot);
+                if (st == null || st.IsEmpty() || !IsMc(st.itemValue.ItemClass?.Name)) return;
+                if (!st.itemValue.ItemClass.HasQuality || st.itemValue.Quality > 0) return;
+                var fixedStack = new ItemStack(new ItemValue(st.itemValue.type, ToolQuality, ToolQuality, false), st.count);
+                p.inventory.SetItem(slot, fixedStack);
+            }
+            catch { }
+        }
+
         public static bool IsMc(string itemName) => itemName != null && itemName.StartsWith(Prefix);
         public static string IdOf(string itemName) => IsMc(itemName) ? itemName.Substring(Prefix.Length) : null;
 
@@ -38,6 +55,8 @@ namespace SteveDaysToDie.Crafting
             if (string.IsNullOrEmpty(mcId) || Kind(mcId) == null) return null;
             var iv = ItemClass.GetItem(Prefix + mcId);
             if (iv == null || iv.IsEmpty()) return null;
+            // Minecraft tools are built on 7 Days tools, which have a quality: 0 means broken (they did not dig)
+            if (iv.ItemClass != null && iv.ItemClass.HasQuality) iv = new ItemValue(iv.type, ToolQuality, ToolQuality, false);
             return new ItemStack(iv, count);
         }
 

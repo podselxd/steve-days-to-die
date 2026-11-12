@@ -114,8 +114,24 @@ public static class FirstPerson
 		}
 	}
 
+	private static EntityPlayerLocal lastPlayer;
+
+	private static bool hooked;
+
+	// right before the frame is drawn: hide any 7 Days held model made after our LateUpdate (no flash)
+	private static void BeforeRender()
+	{
+		if (lastPlayer != null && root != null && root.activeSelf)
+		{
+			rescan = 0f;
+			HideNativeArms(lastPlayer);
+		}
+	}
+
 	public static void LateUpdate(EntityPlayerLocal p)
 	{
+		lastPlayer = p;
+		if (!hooked) { hooked = true; Application.onBeforeRender += BeforeRender; }
 		string held = (p == null) ? null : Held.McId(p);
 		if (p == null || p.IsDead() || !p.bFirstPersonView || p.cameraTransform == null || held == null || HUD.FrontView.Mode != 0 || !Steve.SteveModel.Enabled)
 		{
@@ -218,7 +234,7 @@ public static class FirstPerson
 		rescan -= Time.deltaTime;
 		if (rescan <= 0f)
 		{
-			rescan = 1f;
+			rescan = 0f;   // every frame: a new 7 Days model (the sack) showed for a moment otherwise
 			// keep everything hidden so far (the game pools its models; dropping them here left them hidden for good)
 			hiddenRenderers.RemoveAll((Renderer r) => r == null);
 			GameObject gameObject = ((p.emodel != null) ? (p.emodel.avatarController as AvatarLocalPlayerController) : null)?.FPSArms?.Parts?.BodyObj;
