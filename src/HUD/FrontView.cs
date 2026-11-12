@@ -70,12 +70,22 @@ namespace SteveDaysToDie.HUD
             catch (System.Exception ex) { Debug.LogWarning("[SVD] Camera F5: " + ex.Message); Mode = 0; Release(); }
         }
 
+        static World _overlayWorld;
+        static bool _overlayErr;
+
         void LateUpdate()
         {
             // Minecraft's first-person hand and the look of mining (from Ryan Ussery's mod, MIT)
             try { Ryan.FirstPerson.LateUpdate(_player); } catch (System.Exception ex) { Debug.LogWarning("[SVD] Hand: " + ex.Message); }
             Ryan.MiningLook.LateUpdate(_player);
-            Crafting.McBlockLook.Tick();
+            // Minecraft blocks drawn with the player's Minecraft textures (Ryan's BlockOverlay)
+            try
+            {
+                var w = GameManager.Instance?.World;
+                if (w != null && Ryan.Mc.Ready && !ReferenceEquals(w, _overlayWorld)) { Ryan.BlockOverlay.Attach(w); _overlayWorld = w; }
+                if (_overlayWorld != null) { Ryan.BlockOverlay.Update(); Ryan.BlockOverlay.LateUpdate(); }
+            }
+            catch (System.Exception ex) { if (!_overlayErr) { _overlayErr = true; Debug.LogWarning("[SVD] block overlay: " + ex); } }
             Crafting.McFurnaces.Tick();
             if (_player == null || !_player.IsAlive()) return;
             if (Mode != 0) return;      // the third person is the game's own camera (ApplyCameraDistance / FrontCamera)
@@ -242,6 +252,8 @@ namespace SteveDaysToDie.HUD
 
         void OnDestroy()
         {
+            try { Ryan.BlockOverlay.Detach(); } catch { }
+            _overlayWorld = null;
             Release();
             if (Instance == this) Instance = null;
         }

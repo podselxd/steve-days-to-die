@@ -25,15 +25,14 @@ public class BlockMcFurnace : Block
     { SteveDaysToDie.McInv.McInventory.OpenFurnace(_player, _blockPos, Kind); return true; }
 
     public override void OnBlockAdded(WorldBase _world, Chunk _chunk, Vector3i _blockPos, BlockValue _blockValue, PlatformUserIdentifierAbs _addedByPlayer)
-    { base.OnBlockAdded(_world, _chunk, _blockPos, _blockValue, _addedByPlayer); SteveDaysToDie.Crafting.McBlockLook.Add(_blockPos, Kind); }
+    { base.OnBlockAdded(_world, _chunk, _blockPos, _blockValue, _addedByPlayer);  }
     public override void OnBlockLoaded(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue)
-    { base.OnBlockLoaded(_world, _blockPos, _blockValue); SteveDaysToDie.Crafting.McBlockLook.Add(_blockPos, Kind); }
+    { base.OnBlockLoaded(_world, _blockPos, _blockValue);  }
     public override void OnBlockUnloaded(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue)
-    { base.OnBlockUnloaded(_world, _blockPos, _blockValue); SteveDaysToDie.Crafting.McBlockLook.Remove(_blockPos); }
+    { base.OnBlockUnloaded(_world, _blockPos, _blockValue);  }
     public override void OnBlockRemoved(WorldBase _world, Chunk _chunk, Vector3i _blockPos, BlockValue _blockValue)
     {
-        base.OnBlockRemoved(_world, _chunk, _blockPos, _blockValue);
-        SteveDaysToDie.Crafting.McBlockLook.Remove(_blockPos);
+        base.OnBlockRemoved(_world, _chunk, _blockPos, _blockValue); 
         SteveDaysToDie.Crafting.McFurnaces.Broken(_blockPos);          // what was inside falls out, as in Minecraft
     }
 }

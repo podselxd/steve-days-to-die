@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Collections;
 using System.IO;
@@ -38,6 +39,8 @@ namespace SteveDaysToDie
         static IEnumerator Run(EntityPlayerLocal p)
         {
             RuleChecks();
+            // daylight, so the pictures show the textures (the test world's clock keeps running between runs)
+            try { SdtdConsole.Instance.ExecuteSync("settime 1 12 0", null); } catch (Exception tex) { Debug.LogWarning("[SVD] demo settime: " + tex.Message); }
             // the game keeps its loading screen up for a few seconds after we are in the world
             for (int i = 0; i < 80 && p != null; i++)
             {
@@ -264,22 +267,50 @@ namespace SteveDaysToDie
             try { var fb = Block.GetBlockValue("mc_furnace"); GameManager.Instance.World.SetBlockRPC(fpos, fb); fplaced = !fb.isair; } catch { }
             yield return Wait(1f);
             var fs = SteveDaysToDie.Crafting.McFurnaces.Get(fpos, "furnace");
-            var rawIron = ItemClass.GetItem("mc_raw_iron"); var coal = ItemClass.GetItem("resourceCoal");
+            var rawIron = ItemClass.GetItem("mc_raw_iron"); var coal = ItemClass.GetItem("resourceWood");      // 7 Days wood: 15 s of fire
             if (rawIron != null && !rawIron.IsEmpty()) fs.input = new ItemStack(rawIron, 1);
             if (coal != null && !coal.IsEmpty()) fs.fuel = new ItemStack(coal, 1);
             SteveDaysToDie.McInv.McInventory.OpenFurnace(p, fpos, "furnace");
-            yield return Wait(4f);
-            yield return Shot("horno-fundiendo");
-            yield return Wait(7.5f);
+            yield return Wait(2f);
+            yield return Shot("horno-fundiendo");          // flame almost full
+            yield return Wait(9.5f);
+            yield return Shot("horno-fundiendo-2");        // flame lower, iron done
             string fout = fs.output.IsEmpty() ? null : fs.output.itemValue.ItemClass.Name;
             try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
             Debug.Log($"[SVD] demo furnace: placed {fplaced}, fuel {(coal != null)}, out {fout} x{fs.output.count}, burning {fs.burnLeft:0.0}s");
             if (fplaced && fout == "mc_iron_ingot") MeltyTest.Pass("furnace"); else MeltyTest.Fail("furnace", $"placed {fplaced}, out {fout ?? "nothing"}");
             try { GameManager.Instance.World.SetBlockRPC(fpos, BlockValue.Air); } catch { }
 
+            // ---- every Minecraft block: a sample wall in front of Steve, drawn with Minecraft's textures ----
+            MeltyTest.SetPhase("bloques");
+            ThirdPerson(p, false);
+            var rows = SteveDaysToDie.Ryan.Sheets.Blocks;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            Vector3i basePos = World.worldToBlockPos(p.position + fwd * 5f);
+            var wall = new List<Vector3i>();
+            int placedBlocks = 0;
+            for (int i = 0; i < rows.Length; i++)
+            {
+                Vector3 o = side * ((i % 12) - 6) + Vector3.up * (i / 12);
+                var pos = basePos + new Vector3i(Mathf.RoundToInt(o.x), Mathf.RoundToInt(o.y), Mathf.RoundToInt(o.z));
+                try { var bv = Block.GetBlockValue(rows[i].block7d); if (!bv.isair) { GameManager.Instance.World.SetBlockRPC(pos, bv); placedBlocks++; wall.Add(pos); } } catch { }
+            }
+            yield return Wait(3f);
+            int drawn = 0;
+            foreach (var pos in wall) if (SteveDaysToDie.Ryan.BlockOverlay.RowAt(pos) >= 0) drawn++;
+            yield return Shot("pared-de-bloques");
+            Debug.Log($"[SVD] demo blocks: {rows.Length} kinds, placed {placedBlocks}, drawn as Minecraft {drawn}");
+            if (placedBlocks == rows.Length && drawn == placedBlocks) MeltyTest.Pass("mc-blocks");
+            else MeltyTest.Fail("mc-blocks", $"kinds {rows.Length}, placed {placedBlocks}, drawn {drawn}");
+            // the white preview while holding a block
+            var stoneItem = ItemClass.GetItem("mc_stone");
+            if (stoneItem != null && !stoneItem.IsEmpty()) { p.inventory.SetItem(6, new ItemStack(stoneItem, 8)); Hold(p, 6); yield return Wait(1.5f); yield return Shot("vista-previa-piedra"); }
+            foreach (var pos in wall) { try { GameManager.Instance.World.SetBlockRPC(pos, BlockValue.Air); } catch { } }
+
             // ---- Minecraft things in the hand: a block (crafting table) and a flat item (stick) ----
             MeltyTest.SetPhase("mano-minecraft");
-            foreach (var (slot, id) in new[] { (7, "mc_crafting_table"), (8, "mc_stick") })
+            foreach (var (slot, id) in new[] { (7, "mc_crafting_table"), (8, "mc_stick"), (8, "mc_wooden_pickaxe"), (8, "mc_iron_sword"), (8, "mc_stone_axe"), (8, "mc_torch") })
             {
                 var iv = ItemClass.GetItem(id);
                 if (iv == null || iv.IsEmpty()) continue;

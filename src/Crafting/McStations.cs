@@ -36,27 +36,23 @@ public class BlockMcCraftingTable : Block
 
     public override void OnBlockAdded(WorldBase _world, Chunk _chunk, Vector3i _blockPos, BlockValue _blockValue, PlatformUserIdentifierAbs _addedByPlayer)
     {
-        base.OnBlockAdded(_world, _chunk, _blockPos, _blockValue, _addedByPlayer);
-        SteveDaysToDie.Crafting.McBlockLook.Add(_blockPos, "crafting_table");
+        base.OnBlockAdded(_world, _chunk, _blockPos, _blockValue, _addedByPlayer); 
         Debug.Log("[SVD] crafting table added at " + _blockPos);
     }
 
     public override void OnBlockLoaded(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue)
     {
-        base.OnBlockLoaded(_world, _blockPos, _blockValue);
-        SteveDaysToDie.Crafting.McBlockLook.Add(_blockPos, "crafting_table");
+        base.OnBlockLoaded(_world, _blockPos, _blockValue); 
     }
 
     public override void OnBlockRemoved(WorldBase _world, Chunk _chunk, Vector3i _blockPos, BlockValue _blockValue)
     {
-        base.OnBlockRemoved(_world, _chunk, _blockPos, _blockValue);
-        SteveDaysToDie.Crafting.McBlockLook.Remove(_blockPos);
+        base.OnBlockRemoved(_world, _chunk, _blockPos, _blockValue); 
     }
 
     public override void OnBlockUnloaded(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue)
     {
-        base.OnBlockUnloaded(_world, _blockPos, _blockValue);
-        SteveDaysToDie.Crafting.McBlockLook.Remove(_blockPos);
+        base.OnBlockUnloaded(_world, _blockPos, _blockValue); 
     }
 }
 
@@ -125,6 +121,75 @@ namespace SteveDaysToDie.Crafting
             }
             foreach (var r in _relight) _ids[r.Item1] = r.Item2;
             _relight.Clear();
+        }
+    }
+}
+
+namespace SteveDaysToDie.Crafting
+{
+    /// <summary>
+    /// How 7 Days shows a Minecraft block outside the world: the white see-through PREVIEW while placing it shows
+    /// Minecraft's texture (pale, see-through), and a DROPPED block is a small Minecraft cube instead of 7 Days' sack.
+    /// (ItemClassBlock.CreateMesh makes both: purpose Preview / Drop.)
+    /// </summary>
+    [HarmonyLib.HarmonyPatch(typeof(ItemClassBlock), "CreateMesh")]
+    public static class McBlockPreview
+    {
+        static readonly Dictionary<string, Mesh> _shifted = new Dictionary<string, Mesh>();
+        static readonly Dictionary<string, Material> _ghost = new Dictionary<string, Material>();
+
+        static string McId(BlockValue bv)
+        {
+            try { string n = bv.Block?.GetBlockName(); return n != null && n.StartsWith("mc_") && Ryan.Items.Block(n.Substring(3)) != null ? n.Substring(3) : null; }
+            catch { return null; }
+        }
+
+        // the cube from 0 to 1, like 7 Days' own block meshes (Ryan's mesh is centred)
+        static Mesh Shifted(string id)
+        {
+            if (_shifted.TryGetValue(id, out var m)) return m;
+            var src = Ryan.ItemMeshes.Mesh(id);
+            if (src == null) return null;
+            m = Object.Instantiate(src);
+            var v = m.vertices;
+            for (int i = 0; i < v.Length; i++) v[i] += new Vector3(0.5f, 0.5f, 0.5f);
+            m.vertices = v; m.RecalculateBounds();
+            _shifted[id] = m;
+            return m;
+        }
+
+        static void Postfix(BlockValue _blockValue, BlockShape.MeshPurpose _purpose, ref Transform __result)
+        {
+            if (__result == null || !Ryan.Mc.Ready) return;
+            string id = McId(_blockValue);
+            if (id == null) return;
+            try
+            {
+                if (_purpose == BlockShape.MeshPurpose.Preview)
+                {
+                    var mesh = Shifted(id);
+                    if (mesh == null) return;
+                    if (!_ghost.TryGetValue(id, out var mat))
+                        _ghost[id] = mat = Ryan.Mats.Blend(Ryan.Atlas.Texture, new Color(1f, 1f, 1f, 0.55f));    // pale and see-through
+                    foreach (var mf in __result.GetComponentsInChildren<MeshFilter>(true))
+                    {
+                        mf.sharedMesh = mesh;
+                        var mr = mf.GetComponent<MeshRenderer>();
+                        if (mr != null) mr.sharedMaterial = mat;
+                    }
+                }
+                else if (_purpose == BlockShape.MeshPurpose.Drop)
+                {
+                    foreach (var r in __result.GetComponentsInChildren<Renderer>(true)) r.enabled = false;   // 7 Days' sack
+                    var go = new GameObject("SVD_McDrop_" + id);
+                    go.transform.SetParent(__result, false);
+                    go.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+                    go.transform.localScale = Vector3.one * 0.25f;                                       // Minecraft's dropped block size
+                    go.AddComponent<MeshFilter>().sharedMesh = Ryan.ItemMeshes.Mesh(id);
+                    go.AddComponent<MeshRenderer>().sharedMaterial = Ryan.ItemMeshes.Material(id, litInWorld: true);
+                }
+            }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] block preview " + id + ": " + ex.Message); }
         }
     }
 }

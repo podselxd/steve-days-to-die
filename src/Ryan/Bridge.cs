@@ -8,9 +8,14 @@ using UnityEngine;
 
 namespace SteveDaysToDie.Ryan
 {
-    public static class Sheets
+    public static partial class Sheets
     {
-        public struct BlockRow { public string render, model, tint, id; }
+        public struct BlockRow
+        {
+            public string id, block7d, model, render, material7d, tool, drop, sound, tint, special;
+            public int maxDamage7d, minTier, dropCount, light;
+            public float hardness;
+        }
     }
 
     public static class Items
@@ -22,6 +27,8 @@ namespace SteveDaysToDie.Ryan
         {
             if (string.IsNullOrEmpty(id)) return null;
             if (_blocks.TryGetValue(id, out var row)) return row;
+            foreach (var r in Sheets.Blocks)                       // Ryan's block sheet first (sheets/mc_blocks.json)
+                if (r.id == id) { _blocks[id] = r; return r; }
             row = null;
             try
             {
