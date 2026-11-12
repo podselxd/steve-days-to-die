@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v1.0.0 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v1.0.1 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
