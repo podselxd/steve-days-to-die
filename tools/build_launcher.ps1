@@ -13,4 +13,5 @@ Copy-Item $zip (Join-Path $root "launcher\payload.zip") -Force
 dotnet build (Join-Path $root "launcher\SteveVsZombiesLauncher.csproj") -c Release -nologo -v q "-p:Version=$Version" -o (Join-Path $env:TEMP "claude\svz_launcher")
 if ($LASTEXITCODE -ne 0) { throw "launcher build failed" }
 Copy-Item (Join-Path $env:TEMP "claude\svz_launcher\SteveVsZombies.exe") (Join-Path $root "dist\SteveVsZombies.exe") -Force
-Get-Item (Join-Path $root "dist\SteveVsZombies.exe") | Select-Object Name, Length
+Copy-Item (Join-Path $root "dist\SteveVsZombies.exe") (Join-Path $root "dist\SteveDaysToDie-Launcher.exe") -Force   # the name players see on GitHub
+Get-Item (Join-Path $root "dist\SteveDaysToDie-Launcher.exe") | Select-Object Name, Length
