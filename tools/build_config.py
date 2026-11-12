@@ -153,7 +153,7 @@ for n in _names:
     if "ingredient" in r: _mcids |= _ing(r["ingredient"])
 _mcitems = {os.path.basename(n)[:-5] for n in _names if n.startswith("assets/minecraft/items/") and n.endswith(".json")}
 _mcids = sorted(i for i in _mcids if i in _mcitems and not i.endswith("_spawn_egg"))
-_MCBLOCKS = {"crafting_table"}        # real 7 Days blocks in Config/blocks.xml (their item comes with the block)
+_MCBLOCKS = {"crafting_table", "furnace", "smoker", "blast_furnace"}        # real 7 Days blocks in Config/blocks.xml (their item comes with the block)
 
 def _kind(i):
     for tool in ("pickaxe", "axe", "shovel", "hoe", "sword"):

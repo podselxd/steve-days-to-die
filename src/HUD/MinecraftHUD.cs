@@ -11,7 +11,7 @@ namespace SteveDaysToDie
     /// </summary>
     public class MinecraftHUD : MonoBehaviour
     {
-        const KeyCode DefaultToggleKey = KeyCode.Alpha0;   // the 0 key: it belonged to the removed 10th slot
+        const KeyCode DefaultToggleKey = KeyCode.BackQuote;   // the 0 key: it belonged to the removed 10th slot
 
         EntityPlayerLocal _player;
         GUIStyle _countStyle, _countShadowStyle, _badgeStyle, _nameStyle, _nameShadowStyle;

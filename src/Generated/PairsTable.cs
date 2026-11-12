@@ -21,7 +21,7 @@ namespace SteveDaysToDie.Generated
             { "resourcePaper", "paper" },   // exacto
             { "resourceCloth", "white_wool" },   // aproximado
             { "resourceYuccaFibers", "string" },   // aproximado
-            { "resourceWood", "stick" },   // aproximado
+            { "resourceWood", "oak_log" },   // aproximado
             { "resourceClayLump", "dirt" },   // aproximado
             { "resourceRockSmall", "gravel" },   // aproximado
             { "resourceCrushedSand", "sand" },   // exacto

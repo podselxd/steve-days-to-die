@@ -44,7 +44,7 @@ namespace SteveVsZombiesLauncher
 
         public static readonly KeyBind[] Keys =
         {
-            new KeyBind { Key = "tecla_alternar", Label = "Alternar objeto 7 Days / Minecraft", Default = "Alpha0" },
+            new KeyBind { Key = "tecla_alternar", Label = "Alternar objeto 7 Days / Minecraft", Default = "BackQuote" },
             new KeyBind { Key = "tecla_vista_frontal", Label = "Cámara (como F5 de Minecraft)", Default = "F5" },
             new KeyBind { Key = "tecla_adelante", Label = "Avanzar (para el doble toque)", Default = "W" },
         };

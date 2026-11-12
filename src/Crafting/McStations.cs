@@ -38,6 +38,7 @@ public class BlockMcCraftingTable : Block
     {
         base.OnBlockAdded(_world, _chunk, _blockPos, _blockValue, _addedByPlayer);
         SteveDaysToDie.Crafting.McBlockLook.Add(_blockPos, "crafting_table");
+        Debug.Log("[SVD] crafting table added at " + _blockPos);
     }
 
     public override void OnBlockLoaded(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue)
@@ -69,6 +70,9 @@ namespace SteveDaysToDie.Crafting
     {
         static readonly ConcurrentQueue<(Vector3i pos, string id)> _queue = new ConcurrentQueue<(Vector3i, string)>();
         static readonly Dictionary<Vector3i, GameObject> _shown = new Dictionary<Vector3i, GameObject>();
+        static readonly Dictionary<Vector3i, string> _ids = new Dictionary<Vector3i, string>();   // what each one shows now
+        static int _made;
+        static readonly List<(Vector3i, string)> _relight = new List<(Vector3i, string)>();
 
         public static void Add(Vector3i pos, string mcId) => _queue.Enqueue((pos, mcId));
         public static void Remove(Vector3i pos) => _queue.Enqueue((pos, null));
@@ -89,11 +93,38 @@ namespace SteveDaysToDie.Crafting
                     mr.sharedMaterial = Ryan.ItemMeshes.Material(q.id, litInWorld: true);
                     go.transform.localScale = Vector3.one * 1.004f;          // just outside the 7 Days block
                     _shown[q.pos] = go;
+                    _ids[q.pos] = q.id;
+                    if (_made++ < 20) Debug.Log("[SVD] block look: " + q.id + " at " + q.pos + " (mesh " + (go.GetComponent<MeshFilter>().sharedMesh != null) + ", shader " + mr.sharedMaterial?.shader?.name + ")");
                 }
                 catch (System.Exception ex) { Debug.LogWarning("[SVD] block look " + q.id + ": " + ex.Message); }
             }
             foreach (var kv in _shown)
-                if (kv.Value != null) kv.Value.transform.position = kv.Key.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f) - Origin.position;
+            {
+                if (kv.Value == null) continue;
+                kv.Value.transform.position = kv.Key.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f) - Origin.position;
+                // furnaces light up while they burn (Minecraft's furnace_on / smoker_on / blast_furnace_on)
+                if (_ids.TryGetValue(kv.Key, out var id) && (id.StartsWith("furnace") || id.StartsWith("smoker") || id.StartsWith("blast_furnace")))
+                {
+                    string kind = id.EndsWith("_on") ? id.Substring(0, id.Length - 3) : id;
+                    string want = McFurnaces.Burning(kv.Key) ? kind + "_on" : kind;
+                    if (want != id)
+                    {
+                        try
+                        {
+                            var mesh = Ryan.ItemMeshes.Mesh(want);
+                            if (mesh != null)
+                            {
+                                kv.Value.GetComponent<MeshFilter>().sharedMesh = mesh;
+                                kv.Value.GetComponent<MeshRenderer>().sharedMaterial = Ryan.ItemMeshes.Material(want, litInWorld: true);
+                            }
+                        }
+                        catch { }
+                        _relight.Add((kv.Key, want));
+                    }
+                }
+            }
+            foreach (var r in _relight) _ids[r.Item1] = r.Item2;
+            _relight.Clear();
         }
     }
 }

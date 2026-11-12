@@ -44,6 +44,7 @@ namespace SteveVsZombiesLauncher
         // pages
         readonly Panel _home = new Panel();
         readonly Skin3D _homeSkin = new Skin3D(), _bigSkin = new Skin3D();
+        readonly Label _skinNameLabel = new Label();
         readonly FlowLayoutPanel _skinList = new FlowLayoutPanel();
         readonly Label _skinTitle = new Label();
 
@@ -104,7 +105,7 @@ namespace SteveVsZombiesLauncher
             AddLink("Quitar el mod del juego", 2, Uninstall);
 
             // the old toggle key was the Spanish keyboard's Ñ, which also switches 7 Days to third person
-            try { if (LauncherSettings.Get("tecla_alternar", "Alpha0").Equals("BackQuote", StringComparison.OrdinalIgnoreCase)) LauncherSettings.Set("tecla_alternar", "Alpha0"); } catch { }
+            try { if (LauncherSettings.Get("tecla_alternar", "BackQuote").Equals("Alpha0", StringComparison.OrdinalIgnoreCase)) LauncherSettings.Set("tecla_alternar", "BackQuote"); } catch { }
             try { if (LauncherSettings.Get("tecla_vista_frontal", "F5").Equals("Insert", StringComparison.OrdinalIgnoreCase)) LauncherSettings.Set("tecla_vista_frontal", "F5"); } catch { }
 
             BuildHome();
@@ -271,13 +272,22 @@ namespace SteveVsZombiesLauncher
             _pages["Inicio"] = _home;
             _content.Controls.Add(_home);
             _home.Paint += PaintHome;
-            _homeSkin.Size = new Size(220, 330);
-            _home.Controls.Add(_homeSkin);
-            _home.Resize += (s, e) => _homeSkin.Location = new Point(_home.Width - D(250), D(24));
-            var b = new Button(); Style(b, "Cambiar skin…", 10.5f); b.Size = new Size(180, 38);
+            // your Steve, small, in the grey bar at the bottom (right of JUGAR), so the background shows whole
+            _homeSkin.Size = new Size(64, 100);
+            _homeSkin.BackColor = Bar;
+            _bottom.Controls.Add(_homeSkin);
+            var b = new Button(); Style(b, "Cambiar skin…", 10f); b.Size = new Size(150, 34);
             b.Click += (s, e) => ShowPage("Skin");
-            _home.Controls.Add(b);
-            _home.Resize += (s, e) => b.Location = new Point(_home.Width - D(230), _home.Height - D(56));
+            _bottom.Controls.Add(b);
+            _bottom.Resize += (s, e) =>
+            {
+                _homeSkin.Location = new Point(_bottom.Width - D(84), D(6));
+                b.Location = new Point(_bottom.Width - D(84) - D(160), _bottom.Height / 2 - D(4));
+                _skinNameLabel.Location = new Point(_bottom.Width - D(84) - D(160), _bottom.Height / 2 - D(26));
+            };
+            _skinNameLabel.AutoSize = true; _skinNameLabel.ForeColor = Grey; _skinNameLabel.BackColor = Bar;
+            _skinNameLabel.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+            _bottom.Controls.Add(_skinNameLabel);
         }
 
         void PaintHome(object sender, PaintEventArgs e)
@@ -302,7 +312,6 @@ namespace SteveVsZombiesLauncher
                         for (int xx = ((yy / 16) % 2) * 8; xx < w; xx += 16) g.FillRectangle(dot, xx, yy, 8, 8);
             }
 
-            Draw(g, _skinName ?? "", 10, FontStyle.Bold, Grey, w - 230, h - 82);
         }
 
         // ---- Skin ----
@@ -543,6 +552,7 @@ namespace SteveVsZombiesLauncher
             _homeSkin.Skin = _skin; _bigSkin.Skin = _skin;
             oldSkin?.Dispose();
             _skinTitle.Text = _skinName ?? "";
+            _skinNameLabel.Text = _skinName ?? "";
             if (Logo != null) Icon = Logo;
             else if (_skin != null)
                 try { using (var head = new Bitmap(16, 16)) { using (var g = Graphics.FromImage(head)) { g.InterpolationMode = InterpolationMode.NearestNeighbor; g.PixelOffsetMode = PixelOffsetMode.Half; g.DrawImage(_skin, new Rectangle(0, 0, 16, 16), new Rectangle(8, 8, 8, 8), GraphicsUnit.Pixel); g.DrawImage(_skin, new Rectangle(0, 0, 16, 16), new Rectangle(40, 8, 8, 8), GraphicsUnit.Pixel); } Icon = Icon.FromHandle(head.GetHicon()); } }

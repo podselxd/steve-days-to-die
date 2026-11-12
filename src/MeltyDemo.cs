@@ -240,7 +240,7 @@ namespace SteveDaysToDie
             if (inv != null && SteveDaysToDie.McInv.McInventory.IsOpen)
             {
                 var planks = ItemClass.GetItem("woodShapes:VariantHelper");
-                var wood = ItemClass.GetItem("resourceWood");
+                var wood = ItemClass.GetItem("mc_stick");          // 7 Days wood is a log now: sticks are Minecraft's
                 var g = new ItemStack[9];
                 g[0] = new ItemStack(planks, 1); g[1] = new ItemStack(planks, 1); g[2] = new ItemStack(planks, 1);
                 g[4] = new ItemStack(wood, 1); g[7] = new ItemStack(wood, 1);
@@ -256,6 +256,26 @@ namespace SteveDaysToDie
             if (placed && pick == "mc_wooden_pickaxe" && picks > 0) MeltyTest.Pass("crafting-table");
             else MeltyTest.Fail("crafting-table", $"placed {placed}, made {pick ?? "nothing"}, pickaxes {picks}");
             try { GameManager.Instance.World.SetBlockRPC(tablePos, BlockValue.Air); } catch { }
+
+            // ---- Minecraft's furnace: raw iron + 7 Days coal -> iron ingot ----
+            MeltyTest.SetPhase("horno");
+            Vector3i fpos = tablePos + new Vector3i(1, 0, 0);
+            bool fplaced = false;
+            try { var fb = Block.GetBlockValue("mc_furnace"); GameManager.Instance.World.SetBlockRPC(fpos, fb); fplaced = !fb.isair; } catch { }
+            yield return Wait(1f);
+            var fs = SteveDaysToDie.Crafting.McFurnaces.Get(fpos, "furnace");
+            var rawIron = ItemClass.GetItem("mc_raw_iron"); var coal = ItemClass.GetItem("resourceCoal");
+            if (rawIron != null && !rawIron.IsEmpty()) fs.input = new ItemStack(rawIron, 1);
+            if (coal != null && !coal.IsEmpty()) fs.fuel = new ItemStack(coal, 1);
+            SteveDaysToDie.McInv.McInventory.OpenFurnace(p, fpos, "furnace");
+            yield return Wait(4f);
+            yield return Shot("horno-fundiendo");
+            yield return Wait(7.5f);
+            string fout = fs.output.IsEmpty() ? null : fs.output.itemValue.ItemClass.Name;
+            try { p.PlayerUI.windowManager.CloseAllOpenModalWindows(); } catch { }
+            Debug.Log($"[SVD] demo furnace: placed {fplaced}, fuel {(coal != null)}, out {fout} x{fs.output.count}, burning {fs.burnLeft:0.0}s");
+            if (fplaced && fout == "mc_iron_ingot") MeltyTest.Pass("furnace"); else MeltyTest.Fail("furnace", $"placed {fplaced}, out {fout ?? "nothing"}");
+            try { GameManager.Instance.World.SetBlockRPC(fpos, BlockValue.Air); } catch { }
 
             // ---- Minecraft things in the hand: a block (crafting table) and a flat item (stick) ----
             MeltyTest.SetPhase("mano-minecraft");
@@ -290,7 +310,7 @@ namespace SteveDaysToDie
                 string woodAs = wood != null ? Crafting.McRecipes.McId(new ItemStack(wood, 1)) : null;
                 var res = table != null ? Crafting.McItems.Stack(table.result, table.count) : null;
                 Debug.Log($"[SVD] crafting check: mc items {items}, recipes {n}, 4 planks -> {table?.result} x{table?.count}, 7 Days wood counts as {woodAs}, result item {res?.itemValue?.ItemClass?.Name}");
-                if (items && n > 500 && table?.result == "crafting_table" && woodAs == "stick" && res != null) MeltyTest.Pass("mc-crafting");
+                if (items && n > 500 && table?.result == "crafting_table" && woodAs == "oak_log" && res != null) MeltyTest.Pass("mc-crafting");
                 else MeltyTest.Fail("mc-crafting", $"items {items}, recipes {n}, planks -> {table?.result}, wood -> {woodAs}");
             }
             catch (System.Exception cex) { MeltyTest.Fail("mc-crafting", cex.Message); }

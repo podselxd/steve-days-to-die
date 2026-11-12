@@ -18,7 +18,7 @@
     {"id_7days": "resourcePaper", "id_minecraft": "paper", "relation": "exacto", "category": "material", "note": ""},
     {"id_7days": "resourceCloth", "id_minecraft": "white_wool", "relation": "aproximado", "category": "material", "note": "tela = lana"},
     {"id_7days": "resourceYuccaFibers", "id_minecraft": "string", "relation": "aproximado", "category": "material", "note": "fibra vegetal = hilo"},
-    {"id_7days": "resourceWood", "id_minecraft": "stick", "relation": "aproximado", "category": "material", "note": "madera suelta = palo; el bloque de madera es el par de los tablones"},
+    {"id_7days": "resourceWood", "id_minecraft": "oak_log", "relation": "aproximado", "category": "material", "note": "madera suelta = palo; el bloque de madera es el par de los tablones"},
     {"id_7days": "resourceClayLump", "id_minecraft": "dirt", "relation": "aproximado", "category": "material", "note": "regla del diseno: version Minecraft = tierra (se coloca); version 7 Days = arcilla (se cocina)"},
     {"id_7days": "resourceRockSmall", "id_minecraft": "gravel", "relation": "aproximado", "category": "material", "note": "piedras sueltas = grava"},
     {"id_7days": "resourceCrushedSand", "id_minecraft": "sand", "relation": "exacto", "category": "material", "note": ""},

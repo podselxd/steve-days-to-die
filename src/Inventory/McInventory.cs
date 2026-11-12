@@ -47,7 +47,7 @@ namespace SteveDaysToDie.McInv
         int _s;
         bool _blocking;
 
-        enum Kind { Belt, Bag, Armor, Craft, Result }
+        enum Kind { Belt, Bag, Armor, Craft, Result, FIn, FFuel, FOut }
         readonly ItemStack[] _craft = { ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(),
                                         ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone(), ItemStack.Empty.Clone() };
         bool _table;                                // Minecraft's crafting table window (3x3) instead of the inventory
@@ -55,8 +55,22 @@ namespace SteveDaysToDie.McInv
         Texture2D _invTex, _tableTex;
 
         /// <summary>A crafting table was used: open Minecraft's 3x3 window (an empty 7 Days window gives the cursor).</summary>
+        static Vector3i? _furnacePos;
+        static string _furnaceKind = "furnace";
+        bool InFurnace => _table && _furnacePos != null;
+        Crafting.FurnaceState Furnace => _furnacePos != null ? Crafting.McFurnaces.Get(_furnacePos.Value, _furnaceKind) : null;
+
+        /// <summary>A Minecraft furnace / smoker / blast furnace was used: open its window.</summary>
+        public static void OpenFurnace(EntityPlayerLocal p, Vector3i pos, string kind)
+        {
+            _furnacePos = pos; _furnaceKind = kind;
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
+            catch (Exception ex) { Debug.LogWarning("[SVD] furnace: " + ex.Message); }
+        }
+
         public static void OpenTable(EntityPlayerLocal p)
         {
+            _furnacePos = null;
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (Exception ex) { Debug.LogWarning("[SVD] crafting table: " + ex.Message); }
         }
@@ -134,6 +148,7 @@ namespace SteveDaysToDie.McInv
             if (_invTex == null) _invTex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/inventory.png");
             if (_tableTex == null) _tableTex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/crafting_table.png");
             _tex = _table ? _tableTex : _invTex;
+            if (InFurnace) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/" + _furnaceKind + ".png") ?? _tableTex;
         }
 
         void OnClose()
@@ -203,6 +218,9 @@ namespace SteveDaysToDie.McInv
                     case Kind.Bag: return s.idx < BagCount ? (_p.bag.ItemGrid[s.idx] ?? ItemStack.Empty) : ItemStack.Empty;
                     case Kind.Craft: return _craft[s.idx] ?? ItemStack.Empty;
                     case Kind.Result: return ResultStack() ?? ItemStack.Empty;
+                    case Kind.FIn: return Furnace?.input ?? ItemStack.Empty;
+                    case Kind.FFuel: return Furnace?.fuel ?? ItemStack.Empty;
+                    case Kind.FOut: return Furnace?.output ?? ItemStack.Empty;
                     default:
                         var v = _p.equipment.GetSlotItem(s.idx);
                         return v == null || v.IsEmpty() ? ItemStack.Empty : new ItemStack(v, 1);
@@ -220,6 +238,9 @@ namespace SteveDaysToDie.McInv
                 case Kind.Bag: _p.bag.SetSlot(s.idx, st); break;
                 case Kind.Craft: _craft[s.idx] = st; break;
                 case Kind.Result: break;
+                case Kind.FIn: if (Furnace != null) { Furnace.input = st; Crafting.McFurnaces.Changed(); } break;
+                case Kind.FFuel: if (Furnace != null) { Furnace.fuel = st; Crafting.McFurnaces.Changed(); } break;
+                case Kind.FOut: if (Furnace != null) { Furnace.output = st; Crafting.McFurnaces.Changed(); } break;
                 default: _p.equipment.SetSlotItem(s.idx, st.IsEmpty() ? ItemValue.None.Clone() : st.itemValue.Clone()); break;
             }
         }
@@ -227,7 +248,8 @@ namespace SteveDaysToDie.McInv
         bool Accepts(Slot s, ItemStack st)
         {
             if (st == null || st.IsEmpty()) return true;
-            if (s.kind == Kind.Result) return false;
+            if (s.kind == Kind.Result || s.kind == Kind.FOut) return false;                    // take only
+            if (s.kind == Kind.FFuel) return Crafting.McFurnaces.BurnSeconds(st) > 0f;          // only what burns
             if (s.kind != Kind.Armor) return true;
             var ic = st.itemValue.ItemClass;
             try { return ic is ItemClassArmor && _p.equipment.PreferredItemSlot(st) == s.idx; } catch { return false; }
@@ -303,6 +325,17 @@ namespace SteveDaysToDie.McInv
             if (from.kind == Kind.Belt || from.kind == Kind.Armor || from.kind == Kind.Craft) for (int i = 0; i < BagCount; i++) targets.Add(new Slot { kind = Kind.Bag, idx = i });
             if (from.kind == Kind.Bag || from.kind == Kind.Armor || from.kind == Kind.Craft) for (int i = 0; i < 9; i++) targets.Add(new Slot { kind = Kind.Belt, idx = i });
 
+            if (InFurnace && (from.kind == Kind.Bag || from.kind == Kind.Belt))
+            {
+                var probe = new Crafting.FurnaceState { kind = _furnaceKind, input = st };
+                if (Crafting.McFurnaces.SmeltFor(probe) != null) targets.Insert(0, new Slot { kind = Kind.FIn });
+                else if (Crafting.McFurnaces.BurnSeconds(st) > 0f) targets.Insert(0, new Slot { kind = Kind.FFuel });
+            }
+            if (from.kind == Kind.FIn || from.kind == Kind.FFuel || from.kind == Kind.FOut)
+            {
+                for (int i = 0; i < BagCount; i++) targets.Add(new Slot { kind = Kind.Bag, idx = i });
+                for (int i = 0; i < 9; i++) targets.Add(new Slot { kind = Kind.Belt, idx = i });
+            }
             var left = st.Clone();
             foreach (var t in targets)                  // first top up matching stacks...
             {
@@ -496,7 +529,27 @@ namespace SteveDaysToDie.McInv
             {
                 GUI.DrawTextureWithTexCoords(_panel, _tex, new Rect(0, 1f - H / 256f, W / 256f, H / 256f));
                 if (!_table) DrawSteve(px + 26 * s, py + 8 * s, s);
-                Label(px + (_table ? 28 : 97) * s, py + 6 * s, s, Ryan.Mc.T("container.crafting", "Crafting"), new Color(0.25f, 0.25f, 0.25f));
+                string title = InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
+                Label(px + (InFurnace ? 60 : _table ? 28 : 97) * s, py + 6 * s, s, title, new Color(0.25f, 0.25f, 0.25f));
+                if (InFurnace && Furnace != null)
+                {
+                    var f = Furnace;
+                    if (f.burnLeft > 0f && f.burnTotal > 0f)
+                    {
+                        int fh = Mathf.CeilToInt(13f * Mathf.Clamp01(f.burnLeft / f.burnTotal)) + 1;   // the flame, burning down
+                        // Minecraft 1.20.2+ keeps these as their own pictures: gui/sprites/container/<kind>/lit_progress.png
+                        var lit = Ryan.Mc.Tex("assets/minecraft/textures/gui/sprites/container/" + _furnaceKind + "/lit_progress.png");
+                        if (lit != null) GUI.DrawTextureWithTexCoords(new Rect(px + 56 * s, py + (36 + 14 - fh) * s, 14 * s, fh * s), lit, new Rect(0f, 0f, 1f, fh / 14f));
+                        else Sprite(px + 56 * s, py + (36 + 14 - fh) * s, s, 176, 14 - fh, 14, fh);
+                    }
+                    int aw = Mathf.RoundToInt(24f * Mathf.Clamp01(f.cook / Crafting.McFurnaces.CookSeconds(f.kind)));
+                    if (aw > 0)
+                    {
+                        var arrow = Ryan.Mc.Tex("assets/minecraft/textures/gui/sprites/container/" + _furnaceKind + "/burn_progress.png");
+                        if (arrow != null) GUI.DrawTextureWithTexCoords(new Rect(px + 79 * s, py + 34 * s, aw * s, 16 * s), arrow, new Rect(0f, 0f, aw / 24f, 1f));
+                        else Sprite(px + 79 * s, py + 34 * s, s, 176, 14, aw, 17);                 // older Minecraft: on the sheet
+                    }
+                }
                 if (BagRows > 3)
                 {
                     // a slim scrollbar just right of the backpack rows (the wheel moves it)
@@ -584,7 +637,13 @@ namespace SteveDaysToDie.McInv
                 for (int c = 0; c < 9; c++)
                     _slots.Add(new Slot { kind = Kind.Bag, idx = (_row + r) * 9 + c, x = 8 + c * 18, y = 84 + r * 18 });
             for (int c = 0; c < 9; c++) _slots.Add(new Slot { kind = Kind.Belt, idx = c, x = 8 + c * 18, y = 142 });
-            if (_table)
+            if (InFurnace)
+            {
+                _slots.Add(new Slot { kind = Kind.FIn, x = 56, y = 17 });
+                _slots.Add(new Slot { kind = Kind.FFuel, x = 56, y = 53 });
+                _slots.Add(new Slot { kind = Kind.FOut, x = 116, y = 35 });
+            }
+            else if (_table)
             {
                 for (int n = 0; n < 9; n++) _slots.Add(new Slot { kind = Kind.Craft, idx = n, x = 30 + n % 3 * 18, y = 17 + n / 3 * 18 });
                 _slots.Add(new Slot { kind = Kind.Result, idx = 0, x = 124, y = 35 });
@@ -631,6 +690,13 @@ namespace SteveDaysToDie.McInv
         {
             try { var n = st.itemValue.ItemClass.GetLocalizedItemName(); return string.IsNullOrEmpty(n) ? st.itemValue.ItemClass.Name : n; }
             catch { return ""; }
+        }
+
+        // a piece of the window's own texture (256x256 sheet) at pixel scale s
+        void Sprite(float x, float y, int s, int u, int v, int w, int h)
+        {
+            if (_tex == null || w <= 0 || h <= 0) return;
+            GUI.DrawTextureWithTexCoords(new Rect(x, y, w * s, h * s), _tex, new Rect(u / 256f, 1f - (v + h) / 256f, w / 256f, h / 256f));
         }
 
         static void Fill(Rect r, Color c)

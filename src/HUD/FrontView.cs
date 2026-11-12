@@ -76,6 +76,7 @@ namespace SteveDaysToDie.HUD
             try { Ryan.FirstPerson.LateUpdate(_player); } catch (System.Exception ex) { Debug.LogWarning("[SVD] Hand: " + ex.Message); }
             Ryan.MiningLook.LateUpdate(_player);
             Crafting.McBlockLook.Tick();
+            Crafting.McFurnaces.Tick();
             if (_player == null || !_player.IsAlive()) return;
             if (Mode != 0) return;      // the third person is the game's own camera (ApplyCameraDistance / FrontCamera)
             if (!_on) return;
@@ -158,9 +159,8 @@ namespace SteveDaysToDie.HUD
         {
             static bool Prefix(EntityPlayerLocal __instance)
             {
-                if (!SteveModel.Enabled || Instance == null) return true;
-                Instance.CycleCamera();
-                return false;
+                // F5 is the camera; the game's own camera key (the Ñ) now switches items between the games
+                return !SteveModel.Enabled;
             }
         }
 

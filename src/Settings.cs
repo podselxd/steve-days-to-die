@@ -42,8 +42,8 @@ namespace SteveDaysToDie
             "tamano_hud=chico",
             "# tecla_vista_frontal: la camara, como F5 en Minecraft: primera persona, tercera por detras, de frente",
             "tecla_vista_frontal=F5",
-            "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (Alpha0 = la tecla 0)",
-            "tecla_alternar=Alpha0",
+            "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (BackQuote = la Ñ en teclado espanol, ` en ingles)",
+            "tecla_alternar=BackQuote",
         });
 
         // one efecto_<group> line per group of 7 Days effects (sheets/blocked_buffs.json)
@@ -79,10 +79,10 @@ namespace SteveDaysToDie
                     lines.Add(d);
                     added = true;
                 }
-                if (_values.TryGetValue("tecla_alternar", out var tk) && tk.Equals("BackQuote", StringComparison.OrdinalIgnoreCase))
+                if (_values.TryGetValue("tecla_alternar", out var tk) && tk.Equals("Alpha0", StringComparison.OrdinalIgnoreCase))
                 {
                     int i = lines.FindIndex(x => x.Trim().StartsWith("tecla_alternar", StringComparison.OrdinalIgnoreCase));
-                    if (i >= 0) { lines[i] = "tecla_alternar=Alpha0"; added = true; }
+                    if (i >= 0) { lines[i] = "tecla_alternar=BackQuote"; added = true; }
                 }
                 if (_values.TryGetValue("tecla_vista_frontal", out var fk) && fk.Equals("Insert", StringComparison.OrdinalIgnoreCase))
                 {
