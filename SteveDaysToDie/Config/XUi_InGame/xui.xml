@@ -5,5 +5,9 @@
     <window_group name="mcScreen" actionset="false">
       <window name="windowMcScreen"/>
     </window_group>
+    <!-- the same for the guide book (src/HUD/McGuideBook.cs draws Minecraft's book on top) -->
+    <window_group name="mcBook" actionset="false">
+      <window name="windowMcBook"/>
+    </window_group>
   </append>
 </configs>

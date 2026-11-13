@@ -153,6 +153,8 @@ namespace SteveDaysToDie.Crafting
             foreach (var (res, from, ingot) in new[] { ("sb_copper_backpack", "sb_backpack", "copper_ingot"), ("sb_iron_backpack", "sb_copper_backpack", "iron_ingot"),
                                                        ("sb_gold_backpack", "sb_iron_backpack", "gold_ingot"), ("sb_diamond_backpack", "sb_gold_backpack", "diamond") })
                 Shaped(res, new[] { "III", "IBI", "III" }, new Dictionary<char, HashSet<string>> { { 'I', S(ingot) }, { 'B', S(from) } });
+            // the guide book (src/HUD/McGuideBook.cs): a book and a feather
+            _recipes.Add(new Recipe { name = "steve:guide_book", shaped = false, ingredients = new List<HashSet<string>> { S("book"), S("feather") }, result = "written_book", count = 1 });
             _recipes.Add(new Recipe { name = "sophisticatedbackpacks:netherite_backpack", shaped = false, ingredients = new List<HashSet<string>> { S("sb_diamond_backpack"), S("netherite_ingot") }, result = "sb_netherite_backpack", count = 1 });
             Debug.Log($"[SVD] Minecraft recipes: {_recipes.Count} crafting, {_smelts.Count} furnace");
         }

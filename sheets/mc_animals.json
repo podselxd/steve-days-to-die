@@ -110,7 +110,10 @@
     "MoveSpeedRand": "0, 0",
     "JumpMaxDistance": "1.2, 1.2"
    },
-   "health": 100
+   "health": 100,
+   "horde": true,
+   "ai": "creeper",
+   "damage": 0
   },
   {
    "id": "phantom",
@@ -130,7 +133,1197 @@
     "MoveSpeed": "0.5"
    },
    "health": 100,
+   "verified": "datos_ok",
+   "ai": "phantom",
+   "damage": 2
+  },
+  {
+   "id": "skeleton",
+   "class": "mcSkeleton",
+   "base": "zombieBoe",
+   "texture": "entity/skeleton/skeleton.png",
+   "drops": [
+    [
+     "bone",
+     2
+    ],
+    [
+     "arrow",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 100,
+   "verified": "datos_ok",
+   "ai": "ranged,sun",
+   "damage": 2
+  },
+  {
+   "id": "spider",
+   "class": "mcSpider",
+   "base": "zombieSpider",
+   "texture": "entity/spider/spider.png",
+   "drops": [
+    [
+     "string",
+     2
+    ],
+    [
+     "spider_eye",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeedAggro": "1.0, 1.0",
+    "MoveSpeedRand": "0, 0"
+   },
+   "health": 80,
+   "verified": "datos_ok",
+   "ai": "spider",
+   "damage": 2
+  },
+  {
+   "id": "cave_spider",
+   "class": "mcCaveSpider",
+   "base": "zombieSpider",
+   "texture": "entity/spider/cave_spider.png",
+   "drops": [
+    [
+     "string",
+     2
+    ],
+    [
+     "spider_eye",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeedAggro": "1.0, 1.0",
+    "MoveSpeedRand": "0, 0"
+   },
+   "health": 60,
+   "no_spawn": true,
+   "verified": "datos_ok",
+   "ai": "spider",
+   "scale": 0.7,
+   "damage": 2
+  },
+  {
+   "id": "slime",
+   "class": "mcSlime",
+   "base": "zombieBoe",
+   "texture": "entity/slime/slime.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.45, 0.45",
+    "MoveSpeedRand": "0, 0"
+   },
+   "health": 80,
+   "monster_weight": 0.3,
+   "verified": "datos_ok",
+   "ai": "slime",
+   "scale": 4,
+   "damage": 4
+  },
+  {
+   "id": "wolf",
+   "class": "mcWolf",
+   "base": "animalWolf",
+   "texture": "entity/wolf/wolf.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": false,
+   "no_spawn": true,
+   "health": 40,
+   "props": {
+    "AITask-1": [
+     "Look",
+     ""
+    ],
+    "AITask-2": [
+     "ApproachAndAttackTarget",
+     "class=EntityPlayer,15,EntityEnemy,15,EntityAnimalStag,15"
+    ],
+    "AITask-3": [
+     "Wander",
+     ""
+    ],
+    "AITask-4": [
+     "",
+     ""
+    ],
+    "AITask-5": [
+     "",
+     ""
+    ],
+    "AITask-6": [
+     "",
+     ""
+    ],
+    "AITask-7": [
+     "",
+     ""
+    ],
+    "AITask-8": [
+     "",
+     ""
+    ],
+    "AITarget-1": [
+     "SetAsTargetIfHurt",
+     ""
+    ],
+    "AITarget-2": [
+     "BlockingTargetTask",
+     ""
+    ],
+    "AITarget-3": [
+     "",
+     ""
+    ],
+    "AITarget-4": [
+     "",
+     ""
+    ]
+   },
+   "verified": "datos_ok",
+   "damage": 4
+  },
+  {
+   "id": "slime",
+   "key": "slime_medium",
+   "class": "mcSlimeMedium",
+   "base": "zombieBoe",
+   "texture": "entity/slime/slime.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": true,
+   "no_spawn": true,
+   "props": {
+    "MoveSpeed": "0.3",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0"
+   },
+   "health": 20,
+   "verified": "datos_ok",
+   "ai": "slime",
+   "scale": 2,
+   "damage": 2
+  },
+  {
+   "id": "slime",
+   "key": "slime_small",
+   "class": "mcSlimeSmall",
+   "base": "zombieBoe",
+   "texture": "entity/slime/slime.png",
+   "drops": [
+    [
+     "slime_ball",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "no_spawn": true,
+   "props": {
+    "MoveSpeed": "0.35",
+    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeedRand": "0, 0"
+   },
+   "health": 5,
+   "verified": "datos_ok",
+   "ai": "slime",
+   "damage": 0
+  },
+  {
+   "id": "rabbit",
+   "class": "mcRabbit",
+   "base": "animalRabbit",
+   "texture": "entity/rabbit/rabbit_brown.png",
+   "drops": [
+    [
+     "rabbit",
+     1
+    ],
+    [
+     "rabbit_hide",
+     1
+    ]
+   ],
+   "weight": 15,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.2",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 15,
+   "scale": 0.6,
+   "biomes": [
+    "pine_forest",
+    "snow",
+    "desert"
+   ],
    "verified": "datos_ok"
+  },
+  {
+   "id": "fox",
+   "class": "mcFox",
+   "base": "animalDoe",
+   "texture": "entity/fox/fox.png",
+   "drops": [],
+   "weight": 8,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.2",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 50,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok",
+   "damage": 2
+  },
+  {
+   "id": "fox",
+   "key": "fox_snow",
+   "class": "mcFoxSnow",
+   "base": "animalDoe",
+   "texture": "entity/fox/fox_snow.png",
+   "drops": [],
+   "weight": 8,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.2",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 50,
+   "biomes": [
+    "snow"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "goat",
+   "class": "mcGoat",
+   "base": "animalDoe",
+   "texture": "entity/goat/goat.png",
+   "drops": [],
+   "weight": 10,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 50,
+   "biomes": [
+    "snow"
+   ],
+   "verified": "datos_ok",
+   "damage": 2
+  },
+  {
+   "id": "horse",
+   "class": "mcHorse",
+   "base": "animalDoe",
+   "texture": "entity/horse/horse_brown.png",
+   "drops": [
+    [
+     "leather",
+     1
+    ]
+   ],
+   "weight": 6,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.2",
+    "MoveSpeedPanic": "0.9"
+   },
+   "health": 110,
+   "scale": 1.1,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "llama",
+   "class": "mcLlama",
+   "base": "animalDoe",
+   "texture": "entity/llama/llama_creamy.png",
+   "drops": [
+    [
+     "leather",
+     1
+    ]
+   ],
+   "weight": 4,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 110,
+   "biomes": [
+    "snow",
+    "pine_forest"
+   ],
+   "verified": "datos_ok",
+   "damage": 1
+  },
+  {
+   "id": "camel",
+   "class": "mcCamel",
+   "base": "animalDoe",
+   "texture": "entity/camel/camel.png",
+   "drops": [],
+   "weight": 4,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 160,
+   "biomes": [
+    "desert"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "armadillo",
+   "class": "mcArmadillo",
+   "base": "animalRabbit",
+   "texture": "entity/armadillo/armadillo.png",
+   "drops": [
+    [
+     "armadillo_scute",
+     1
+    ]
+   ],
+   "weight": 8,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 60,
+   "biomes": [
+    "desert",
+    "wasteland"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "sniffer",
+   "class": "mcSniffer",
+   "base": "animalDoe",
+   "texture": "entity/sniffer/sniffer.png",
+   "drops": [],
+   "weight": 1,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 70,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "frog",
+   "class": "mcFrog",
+   "base": "animalRabbit",
+   "texture": "entity/frog/frog_temperate.png",
+   "drops": [],
+   "weight": 6,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 50,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "turtle",
+   "class": "mcTurtle",
+   "base": "animalRabbit",
+   "texture": "entity/turtle/turtle.png",
+   "drops": [
+    [
+     "turtle_scute",
+     1
+    ]
+   ],
+   "weight": 2,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 150,
+   "biomes": [
+    "desert"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "panda",
+   "class": "mcPanda",
+   "base": "animalDoe",
+   "texture": "entity/panda/panda.png",
+   "drops": [
+    [
+     "bamboo",
+     1
+    ]
+   ],
+   "weight": 2,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 100,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok",
+   "damage": 6
+  },
+  {
+   "id": "cat",
+   "key": "ocelot",
+   "class": "mcOcelot",
+   "base": "animalDoe",
+   "texture": "entity/cat/ocelot.png",
+   "drops": [],
+   "weight": 3,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.2",
+    "MoveSpeedPanic": "1.0"
+   },
+   "health": 50,
+   "scale": 0.8,
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cat",
+   "class": "mcCat",
+   "base": "animalRabbit",
+   "texture": "entity/cat/cat_tabby.png",
+   "drops": [
+    [
+     "string",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 50,
+   "scale": 0.8,
+   "no_spawn": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "villager",
+   "class": "mcVillager",
+   "base": "animalDoe",
+   "texture": "entity/villager/villager.png",
+   "drops": [],
+   "weight": 2,
+   "hostile": false,
+   "props": {
+    "AITask-2": [
+     "RunawayFromEntity",
+     "flags=zombie;safeFlags=timid"
+    ],
+    "MoveSpeed": "0.12",
+    "MoveSpeedPanic": "0.6"
+   },
+   "health": 100,
+   "scale": 0.9375,
+   "biomes": [
+    "pine_forest",
+    "desert",
+    "snow"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "villager",
+   "key": "wandering_trader",
+   "class": "mcWanderingTrader",
+   "base": "animalDoe",
+   "texture": "entity/wandering_trader/wandering_trader.png",
+   "drops": [],
+   "weight": 1,
+   "hostile": false,
+   "props": {
+    "AITask-2": [
+     "RunawayFromEntity",
+     "flags=zombie;safeFlags=timid"
+    ],
+    "MoveSpeed": "0.12",
+    "MoveSpeedPanic": "0.6"
+   },
+   "health": 100,
+   "scale": 0.9375,
+   "biomes": [
+    "pine_forest",
+    "desert"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "bat",
+   "class": "mcBat",
+   "base": "animalChicken",
+   "texture": "entity/bat/bat.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 30,
+   "scale": 0.35,
+   "ai": "fly",
+   "no_spawn": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "parrot",
+   "class": "mcParrot",
+   "base": "animalChicken",
+   "texture": "entity/parrot/parrot_red_blue.png",
+   "drops": [
+    [
+     "feather",
+     1
+    ]
+   ],
+   "weight": 2,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 30,
+   "ai": "fly",
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "bee",
+   "class": "mcBee",
+   "base": "animalChicken",
+   "texture": "entity/bee/bee.png",
+   "drops": [],
+   "weight": 4,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 50,
+   "ai": "fly",
+   "biomes": [
+    "pine_forest"
+   ],
+   "verified": "datos_ok",
+   "damage": 2
+  },
+  {
+   "id": "allay",
+   "class": "mcAllay",
+   "base": "animalChicken",
+   "texture": "entity/allay/allay.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   },
+   "health": 100,
+   "ai": "fly",
+   "no_spawn": true,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "polar_bear",
+   "class": "mcPolarBear",
+   "base": "animalBear",
+   "texture": "entity/bear/polarbear.png",
+   "drops": [
+    [
+     "cod",
+     1
+    ],
+    [
+     "salmon",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": false,
+   "props": {
+    "AITask-1": [
+     "Look",
+     ""
+    ],
+    "AITask-2": [
+     "ApproachAndAttackTarget",
+     "class=EntityPlayer,15,EntityEnemy,15"
+    ],
+    "AITask-3": [
+     "Wander",
+     ""
+    ],
+    "AITask-4": [
+     "",
+     ""
+    ],
+    "AITask-5": [
+     "",
+     ""
+    ],
+    "AITask-6": [
+     "",
+     ""
+    ],
+    "AITask-7": [
+     "",
+     ""
+    ],
+    "AITask-8": [
+     "",
+     ""
+    ],
+    "AITarget-1": [
+     "SetAsTargetIfHurt",
+     ""
+    ],
+    "AITarget-2": [
+     "BlockingTargetTask",
+     ""
+    ],
+    "AITarget-3": [
+     "",
+     ""
+    ],
+    "AITarget-4": [
+     "",
+     ""
+    ]
+   },
+   "health": 150,
+   "no_spawn": true,
+   "verified": "datos_ok",
+   "damage": 6
+  },
+  {
+   "id": "iron_golem",
+   "class": "mcIronGolem",
+   "base": "animalWolf",
+   "texture": "entity/iron_golem/iron_golem.png",
+   "drops": [
+    [
+     "iron_ingot",
+     4
+    ],
+    [
+     "poppy",
+     1
+    ]
+   ],
+   "weight": 1,
+   "hostile": false,
+   "props": {
+    "AITask-1": [
+     "Look",
+     ""
+    ],
+    "AITask-2": [
+     "ApproachAndAttackTarget",
+     "class=EntityZombie,20,EntityEnemyAnimal,20,EntityEnemy,20"
+    ],
+    "AITask-3": [
+     "Wander",
+     ""
+    ],
+    "AITask-4": [
+     "",
+     ""
+    ],
+    "AITask-5": [
+     "",
+     ""
+    ],
+    "AITask-6": [
+     "",
+     ""
+    ],
+    "AITask-7": [
+     "",
+     ""
+    ],
+    "AITask-8": [
+     "",
+     ""
+    ],
+    "AITarget-1": [
+     "SetAsTargetIfHurt",
+     ""
+    ],
+    "AITarget-2": [
+     "BlockingTargetTask",
+     ""
+    ],
+    "AITarget-3": [
+     "SetNearestEntityAsTarget",
+     "class=EntityZombie,16,16,EntityEnemyAnimal,16,16"
+    ],
+    "AITarget-4": [
+     "",
+     ""
+    ],
+    "MoveSpeed": "0.2",
+    "MoveSpeedAggro": "0.5, 0.5"
+   },
+   "health": 500,
+   "biomes": [
+    "pine_forest",
+    "desert",
+    "snow"
+   ],
+   "verified": "datos_ok",
+   "damage": 15
+  },
+  {
+   "id": "snow_golem",
+   "class": "mcSnowGolem",
+   "base": "animalDoe",
+   "texture": "entity/snow_golem/snow_golem.png",
+   "drops": [
+    [
+     "snowball",
+     8
+    ]
+   ],
+   "weight": 1,
+   "hostile": false,
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.1",
+    "MoveSpeedPanic": "0.4"
+   },
+   "health": 20,
+   "ai": "ranged",
+   "biomes": [
+    "snow"
+   ],
+   "verified": "datos_ok",
+   "damage": 0
+  },
+  {
+   "id": "witch",
+   "class": "mcWitch",
+   "base": "zombieBoe",
+   "texture": "entity/witch/witch.png",
+   "drops": [
+    [
+     "glass_bottle",
+     2
+    ],
+    [
+     "glowstone_dust",
+     2
+    ],
+    [
+     "redstone",
+     2
+    ],
+    [
+     "sugar",
+     2
+    ],
+    [
+     "stick",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 130,
+   "scale": 0.9375,
+   "ai": "ranged",
+   "monster_weight": 0.3,
+   "verified": "datos_ok",
+   "damage": 0
+  },
+  {
+   "id": "illager",
+   "key": "pillager",
+   "class": "mcPillager",
+   "base": "zombieBoe",
+   "texture": "entity/illager/pillager.png",
+   "drops": [
+    [
+     "arrow",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 120,
+   "scale": 0.9375,
+   "ai": "ranged",
+   "monster_weight": 0.3,
+   "verified": "datos_ok",
+   "damage": 0
+  },
+  {
+   "id": "illager",
+   "key": "vindicator",
+   "class": "mcVindicator",
+   "base": "zombieBoe",
+   "texture": "entity/illager/vindicator.png",
+   "drops": [
+    [
+     "emerald",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.7, 0.7",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 120,
+   "scale": 0.9375,
+   "monster_weight": 0.2,
+   "verified": "datos_ok",
+   "damage": 13
+  },
+  {
+   "id": "skeleton",
+   "key": "stray",
+   "class": "mcStray",
+   "base": "zombieBoe",
+   "texture": "entity/skeleton/stray.png",
+   "drops": [
+    [
+     "bone",
+     2
+    ],
+    [
+     "arrow",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 100,
+   "ai": "ranged,sun",
+   "monster_biomes": [
+    "snow"
+   ],
+   "monster_weight": 1,
+   "verified": "datos_ok",
+   "damage": 2
+  },
+  {
+   "id": "blaze",
+   "class": "mcBlaze",
+   "base": "animalZombieVulture",
+   "texture": "entity/blaze/blaze.png",
+   "drops": [
+    [
+     "blaze_rod",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.3"
+   },
+   "health": 100,
+   "ai": "fly,ranged",
+   "monster_biomes": [
+    "burnt_forest",
+    "wasteland"
+   ],
+   "monster_weight": 0.5,
+   "verified": "datos_ok",
+   "damage": 6
+  },
+  {
+   "id": "ghast",
+   "class": "mcGhast",
+   "base": "animalZombieVulture",
+   "texture": "entity/ghast/ghast.png",
+   "drops": [
+    [
+     "ghast_tear",
+     1
+    ],
+    [
+     "gunpowder",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.3"
+   },
+   "health": 50,
+   "scale": 4.5,
+   "ai": "fly,ranged",
+   "monster_biomes": [
+    "wasteland"
+   ],
+   "monster_weight": 0.2,
+   "verified": "datos_ok",
+   "damage": 0
+  },
+  {
+   "id": "magma_cube",
+   "class": "mcMagmaCube",
+   "base": "zombieBoe",
+   "texture": "entity/slime/magmacube.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.5, 0.5",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 80,
+   "scale": 4,
+   "ai": "slime",
+   "monster_biomes": [
+    "burnt_forest",
+    "wasteland"
+   ],
+   "monster_weight": 0.5,
+   "verified": "datos_ok",
+   "damage": 6
+  },
+  {
+   "id": "magma_cube",
+   "key": "magma_cube_medium",
+   "class": "mcMagmaCubeMedium",
+   "base": "zombieBoe",
+   "texture": "entity/slime/magmacube.png",
+   "drops": [
+    [
+     "magma_cream",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 20,
+   "scale": 2,
+   "ai": "slime",
+   "no_spawn": true,
+   "verified": "datos_ok",
+   "damage": 4
+  },
+  {
+   "id": "magma_cube",
+   "key": "magma_cube_small",
+   "class": "mcMagmaCubeSmall",
+   "base": "zombieBoe",
+   "texture": "entity/slime/magmacube.png",
+   "drops": [],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 5,
+   "scale": 1,
+   "ai": "slime",
+   "no_spawn": true,
+   "verified": "datos_ok",
+   "damage": 3
+  },
+  {
+   "id": "hoglin",
+   "class": "mcHoglin",
+   "base": "zombieBoe",
+   "texture": "entity/hoglin/hoglin.png",
+   "drops": [
+    [
+     "porkchop",
+     3
+    ],
+    [
+     "leather",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 200,
+   "monster_biomes": [
+    "burnt_forest"
+   ],
+   "monster_weight": 0.4,
+   "verified": "datos_ok",
+   "damage": 6
+  },
+  {
+   "id": "piglin",
+   "class": "mcPiglin",
+   "base": "zombieBoe",
+   "texture": "entity/piglin/piglin.png",
+   "drops": [
+    [
+     "gold_nugget",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 80,
+   "monster_biomes": [
+    "burnt_forest",
+    "wasteland"
+   ],
+   "monster_weight": 0.5,
+   "verified": "datos_ok",
+   "damage": 8
+  },
+  {
+   "id": "skeleton",
+   "key": "wither_skeleton",
+   "class": "mcWitherSkeleton",
+   "base": "zombieBoe",
+   "texture": "entity/skeleton/wither_skeleton.png",
+   "drops": [
+    [
+     "coal",
+     1
+    ],
+    [
+     "bone",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 100,
+   "scale": 1.2,
+   "ai": "wither",
+   "monster_biomes": [
+    "burnt_forest"
+   ],
+   "monster_weight": 0.4,
+   "verified": "datos_ok",
+   "damage": 8
   }
  ],
  "biomes": [
@@ -145,6 +1338,18 @@
    2,
    1,
    "0.8"
+  ],
+  [
+   "desert",
+   2,
+   1,
+   "0.8"
+  ],
+  [
+   "wasteland",
+   1,
+   1,
+   "1"
   ]
  ],
  "_replace": "Animales de 7 Days que se parecen a uno de Minecraft: se cambian por el de Minecraft en todos los grupos donde aparecen. El de Minecraft suelta lo del animal de 7 Days en que se basa MAS lo de Minecraft (doble botin, usuario 2026-11-13). El conejo se queda hasta tener su modelo.",
@@ -164,9 +1369,45 @@
   [
    "animalChicken",
    "mcChicken"
+  ],
+  [
+   "animalWolf",
+   "mcWolf"
+  ],
+  [
+   "animalDireWolf",
+   "mcWolf"
+  ],
+  [
+   "animalRabbit",
+   "mcRabbit"
+  ],
+  [
+   "animalCoyote",
+   "mcFox"
+  ],
+  [
+   "animalMountainLion",
+   "mcOcelot"
+  ],
+  [
+   "animalBear",
+   "mcPolarBear"
+  ],
+  [
+   "animalBearSmall",
+   "mcPolarBear"
+  ],
+  [
+   "animalPig",
+   "mcPig"
+  ],
+  [
+   "animalBeeSwarm",
+   "mcBee"
   ]
  ],
- "_hostile": "Mobs hostiles (hostile=true): no van al grupo de animales; salen de noche en todos los biomas (grupo mcMonsters, 'monsters'). Creeper: cuerpo y persecucion de un zombi de 7 Days; la mecha y la explosion de Minecraft estan en src/Mobs/McCreeper.cs.",
+ "_hostile": "Mobs hostiles (hostile=true): salen de noche en todos los biomas (grupo mcMonsters, 'monsters'; monster_weight = que tan seguido). horde=true: tambien en las hordas (solo el creeper). no_spawn: no salen solos (cave spider: minas; slimes medianos y chicos: al dividirse). Comportamientos de Minecraft en src/Mobs/: McCreeper (mecha y explosion), McSkeleton (dispara flechas, se aleja, se quema al sol), McSpider (tranquila de dia si no le pegas; la de cueva envenena), McSlime (salta y se divide), McPhantom (vuela). Lobo: neutral como en Minecraft, solo muerde si le pegas.",
  "monsters": [
   [
    "pine_forest",
@@ -194,5 +1435,7 @@
    "0.5"
   ]
  ],
- "_props": "props: propiedades de 7 Days que se cambian (velocidad, IA). Animales: ya no huyen de ti (AITask-2 RunawayFromEntity -> Look); solo corren cuando les pegas, como en Minecraft. Creeper: velocidad de Minecraft (como caminar), no salta mas de 1 bloque. health: vida (x5 de Minecraft: 7 Days usa 100 para el jugador)."
+ "_props": "props: propiedades de 7 Days que se cambian (velocidad, IA). Animales: ya no huyen de ti (AITask-2 RunawayFromEntity -> Look); solo corren cuando les pegas, como en Minecraft. Creeper: velocidad de Minecraft (como caminar), no salta mas de 1 bloque. health: vida (x5 de Minecraft: 7 Days usa 100 para el jugador).",
+ "_biomes": "Cada animal pacifico dice en 'biomes' donde sale (si no dice nada: pine_forest y snow, como los primeros). Cada mob hostil dice en 'monster_biomes' donde sale (si no dice nada: en todos). 'scale' = tamano del modelo; 'ai' = comportamiento de Minecraft (src/Mobs/).",
+ "_damage": "damage: el golpe de Minecraft en dificultad Normal, en puntos de vida de Minecraft (1 corazón = 2). tools/build_config.py crea una mano para cada mob (meleeHandMc...) con ese daño x5, un golpe por segundo como en Minecraft, sin heridas ni infección de 7 Days y sin romper bloques. 0 = no pega (dispara, explota o es pacífico)."
 }

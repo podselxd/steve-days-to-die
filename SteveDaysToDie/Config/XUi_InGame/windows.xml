@@ -9,5 +9,8 @@
         <window name="windowMcScreen" anchor="Center" width="4" height="4" cursor_area="true">
             <rect depth="0" width="4" height="4"/>
         </window>
+        <window name="windowMcBook" anchor="Center" width="4" height="4" cursor_area="true">
+            <rect depth="0" width="4" height="4"/>
+        </window>
     </append>
 </configs>

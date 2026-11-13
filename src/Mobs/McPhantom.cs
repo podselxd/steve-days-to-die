@@ -6,7 +6,7 @@ namespace SteveDaysToDie.Mobs
     /// <summary>
     /// Minecraft's phantom (user 2026-11-13: its own movements and behaviour, every 3 nights without sleeping, it flies).
     /// Behaviour (Minecraft's Phantom goals): circles high above its target, now and then swoops down at it, bites
-    /// (2 hearts = 20 of 7 Days' health) and climbs back; burns in daylight. The 7 Days vulture underneath only gives the
+    /// (1 heart = 10 of 7 Days' health) and climbs back; burns in daylight. The 7 Days vulture underneath only gives the
     /// body; the host moves it here every frame. Spawning (McPhantom.Spawner): at night, when the player has gone
     /// 3 or more in-game days without sleeping (7 Days has no sleep: counted from joining the world or the last death,
     /// both of which reset it in Minecraft too), 1 to 3 phantoms appear 20-34 blocks above, about once a minute.
@@ -59,7 +59,7 @@ namespace SteveDaysToDie.Mobs
                     if (Time.time - _lastBite > 1f)
                     {
                         _lastBite = Time.time;
-                        try { target.DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Piercing, _e.entityId), 20, false, 1f); } catch { }
+                        try { target.DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Piercing, _e.entityId), 10, false, 1f); } catch { }
                     }
                     _swooping = false;                                            // back up
                     _height = Random.Range(10f, 20f);

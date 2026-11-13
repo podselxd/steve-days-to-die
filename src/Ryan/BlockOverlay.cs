@@ -601,6 +601,25 @@ public static class BlockOverlay
 				}
 				break;
 			}
+			case "bed":
+			{
+				// Minecraft's bed: two blocks long along its facing, 9 px high, wool on top and sides, planks underneath
+				BlockValue bbv = world.GetBlock(member);
+				if (bbv.ischild) break;
+				string wool = "minecraft:block/white_wool";
+				foreach (string kv in (blockRow.special ?? "").Split(';')) if (kv.StartsWith("wool=")) wool = "minecraft:block/" + kv.Substring(5);
+				Color32 ww = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+				Rect rw = Atlas.Uv(new List<FaceLayer> { new FaceLayer { tex = wool } }, ww);
+				Rect rp = Atlas.Uv(new List<FaceLayer> { new FaceLayer { tex = "minecraft:block/oak_planks" } }, ww);
+				Vector3i along = Face.Dir[Face.Ring[(bbv.rotation & 3)]];
+				Vector3 a0 = vector, a1 = vector + new Vector3(1f, 0f, 1f) + along.ToVector3();
+				Vector3 bmin = Vector3.Min(a0, a1 - new Vector3(0f, 0f, 0f)), bmax = Vector3.Max(a0, a1);
+				bmin = new Vector3(Mathf.Min(vector.x, vector.x + along.x), vector.y, Mathf.Min(vector.z, vector.z + along.z));
+				bmax = new Vector3(Mathf.Max(vector.x + 1f, vector.x + 1f + along.x), vector.y, Mathf.Max(vector.z + 1f, vector.z + 1f + along.z));
+				Vector3 top = new Vector3(bmax.x, vector.y + 0.5625f, bmax.z);
+				for (int f = 0; f < 6; f++) meshKit2.Face(f, new Vector3(bmin.x, vector.y + 0.1875f, bmin.z), top, f == 1 ? rp : rw);
+				break;
+			}
 			case "door7d":
 			{
 				// a Minecraft door on a 7 Days door: drawn from its lower block, two blocks high, 3 px thick, swung open

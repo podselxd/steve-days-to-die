@@ -40,6 +40,8 @@ namespace SteveDaysToDie
             Crafting.McItems.FixHeld(_player);
             Patches.McControls.Tick(_player);
             Mobs.McPhantom.Spawner.Tick(_player);
+            Crafting.McBeds.Tick();
+            McGuideBook.Tick(_player);
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {

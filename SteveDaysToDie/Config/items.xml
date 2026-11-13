@@ -578,4 +578,181 @@
         <item name="mc_sb_diamond_backpack"><property name="Extends" value="armorPrimitiveOutfit"/><property name="CustomIcon" value="mc_sb_diamond_backpack"/><property name="CustomIconTint" value="ffffff"/><property name="Stacknumber" value="1"/><property name="DescriptionKey" value="mcItemDesc"/><effect_group name="mc_sb_diamond_backpack"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="DegradationMax" operation="base_set" value="99999"/></effect_group></item>
         <item name="mc_sb_netherite_backpack"><property name="Extends" value="armorPrimitiveOutfit"/><property name="CustomIcon" value="mc_sb_netherite_backpack"/><property name="CustomIconTint" value="ffffff"/><property name="Stacknumber" value="1"/><property name="DescriptionKey" value="mcItemDesc"/><effect_group name="mc_sb_netherite_backpack"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="DegradationMax" operation="base_set" value="99999"/></effect_group></item>
     </append>
+    <!-- GENERATED from sheets/mc_animals.json: Minecraft mobs' hits (Normal difficulty, x5) -->
+    <append xpath="/items">
+        <item name="meleeHandMcCreeper">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcCreeper" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcPhantom">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcPhantom" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSkeleton">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSkeleton" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSpider">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSpider" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcCaveSpider">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcCaveSpider" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSlime">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="2.6"/><property name="DamageEntity" value="20"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSlime" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="20"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcWolf">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="20"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcWolf" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="20"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSlimeMedium">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSlimeMedium" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSlimeSmall">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSlimeSmall" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcFox">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcFox" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcGoat">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcGoat" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcLlama">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="5"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcLlama" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="5"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcPanda">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="30"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcPanda" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="30"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcBee">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcBee" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcPolarBear">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="30"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcPolarBear" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="30"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcIronGolem">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="2.6"/><property name="DamageEntity" value="75"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcIronGolem" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="75"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcSnowGolem">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcSnowGolem" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcWitch">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcWitch" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcPillager">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcPillager" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcVindicator">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="65"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcVindicator" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="65"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcStray">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="10"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcStray" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="10"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcBlaze">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="30"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcBlaze" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="30"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcGhast">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="2.6"/><property name="DamageEntity" value="0"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcGhast" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="0"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcMagmaCube">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="2.6"/><property name="DamageEntity" value="30"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcMagmaCube" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="30"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcMagmaCubeMedium">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="20"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcMagmaCubeMedium" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="20"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcMagmaCubeSmall">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="15"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcMagmaCubeSmall" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="15"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcHoglin">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="30"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcHoglin" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="30"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcPiglin">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="40"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcPiglin" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="40"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+        <item name="meleeHandMcWitherSkeleton">
+            <property name="Extends" value="meleeHandMaster"/>
+            <property name="CreativeMode" value="None"/>
+            <property class="Action0"><property name="Delay" value="1"/><property name="Range" value="1.7"/><property name="DamageEntity" value="40"/><property name="DamageBlock" value="0"/></property>
+            <effect_group name="meleeHandMcWitherSkeleton" tiered="false"><passive_effect name="ModSlots" operation="base_set" value="0"/><passive_effect name="EntityDamage" operation="base_set" value="40"/><passive_effect name="BlockDamage" operation="base_set" value="0"/><passive_effect name="AttacksPerMinute" operation="base_set" value="60"/></effect_group>
+        </item>
+    </append>
 </configs>

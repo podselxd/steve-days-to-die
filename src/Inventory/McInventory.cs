@@ -17,7 +17,7 @@ namespace SteveDaysToDie.McInv
     /// the window throws what you carry. The 2x2 grid crafts with Minecraft's recipes (Crafting/McRecipes.cs);
     /// what it makes is a Minecraft item (mc_<id>).
     /// </summary>
-    public class McInventory : MonoBehaviour
+    public partial class McInventory : MonoBehaviour
     {
         const int W = 176, H = 166;                 // Minecraft's inventory.png, in its own pixels
         public static bool Enabled => Settings.GetBool("inventario_minecraft", true);
@@ -619,7 +619,7 @@ namespace SteveDaysToDie.McInv
             var e = Event.current;
 
             // the game's own menus must not take clicks that land on our window
-            bool over = _panel.Contains(e.mousePosition) || !_cursor.IsEmpty()
+            bool over = _panel.Contains(e.mousePosition) || !_cursor.IsEmpty() || _bookRect.Contains(e.mousePosition)
                         || new Rect(_panel.x - (Btn + 2) * _s, _panel.y, (Btn + 2) * _s, H * _s).Contains(e.mousePosition);
             if (over != _blocking) { UICamera.ignoreAllEvents = over; _blocking = over; }
 
@@ -660,6 +660,9 @@ namespace SteveDaysToDie.McInv
                 }
                 if (!_table) DrawPages(px, py, s, e);
             }
+            // Minecraft's recipe book (McRecipeBook.cs): its button on the window, the book on the left
+            if (Time.time - _openedAt >= 0.15f || e.type == EventType.Repaint)
+                if (RecipeBookGUI(px, py, s, e)) return;
 
             Slot? hover = null;
             foreach (var sl in _slots)

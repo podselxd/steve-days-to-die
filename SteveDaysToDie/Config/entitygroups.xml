@@ -1,14 +1,106 @@
 <configs>
     <!-- GENERATED from sheets/mc_animals.json -->
     <append xpath="/entitygroups">
-        <entitygroup name="mcAnimals">
+        <entitygroup name="mcAnimals_pine_forest">
             <e n="mcCow" p="30"/>
             <e n="mcPig" p="25"/>
             <e n="mcSheep" p="25"/>
             <e n="mcChicken" p="20"/>
+            <e n="mcRabbit" p="15"/>
+            <e n="mcFox" p="8"/>
+            <e n="mcHorse" p="6"/>
+            <e n="mcLlama" p="4"/>
+            <e n="mcSniffer" p="1"/>
+            <e n="mcFrog" p="6"/>
+            <e n="mcPanda" p="2"/>
+            <e n="mcOcelot" p="3"/>
+            <e n="mcVillager" p="2"/>
+            <e n="mcWanderingTrader" p="1"/>
+            <e n="mcParrot" p="2"/>
+            <e n="mcBee" p="4"/>
+            <e n="mcIronGolem" p="1"/>
         </entitygroup>
-        <entitygroup name="mcMonsters">
+        <entitygroup name="mcMonsters_pine_forest">
             <e n="mcCreeper" p="1"/>
+            <e n="mcSkeleton" p="1"/>
+            <e n="mcSpider" p="1"/>
+            <e n="mcSlime" p="0.3"/>
+            <e n="mcWitch" p="0.3"/>
+            <e n="mcPillager" p="0.3"/>
+            <e n="mcVindicator" p="0.2"/>
+        </entitygroup>
+        <entitygroup name="mcAnimals_burnt_forest">
+        </entitygroup>
+        <entitygroup name="mcMonsters_burnt_forest">
+            <e n="mcCreeper" p="1"/>
+            <e n="mcSkeleton" p="1"/>
+            <e n="mcSpider" p="1"/>
+            <e n="mcSlime" p="0.3"/>
+            <e n="mcWitch" p="0.3"/>
+            <e n="mcPillager" p="0.3"/>
+            <e n="mcVindicator" p="0.2"/>
+            <e n="mcBlaze" p="0.5"/>
+            <e n="mcMagmaCube" p="0.5"/>
+            <e n="mcHoglin" p="0.4"/>
+            <e n="mcPiglin" p="0.5"/>
+            <e n="mcWitherSkeleton" p="0.4"/>
+        </entitygroup>
+        <entitygroup name="mcAnimals_desert">
+            <e n="mcRabbit" p="15"/>
+            <e n="mcCamel" p="4"/>
+            <e n="mcArmadillo" p="8"/>
+            <e n="mcTurtle" p="2"/>
+            <e n="mcVillager" p="2"/>
+            <e n="mcWanderingTrader" p="1"/>
+            <e n="mcIronGolem" p="1"/>
+        </entitygroup>
+        <entitygroup name="mcMonsters_desert">
+            <e n="mcCreeper" p="1"/>
+            <e n="mcSkeleton" p="1"/>
+            <e n="mcSpider" p="1"/>
+            <e n="mcSlime" p="0.3"/>
+            <e n="mcWitch" p="0.3"/>
+            <e n="mcPillager" p="0.3"/>
+            <e n="mcVindicator" p="0.2"/>
+        </entitygroup>
+        <entitygroup name="mcAnimals_snow">
+            <e n="mcCow" p="30"/>
+            <e n="mcPig" p="25"/>
+            <e n="mcSheep" p="25"/>
+            <e n="mcChicken" p="20"/>
+            <e n="mcRabbit" p="15"/>
+            <e n="mcFoxSnow" p="8"/>
+            <e n="mcGoat" p="10"/>
+            <e n="mcLlama" p="4"/>
+            <e n="mcVillager" p="2"/>
+            <e n="mcIronGolem" p="1"/>
+            <e n="mcSnowGolem" p="1"/>
+        </entitygroup>
+        <entitygroup name="mcMonsters_snow">
+            <e n="mcCreeper" p="1"/>
+            <e n="mcSkeleton" p="1"/>
+            <e n="mcSpider" p="1"/>
+            <e n="mcSlime" p="0.3"/>
+            <e n="mcWitch" p="0.3"/>
+            <e n="mcPillager" p="0.3"/>
+            <e n="mcVindicator" p="0.2"/>
+            <e n="mcStray" p="1"/>
+        </entitygroup>
+        <entitygroup name="mcAnimals_wasteland">
+            <e n="mcArmadillo" p="8"/>
+        </entitygroup>
+        <entitygroup name="mcMonsters_wasteland">
+            <e n="mcCreeper" p="1"/>
+            <e n="mcSkeleton" p="1"/>
+            <e n="mcSpider" p="1"/>
+            <e n="mcSlime" p="0.3"/>
+            <e n="mcWitch" p="0.3"/>
+            <e n="mcPillager" p="0.3"/>
+            <e n="mcVindicator" p="0.2"/>
+            <e n="mcBlaze" p="0.5"/>
+            <e n="mcGhast" p="0.2"/>
+            <e n="mcMagmaCube" p="0.5"/>
+            <e n="mcPiglin" p="0.5"/>
         </entitygroup>
         <entitygroup name="mcNight">
             <e n="mcPhantom" p="1"/>
@@ -18,5 +110,14 @@
     <set xpath="/entitygroups/entitygroup/e[@n='animalDoe']/@n">mcCow</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalBoar']/@n">mcPig</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalChicken']/@n">mcChicken</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalWolf']/@n">mcWolf</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalDireWolf']/@n">mcWolf</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalRabbit']/@n">mcRabbit</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalCoyote']/@n">mcFox</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalMountainLion']/@n">mcOcelot</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalBear']/@n">mcPolarBear</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalBearSmall']/@n">mcPolarBear</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalPig']/@n">mcPig</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalBeeSwarm']/@n">mcBee</set>
     <append xpath="/entitygroups/entitygroup[contains(@name,'Horde')]"><e n="mcCreeper"/></append>
 </configs>

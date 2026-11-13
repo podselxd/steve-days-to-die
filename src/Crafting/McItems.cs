@@ -74,10 +74,12 @@ namespace SteveDaysToDie.Crafting
                 {
                     string file = Path.Combine(dir, Prefix + r.id + ".png");
                     // icons are 128 px at most: 1,400 icons of 640 px overflowed 7 Days' icon atlas (its own icons broke)
-                    if (File.Exists(file) && PngWidth(file) <= 160) continue;
+                    if (File.Exists(file) && PngWidth(file) <= 160 && !r.id.EndsWith("_bed")) continue;
                     try
                     {
-                        var icon = r.id.StartsWith("sb_") ? McInv.Backpacks.Icon(r.id) : Ryan.Icons.Get(r.id);
+                        var icon = r.id.StartsWith("sb_") ? McInv.Backpacks.Icon(r.id)
+                                 : r.id.EndsWith("_bed") ? Ryan.Icons.Get(r.id.Substring(0, r.id.Length - 4) + "_wool")    // drawn by code in Minecraft
+                                 : Ryan.Icons.Get(r.id);
                         if (icon == null) { failed++; continue; }
                         int k = Mathf.Max(1, 128 / Mathf.Max(1, icon.width));
                         File.WriteAllBytes(file, Upscale(icon, k).EncodeToPNG());

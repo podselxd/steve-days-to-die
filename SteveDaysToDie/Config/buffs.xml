@@ -1,0 +1,40 @@
+<configs>
+    <!-- Minecraft's poison (cave spider bite, Poison II for 7 s on normal): about 1.7 hearts-points a second,
+         and like Minecraft it never kills (stops at 6% health). -->
+    <append xpath="/buffs">
+        <buff name="buffMcPoison" icon="ui_game_symbol_critical" icon_color="78,147,49">
+            <stack_type value="replace"/>
+            <duration value="7"/>
+            <effect_group>
+                <triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="add" value="-8">
+                    <requirement name="StatComparePercCurrentToMax" stat="Health" operation="GT" value=".14"/>
+                </triggered_effect>
+            </effect_group>
+        </buff>
+        <!-- Minecraft's Slowness (stray arrows): 30 s, 15% slower -->
+        <buff name="buffMcSlowness" icon="ui_game_symbol_critical" icon_color="90,108,129">
+            <stack_type value="replace"/>
+            <duration value="30"/>
+            <effect_group>
+                <passive_effect name="WalkSpeed" operation="perc_add" value="-.15"/>
+                <passive_effect name="RunSpeed" operation="perc_add" value="-.15"/>
+            </effect_group>
+        </buff>
+        <!-- Minecraft's fire (blaze fireballs): 5 s, 1 heart-point a second (x5) -->
+        <buff name="buffMcOnFire" icon="ui_game_symbol_critical" icon_color="255,140,30">
+            <stack_type value="replace"/>
+            <duration value="5"/>
+            <effect_group>
+                <triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="add" value="-5"/>
+            </effect_group>
+        </buff>
+        <!-- Minecraft's Wither (wither skeleton hits): 10 s, can kill -->
+        <buff name="buffMcWither" icon="ui_game_symbol_critical" icon_color="40,40,40">
+            <stack_type value="replace"/>
+            <duration value="10"/>
+            <effect_group>
+                <triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="add" value="-3"/>
+            </effect_group>
+        </buff>
+    </append>
+</configs>

@@ -43,6 +43,7 @@
         </entity_class>
         <entity_class name="mcCreeper" extends="zombieBoe">
             <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcCreeper"/>
             <property name="MoveSpeed" value="0.25"/>
             <property name="MoveSpeedAggro" value="0.6, 0.6"/>
             <property name="MoveSpeedRand" value="0, 0"/>
@@ -52,9 +53,428 @@
         </entity_class>
         <entity_class name="mcPhantom" extends="animalZombieVulture">
             <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcPhantom"/>
             <property name="MoveSpeed" value="0.5"/>
             <effect_group name="mcPhantom health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
             <drop event="Harvest" name="mc_phantom_membrane" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcSkeleton" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSkeleton"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcSkeleton health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_bone" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_arrow" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcSpider" extends="zombieSpider">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSpider"/>
+            <property name="MoveSpeedAggro" value="1.0, 1.0"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <effect_group name="mcSpider health"><passive_effect name="HealthMax" operation="base_set" value="80"/></effect_group>
+            <drop event="Harvest" name="mc_string" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_spider_eye" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcCaveSpider" extends="zombieSpider">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcCaveSpider"/>
+            <property name="MoveSpeedAggro" value="1.0, 1.0"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <effect_group name="mcCaveSpider health"><passive_effect name="HealthMax" operation="base_set" value="60"/></effect_group>
+            <drop event="Harvest" name="mc_string" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_spider_eye" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcSlime" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSlime"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.45, 0.45"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <effect_group name="mcSlime health"><passive_effect name="HealthMax" operation="base_set" value="80"/></effect_group>
+        </entity_class>
+        <entity_class name="mcWolf" extends="animalWolf">
+            <property name="Tags" value="entity,animal,minecraft,mcwolf"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcWolf"/>
+            <property name="AITask-1" value="Look"/>
+            <property name="AITask-2" value="ApproachAndAttackTarget" data="class=EntityPlayer,15,EntityEnemy,15,EntityAnimalStag,15"/>
+            <property name="AITask-3" value="Wander"/>
+            <property name="AITask-4" value=""/>
+            <property name="AITask-5" value=""/>
+            <property name="AITask-6" value=""/>
+            <property name="AITask-7" value=""/>
+            <property name="AITask-8" value=""/>
+            <property name="AITarget-1" value="SetAsTargetIfHurt"/>
+            <property name="AITarget-2" value="BlockingTargetTask"/>
+            <property name="AITarget-3" value=""/>
+            <property name="AITarget-4" value=""/>
+            <effect_group name="mcWolf health"><passive_effect name="HealthMax" operation="base_set" value="40"/></effect_group>
+        </entity_class>
+        <entity_class name="mcSlimeMedium" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSlimeMedium"/>
+            <property name="MoveSpeed" value="0.3"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <effect_group name="mcSlimeMedium health"><passive_effect name="HealthMax" operation="base_set" value="20"/></effect_group>
+        </entity_class>
+        <entity_class name="mcSlimeSmall" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSlimeSmall"/>
+            <property name="MoveSpeed" value="0.35"/>
+            <property name="MoveSpeedAggro" value="0.6, 0.6"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <effect_group name="mcSlimeSmall health"><passive_effect name="HealthMax" operation="base_set" value="5"/></effect_group>
+            <drop event="Harvest" name="mc_slime_ball" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcRabbit" extends="animalRabbit">
+            <property name="Tags" value="entity,animal,minecraft,mcrabbit"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcRabbit health"><passive_effect name="HealthMax" operation="base_set" value="15"/></effect_group>
+            <drop event="Harvest" name="mc_rabbit" count="1" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_rabbit_hide" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcFox" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcfox"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcFox"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcFox health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcFoxSnow" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcfox"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcFoxSnow health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcGoat" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcgoat"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcGoat"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcGoat health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcHorse" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mchorse"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedPanic" value="0.9"/>
+            <effect_group name="mcHorse health"><passive_effect name="HealthMax" operation="base_set" value="110"/></effect_group>
+            <drop event="Harvest" name="mc_leather" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcLlama" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcllama"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcLlama"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcLlama health"><passive_effect name="HealthMax" operation="base_set" value="110"/></effect_group>
+            <drop event="Harvest" name="mc_leather" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcCamel" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mccamel"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcCamel health"><passive_effect name="HealthMax" operation="base_set" value="160"/></effect_group>
+        </entity_class>
+        <entity_class name="mcArmadillo" extends="animalRabbit">
+            <property name="Tags" value="entity,animal,minecraft,mcarmadillo"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcArmadillo health"><passive_effect name="HealthMax" operation="base_set" value="60"/></effect_group>
+            <drop event="Harvest" name="mc_armadillo_scute" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcSniffer" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcsniffer"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcSniffer health"><passive_effect name="HealthMax" operation="base_set" value="70"/></effect_group>
+        </entity_class>
+        <entity_class name="mcFrog" extends="animalRabbit">
+            <property name="Tags" value="entity,animal,minecraft,mcfrog"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcFrog health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcTurtle" extends="animalRabbit">
+            <property name="Tags" value="entity,animal,minecraft,mcturtle"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcTurtle health"><passive_effect name="HealthMax" operation="base_set" value="150"/></effect_group>
+            <drop event="Harvest" name="mc_turtle_scute" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcPanda" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcpanda"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcPanda"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcPanda health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_bamboo" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcOcelot" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mccat"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedPanic" value="1.0"/>
+            <effect_group name="mcOcelot health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcCat" extends="animalRabbit">
+            <property name="Tags" value="entity,animal,minecraft,mccat"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcCat health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+            <drop event="Harvest" name="mc_string" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcVillager" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcvillager"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="RunawayFromEntity" data="flags=zombie;safeFlags=timid"/>
+            <property name="MoveSpeed" value="0.12"/>
+            <property name="MoveSpeedPanic" value="0.6"/>
+            <effect_group name="mcVillager health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+        </entity_class>
+        <entity_class name="mcWanderingTrader" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcvillager"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="RunawayFromEntity" data="flags=zombie;safeFlags=timid"/>
+            <property name="MoveSpeed" value="0.12"/>
+            <property name="MoveSpeedPanic" value="0.6"/>
+            <effect_group name="mcWanderingTrader health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+        </entity_class>
+        <entity_class name="mcBat" extends="animalChicken">
+            <property name="Tags" value="entity,animal,minecraft,mcbat"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcBat health"><passive_effect name="HealthMax" operation="base_set" value="30"/></effect_group>
+        </entity_class>
+        <entity_class name="mcParrot" extends="animalChicken">
+            <property name="Tags" value="entity,animal,minecraft,mcparrot"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcParrot health"><passive_effect name="HealthMax" operation="base_set" value="30"/></effect_group>
+            <drop event="Harvest" name="mc_feather" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcBee" extends="animalChicken">
+            <property name="Tags" value="entity,animal,minecraft,mcbee"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcBee"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcBee health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+        </entity_class>
+        <entity_class name="mcAllay" extends="animalChicken">
+            <property name="Tags" value="entity,animal,minecraft,mcallay"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
+            <effect_group name="mcAllay health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+        </entity_class>
+        <entity_class name="mcPolarBear" extends="animalBear">
+            <property name="Tags" value="entity,animal,minecraft,mcpolar_bear"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcPolarBear"/>
+            <property name="AITask-1" value="Look"/>
+            <property name="AITask-2" value="ApproachAndAttackTarget" data="class=EntityPlayer,15,EntityEnemy,15"/>
+            <property name="AITask-3" value="Wander"/>
+            <property name="AITask-4" value=""/>
+            <property name="AITask-5" value=""/>
+            <property name="AITask-6" value=""/>
+            <property name="AITask-7" value=""/>
+            <property name="AITask-8" value=""/>
+            <property name="AITarget-1" value="SetAsTargetIfHurt"/>
+            <property name="AITarget-2" value="BlockingTargetTask"/>
+            <property name="AITarget-3" value=""/>
+            <property name="AITarget-4" value=""/>
+            <effect_group name="mcPolarBear health"><passive_effect name="HealthMax" operation="base_set" value="150"/></effect_group>
+            <drop event="Harvest" name="mc_cod" count="1" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_salmon" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcIronGolem" extends="animalWolf">
+            <property name="Tags" value="entity,animal,minecraft,mciron_golem"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcIronGolem"/>
+            <property name="AITask-1" value="Look"/>
+            <property name="AITask-2" value="ApproachAndAttackTarget" data="class=EntityZombie,20,EntityEnemyAnimal,20,EntityEnemy,20"/>
+            <property name="AITask-3" value="Wander"/>
+            <property name="AITask-4" value=""/>
+            <property name="AITask-5" value=""/>
+            <property name="AITask-6" value=""/>
+            <property name="AITask-7" value=""/>
+            <property name="AITask-8" value=""/>
+            <property name="AITarget-1" value="SetAsTargetIfHurt"/>
+            <property name="AITarget-2" value="BlockingTargetTask"/>
+            <property name="AITarget-3" value="SetNearestEntityAsTarget" data="class=EntityZombie,16,16,EntityEnemyAnimal,16,16"/>
+            <property name="AITarget-4" value=""/>
+            <property name="MoveSpeed" value="0.2"/>
+            <property name="MoveSpeedAggro" value="0.5, 0.5"/>
+            <effect_group name="mcIronGolem health"><passive_effect name="HealthMax" operation="base_set" value="500"/></effect_group>
+            <drop event="Harvest" name="mc_iron_ingot" count="4" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_poppy" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcSnowGolem" extends="animalDoe">
+            <property name="Tags" value="entity,animal,minecraft,mcsnow_golem"/>
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcSnowGolem"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.1"/>
+            <property name="MoveSpeedPanic" value="0.4"/>
+            <effect_group name="mcSnowGolem health"><passive_effect name="HealthMax" operation="base_set" value="20"/></effect_group>
+            <drop event="Harvest" name="mc_snowball" count="8" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcWitch" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcWitch"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcWitch health"><passive_effect name="HealthMax" operation="base_set" value="130"/></effect_group>
+            <drop event="Harvest" name="mc_glass_bottle" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_glowstone_dust" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_redstone" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_sugar" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_stick" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcPillager" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcPillager"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcPillager health"><passive_effect name="HealthMax" operation="base_set" value="120"/></effect_group>
+            <drop event="Harvest" name="mc_arrow" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcVindicator" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcVindicator"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.7, 0.7"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcVindicator health"><passive_effect name="HealthMax" operation="base_set" value="120"/></effect_group>
+            <drop event="Harvest" name="mc_emerald" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcStray" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcStray"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcStray health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_bone" count="2" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_arrow" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcBlaze" extends="animalZombieVulture">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcBlaze"/>
+            <property name="MoveSpeed" value="0.3"/>
+            <effect_group name="mcBlaze health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_blaze_rod" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcGhast" extends="animalZombieVulture">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcGhast"/>
+            <property name="MoveSpeed" value="0.3"/>
+            <effect_group name="mcGhast health"><passive_effect name="HealthMax" operation="base_set" value="50"/></effect_group>
+            <drop event="Harvest" name="mc_ghast_tear" count="1" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_gunpowder" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcMagmaCube" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcMagmaCube"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.5, 0.5"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcMagmaCube health"><passive_effect name="HealthMax" operation="base_set" value="80"/></effect_group>
+        </entity_class>
+        <entity_class name="mcMagmaCubeMedium" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcMagmaCubeMedium"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcMagmaCubeMedium health"><passive_effect name="HealthMax" operation="base_set" value="20"/></effect_group>
+            <drop event="Harvest" name="mc_magma_cream" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcMagmaCubeSmall" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcMagmaCubeSmall"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.6, 0.6"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcMagmaCubeSmall health"><passive_effect name="HealthMax" operation="base_set" value="5"/></effect_group>
+        </entity_class>
+        <entity_class name="mcHoglin" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcHoglin"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.6, 0.6"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcHoglin health"><passive_effect name="HealthMax" operation="base_set" value="200"/></effect_group>
+            <drop event="Harvest" name="mc_porkchop" count="3" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_leather" count="1" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcPiglin" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcPiglin"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.55, 0.55"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcPiglin health"><passive_effect name="HealthMax" operation="base_set" value="80"/></effect_group>
+            <drop event="Harvest" name="mc_gold_nugget" count="2" tag="allHarvest"/>
+        </entity_class>
+        <entity_class name="mcWitherSkeleton" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="HandItem" value="meleeHandMcWitherSkeleton"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.6, 0.6"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcWitherSkeleton health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_coal" count="1" tag="allHarvest"/>
+            <drop event="Harvest" name="mc_bone" count="2" tag="allHarvest"/>
         </entity_class>
     </append>
 </configs>

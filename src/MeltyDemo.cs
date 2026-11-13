@@ -650,6 +650,8 @@ namespace SteveDaysToDie
                 world.SetBlockRPC(lp - new Vector3i(Mathf.RoundToInt(side.x), 0, Mathf.RoundToInt(side.z)), Block.GetBlockValue("mc_birch_leaves"));
             }
             catch (Exception ex) { Debug.LogWarning("[SVD] demo leaves: " + ex.Message); }
+            try { world.SetBlockRPC(lp + new Vector3i(Mathf.RoundToInt(fwd.x * 2), -1, Mathf.RoundToInt(fwd.z * 2)), Block.GetBlockValue("mc_red_bed")); } catch (Exception ex) { Debug.LogWarning("[SVD] demo bed: " + ex.Message); }
+            Debug.Log("[SVD] lote2: bed block " + Block.GetBlockValue("mc_red_bed").Block?.GetType().Name);
             EntityAlive ph = null;
             try { ph = EntityFactory.CreateEntity(EntityClass.FromString("mcPhantom"), p.position + fwd * 5f + Vector3.up * 3f) as EntityAlive; if (ph != null) world.SpawnEntityInWorld(ph); } catch (Exception ex) { Debug.LogWarning("[SVD] demo phantom: " + ex.Message); }
             try { if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = Quaternion.LookRotation(fwd).eulerAngles.y; p.vp_FPCamera.Pitch = -5f; } } catch { }
