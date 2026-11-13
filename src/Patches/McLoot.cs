@@ -16,7 +16,7 @@ namespace SteveDaysToDie.Patches
         static readonly (string id, int min, int max, int w)[] Food = { ("bread", 1, 3, 4), ("apple", 1, 3, 4), ("cooked_beef", 1, 2, 2), ("cooked_porkchop", 1, 2, 2), ("carrot", 1, 4, 3), ("baked_potato", 1, 3, 3), ("cookie", 2, 6, 2), ("pumpkin_pie", 1, 1, 1), ("golden_carrot", 1, 2, 1), ("melon_slice", 1, 5, 2), ("cooked_chicken", 1, 2, 2), ("honey_bottle", 1, 1, 1) };
         static readonly (string id, int min, int max, int w)[] Weapons = { ("arrow", 4, 12, 5), ("bow", 1, 1, 1), ("crossbow", 1, 1, 1), ("iron_sword", 1, 1, 1), ("gunpowder", 1, 4, 3), ("string", 1, 4, 2) };
         static readonly (string id, int min, int max, int w)[] Materials = { ("string", 1, 4, 4), ("stick", 2, 8, 4), ("coal", 1, 6, 4), ("iron_nugget", 2, 9, 3), ("leather", 1, 3, 3), ("paper", 1, 4, 3), ("iron_ingot", 1, 3, 3), ("gold_ingot", 1, 2, 2), ("redstone", 1, 6, 2), ("gunpowder", 1, 3, 2), ("book", 1, 1, 2), ("bone", 1, 4, 3), ("feather", 1, 4, 2), ("flint", 1, 3, 2), ("torch", 2, 8, 3), ("bucket", 1, 1, 1), ("saddle", 1, 1, 1), ("name_tag", 1, 1, 1), ("lapis_lazuli", 1, 6, 1), ("copper_ingot", 1, 4, 2) };
-        static readonly (string id, int min, int max, int w)[] Rare = { ("diamond", 1, 2, 3), ("emerald", 1, 3, 3), ("golden_apple", 1, 1, 2), ("ender_pearl", 1, 1, 2), ("enchanted_golden_apple", 1, 1, 1), ("diamond_horse_armor", 1, 1, 1), ("music_disc_cat", 1, 1, 1) };
+        static readonly (string id, int min, int max, int w)[] Rare = { ("diamond", 1, 2, 3), ("emerald", 1, 3, 3), ("golden_apple", 1, 1, 2), ("ender_pearl", 1, 1, 2), ("enchanted_golden_apple", 1, 1, 1), ("diamond_horse_armor", 1, 1, 1), ("music_disc_cat", 1, 1, 1), ("enchanted_book", 1, 1, 4) };
 
         static void Prefix(TEFeatureStorage _tileEntity, out bool __state)
         {
@@ -40,6 +40,13 @@ namespace SteveDaysToDie.Patches
                 {
                     var pick = Pick(Random.value < 0.05f ? Rare : list);
                     var st = Crafting.McItems.Stack(pick.id, Random.Range(pick.min, pick.max + 1));
+                    if (st != null && pick.id == "enchanted_book")
+                    {
+                        // Minecraft's loot books: any enchantment, treasure ones (Mending) included, at a random level
+                        var all = Enchanting.McEnchant.All;
+                        var e = all[Random.Range(0, all.Length)];
+                        Enchanting.McEnchant.Write(st.itemValue, new System.Collections.Generic.Dictionary<string, int> { { e.id, Random.Range(1, e.max + 1) } });
+                    }
                     if (st != null) _tileEntity.AddItem(st);
                 }
             }

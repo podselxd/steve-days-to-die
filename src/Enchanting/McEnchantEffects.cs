@@ -63,6 +63,19 @@ namespace SteveDaysToDie.Enchanting
                     var iv = local.inventory.holdingItemItemValue;
                     var ench = McEnchant.Read(iv);
                     if (ench.Count == 0) return;
+                    string held = McEnchant.McId(iv);
+                    if ((held == "bow" || held == "crossbow") && _damageSource.GetDamageType() == EnumDamageTypes.Piercing)
+                    {
+                        // Power: +25% x (level + 1); Punch: pushes; Flame: sets on fire
+                        if (ench.TryGetValue("power", out int pw)) _strength = Mathf.RoundToInt(_strength * (1f + 0.25f * (pw + 1)));
+                        if (ench.TryGetValue("flame", out _)) { try { __instance.Buffs.AddBuff("buffMcOnFire"); } catch { } }
+                        if (ench.TryGetValue("punch", out int pu))
+                        {
+                            Vector3 d = __instance.position - local.position; d.y = 0f;
+                            if (d.sqrMagnitude > 0.01f) __instance.motion += d.normalized * 0.6f * pu + Vector3.up * 0.1f;
+                        }
+                        return;
+                    }
                     float charge = Mathf.Clamp01(Combat.AttackCharge.ChargeAtPress);
                     if (ench.TryGetValue("smite", out int sm) && Undead(__instance)) _strength += Mathf.RoundToInt(2.5f * sm * 5f * charge);
                     if (ench.TryGetValue("bane_of_arthropods", out int ba) && Arthropod(__instance)) _strength += Mathf.RoundToInt(2.5f * ba * 5f * charge);
@@ -138,16 +151,33 @@ namespace SteveDaysToDie.Enchanting
         [HarmonyPatch(typeof(Block), nameof(Block.OnBlockDestroyedBy))]
         static class OreXp
         {
-            static void Postfix(Block __instance, int _entityId)
+            static void Postfix(Block __instance, BlockValueRef _bvRef, int _entityId)
             {
                 try
                 {
                     var local = GameManager.Instance?.World?.GetPrimaryPlayer();
                     if (local == null || _entityId != local.entityId) return;
-                    McXp.Add(local, McXp.ForBlock(__instance.GetBlockName()));
+                    string name = __instance.GetBlockName();
+                    McXp.Add(local, McXp.ForBlock(name));
+                    Fortune(local, name, _bvRef);
                     Unbreaking(local);
                 }
                 catch { }
+            }
+
+            // Fortune (Minecraft's ore formula): the ore's Minecraft drop x max(1, rand(level + 2)) -> the extra on the ground
+            static void Fortune(EntityPlayerLocal p, string block, BlockValueRef at)
+            {
+                int l = McEnchant.Level(p.inventory.holdingItemItemValue, "fortune");
+                if (l <= 0 || block == null || !block.StartsWith("terrOre") || !at.TryGetBlockPos(out var pos)) return;
+                int mult = Mathf.Max(1, Random.Range(0, l + 2));
+                if (mult <= 1) return;
+                foreach (var (item, b, chance) in Generated.McGuideTable.Mining)
+                {
+                    if (b != block || chance != null) continue;
+                    var st = Crafting.McItems.Stack(item.Substring(3), mult - 1);
+                    if (st != null) GameManager.Instance.ItemDropServer(st, pos.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f), Vector3.zero, Vector3.up, -1, 60f, false, -1);
+                }
             }
         }
     }

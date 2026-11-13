@@ -19,7 +19,7 @@ namespace SteveDaysToDie.McInv
 
         public static void OpenEnchant(EntityPlayerLocal p, Vector3i pos)
         {
-            _furnacePos = null; _enchPos = pos;
+            _furnacePos = null; _enchPos = pos; _anvilPos = null;
             try { _enchShelves = McEnchant.Shelves(pos); } catch { _enchShelves = 0; }
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] enchanting table: " + ex.Message); }

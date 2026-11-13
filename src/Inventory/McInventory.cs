@@ -63,14 +63,14 @@ namespace SteveDaysToDie.McInv
         /// <summary>A Minecraft furnace / smoker / blast furnace was used: open its window.</summary>
         public static void OpenFurnace(EntityPlayerLocal p, Vector3i pos, string kind)
         {
-            _furnacePos = pos; _furnaceKind = kind; _enchPos = null;
+            _furnacePos = pos; _furnaceKind = kind; _enchPos = null; _anvilPos = null;
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (Exception ex) { Debug.LogWarning("[SVD] furnace: " + ex.Message); }
         }
 
         public static void OpenTable(EntityPlayerLocal p)
         {
-            _furnacePos = null; _enchPos = null;
+            _furnacePos = null; _enchPos = null; _anvilPos = null;
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (Exception ex) { Debug.LogWarning("[SVD] crafting table: " + ex.Message); }
         }
@@ -224,6 +224,7 @@ namespace SteveDaysToDie.McInv
             _tex = _table ? _tableTex : _invTex;
             if (InFurnace) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/" + _furnaceKind + ".png") ?? _tableTex;
             if (InEnchant) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/enchanting_table.png") ?? _tableTex;
+            if (InAnvil) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/anvil.png") ?? _tableTex;
         }
 
         void OnClose()
@@ -495,6 +496,7 @@ namespace SteveDaysToDie.McInv
 
         ItemStack ResultStack()
         {
+            if (InAnvil) return _anvilResult;
             var st = _recipe != null ? Crafting.McItems.Stack(_recipe.result, _recipe.count) : null;
             if (st != null) st.itemValue.SetMetadata(Crafting.RealToggle.Crafted, 1);      // made by a Minecraft recipe: stays Minecraft
             return st;
@@ -503,6 +505,7 @@ namespace SteveDaysToDie.McInv
         // Minecraft: a click takes the result (onto what you carry, if it fits); shift crafts all you can into the bag
         void TakeResult(bool shift)
         {
+            if (InAnvil) { AnvilTake(shift); return; }
             for (int guard = 0; guard < 64; guard++)
             {
                 _recipe = Match();
@@ -627,13 +630,13 @@ namespace SteveDaysToDie.McInv
             if (over != _blocking) { UICamera.ignoreAllEvents = over; _blocking = over; }
 
             BuildSlots();
-            if (e.type == EventType.Layout) _recipe = InEnchant ? null : Match();
+            if (e.type == EventType.Layout) _recipe = InEnchant || InAnvil ? null : Match();
             if (e.type == EventType.Repaint)
             {
                 GUI.DrawTextureWithTexCoords(_panel, _tex, new Rect(0, 1f - H / 256f, W / 256f, H / 256f));
                 if (!_table) InventorySteve.Draw(new Rect(px + 26 * s, py + 8 * s, 51 * s, 72 * s), e.mousePosition, s);     // 3D, follows the mouse
-                string title = InEnchant ? Ryan.Mc.T("container.enchant", "Encantar") : InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
-                Label(px + (InEnchant ? 12 : InFurnace ? 60 : _table ? 28 : 97) * s, py + (InEnchant ? 5 : 6) * s, s, title, new Color(0.25f, 0.25f, 0.25f));
+                string title = InAnvil ? Ryan.Mc.T("container.repair", "Reparar y renombrar") : InEnchant ? Ryan.Mc.T("container.enchant", "Encantar") : InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
+                Label(px + (InAnvil ? 60 : InEnchant ? 12 : InFurnace ? 60 : _table ? 28 : 97) * s, py + (InEnchant ? 5 : 6) * s, s, title, new Color(0.25f, 0.25f, 0.25f));
                 if (InFurnace && Furnace != null)
                 {
                     var f = Furnace;
@@ -664,7 +667,8 @@ namespace SteveDaysToDie.McInv
                 if (!_table) DrawPages(px, py, s, e);
             }
             // Minecraft's recipe book (McRecipeBook.cs): its button on the window, the book on the left
-            if (InEnchant) EnchantGUI(px, py, s, e);
+            if (InAnvil) AnvilGUI(px, py, s, e);
+            else if (InEnchant) EnchantGUI(px, py, s, e);
             else if (Time.time - _openedAt >= 0.15f || e.type == EventType.Repaint)
                 if (RecipeBookGUI(px, py, s, e)) return;
 
@@ -716,7 +720,9 @@ namespace SteveDaysToDie.McInv
             }
 
             if (Time.time - _openedAt < 0.15f) return;
-            if (_table && e.type == EventType.KeyDown && (e.keyCode == KeyCode.E || e.keyCode == KeyCode.Escape || e.keyCode == KeyCode.Tab)) { e.Use(); OnClose(); return; }
+            bool typing = InAnvil && GUI.GetNameOfFocusedControl() == "mcAnvilName";
+            if (_table && e.type == EventType.KeyDown && ((e.keyCode == KeyCode.E && !typing) || e.keyCode == KeyCode.Escape || e.keyCode == KeyCode.Tab)) { e.Use(); OnClose(); return; }
+            if (typing && e.type == EventType.KeyDown && e.keyCode != KeyCode.Escape) return;
             if (e.type == EventType.MouseDown && e.button == 0 && !_table && PageClick(px, py, s, e.mousePosition)) { e.Use(); return; }
             // Minecraft's drag: moving with a button held over slots
             if (e.type == EventType.MouseDrag)
@@ -793,7 +799,13 @@ namespace SteveDaysToDie.McInv
                 for (int c = 0; c < 9; c++)
                     _slots.Add(new Slot { kind = Kind.Bag, idx = (_row + r) * 9 + c, x = 8 + c * 18, y = 84 + r * 18 });
             for (int c = 0; c < 9; c++) _slots.Add(new Slot { kind = Kind.Belt, idx = c, x = 8 + c * 18, y = 142 });
-            if (InEnchant)
+            if (InAnvil)
+            {
+                _slots.Add(new Slot { kind = Kind.Craft, idx = 0, x = 27, y = 47 });
+                _slots.Add(new Slot { kind = Kind.Craft, idx = 1, x = 76, y = 47 });
+                _slots.Add(new Slot { kind = Kind.Result, idx = 0, x = 134, y = 47 });
+            }
+            else if (InEnchant)
             {
                 _slots.Add(new Slot { kind = Kind.Craft, idx = 0, x = 15, y = 47 });     // the item
                 _slots.Add(new Slot { kind = Kind.Craft, idx = 1, x = 35, y = 47 });     // lapis lazuli
@@ -849,7 +861,12 @@ namespace SteveDaysToDie.McInv
 
         static string Name(ItemStack st)
         {
-            try { var n = st.itemValue.ItemClass.GetLocalizedItemName(); return string.IsNullOrEmpty(n) ? st.itemValue.ItemClass.Name : n; }
+            try
+            {
+                string custom = CustomName(st.itemValue);                         // renamed at the anvil
+                if (!string.IsNullOrEmpty(custom)) return custom;
+                var n = st.itemValue.ItemClass.GetLocalizedItemName(); return string.IsNullOrEmpty(n) ? st.itemValue.ItemClass.Name : n;
+            }
             catch { return ""; }
         }
 

@@ -52,6 +52,7 @@ namespace SteveDaysToDie.Enchanting
             E("density", "Densidad", 5, 5, 5, 8, 20, "mace", "macedmg"),
             E("breach", "Brecha", 4, 2, 15, 9, 50, "mace", "macedmg"),
             E("unbreaking", "Irrompibilidad", 3, 5, 5, 8, 50, "any", null),
+            E("mending", "Reparación", 1, 2, 0, 0, -1, "any", null),            // treasure: never from the table (window max < min)
         };
 
         static Ench E(string id, string name, int max, int weight, int a, int b, int c, string on, string group)
@@ -273,10 +274,41 @@ namespace SteveDaysToDie.Enchanting
         public static void Add(EntityPlayer p, int points)
         {
             if (p == null || points <= 0) return;
+            points = Mend(p, points);
+            if (points <= 0) return;
             int before = LevelOf(p);
             p.Buffs.SetCustomVar(Cvar, Total(p) + points);
             int after = LevelOf(p);
             Sound.MinecraftSounds.PlayGroup(after > before && after % 5 == 0 ? "random/levelup" : "random/orb", p.position + Vector3.up, 8f, 0.3f, 0.8f + Random.value * 0.5f);
+        }
+
+        /// <summary>Minecraft's Mending: experience goes first into repairing a damaged Mending item held or worn (2 a point).</summary>
+        static int Mend(EntityPlayer p, int points)
+        {
+            try
+            {
+                if (p is EntityPlayerLocal lp)
+                {
+                    var iv = lp.inventory.holdingItemItemValue;
+                    if (McEnchant.Level(iv, "mending") > 0 && iv.UseTimes > 0f)
+                    {
+                        float fix = Mathf.Min(iv.UseTimes, points * 2f);
+                        var nv = iv.Clone(); nv.UseTimes -= fix;
+                        int slot = lp.inventory.holdingItemIdx; var st = lp.inventory.GetItem(slot).Clone(); st.itemValue = nv; lp.inventory.SetItem(slot, st);
+                        points -= Mathf.CeilToInt(fix / 2f);
+                    }
+                }
+                for (int i = 0; i < 4 && points > 0; i++)
+                {
+                    var a = p.equipment.GetSlotItem(i);
+                    if (a == null || a.IsEmpty() || McEnchant.Level(a, "mending") <= 0 || a.UseTimes <= 0f) continue;
+                    float fix = Mathf.Min(a.UseTimes, points * 2f);
+                    var nv = a.Clone(); nv.UseTimes -= fix; p.equipment.SetSlotItem(i, nv);
+                    points -= Mathf.CeilToInt(fix / 2f);
+                }
+            }
+            catch { }
+            return points;
         }
 
         /// <summary>Takes whole levels away (enchanting), keeping the progress fraction like Minecraft.</summary>

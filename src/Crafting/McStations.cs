@@ -221,6 +221,20 @@ public class BlockMcEnchantingTable : BlockMcHidden
     { SteveDaysToDie.McInv.McInventory.OpenEnchant(_player, _blockPos); return true; }
 }
 
+/// <summary>Minecraft's anvil: drawn by the overlay (hidden shape), opens the anvil screen.</summary>
+public class BlockMcAnvil : BlockMcHidden
+{
+    static readonly BlockActivationCommand[] Cmds = { new BlockActivationCommand("open", "hand", true, false, null) };
+    public override bool HasBlockActivationCommands(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing) => true;
+    public override BlockActivationCommand[] GetBlockActivationCommands(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing) => Cmds;
+    public override string GetActivationText(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing)
+        => "[E] " + (Localization.Get("mc_anvil") ?? "Yunque");
+    public override bool OnBlockActivated(string _commandName, WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, EntityPlayerLocal _player)
+    { SteveDaysToDie.McInv.McInventory.OpenAnvil(_player, _blockPos); return true; }
+    public override bool OnBlockActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, EntityPlayerLocal _player)
+    { SteveDaysToDie.McInv.McInventory.OpenAnvil(_player, _blockPos); return true; }
+}
+
 public class BlockMcHidden : Block
 {
     public override void OnBlockEntityTransformAfterActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, BlockEntityData _ebcd)

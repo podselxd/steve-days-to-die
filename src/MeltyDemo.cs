@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "yunque") { yield return AnvilTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "encantar") { yield return EnchantTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "andar") { yield return WalkTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "velocidad") { yield return SpeedTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -837,6 +838,24 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- Minecraft's anvil: Sharpness III + III = IV
+        static IEnumerator AnvilTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("yunque");
+            try { p.Buffs.SetCustomVar(Enchanting.McXp.Cvar, 1395f); } catch { }
+            yield return Wait(0.5f);
+            McInv.McInventory.OpenAnvil(p, World.worldToBlockPos(p.position));
+            yield return Wait(1f);
+            var inv = McInv.McInventory.Instance;
+            Debug.Log("[SVD] anvil test put: " + inv?.TestAnvil(true));
+            yield return Wait(1f);
+            yield return Shot("yunque-0");
+            string r = inv?.TestAnvil(false) ?? "no inventory";
+            Debug.Log("[SVD] anvil test: " + r);
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Close("mcScreen"); } catch { }
+            if (r.Contains("sharpness=4")) MeltyTest.Pass("anvil"); else MeltyTest.Fail("anvil", r);
+        }
+
         // ---- Minecraft enchanting: level 30, a sword and lapis on the table, the third offer
         static IEnumerator EnchantTest(EntityPlayerLocal p)
         {
