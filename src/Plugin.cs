@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v1.13.0 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v1.14.0 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
@@ -76,6 +76,7 @@ namespace SteveDaysToDie
                 MeltyTest.Fail("minecraft-files", "HUD sprites or skin could not be read from Minecraft " + MinecraftVersion);
 
             Patches.OcclusionOff.Init();
+            Enchanting.McEnchantEffects.Init();
             var harmony = new Harmony("com.stevevszombies");
             harmony.PatchAll();
             Debug.Log("[SVD] SteveDaysToDie ready.");

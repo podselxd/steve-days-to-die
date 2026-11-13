@@ -198,8 +198,8 @@ namespace SteveDaysToDie
             int level = 0; float prog = 0f;
             try
             {
-                var pr = _player.Progression;
-                if (pr != null) { level = pr.Level; prog = Mathf.Clamp01(pr.GetLevelProgressPercentage()); }
+                // Minecraft's own experience (kills, ores; spent at the enchanting table) - 7 Days' level stays in its skills page
+                Enchanting.McXp.Level(_player, out level, out prog);
             }
             catch { }
             int x = (sw - 182 * S) / 2, y = hbY - 7 * S;

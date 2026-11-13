@@ -54,6 +54,8 @@ namespace SteveDaysToDie.Patches
             var (kind, mat) = Tool(who);
             bool right = r.tool == kind || (r.tool == "hoe" && kind == "sword");
             float speed = right && Speed.TryGetValue(mat, out var sp) ? sp : 1f;
+            // Efficiency: + level^2 + 1 when it is the right tool (Minecraft)
+            if (right && who is EntityPlayer ep) speed += Combat.ItemModifiers.MiningSpeedBonus(ep.inventory.holdingItemItemValue);
             bool needsTool = r.minTier >= 0;
             bool canHarvest = !needsTool || (right && Level.TryGetValue(mat, out var lv) && lv >= r.minTier);
             float seconds = r.hardness <= 0f ? 0f : r.hardness * (canHarvest ? 1.5f : 5f) / speed;

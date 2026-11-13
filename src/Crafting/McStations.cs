@@ -207,6 +207,20 @@ namespace SteveDaysToDie.Crafting
 /// its drawing, flame and light are switched off here and only Minecraft's drawing (Ryan's BlockOverlay) shows.
 /// Its collider stays, so the torch can be hit and broken. (Config/blocks.xml: Class="McHidden, SteveDaysToDie".)
 /// </summary>
+/// <summary>Minecraft's enchanting table: drawn by the overlay (hidden shape) and opens the enchanting screen.</summary>
+public class BlockMcEnchantingTable : BlockMcHidden
+{
+    static readonly BlockActivationCommand[] Cmds = { new BlockActivationCommand("open", "hand", true, false, null) };
+    public override bool HasBlockActivationCommands(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing) => true;
+    public override BlockActivationCommand[] GetBlockActivationCommands(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing) => Cmds;
+    public override string GetActivationText(WorldBase _world, BlockValue _blockValue, Vector3i _blockPos, EntityAlive _entityFocusing)
+        => "[E] " + (Localization.Get("mc_enchanting_table") ?? "Mesa de encantamientos");
+    public override bool OnBlockActivated(string _commandName, WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, EntityPlayerLocal _player)
+    { SteveDaysToDie.McInv.McInventory.OpenEnchant(_player, _blockPos); return true; }
+    public override bool OnBlockActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, EntityPlayerLocal _player)
+    { SteveDaysToDie.McInv.McInventory.OpenEnchant(_player, _blockPos); return true; }
+}
+
 public class BlockMcHidden : Block
 {
     public override void OnBlockEntityTransformAfterActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, BlockEntityData _ebcd)

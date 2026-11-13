@@ -55,6 +55,8 @@ namespace SteveDaysToDie.Combat
         public static float CurrentCooldown => _cooldown;
 
         /// <summary>0..1: how recharged the next hit is.</summary>
+        /// <summary>How charged the swing that is landing now was (enchantment damage scales with it).</summary>
+        public static float ChargeAtPress => _chargeAtPress;
         public static float Charge => Mathf.Clamp01((Time.time - _lastAttack) / Mathf.Max(0.05f, _cooldown));
 
         /// <summary>Minecraft's damage rule, in one place (also used by the test).</summary>

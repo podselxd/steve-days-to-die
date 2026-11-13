@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "encantar") { yield return EnchantTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "andar") { yield return WalkTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "velocidad") { yield return SpeedTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "mobs") { yield return MobsTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -836,6 +837,29 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- Minecraft enchanting: level 30, a sword and lapis on the table, the third offer
+        static IEnumerator EnchantTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("encantar");
+            try { p.Buffs.SetCustomVar(Enchanting.McXp.Cvar, 1395f); } catch { }       // exactly level 30
+            yield return Wait(0.5f);
+            McInv.McInventory.OpenEnchant(p, World.worldToBlockPos(p.position));
+            yield return Wait(1f);
+            var inv = McInv.McInventory.Instance;
+            inv?.TestEnchant("iron_sword", 2, true);
+            yield return Wait(1f);
+            yield return Shot("encantar-0");
+            string r1 = inv?.TestEnchant("iron_sword", 2, false) ?? "no inventory";
+            Debug.Log("[SVD] enchant test result: " + r1);
+            yield return Wait(0.5f);
+            yield return Shot("encantar-1");
+            inv?.TestEnchant("book", 0, true);
+            string r2 = inv?.TestEnchant("book", 0, false) ?? "";
+            Debug.Log("[SVD] enchant test book: " + r2);
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Close("mcScreen"); } catch { }
+            if (r1.Contains("=")) MeltyTest.Pass("enchant"); else MeltyTest.Fail("enchant", r1);
+        }
+
         // ---- Steve's own speeds (walk, run, crouch) on flat ground, to match Minecraft's 4.317 / 5.612 / 1.295 m/s
         static IEnumerator WalkTest(EntityPlayerLocal p)
         {

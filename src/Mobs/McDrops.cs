@@ -29,13 +29,15 @@ namespace SteveDaysToDie.Mobs
             if (_done || _e == null || !_e.IsDead()) return;
             _done = true;
             if (string.IsNullOrEmpty(Drops) || !McMobRules.IsHost) return;
+            int looting = 0;
+            try { if (_e.entityThatKilledMe is EntityPlayer killer) looting = Enchanting.McEnchant.Level(killer.inventory.holdingItemItemValue, "looting"); } catch { }
             bool burning = false;
             try { burning = GetComponent<McAnimal>()?.Burning == true || _e.Buffs.HasBuff("buffMcOnFire") || _e.Buffs.HasBuff("buffBurningMolotov"); } catch { }
             foreach (var d in Drops.Split(';'))
             {
                 var kv = d.Split(':');
                 if (kv.Length < 2 || !int.TryParse(kv[1], out int max)) continue;
-                int n = Random.Range(0, max + 1);                                  // Minecraft: 0 to max of each
+                int n = Random.Range(0, max + looting + 1);                        // Minecraft: 0 to max (+1 a Looting level)
                 if (n <= 0) continue;
                 var st = Crafting.McItems.Stack(burning ? Cooked(kv[0]) : kv[0], n) ?? Crafting.McItems.Stack(kv[0], n);
                 if (st == null) continue;

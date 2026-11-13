@@ -63,14 +63,14 @@ namespace SteveDaysToDie.McInv
         /// <summary>A Minecraft furnace / smoker / blast furnace was used: open its window.</summary>
         public static void OpenFurnace(EntityPlayerLocal p, Vector3i pos, string kind)
         {
-            _furnacePos = pos; _furnaceKind = kind;
+            _furnacePos = pos; _furnaceKind = kind; _enchPos = null;
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (Exception ex) { Debug.LogWarning("[SVD] furnace: " + ex.Message); }
         }
 
         public static void OpenTable(EntityPlayerLocal p)
         {
-            _furnacePos = null;
+            _furnacePos = null; _enchPos = null;
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcScreen", true); }
             catch (Exception ex) { Debug.LogWarning("[SVD] crafting table: " + ex.Message); }
         }
@@ -223,6 +223,7 @@ namespace SteveDaysToDie.McInv
             if (_tableTex == null) _tableTex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/crafting_table.png");
             _tex = _table ? _tableTex : _invTex;
             if (InFurnace) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/" + _furnaceKind + ".png") ?? _tableTex;
+            if (InEnchant) _tex = Ryan.Mc.Tex("assets/minecraft/textures/gui/container/enchanting_table.png") ?? _tableTex;
         }
 
         void OnClose()
@@ -324,6 +325,8 @@ namespace SteveDaysToDie.McInv
             if (st == null || st.IsEmpty()) return true;
             if (s.kind == Kind.Result || s.kind == Kind.FOut) return false;                    // take only
             if (s.kind == Kind.FFuel) return Crafting.McFurnaces.BurnSeconds(st) > 0f;          // only what burns
+            if (InEnchant && s.kind == Kind.Craft)
+                return s.idx == 1 ? Crafting.McRecipes.McId(st) == "lapis_lazuli" : EnchantableHere(st) && st.count == 1;
             if (s.kind != Kind.Armor) return true;
             var ic = st.itemValue.ItemClass;
             return ArmorSlot(st) == s.idx;
@@ -624,13 +627,13 @@ namespace SteveDaysToDie.McInv
             if (over != _blocking) { UICamera.ignoreAllEvents = over; _blocking = over; }
 
             BuildSlots();
-            if (e.type == EventType.Layout) _recipe = Match();
+            if (e.type == EventType.Layout) _recipe = InEnchant ? null : Match();
             if (e.type == EventType.Repaint)
             {
                 GUI.DrawTextureWithTexCoords(_panel, _tex, new Rect(0, 1f - H / 256f, W / 256f, H / 256f));
                 if (!_table) InventorySteve.Draw(new Rect(px + 26 * s, py + 8 * s, 51 * s, 72 * s), e.mousePosition, s);     // 3D, follows the mouse
-                string title = InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
-                Label(px + (InFurnace ? 60 : _table ? 28 : 97) * s, py + 6 * s, s, title, new Color(0.25f, 0.25f, 0.25f));
+                string title = InEnchant ? Ryan.Mc.T("container.enchant", "Encantar") : InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
+                Label(px + (InEnchant ? 12 : InFurnace ? 60 : _table ? 28 : 97) * s, py + (InEnchant ? 5 : 6) * s, s, title, new Color(0.25f, 0.25f, 0.25f));
                 if (InFurnace && Furnace != null)
                 {
                     var f = Furnace;
@@ -661,7 +664,8 @@ namespace SteveDaysToDie.McInv
                 if (!_table) DrawPages(px, py, s, e);
             }
             // Minecraft's recipe book (McRecipeBook.cs): its button on the window, the book on the left
-            if (Time.time - _openedAt >= 0.15f || e.type == EventType.Repaint)
+            if (InEnchant) EnchantGUI(px, py, s, e);
+            else if (Time.time - _openedAt >= 0.15f || e.type == EventType.Repaint)
                 if (RecipeBookGUI(px, py, s, e)) return;
 
             Slot? hover = null;
@@ -686,6 +690,7 @@ namespace SteveDaysToDie.McInv
                         shown = pre;
                     }
                     DrawStack(shown, r, s);
+                    Glint(shown, r);
                     if (isHover || InDrag(sl)) Fill(r, new Color(1f, 1f, 1f, 0.5f));
                 }
             }
@@ -706,7 +711,7 @@ namespace SteveDaysToDie.McInv
                 else if (hover.HasValue)
                 {
                     var st = Get(hover.Value);
-                    if (!st.IsEmpty()) Tooltip(Name(st), e.mousePosition, s);
+                    if (!st.IsEmpty()) Tooltip(NameWithEnchantments(st), e.mousePosition, s);
                 }
             }
 
@@ -788,7 +793,12 @@ namespace SteveDaysToDie.McInv
                 for (int c = 0; c < 9; c++)
                     _slots.Add(new Slot { kind = Kind.Bag, idx = (_row + r) * 9 + c, x = 8 + c * 18, y = 84 + r * 18 });
             for (int c = 0; c < 9; c++) _slots.Add(new Slot { kind = Kind.Belt, idx = c, x = 8 + c * 18, y = 142 });
-            if (InFurnace)
+            if (InEnchant)
+            {
+                _slots.Add(new Slot { kind = Kind.Craft, idx = 0, x = 15, y = 47 });     // the item
+                _slots.Add(new Slot { kind = Kind.Craft, idx = 1, x = 35, y = 47 });     // lapis lazuli
+            }
+            else if (InFurnace)
             {
                 _slots.Add(new Slot { kind = Kind.FIn, x = 56, y = 17 });
                 _slots.Add(new Slot { kind = Kind.FFuel, x = 56, y = 53 });
