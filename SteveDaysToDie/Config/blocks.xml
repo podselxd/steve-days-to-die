@@ -1,14 +1,50 @@
 <configs>
-    <!-- V1: Stone yields cobblestone when mined with pickaxe (Minecraft behavior).
-         Original drop was resourceRockSmall x55 — changed to resourceCobblestones 1-4. -->
-    <set xpath="/blocks/block[@name='terrStone']/drop[@event='Harvest']/@name">resourceCobblestones</set>
-    <set xpath="/blocks/block[@name='terrStone']/drop[@event='Harvest']/@count">1,4</set>
 
-    <!-- Coal ore already drops resourceCoal — no change needed.                   -->
-    <!-- Iron ore already drops resourceScrapIron (iron nugget equiv) — no change. -->
-    <!-- Dirt already drops resourceClayLump (clay ball equiv) — no change.        -->
-    
-    
+    <!-- MINING LIKE MINECRAFT (user, 2026-11-12): each terrain block broken gives ONE Minecraft block/item,
+         no 7 Days handfuls per hit, and it breaks in a few hits. Ores keep their 7 Days drops and add Minecraft's raw item. -->
+    <remove xpath="/blocks/block[@name='terrStone']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrStone']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrStone']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrStone']"><drop event="Destroy" name="mc_cobblestone" count="1"/><property name="MaxDamage" value="100"/></append>
+    <remove xpath="/blocks/block[@name='terrDestroyedStone']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrDestroyedStone']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrDestroyedStone']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrDestroyedStone']"><drop event="Destroy" name="mc_cobblestone" count="1"/><property name="MaxDamage" value="80"/></append>
+    <remove xpath="/blocks/block[@name='terrDirt']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrDirt']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrDirt']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrDirt']"><drop event="Destroy" name="mc_dirt" count="1"/><property name="MaxDamage" value="40"/></append>
+    <remove xpath="/blocks/block[@name='terrForestGround']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrForestGround']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrForestGround']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrForestGround']"><drop event="Destroy" name="mc_dirt" count="1"/><property name="MaxDamage" value="40"/></append>
+    <remove xpath="/blocks/block[@name='terrBurntForestGround']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrBurntForestGround']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrBurntForestGround']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrBurntForestGround']"><drop event="Destroy" name="mc_netherrack" count="1"/><property name="MaxDamage" value="40"/></append>
+    <remove xpath="/blocks/block[@name='terrDesertGround']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrDesertGround']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrDesertGround']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrDesertGround']"><drop event="Destroy" name="mc_sand" count="1"/><property name="MaxDamage" value="35"/></append>
+    <remove xpath="/blocks/block[@name='terrSand']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrSand']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrSand']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrSand']"><drop event="Destroy" name="mc_sand" count="1"/><property name="MaxDamage" value="35"/></append>
+    <remove xpath="/blocks/block[@name='terrGravel']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrGravel']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrGravel']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrGravel']"><drop event="Destroy" name="mc_gravel" count="1"/><property name="MaxDamage" value="40"/></append>
+    <remove xpath="/blocks/block[@name='terrSnow']/drop[@event='Harvest']"/>
+    <remove xpath="/blocks/block[@name='terrSnow']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrSnow']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrSnow']"><drop event="Destroy" name="mc_snowball" count="4"/><property name="MaxDamage" value="20"/></append>
+    <remove xpath="/blocks/block[@name='terrOreIron']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrOreIron']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrOreIron']"><drop event="Destroy" name="mc_raw_iron" count="1"/><property name="MaxDamage" value="150"/></append>
+    <remove xpath="/blocks/block[@name='terrOreCoal']/drop[@event='Destroy']"/>
+    <remove xpath="/blocks/block[@name='terrOreCoal']/property[@name='MaxDamage']"/>
+    <append xpath="/blocks/block[@name='terrOreCoal']"><drop event="Destroy" name="mc_coal" count="1"/><property name="MaxDamage" value="150"/></append>
+
     
     
     <!-- BEGIN GENERATED MC BLOCKS -->

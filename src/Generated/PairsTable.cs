@@ -23,14 +23,14 @@ namespace SteveDaysToDie.Generated
             { "resourceYuccaFibers", "string" },   // aproximado
             { "resourceWood", "oak_log" },   // aproximado
             { "resourceClayLump", "dirt" },   // aproximado
-            { "resourceRockSmall", "gravel" },   // aproximado
+            { "resourceRockSmall", "cobblestone" },   // aproximado
             { "resourceCrushedSand", "sand" },   // exacto
             { "cobweb", "cobweb" },   // exacto
             { "drinkJarEmpty", "glass_bottle" },   // exacto
             { "bucketEmpty", "bucket" },   // exacto
             { "bucketRiverWater", "water_bucket" },   // exacto
             { "woodShapes:VariantHelper", "oak_planks" },   // aproximado
-            { "cobblestoneShapes:VariantHelper", "cobblestone" },   // exacto
+            { "cobblestoneShapes:VariantHelper", "stone" },   // aproximado
             { "glassBlockVariantHelper", "glass" },   // aproximado
             { "ironBars", "iron_bars" },   // exacto
             { "candle", "candle" },   // exacto

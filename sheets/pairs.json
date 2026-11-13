@@ -20,7 +20,7 @@
     {"id_7days": "resourceYuccaFibers", "id_minecraft": "string", "relation": "aproximado", "category": "material", "note": "fibra vegetal = hilo"},
     {"id_7days": "resourceWood", "id_minecraft": "oak_log", "relation": "aproximado", "category": "material", "note": "madera suelta = palo; el bloque de madera es el par de los tablones"},
     {"id_7days": "resourceClayLump", "id_minecraft": "dirt", "relation": "aproximado", "category": "material", "note": "regla del diseno: version Minecraft = tierra (se coloca); version 7 Days = arcilla (se cocina)"},
-    {"id_7days": "resourceRockSmall", "id_minecraft": "gravel", "relation": "aproximado", "category": "material", "note": "piedras sueltas = grava"},
+    {"id_7days": "resourceRockSmall", "id_minecraft": "cobblestone", "relation": "aproximado", "category": "material", "note": "piedras sueltas = adoquin (usuario 2026-11-12: la roca no es grava)"},
     {"id_7days": "resourceCrushedSand", "id_minecraft": "sand", "relation": "exacto", "category": "material", "note": ""},
     {"id_7days": "cobweb", "id_minecraft": "cobweb", "relation": "exacto", "category": "material", "note": ""},
     {"id_7days": "drinkJarEmpty", "id_minecraft": "glass_bottle", "relation": "exacto", "category": "material", "note": "frasco vacio"},
@@ -28,7 +28,7 @@
     {"id_7days": "bucketRiverWater", "id_minecraft": "water_bucket", "relation": "exacto", "category": "herramienta", "note": "cubeta con agua"},
 
     {"id_7days": "woodShapes:VariantHelper", "id_minecraft": "oak_planks", "relation": "aproximado", "category": "bloque", "note": "bloque de madera = tablones"},
-    {"id_7days": "cobblestoneShapes:VariantHelper", "id_minecraft": "cobblestone", "relation": "exacto", "category": "bloque", "note": "bloque de adoquin"},
+    {"id_7days": "cobblestoneShapes:VariantHelper", "id_minecraft": "stone", "relation": "aproximado", "category": "bloque", "note": "bloque de adoquin de 7 Days = piedra de Minecraft (el adoquin de Minecraft quedo para la roca suelta, usuario 2026-11-12)"},
     {"id_7days": "glassBlockVariantHelper", "id_minecraft": "glass", "relation": "aproximado", "category": "bloque", "note": ""},
     {"id_7days": "ironBars", "id_minecraft": "iron_bars", "relation": "exacto", "category": "bloque", "note": ""},
     {"id_7days": "candle", "id_minecraft": "candle", "relation": "exacto", "category": "bloque", "note": ""},
