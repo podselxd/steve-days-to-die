@@ -158,7 +158,30 @@ namespace SteveVsZombiesLauncher
             Thread.Sleep(6000);
         }
 
+        // Started BY STEAM, so Steam puts its overlay on it: without the overlay "Invitar amigos" opens nothing.
+        // Steam's own "Launch game without EAC" option (7dLauncher.exe -from-steam -forceeac off): no anti-cheat,
+        // so the mod loads. If Steam starts nothing, the game is opened directly as before (no overlay).
         public static void Launch(string game)
+        {
+            string steam = (Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamExe", null) as string)?.Replace('/', '\\');
+            if (steam != null && File.Exists(steam))
+            {
+                try
+                {
+                    Process.Start(steam, "-applaunch 251570 -skip-launcher -forceeac off -force-d3d11 -nogs");
+                    for (int i = 0; i < 40; i++)                 // up to 20 s for Steam to start it
+                    {
+                        Thread.Sleep(500);
+                        if (Process.GetProcessesByName("7DaysToDie").Length > 0 || Process.GetProcessesByName("7dLauncher").Length > 0
+                            || Process.GetProcessesByName("7DaysToDie_EAC").Length > 0) return;
+                    }
+                }
+                catch { }
+            }
+            LaunchDirect(game);
+        }
+
+        public static void LaunchDirect(string game)
         {
             var psi = new ProcessStartInfo(Path.Combine(game, "7DaysToDie.exe"), "-force-d3d11 -nogs")
             {
