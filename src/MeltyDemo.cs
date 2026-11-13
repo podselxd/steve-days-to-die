@@ -51,6 +51,8 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "casa") { yield return HouseTorches(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
+            if (MeltyTest.Only == "acumula") { yield return Accumulate(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only.StartsWith("picar")) { yield return DigRepro(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
 
             // ---- first person ----
@@ -497,6 +499,158 @@ namespace SteveDaysToDie
                 for (int i = 0; i < list.Count && i < 45; i++) Debug.Log($"[SVD] near {label}: x{list[i].Value} {list[i].Key}");
             }
             catch (Exception ex) { Debug.LogWarning("[SVD] near things: " + ex.Message); }
+        }
+
+        // ---- "the more you break, the more breaks": Minecraft torches and blocks around, then many block changes ----
+        static IEnumerator Accumulate(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("acumula");
+            var world = GameManager.Instance.World;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 15f; } catch { }
+            yield return Wait(1f);
+            Census("0-inicio");
+            yield return Shot("acumula-0-inicio");
+            // torches and blocks of Minecraft on the ground around
+            var placed = new List<Vector3i>();
+            string[] kinds = { "mc_torch", "mc_cobblestone", "mc_torch", "mc_oak_planks", "mc_torch", "mc_dirt" };
+            int k = 0;
+            for (int d = 3; d <= 9; d += 2)
+                for (int sx = -6; sx <= 6; sx += 3)
+                {
+                    Vector3i col = World.worldToBlockPos(p.position + fwd * d + side * sx);
+                    for (int y = col.y + 4; y >= col.y - 4; y--)
+                    {
+                        var pos = new Vector3i(col.x, y, col.z);
+                        if (world.GetBlock(pos).isair && !world.GetBlock(pos + Vector3i.down).isair)
+                        {
+                            try { world.SetBlockRPC(pos, Block.GetBlockValue(kinds[k++ % kinds.Length])); placed.Add(pos); } catch { }
+                            break;
+                        }
+                    }
+                }
+            yield return Wait(3f);
+            Census("1-puestos-" + placed.Count);
+            yield return Shot("acumula-1-puestos");
+            // many block changes: damage and break the ground around, several rounds
+            for (int round = 0; round < 4; round++)
+            {
+                int n = 0;
+                for (int d = 2; d <= 10; d++)
+                    for (int sx = -7; sx <= 7; sx++)
+                    {
+                        Vector3i col = World.worldToBlockPos(p.position + fwd * d + side * sx);
+                        for (int y = col.y + 4; y >= col.y - 5; y--)
+                        {
+                            var pos = new Vector3i(col.x, y, col.z);
+                            BlockValue bv = world.GetBlock(pos);
+                            if (bv.isair || placed.Contains(pos)) continue;
+                            try { bv.Block.DamageBlock(world, new BlockValueRef(pos), bv, bv.Block.MaxDamage / 2 + 1, p.entityId, null, true); n++; } catch { }
+                            break;
+                        }
+                        if (n % 20 == 0) yield return null;
+                    }
+                yield return Wait(4f);
+                Census("2-ronda" + round + "-golpes" + n);
+                yield return Shot("acumula-2-ronda" + round);
+            }
+            // turn around: plates "all over the map"
+            for (int t = 1; t < 4; t++)
+            {
+                try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 90f; } catch { }
+                yield return Wait(1f);
+                yield return Shot("acumula-3-vuelta" + t);
+            }
+            Census("3-fin");
+        }
+
+        // ---- the user's case: Minecraft torches stuck to a house's walls ----
+        static IEnumerator HouseTorches(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("casa");
+            var world = GameManager.Instance.World;
+            Vector3i me = World.worldToBlockPos(p.position);
+            // nearest building wall: a non-terrain solid block with air beside it, at the player's height
+            Vector3i wall = Vector3i.zero, air = Vector3i.zero; bool found = false; float best = float.MaxValue;
+            for (int dx = -45; dx <= 45; dx++)
+                for (int dz = -45; dz <= 45; dz++)
+                    for (int dy = -2; dy <= 4; dy++)
+                    {
+                        var pos = me + new Vector3i(dx, dy, dz);
+                        var bv = world.GetBlock(pos);
+                        if (bv.isair || bv.Block.shape.IsTerrain() || !bv.Block.IsCollideMovement || bv.Block.GetBlockName().StartsWith("mc_")) continue;
+                        foreach (var d in new[] { Vector3i.forward, Vector3i.back, Vector3i.left, Vector3i.right })
+                        {
+                            var a2 = pos + d;
+                            if (!world.GetBlock(a2).isair || world.GetBlock(a2 + Vector3i.down).isair) continue;
+                            float dist = (pos - me).ToVector3().sqrMagnitude;
+                            if (dist < best && dist > 9f) { best = dist; wall = pos; air = a2; found = true; }
+                        }
+                    }
+            if (!found) { Debug.Log("[SVD] casa: no wall found"); yield break; }
+            Debug.Log($"[SVD] casa: wall {world.GetBlock(wall).Block.GetBlockName()} at {wall}, torch spot {air}");
+            // stand 3 blocks away looking at the wall
+            Vector3 dirOut = (air - wall).ToVector3();
+            Vector3 stand = air.ToVector3() + new Vector3(0.5f, 0f, 0.5f) + dirOut * 3f;
+            try { p.SetPosition(stand); } catch { }
+            yield return Wait(2f);
+            void Look()
+            {
+                Vector3 to = wall.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f) - (p.position + Vector3.up * 1.6f);
+                if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = Mathf.Atan2(to.x, to.z) * Mathf.Rad2Deg; p.vp_FPCamera.Pitch = -Mathf.Atan2(to.y, new Vector2(to.x, to.z).magnitude) * Mathf.Rad2Deg; }
+            }
+            try { Look(); } catch { }
+            yield return Wait(1.5f);
+            Census("casa-antes");
+            yield return Shot("casa-0-antes");
+            // torches along the wall: the spot found and its neighbours along the wall, two heights
+            Vector3 along = Vector3.Cross(Vector3.up, dirOut);
+            Vector3i al = new Vector3i(Mathf.RoundToInt(along.x), 0, Mathf.RoundToInt(along.z));
+            int n = 0;
+            for (int i = -3; i <= 3; i++)
+                for (int h = 0; h <= 1; h++)
+                {
+                    var spot = air + al * i + Vector3i.up * h;
+                    if (!world.GetBlock(spot).isair) continue;
+                    try { world.SetBlockRPC(spot, Block.GetBlockValue("mc_torch")); n++; } catch { }
+                }
+            Debug.Log("[SVD] casa: torches placed " + n);
+            for (int t = 0; t < 4; t++)
+            {
+                yield return Wait(2f);
+                try { Look(); } catch { }
+                yield return Shot("casa-1-antorchas-" + t);
+            }
+            Census("casa-despues");
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 180f; } catch { }
+            yield return Wait(1.5f);
+            yield return Shot("casa-2-atras");
+        }
+
+        // everything drawn in the scene, grouped (renderer type, top object name, material/shader): what grows?
+        static void Census(string label)
+        {
+            try
+            {
+                var groups = new Dictionary<string, int>();
+                int total = 0;
+                foreach (var r in UnityEngine.Object.FindObjectsOfType<Renderer>())
+                {
+                    if (!r.enabled || !r.gameObject.activeInHierarchy) continue;
+                    total++;
+                    var t = r.transform; while (t.parent != null && t.parent.parent != null) t = t.parent;
+                    var m = r.sharedMaterial;
+                    string key = r.GetType().Name + " | " + System.Text.RegularExpressions.Regex.Replace(t.name + "/" + r.name, "[0-9]+", "#")
+                                 + " | " + (m != null ? m.name + " / " + (m.shader != null ? m.shader.name : "-") : "-") + " | L" + r.gameObject.layer;
+                    groups[key] = groups.TryGetValue(key, out int c) ? c + 1 : 1;
+                }
+                var list = new List<KeyValuePair<string, int>>(groups);
+                list.Sort((x, y) => y.Value.CompareTo(x.Value));
+                Debug.Log($"[SVD] census {label}: {total} renderers, {list.Count} groups, gameobjects {UnityEngine.Object.FindObjectsOfType<GameObject>().Length}, lights {UnityEngine.Object.FindObjectsOfType<Light>().Length}");
+                for (int i = 0; i < list.Count && i < 60; i++) Debug.Log($"[SVD] census {label}: x{list[i].Value} {list[i].Key}");
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] census: " + ex.Message); }
         }
 
         static void GrassInfo(string label)

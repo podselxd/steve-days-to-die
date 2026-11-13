@@ -249,8 +249,13 @@ for r in _mcb_rows:
     i = r["id"]
     drop = i if r["drop"] == "self" else r["drop"]
     _bx.append('        <block name="mc_%s">' % i)
-    if i in _CLASS: _bx.append('            <property name="Class" value="%s"/>' % _CLASS[i])
-    for k, v in (("Material", r["material7d"]), ("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"),
+    # thin things (torch): a full 7 Days cube showed under Minecraft's drawing (big yellow cubes). They use the 7 Days
+    # wall torch's model only for its shape (to hit and touch it); BlockMcHidden hides its drawing, flame and light.
+    _thin = r["render"] == "torch"
+    if _thin: _bx.append('            <property name="Class" value="McHidden, SteveDaysToDie"/>')
+    elif i in _CLASS: _bx.append('            <property name="Class" value="%s"/>' % _CLASS[i])
+    _shape = (("Shape", "ModelEntity"), ("Model", "@:Entities/Lighting/torch_wallPrefab.prefab"), ("LightOpacity", "0")) if _thin         else (("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"))
+    for k, v in (("Material", r["material7d"]),) + _shape + (
                  ("MaxDamage", str(r["maxDamage7d"])), ("StabilityIgnore", "true"), ("DisplayType", "blockHardened"),
                  ("Tags", "stevedays"), ("Group", "Building,Minecraft"), ("CreativeMode", "Player"),
                  ("CustomIcon", "mc_" + i), ("CustomIconTint", "ffffff"), ("Stacknumber", "64"),

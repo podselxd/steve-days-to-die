@@ -790,8 +790,8 @@ public static class BlockOverlay
 			Sheets.BlockRow blockRow = Sheets.Blocks[list[num].Value];
 			light2.enabled = true;
 			light2.GetComponent<LightTag>().pos = list[num].Key;
-			light2.range = 9f * (float)blockRow.light / 15f;
-			light2.intensity = 1.6f;
+			light2.range = 6f * (float)blockRow.light / 15f;
+			light2.intensity = 0.8f;   // was 1.6: many torches turned everything yellow by day
 			light2.color = ((blockRow.render == "torch") ? new Color(1f, 0.78f, 0.5f) : new Color(1f, 0.9f, 0.7f));
 		}
 	}

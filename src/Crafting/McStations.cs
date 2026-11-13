@@ -193,3 +193,36 @@ namespace SteveDaysToDie.Crafting
         }
     }
 }
+
+/// <summary>
+/// Thin Minecraft blocks (the torch): 7 Days needs a model for the block's shape, so they use the 7 Days wall torch;
+/// its drawing, flame and light are switched off here and only Minecraft's drawing (Ryan's BlockOverlay) shows.
+/// Its collider stays, so the torch can be hit and broken. (Config/blocks.xml: Class="McHidden, SteveDaysToDie".)
+/// </summary>
+public class BlockMcHidden : Block
+{
+    public override void OnBlockEntityTransformAfterActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, BlockEntityData _ebcd)
+    {
+        base.OnBlockEntityTransformAfterActivated(_world, _blockPos, _blockValue, _ebcd);
+        Hide(_ebcd);
+    }
+
+    public override void OnBlockEntityTransformBeforeActivated(WorldBase _world, Vector3i _blockPos, BlockValue _blockValue, BlockEntityData _ebcd)
+    {
+        base.OnBlockEntityTransformBeforeActivated(_world, _blockPos, _blockValue, _ebcd);
+        Hide(_ebcd);
+    }
+
+    static void Hide(BlockEntityData d)
+    {
+        try
+        {
+            var t = d?.transform;
+            if (t == null) return;
+            foreach (var r in t.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+            foreach (var l in t.GetComponentsInChildren<Light>(true)) l.enabled = false;
+            foreach (var a in t.GetComponentsInChildren<AudioSource>(true)) a.enabled = false;
+        }
+        catch (System.Exception ex) { Debug.LogWarning("[SVD] hidden block: " + ex.Message); }
+    }
+}
