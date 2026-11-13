@@ -348,7 +348,7 @@ public static class FirstPerson
 			item.SetActive(id != "");
 			if (!(id == ""))
 			{
-				FaceCull.Own(item.GetComponent<MeshFilter>(), ItemMeshes.Mesh(id));
+				FaceCull.Own(item.GetComponent<MeshFilter>(), ItemMeshes.Mesh(id), sprite: !ItemMeshes.IsBlock(id));
 				item.GetComponent<MeshRenderer>().sharedMaterial = ItemMeshes.Material(id, litInWorld: false);
 			}
 		}

@@ -4,46 +4,92 @@ using UnityEngine;
 namespace SteveDaysToDie.Ryan
 {
     /// <summary>
-    /// The hand's material (Sprites/Default) draws every face with no depth test, so a cube's back faces landed
-    /// on top of its front ones ("textura rota") and flat items showed their mirrored back. Every frame only the
-    /// faces turned towards the camera are kept: a face is visible when it points away from the mesh's centre
-    /// and towards the camera, which works for boxes, the arm and the thin extruded items, mirrored or not.
+    /// The hand's material (Sprites/Default) draws every face with no depth test, in the order the mesh lists them.
+    /// So every frame the mesh is given only the faces turned towards the camera, in an order that draws right:
+    ///  - which way a face looks comes from its own winding (the old "away from the mesh's centre" guess was wrong
+    ///    for shapes with hollows, like a pickaxe: inner side walls were kept and drawn over the flat face);
+    ///  - for flat items (extruded sprites) the side walls go first, far ones before near ones, and the flat face
+    ///    last, on top - that is what a depth buffer would show, since every wall lies behind the flat face.
     /// </summary>
     public static class FaceCull
     {
-        class Data { public Mesh mesh; public Vector3[] v; public int[] all; public Vector3 center; }
+        class Data
+        {
+            public Mesh mesh; public int[] all; public Vector3[] centre; public Vector3[] normal;
+            public bool sprite; public float[] dist; public int[] order;
+        }
         static readonly Dictionary<MeshFilter, Data> _data = new Dictionary<MeshFilter, Data>();
         static readonly List<int> _tris = new List<int>();
+        static readonly List<MeshFilter> _gone = new List<MeshFilter>();
 
-        /// <summary>Give this filter its own copy of the mesh (call when the shown mesh changes).</summary>
-        public static void Own(MeshFilter f, Mesh shared)
+        /// <summary>Give this filter its own copy of the mesh (call when the shown mesh changes).
+        /// sprite = a flat item made by MeshKit.ExtrudedSprite (its first two quads are the flat faces).</summary>
+        public static void Own(MeshFilter f, Mesh shared, bool sprite = false)
         {
             if (f == null || shared == null) return;
             if (_data.TryGetValue(f, out var old) && old.mesh != null) Object.Destroy(old.mesh);
+            if (_data.Count > 8)                                   // filters of hands that no longer exist
+            {
+                _gone.Clear();
+                foreach (var kv in _data) if (kv.Key == null) _gone.Add(kv.Key);
+                foreach (var k in _gone) { if (_data[k].mesh != null) Object.Destroy(_data[k].mesh); _data.Remove(k); }
+            }
             var m = Object.Instantiate(shared);
             m.name = shared.name + " (culled)";
             f.sharedMesh = m;
-            _data[f] = new Data { mesh = m, v = shared.vertices, all = shared.triangles, center = shared.bounds.center };
+            var v = shared.vertices; var all = shared.triangles;
+            int quads = all.Length / 6;                            // MeshKit: each face = 4 vertices, 2 triangles
+            var d = new Data
+            {
+                mesh = m, all = all, sprite = sprite && quads >= 2,
+                centre = new Vector3[quads], normal = new Vector3[quads], dist = new float[quads], order = new int[quads]
+            };
+            for (int k = 0; k < quads; k++)
+            {
+                int i = k * 6;
+                Vector3 a = v[all[i]], b = v[all[i + 1]], e = v[all[i + 2]], g = v[all[i + 5]];
+                d.centre[k] = (a + b + e + g) * 0.25f;
+                d.normal[k] = Vector3.Cross(b - a, e - a);
+            }
+            // the arm's mesh is mirrored by hand, which turns every winding round: the first quad is always an
+            // outer face of a box, so it tells which way this mesh's windings point
+            if (quads > 0 && Vector3.Dot(d.normal[0], d.centre[0] - shared.bounds.center) < 0f)
+                for (int k = 0; k < quads; k++) d.normal[k] = -d.normal[k];
+            _data[f] = d;
         }
 
         public static void Apply(MeshFilter f, Vector3 camPos)
         {
             if (f == null || !f.gameObject.activeInHierarchy || !_data.TryGetValue(f, out var d) || d.mesh == null) return;
-            var t = f.transform;
-            Vector3 c = t.TransformPoint(d.center);
+            Vector3 cam = f.transform.InverseTransformPoint(camPos);   // everything in the mesh's own space
+            int quads = d.centre.Length;
             _tris.Clear();
-            for (int i = 0; i + 5 < d.all.Length; i += 6)          // MeshKit: each face = 4 vertices, 2 triangles
+            if (!d.sprite)
             {
-                Vector3 a = t.TransformPoint(d.v[d.all[i]]), b = t.TransformPoint(d.v[d.all[i + 1]]), e = t.TransformPoint(d.v[d.all[i + 2]]);
-                Vector3 g = t.TransformPoint(d.v[d.all[i + 5]]);
-                Vector3 fc = (a + e) * 0.5f;                       // middle of the quad (its diagonal)
-                Vector3 n = Vector3.Cross(b - a, g - a);
-                if (Vector3.Dot(n, fc - c) < 0f) n = -n;           // make it point outwards
-                if (n.sqrMagnitude < 1e-12f) n = fc - c;
-                if (Vector3.Dot(n, camPos - fc) <= 0f) continue;   // turned away from the camera
-                for (int k = 0; k < 6; k++) _tris.Add(d.all[i + k]);
+                for (int k = 0; k < quads; k++)
+                    if (Vector3.Dot(d.normal[k], cam - d.centre[k]) > 0f) Add(d, k);
+            }
+            else
+            {
+                int n = 0;
+                for (int k = 2; k < quads; k++)
+                {
+                    Vector3 to = cam - d.centre[k];
+                    if (Vector3.Dot(d.normal[k], to) <= 0f) continue;   // turned away from the camera
+                    d.dist[n] = -to.sqrMagnitude; d.order[n] = k; n++;
+                }
+                System.Array.Sort(d.dist, d.order, 0, n);              // far walls first
+                for (int j = 0; j < n; j++) Add(d, d.order[j]);
+                for (int k = 0; k < 2; k++)
+                    if (Vector3.Dot(d.normal[k], cam - d.centre[k]) > 0f) Add(d, k);   // the flat face, on top
             }
             d.mesh.SetTriangles(_tris, 0);
+        }
+
+        static void Add(Data d, int k)
+        {
+            int i = k * 6;
+            for (int j = 0; j < 6; j++) _tris.Add(d.all[i + j]);
         }
     }
 }
