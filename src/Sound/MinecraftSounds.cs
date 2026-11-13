@@ -64,8 +64,13 @@ namespace SteveDaysToDie.Sound
             }
             Debug.Log("[SVD] Minecraft hurt sounds loaded: " + _hurt.Count + "/3");
             // other Minecraft sounds (creeper fuse, explosion, creeper hurt/death), by their path under sounds/
-            foreach (var name in new[] { "random/fuse", "random/explode1", "random/explode2", "random/explode3", "random/explode4",
-                                         "mob/creeper/say1", "mob/creeper/say2", "mob/creeper/say3", "mob/creeper/say4", "mob/creeper/death" })
+            var wanted = new List<string> { "random/fuse", "random/explode1", "random/explode2", "random/explode3", "random/explode4",
+                                         "mob/creeper/say1", "mob/creeper/say2", "mob/creeper/say3", "mob/creeper/say4", "mob/creeper/death",
+                                         "mob/pig/death", "mob/sheep/say1", "mob/sheep/say2", "mob/sheep/say3" };
+            foreach (var g in new[] { "stone", "wood", "gravel", "grass", "sand", "cloth", "snow" })
+                for (int i = 1; i <= 4; i++) { wanted.Add("dig/" + g + i); wanted.Add("step/" + g + i); }
+            for (int i = 1; i <= 4; i++) { wanted.Add("mob/cow/say" + i); wanted.Add("mob/cow/hurt" + i); wanted.Add("mob/pig/say" + i); wanted.Add("mob/chicken/say" + i); wanted.Add("mob/chicken/hurt" + i); }
+            foreach (var name in wanted)
             {
                 var m = Regex.Match(json, "\"minecraft/sounds/" + Regex.Escape(name) + @"\.ogg""\s*:\s*\{\s*""hash""\s*:\s*""([0-9a-f]{40})""");
                 if (!m.Success) continue;
@@ -114,6 +119,22 @@ namespace SteveDaysToDie.Sound
         }
 
         static readonly Dictionary<string, AudioClip> _clips = new Dictionary<string, AudioClip>();
+
+        static readonly Dictionary<string, List<string>> _groups = new Dictionary<string, List<string>>();
+
+        /// <summary>One of a group's sounds at random (group = path without the number, e.g. "dig/stone", "mob/cow/say").</summary>
+        public static void PlayGroup(string group, Vector3 pos, float maxDistance = 16f, float volume = 1f, float pitch = 1f)
+        {
+            if (!_groups.TryGetValue(group, out var list))
+            {
+                list = new List<string>();
+                foreach (var k in _clips.Keys)
+                    if (k.StartsWith(group) && (k.Length == group.Length || char.IsDigit(k[group.Length]))) list.Add(k);
+                if (_clips.Count > 0) _groups[group] = list;
+            }
+            if (list.Count == 0) return;
+            PlayAt(list[UnityEngine.Random.Range(0, list.Count)], pos, maxDistance, volume, pitch);
+        }
 
         /// <summary>A Minecraft sound (path under sounds/, e.g. "random/fuse") heard from a place in the world.</summary>
         public static void PlayAt(string name, Vector3 pos, float maxDistance = 16f, float volume = 1f, float pitch = 1f)

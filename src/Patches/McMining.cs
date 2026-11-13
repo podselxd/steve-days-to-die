@@ -64,7 +64,7 @@ namespace SteveDaysToDie.Patches
         [HarmonyPatch(typeof(Block), "DamageBlock")]
         static class DamagePatch
         {
-            static void Prefix(BlockValue _blockValue, ref int _damagePoints, int _entityIdThatDamaged)
+            static void Prefix(BlockValueRef _blockValueRef, BlockValue _blockValue, ref int _damagePoints, int _entityIdThatDamaged)
             {
                 try
                 {
@@ -72,7 +72,18 @@ namespace SteveDaysToDie.Patches
                     var who = GameManager.Instance?.World?.GetEntity(_entityIdThatDamaged) as EntityPlayer;
                     if (who == null) return;
                     int d = SwingDamage(_blockValue, who);
-                    if (d > 0) _damagePoints = d;
+                    if (d > 0)
+                    {
+                        _damagePoints = d;
+                        // Minecraft's sounds: a soft step sound while digging, the dig sound when it breaks
+                        var row = Row(_blockValue.Block.GetBlockName());
+                        string g = row?.sound;
+                        if (string.IsNullOrEmpty(g) || g == "none") g = "stone";
+                        Vector3 at = _blockValueRef.BlockPosition.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f);
+                        bool breaks = _blockValue.damage + d >= _blockValue.Block.MaxDamage;
+                        if (breaks) Sound.MinecraftSounds.PlayGroup("dig/" + g, at, 16f, 1f, 0.8f);
+                        else Sound.MinecraftSounds.PlayGroup("step/" + g, at, 8f, 0.25f, 0.5f);
+                    }
                 }
                 catch { }
             }

@@ -413,6 +413,17 @@ public static class BlockOverlay
 		{
 			int num3 = RowAt(result2.Key);
 			int num4 = RowOfType(result2.Value);
+			if (num4 >= 0 && num3 != num4)
+			{
+				// Minecraft's place sound (the dig sound of the block), when it is close to a player
+				var me = world.GetPrimaryPlayer();
+				Vector3 at = result2.Key.ToVector3() + new Vector3(0.5f, 0.5f, 0.5f);
+				if (me != null && (me.position - at).sqrMagnitude < 400f)
+				{
+					string g = Sheets.Blocks[num4].sound;
+					Sound.MinecraftSounds.PlayGroup("dig/" + (string.IsNullOrEmpty(g) || g == "none" ? "stone" : g), at, 16f, 1f, 0.8f);
+				}
+			}
 			Set(result2.Key, num4);
 			if (num3 >= 0 && num4 != num3 && Sheets.Blocks[num3].render == "door")
 			{

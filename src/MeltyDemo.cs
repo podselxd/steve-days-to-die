@@ -51,6 +51,8 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "funcional") { yield return Functional(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
+            if (MeltyTest.Only == "tirar") { yield return DropTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "todos") { yield return AllBlocks(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "creeper") { yield return CreeperTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "animales") { yield return Animals(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -566,6 +568,56 @@ namespace SteveDaysToDie
                 yield return Shot("acumula-3-vuelta" + t);
             }
             Census("3-fin");
+        }
+
+        // ---- Minecraft door, chest and barrel, and a dropped block ----
+        static IEnumerator Functional(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("funcional");
+            var world = GameManager.Instance.World;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            Vector3i baseP = World.worldToBlockPos(p.position + fwd * 3f);
+            string[] ids = { "mc_oak_door", "mc_chest", "mc_barrel", "mc_spruce_door" };
+            for (int i = 0; i < ids.Length; i++)
+            {
+                var pos = baseP + new Vector3i(Mathf.RoundToInt(side.x * (i * 2 - 3)), 0, Mathf.RoundToInt(side.z * (i * 2 - 3)));
+                try { world.SetBlockRPC(pos, Block.GetBlockValue(ids[i])); } catch (Exception ex) { Debug.LogWarning("[SVD] demo place " + ids[i] + ": " + ex.Message); }
+            }
+            var st = SteveDaysToDie.Crafting.McItems.Stack("cobblestone", 1);
+            if (st != null) try { GameManager.Instance.ItemDropServer(st, p.position + fwd * 1.8f + Vector3.up * 0.5f, Vector3.zero, -1, 120f, false); } catch { }
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 10f; } catch { }
+            yield return Wait(4f);
+            var chestBv = world.GetBlock(baseP + new Vector3i(Mathf.RoundToInt(side.x * -1), 0, Mathf.RoundToInt(side.z * -1)));
+            Debug.Log($"[SVD] functional: doors dressed {SteveDaysToDie.Crafting.McDoors.Dressed}, chest block {chestBv.Block.GetBlockName()} class {chestBv.Block.GetType().Name}");
+            yield return Shot("funcional-0");
+        }
+
+        // ---- Minecraft items thrown on the ground: Minecraft's look, no 7 Days sack ----
+        static IEnumerator DropTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("tirar");
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            string[] ids = { "stick", "iron_sword", "diamond_pickaxe", "apple", "cobblestone", "oak_planks" };
+            for (int i = 0; i < ids.Length; i++)
+            {
+                var st = SteveDaysToDie.Crafting.McItems.Stack(ids[i], 1);
+                if (st == null) continue;
+                try { GameManager.Instance.ItemDropServer(st, p.position + fwd * 2.5f + side * (i - 2.5f) * 0.7f + Vector3.up * 0.5f, Vector3.zero, -1, 120f, false); } catch (Exception ex) { Debug.LogWarning("[SVD] demo drop: " + ex.Message); }
+            }
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 35f; } catch { }
+            yield return Wait(3f);
+            int mc = 0, sack = 0;
+            foreach (var e in GameManager.Instance.World.Entities.list)
+                if (e is EntityItem ei && (ei.position - p.position).magnitude < 6f)
+                {
+                    if (ei.GetComponentInChildren<MeshFilter>(true) != null && ei.transform.GetComponentsInChildren<Transform>(true).Length > 0)
+                        foreach (var t in ei.GetComponentsInChildren<Transform>(true)) if (t.name == "SVD_McDrop") mc++;
+                    foreach (var r in ei.GetComponentsInChildren<Renderer>(false)) if (r.enabled && r.name != "SVD_McDrop") sack++;
+                }
+            Debug.Log($"[SVD] drop test: Minecraft looks {mc}, other visible renderers {sack}");
+            yield return Shot("tirar-0");
         }
 
         // ---- every Minecraft block in a grid (30 wide), seen from above; and Minecraft's mining times ----

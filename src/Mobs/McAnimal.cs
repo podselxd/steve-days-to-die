@@ -193,6 +193,9 @@ namespace SteveDaysToDie.Mobs
             bool dead = _e.IsDead();
             if (dead) { _root.rotation *= Quaternion.Euler(0f, 0f, 90f); _root.position += Vector3.up * 0.2f; }
 
+            // Minecraft voices: now and then, when hurt, when it dies
+            Voices(dead);
+
             // creeper about to blow: swells and flashes white (Minecraft's CreeperRenderer)
             if (Swell > 0f)
             {
@@ -217,6 +220,25 @@ namespace SteveDaysToDie.Mobs
                 float a = Mathf.Cos(_phase * 0.6662f + ((leg == 0 || leg == 3) ? 0f : Mathf.PI)) * 1.4f * _amount;
                 t.localRotation = Quaternion.Euler(a * Mathf.Rad2Deg, 0f, 0f);
             }
+        }
+
+        float _nextSay = -1f, _lastHp = -1f; bool _saidDeath;
+        void Voices(bool dead)
+        {
+            string say = AnimalId == "cow" ? "mob/cow/say" : AnimalId == "pig" ? "mob/pig/say" : AnimalId == "sheep" ? "mob/sheep/say" : AnimalId == "chicken" ? "mob/chicken/say" : null;
+            string hurt = AnimalId == "cow" ? "mob/cow/hurt" : AnimalId == "chicken" ? "mob/chicken/hurt" : say;
+            if (say == null) return;
+            Vector3 at = transform.position + Vector3.up * 0.8f;
+            if (dead)
+            {
+                if (!_saidDeath) { _saidDeath = true; Sound.MinecraftSounds.PlayGroup(AnimalId == "pig" ? "mob/pig/death" : hurt, at, 16f, 1f, 0.8f); }
+                return;
+            }
+            float hp = _e.Health;
+            if (_lastHp >= 0f && hp < _lastHp) Sound.MinecraftSounds.PlayGroup(hurt, at, 16f, 1f, 1f + (Random.value - Random.value) * 0.2f);
+            _lastHp = hp;
+            if (_nextSay < 0f) _nextSay = Time.time + Random.Range(4f, 16f);
+            if (Time.time >= _nextSay) { _nextSay = Time.time + Random.Range(8f, 20f); Sound.MinecraftSounds.PlayGroup(say, at, 16f, 0.8f, 1f + (Random.value - Random.value) * 0.2f); }
         }
 
         void OnDestroy()

@@ -21,6 +21,10 @@ namespace SteveDaysToDie.Patches
                 if (mc.id == "creeper" && __instance.GetComponent<McCreeper>() == null) __instance.gameObject.AddComponent<McCreeper>();
                 return;
             }
+            // 7 Days animals keep their own look: the old texture swap (Minecraft skins on 7 Days bodies) is gone
+            // (user 2026-11-13); Minecraft animals are real Minecraft models (above)
+            return;
+#pragma warning disable CS0162
             if (!MobVisuals.HasMapping(className)) return;
 
             // Skip if this is a server entity (no visual on server)

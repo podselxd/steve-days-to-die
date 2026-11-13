@@ -194,6 +194,7 @@ namespace SteveDaysToDie.Crafting
                     dm.name = "SVD_drop_" + id;
                     go.AddComponent<MeshFilter>().sharedMesh = dm;
                     go.AddComponent<MeshRenderer>().sharedMaterial = Ryan.ItemMeshes.Material(id, litInWorld: true);
+                    go.AddComponent<McDropLook.Spin>();          // turns, bobs, and keeps 7 Days' sack hidden
                 }
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] block preview " + id + ": " + ex.Message); }

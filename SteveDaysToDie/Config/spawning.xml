@@ -3,9 +3,9 @@
     <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mca1" maxcount="4" respawndelay="0.5" time="Day" entitygroup="mcAnimals"/></append>
     <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mca2" maxcount="4" respawndelay="0.5" time="Day" entitygroup="mcAnimals"/></append>
     <append xpath="/spawning/biome[@name='snow']"><spawn id="mca1" maxcount="2" respawndelay="0.8" time="Day" entitygroup="mcAnimals"/></append>
-    <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Night" entitygroup="mcMonsters"/></append>
-    <append xpath="/spawning/biome[@name='burnt_forest']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Night" entitygroup="mcMonsters"/></append>
-    <append xpath="/spawning/biome[@name='desert']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Night" entitygroup="mcMonsters"/></append>
-    <append xpath="/spawning/biome[@name='snow']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Night" entitygroup="mcMonsters"/></append>
-    <append xpath="/spawning/biome[@name='wasteland']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Night" entitygroup="mcMonsters"/></append>
+    <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Any" entitygroup="mcMonsters"/></append>
+    <append xpath="/spawning/biome[@name='burnt_forest']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Any" entitygroup="mcMonsters"/></append>
+    <append xpath="/spawning/biome[@name='desert']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Any" entitygroup="mcMonsters"/></append>
+    <append xpath="/spawning/biome[@name='snow']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Any" entitygroup="mcMonsters"/></append>
+    <append xpath="/spawning/biome[@name='wasteland']"><spawn id="mcm1" maxcount="2" respawndelay="0.25" time="Any" entitygroup="mcMonsters"/></append>
 </configs>
