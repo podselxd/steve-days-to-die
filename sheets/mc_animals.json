@@ -69,6 +69,21 @@
    ],
    "weight": 20,
    "verified": "datos_ok"
+  },
+  {
+   "id": "creeper",
+   "class": "mcCreeper",
+   "base": "zombieBoe",
+   "texture": "entity/creeper/creeper.png",
+   "drops": [
+    [
+     "gunpowder",
+     2
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "verified": "datos_ok"
   }
  ],
  "biomes": [
@@ -102,6 +117,34 @@
   [
    "animalChicken",
    "mcChicken"
+  ]
+ ],
+ "_hostile": "Mobs hostiles (hostile=true): no van al grupo de animales; salen de noche en todos los biomas (grupo mcMonsters, 'monsters'). Creeper: cuerpo y persecucion de un zombi de 7 Days; la mecha y la explosion de Minecraft estan en src/Mobs/McCreeper.cs.",
+ "monsters": [
+  [
+   "pine_forest",
+   2,
+   "0.25"
+  ],
+  [
+   "burnt_forest",
+   2,
+   "0.25"
+  ],
+  [
+   "desert",
+   2,
+   "0.25"
+  ],
+  [
+   "snow",
+   2,
+   "0.25"
+  ],
+  [
+   "wasteland",
+   2,
+   "0.25"
   ]
  ]
 }

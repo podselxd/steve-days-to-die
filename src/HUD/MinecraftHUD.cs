@@ -41,11 +41,14 @@ namespace SteveDaysToDie
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {
-                // Until the real conversion exists (step 6) this only previews the paired Minecraft icon.
+                // the REAL change: the item in the slot becomes its pair (Crafting.RealToggle)
                 int sel = GetSelectedSlot(_player);
-                string held = null;
-                try { held = _player.inventory.GetItem(sel)?.itemValue?.ItemClass?.Name; } catch { }
-                ItemModeManager.Toggle(sel, held);
+                try
+                {
+                    string msg = Crafting.RealToggle.Toggle(_player, sel);
+                    if (msg != null) GameManager.ShowTooltip(_player, msg);
+                }
+                catch (Exception ex) { Debug.LogWarning("[SVD] toggle: " + ex.Message); }
             }
         }
 

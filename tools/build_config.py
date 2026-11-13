@@ -154,6 +154,11 @@ for n in _names:
 _mcitems = {os.path.basename(n)[:-5] for n in _names if n.startswith("assets/minecraft/items/") and n.endswith(".json")}
 _mcids = sorted(i for i in _mcids if i in _mcitems and not i.endswith("_spawn_egg"))
 _mcb_rows = [r for r in json.load(open(os.path.join(ROOT, "sheets", "mc_blocks.json"), encoding="utf-8"))["rows"] if r["render"] != "door"]
+# + every full-cube block, slab and stairs of Minecraft (tools/gen_mc_blocks.py), after the hand-made ones
+_mcb_auto = os.path.join(ROOT, "sheets", "mc_blocks_auto.json")
+if os.path.exists(_mcb_auto):
+    _have = {r["id"] for r in _mcb_rows}
+    _mcb_rows += [r for r in json.load(open(_mcb_auto, encoding="utf-8"))["rows"] if r["id"] not in _have]
 for _r in _mcb_rows:
     for _k in list(_r): _r[_k] = "" if _r[_k] == "-" else _r[_k]      # "-" in the sheet = nothing
 _MCBLOCKS = {r["id"] for r in _mcb_rows}   # real 7 Days blocks (Config/blocks.xml, generated below); their item comes with the block        # real 7 Days blocks in Config/blocks.xml (their item comes with the block)
@@ -187,6 +192,7 @@ _ARMOR_POINTS.update({"golden_helmet": 2, "golden_chestplate": 5, "golden_leggin
                       "netherite_helmet": 3, "netherite_chestplate": 8, "netherite_leggings": 6, "netherite_boots": 3})
 _ARMOR_DUR = {"leather": 5, "golden": 7, "copper": 11, "chainmail": 15, "iron": 15, "turtle": 25, "diamond": 33, "netherite": 37}
 _FOODS = {r["id"]: r for r in json.load(open(os.path.join(ROOT, "sheets", "mc_foods.json"), encoding="utf-8"))["rows"]}
+_mcids = sorted(set(_mcids) | {r["id"] for r in _mcb_rows})
 for i in _mcids:
     k = _kind(i)
     if i in _MCBLOCKS:
@@ -235,6 +241,11 @@ for i in _mcids:
         for _g in sd.items[base].findall("effect_group"):
             _g = _ET.fromstring(_ET.tostring(_g))
             _g.set("name", "mc_%s" % i)
+            # Minecraft's durability for its material (uses), in place of the 7 Days tool's
+            _dur = {"wooden": 59, "stone": 131, "copper": 190, "iron": 250, "golden": 32, "diamond": 1561, "netherite": 2031}.get(_mat(i))
+            for _pe in _g.findall("passive_effect"):
+                if _dur and _pe.get("name") == "DegradationMax":
+                    _pe.set("value", str(_dur)); _pe.attrib.pop("tier", None)
             _eg += " ".join(_ET.tostring(_g, encoding="unicode").split())
     _mx.append('        <item name="mc_%s"><property name="Extends" value="%s"/><property name="CustomIcon" value="mc_%s"/>'
                '<property name="Stacknumber" value="%d"/><property name="DescriptionKey" value="mcItemDesc"/>%s</item>' % (i, ext, i, stack, _eg))
@@ -276,7 +287,10 @@ for r in _mcb_rows:
     _thin = r["render"] == "torch"
     if _thin: _bx.append('            <property name="Class" value="McHidden, SteveDaysToDie"/>')
     elif i in _CLASS: _bx.append('            <property name="Class" value="%s"/>' % _CLASS[i])
-    _shape = (("Shape", "ModelEntity"), ("Model", "@:Entities/Lighting/torch_wallPrefab.prefab"), ("LightOpacity", "0")) if _thin         else (("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"))
+    _sp = dict(kv.split("=", 1) for kv in (r.get("special") or "").split(";") if "=" in kv)
+    _hid = (("Shape", "ModelEntity"), ("Model", "@:Entities/Misc/block_missingPrefab.prefab"), ("LightOpacity", "0"))
+    if r["render"] == "model" and _sp.get("shape") != "slab": _bx.append('            <property name="Class" value="McHidden, SteveDaysToDie"/>')
+    _shape = (("Shape", "ModelEntity"), ("Model", "@:Entities/Lighting/torch_wallPrefab.prefab"), ("LightOpacity", "0")) if _thin         else (("Shape", "New"), ("Model", "@:Shapes/cube_half.fbx"), ("Texture", "14"), ("LightOpacity", "0")) if _sp.get("shape") == "slab"         else _hid + (("Place", "TowardsPlacerInverted"),) if _sp.get("shape") == "solid"         else _hid + (("Place", "TowardsPlacerInverted"), ("Collide", "melee,bullet,arrow,rocket")) if r["render"] == "model"         else (("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"))
     for k, v in (("Material", r["material7d"]),) + _shape + (
                  ("MaxDamage", str(r["maxDamage7d"])), ("StabilityIgnore", "true"), ("DisplayType", "blockHardened"),
                  ("Tags", "stevedays"), ("Group", "Building,Minecraft"), ("CreativeMode", "Player"),
@@ -361,7 +375,8 @@ for r in _an["rows"]:
     for d, _c in r["drops"]:
         if d not in _ids_all: raise SystemExit("mc_animals.json: mc_%s is not a Minecraft item" % d)
     ec.append('        <entity_class name="%s" extends="%s">' % (r["class"], r["base"]))
-    ec.append('            <property name="Tags" value="entity,animal,minecraft,mc%s"/>' % r["id"])
+    if not r.get("hostile"):    # a hostile one keeps its zombie's tags (its AI needs them)
+        ec.append('            <property name="Tags" value="entity,animal,minecraft,mc%s"/>' % r["id"])
     ec.append('            <property name="UserSpawnType" value="Menu"/>')
     ec += ['            <drop event="Harvest" name="mc_%s" count="%d" tag="allHarvest"/>' % (d, c) for d, c in r["drops"]]
     ec.append('        </entity_class>')
@@ -369,7 +384,7 @@ ec += ["    </append>"]
 # DOUBLE LOOT (user 2026-11-13): the 7 Days drops of the base animal are inherited AND Minecraft's are added
 ec += ["</configs>", ""]
 _eg = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json -->", '    <append xpath="/entitygroups">',
-       '        <entitygroup name="mcAnimals">'] + ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"]] +       ['        </entitygroup>', "    </append>"]
+       '        <entitygroup name="mcAnimals">'] + ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"] if not r.get("hostile")] +       ['        </entitygroup>', '        <entitygroup name="mcMonsters">'] + ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("hostile")] +       ['        </entitygroup>', "    </append>"]
 # 7 Days animals that look like a Minecraft one are replaced by it everywhere they spawn (user 2026-11-13)
 for _old, _new in _an["replace"]:
     _eg.append("    <set xpath=\"/entitygroups/entitygroup/e[@n='%s']/@n\">%s</set>" % (_old, _new))
@@ -379,6 +394,8 @@ _sp = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json: herds of Mi
 for b, mx, n, delay in _an["biomes"]:
     for k in range(n):
         _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mca%d\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Day\" entitygroup=\"mcAnimals\"/></append>" % (b, k + 1, mx, delay))
+for b, mx, delay in _an.get("monsters", []):
+    _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mcm1\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Night\" entitygroup=\"mcMonsters\"/></append>" % (b, mx, delay))
 _sp += ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "spawning.xml"), "w", encoding="utf-8").write(chr(10).join(_sp))
 _at = ["// GENERATED by tools/build_config.py from sheets/mc_animals.json. Do not edit by hand.", "namespace SteveDaysToDie.Generated", "{",

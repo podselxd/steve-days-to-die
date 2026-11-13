@@ -63,6 +63,26 @@ namespace SteveDaysToDie.Sound
                 }
             }
             Debug.Log("[SVD] Minecraft hurt sounds loaded: " + _hurt.Count + "/3");
+            // other Minecraft sounds (creeper fuse, explosion, creeper hurt/death), by their path under sounds/
+            foreach (var name in new[] { "random/fuse", "random/explode1", "random/explode2", "random/explode3", "random/explode4",
+                                         "mob/creeper/say1", "mob/creeper/say2", "mob/creeper/say3", "mob/creeper/say4", "mob/creeper/death" })
+            {
+                var m = Regex.Match(json, "\"minecraft/sounds/" + Regex.Escape(name) + @"\.ogg""\s*:\s*\{\s*""hash""\s*:\s*""([0-9a-f]{40})""");
+                if (!m.Success) continue;
+                string h = m.Groups[1].Value;
+                string path = Path.Combine(mc, "assets", "objects", h.Substring(0, 2), h);
+                if (!File.Exists(path)) continue;
+                using (var req = UnityWebRequestMultimedia.GetAudioClip(new Uri(path).AbsoluteUri, AudioType.OGGVORBIS))
+                {
+                    yield return req.SendWebRequest();
+                    if (req.result == UnityWebRequest.Result.Success)
+                    {
+                        var clip = DownloadHandlerAudioClip.GetContent(req);
+                        if (clip != null) { clip.name = "mc_" + name; _clips[name] = clip; }
+                    }
+                }
+            }
+            Debug.Log("[SVD] Minecraft sounds loaded: " + _clips.Count);
         }
 
         static string FindIndex(string mc, string version)
@@ -91,6 +111,26 @@ namespace SteveDaysToDie.Sound
         {
             try { return Mathf.Clamp01(GamePrefs.GetFloat(EnumGamePrefs.OptionsOverallAudioVolumeLevel)); }
             catch { return 1f; }
+        }
+
+        static readonly Dictionary<string, AudioClip> _clips = new Dictionary<string, AudioClip>();
+
+        /// <summary>A Minecraft sound (path under sounds/, e.g. "random/fuse") heard from a place in the world.</summary>
+        public static void PlayAt(string name, Vector3 pos, float maxDistance = 16f, float volume = 1f, float pitch = 1f)
+        {
+            if (_instance == null || !_clips.TryGetValue(name, out var clip) || clip == null) return;
+            var go = new GameObject("SVD_sound");
+            go.transform.position = pos;
+            var s = go.AddComponent<AudioSource>();
+            s.spatialBlend = 1f;
+            s.minDistance = 1f;
+            s.maxDistance = maxDistance;
+            s.rolloffMode = AudioRolloffMode.Linear;
+            s.pitch = pitch;
+            s.volume = Volume() * volume;
+            s.clip = clip;
+            s.Play();
+            Destroy(go, clip.length / Mathf.Max(0.1f, pitch) + 0.2f);
         }
 
         public static void PlayHurt(Entity e)

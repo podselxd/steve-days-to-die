@@ -583,6 +583,10 @@ public static class BlockOverlay
 				}
 				break;
 			}
+			case "model":
+				// any other Minecraft shape: its own model boxes (src/Ryan/ModelBoxes.cs), see-through parts allowed
+				ModelBoxes.Append(meshKit2, vector, blockRow.special, num3);
+				break;
 			case "torch":
 			{
 				string tex2 = (BlockModels.Get(blockRow.model).textures.TryGetValue("torch", out var value2) ? value2 : "minecraft:block/torch");

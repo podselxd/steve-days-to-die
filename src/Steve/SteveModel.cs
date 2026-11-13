@@ -127,6 +127,7 @@ namespace SteveDaysToDie.Steve
             for (int i = 0; i < _hidden.Count; i++)
                 if (_hidden[i] != null) _hidden[i].forceRenderingOff = true;
             PlaceHeldItem();
+            McHeld();
         }
 
         bool HoldingSomething()
@@ -137,6 +138,54 @@ namespace SteveDaysToDie.Steve
                 return ic != null && !ic.Name.StartsWith("meleeHand");
             }
             catch { return false; }
+        }
+
+        // A Minecraft item (mc_) in Steve's fist, seen by everybody (third person, other players): the 7 Days model it is
+        // built on (a knife for the iron sword...) is hidden and Minecraft's own item is drawn, the way Minecraft holds it.
+        GameObject _mcHeld; string _mcHeldId;
+        void McHeld()
+        {
+            string id = null;
+            try { string n = _player?.inventory?.holdingItem?.Name; if (n != null && n.StartsWith("mc_")) id = n.Substring(3); } catch { }
+            var local = _player as EntityPlayerLocal;
+            bool show = id != null && _root != null && _root.gameObject.activeInHierarchy && _armR != null && !(local != null && local.bFirstPersonView);
+            if (!show) { if (_mcHeld != null && _mcHeld.activeSelf) _mcHeld.SetActive(false); return; }
+            if (_heldItem != null) foreach (var r in _heldItem.GetComponentsInChildren<Renderer>(true)) if (r.enabled) r.enabled = false;
+            if (_mcHeld == null)
+            {
+                _mcHeld = new GameObject("SVD_McHeld") { layer = _armR.gameObject.layer };
+                _mcHeld.AddComponent<MeshFilter>();
+                _mcHeld.AddComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                _mcHeldId = null;
+            }
+            if (_mcHeld.transform.parent != _armR) _mcHeld.transform.SetParent(_armR, false);
+            if (_mcHeldId != id)
+            {
+                _mcHeldId = id;
+                try
+                {
+                    _mcHeld.GetComponent<MeshFilter>().sharedMesh = Ryan.ItemMeshes.Mesh(id);
+                    _mcHeld.GetComponent<MeshRenderer>().sharedMaterial = Ryan.ItemMeshes.Material(id, litInWorld: true);
+                }
+                catch { }
+            }
+            _mcHeld.SetActive(true);
+            float block = 16f * _px;                                     // one Minecraft block in Steve's size
+            bool isBlock = Ryan.ItemMeshes.IsBlock(id);
+            var t = _mcHeld.transform;
+            if (isBlock)
+            {
+                t.localRotation = Quaternion.Euler(10f, 45f, 0f);
+                t.localScale = Vector3.one * block * 0.375f;
+                t.localPosition = new Vector3(0f, -10f * _px, 2f * _px);
+            }
+            else
+            {
+                // the drawing's diagonal (handle bottom-left, tip top-right) points forward along the arm's front
+                t.localRotation = Quaternion.Euler(0f, -90f, 0f) * Quaternion.Euler(0f, 0f, -45f);
+                t.localScale = Vector3.one * block * 0.85f;
+                t.localPosition = new Vector3(0f, -10f * _px, 0f) + Vector3.forward * (block * 0.85f * 0.3f);
+            }
         }
 
         // Moves the held item from the 7 Days hand to Steve's fist, keeping how the item sits in the hand.

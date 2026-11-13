@@ -7,6 +7,9 @@
             <e n="mcSheep" p="25"/>
             <e n="mcChicken" p="20"/>
         </entitygroup>
+        <entitygroup name="mcMonsters">
+            <e n="mcCreeper" p="1"/>
+        </entitygroup>
     </append>
     <set xpath="/entitygroups/entitygroup/e[@n='animalStag']/@n">mcCow</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalDoe']/@n">mcCow</set>

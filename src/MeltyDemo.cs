@@ -51,6 +51,8 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "todos") { yield return AllBlocks(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
+            if (MeltyTest.Only == "creeper") { yield return CreeperTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "animales") { yield return Animals(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "casa") { yield return HouseTorches(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "acumula") { yield return Accumulate(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -564,6 +566,87 @@ namespace SteveDaysToDie
                 yield return Shot("acumula-3-vuelta" + t);
             }
             Census("3-fin");
+        }
+
+        // ---- every Minecraft block in a grid (30 wide), seen from above; and Minecraft's mining times ----
+        static IEnumerator AllBlocks(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("todos");
+            var world = GameManager.Instance.World;
+            // mining times first (no world needed): hits per block for a few tools
+            var probe = new[] { "mc_oak_planks", "mc_stone", "mc_cobblestone", "mc_dirt", "mc_white_wool", "mc_iron_ore", "mc_oak_stairs", "mc_poppy", "mc_obsidian" };
+            foreach (var held in new[] { "", "mc_wooden_axe", "mc_wooden_pickaxe", "mc_stone_pickaxe", "mc_iron_pickaxe", "mc_diamond_pickaxe", "mc_wooden_shovel" })
+            {
+                if (held == "") p.inventory.SetItem(8, ItemStack.Empty.Clone());
+                else p.inventory.SetItem(8, SteveDaysToDie.Crafting.McItems.Stack(held.Substring(3), 1) ?? ItemStack.Empty.Clone());
+                Hold(p, 8);
+                yield return Wait(0.6f);
+                var sb = new System.Text.StringBuilder("[SVD] mining " + (held == "" ? "hand" : held) + ":");
+                foreach (var b in probe)
+                {
+                    var bv = Block.GetBlockValue(b);
+                    if (bv.isair) continue;
+                    int d = SteveDaysToDie.Patches.McMining.SwingDamage(bv, p);
+                    sb.Append($" {b.Substring(3)} {(d > 0 ? Mathf.CeilToInt((float)bv.Block.MaxDamage / d) : -1)} hits;");
+                }
+                Debug.Log(sb.ToString());
+            }
+            // the grid, floating 3 blocks over the ground in front
+            var rows = SteveDaysToDie.Ryan.Sheets.Blocks;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            Vector3i origin = World.worldToBlockPos(p.position + fwd * 4f + Vector3.up * 3f - side * 15f);
+            int placed = 0;
+            for (int i = 0; i < rows.Length; i++)
+            {
+                Vector3 o = side * (i % 30) + fwd * (i / 30);
+                var pos = origin + new Vector3i(Mathf.RoundToInt(o.x), 0, Mathf.RoundToInt(o.z));
+                try { var bv = Block.GetBlockValue(rows[i].block7d); if (!bv.isair) { world.SetBlockRPC(pos, bv); placed++; } } catch { }
+                if (i % 60 == 0) yield return null;
+            }
+            Debug.Log($"[SVD] all blocks: {rows.Length} kinds, placed {placed}");
+            yield return Wait(6f);
+            // up high, looking down at the grid, in four places
+            for (int k = 0; k < 4; k++)
+            {
+                Vector3 at = origin.ToVector3() + side * (4 + (k % 2) * 16) + fwd * (2 + (k / 2) * 14) + Vector3.up * 6f;
+                try { p.SetPosition(at); if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = Quaternion.LookRotation(fwd).eulerAngles.y; p.vp_FPCamera.Pitch = 60f; } } catch { }
+                yield return Wait(3f);
+                yield return Shot("todos-" + k);
+            }
+            if (placed == rows.Length) MeltyTest.Pass("all-blocks"); else MeltyTest.Fail("all-blocks", placed + "/" + rows.Length);
+        }
+
+        // ---- the creeper: comes, swells, explodes ----
+        static IEnumerator CreeperTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("creeper");
+            var world = GameManager.Instance.World;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            EntityAlive c = null;
+            try
+            {
+                c = EntityFactory.CreateEntity(EntityClass.FromString("mcCreeper"), p.position + fwd * 6f + Vector3.up * 0.5f) as EntityAlive;
+                if (c != null) world.SpawnEntityInWorld(c);
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo creeper: " + ex.Message); }
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 10f; } catch { }
+            float hpBefore = p.Health;
+            yield return Wait(2f);
+            yield return Shot("creeper-0-viene");
+            for (int i = 0; i < 12 && c != null && world.GetEntity(c.entityId) != null; i++)
+            {
+                float d = (c.position - p.position).magnitude;
+                if (i == 6 && d > 4f) { try { c.SetPosition(p.position + fwd * 2.5f); } catch { } }      // the zombie AI may not chase in the test
+                yield return Wait(0.5f);
+                if (i % 2 == 1) yield return Shot("creeper-1-mecha-" + i);
+                Debug.Log($"[SVD] creeper test: distance {d:0.0}, alive {(world.GetEntity(c.entityId) != null)}");
+            }
+            yield return Wait(1.5f);
+            yield return Shot("creeper-2-despues");
+            bool gone = c == null || world.GetEntity(c.entityId) == null;
+            Debug.Log($"[SVD] creeper test: gone {gone}, player health {hpBefore:0} -> {p.Health:0}");
+            if (gone && p.Health < hpBefore) MeltyTest.Pass("mc-creeper"); else MeltyTest.Fail("mc-creeper", "gone " + gone + ", health " + hpBefore + " -> " + p.Health);
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----

@@ -18,6 +18,7 @@ namespace SteveDaysToDie.Patches
                 var a = __instance.gameObject.AddComponent<McAnimal>();
                 a.AnimalId = mc.id;
                 a.TexturePath = mc.texture;
+                if (mc.id == "creeper" && __instance.GetComponent<McCreeper>() == null) __instance.gameObject.AddComponent<McCreeper>();
                 return;
             }
             if (!MobVisuals.HasMapping(className)) return;

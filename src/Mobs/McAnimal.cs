@@ -44,6 +44,13 @@ namespace SteveDaysToDie.Mobs
                         new Part { name = "body", pivot = new Vector3(0, 5, 2), rotX = 90, boxes = new[] { Bx(-4, -10, -7, 8, 16, 6, 28, 8), Bx(-4, -10, -7, 8, 16, 6, 28, 8, 1.75f, true) } },
                         SheepLeg(0, new Vector3(-3, 12, 7)), SheepLeg(1, new Vector3(3, 12, 7)), SheepLeg(2, new Vector3(-3, 12, -5)), SheepLeg(3, new Vector3(3, 12, -5)),
                     };
+                case "creeper":
+                    return new[]
+                    {
+                        new Part { name = "head", head = true, pivot = new Vector3(0, 6, 0), boxes = new[] { Bx(-4, -8, -4, 8, 8, 8, 0, 0) } },
+                        new Part { name = "body", pivot = new Vector3(0, 6, 0), boxes = new[] { Bx(-4, 0, -2, 8, 12, 4, 16, 16) } },
+                        Leg4(0, new Vector3(-2, 18, 4)), Leg4(1, new Vector3(2, 18, 4)), Leg4(2, new Vector3(-2, 18, -4)), Leg4(3, new Vector3(2, 18, -4)),
+                    };
                 case "chicken":
                     return new[]
                     {
@@ -58,6 +65,7 @@ namespace SteveDaysToDie.Mobs
             return null;
         }
 
+        static Part Leg4(int i, Vector3 pivot) => new Part { name = "leg" + i, leg = i, pivot = pivot, boxes = new[] { Bx(-2, 0, -2, 4, 6, 4, 0, 16) } };
         static Part Leg(int i, Vector3 pivot, int h) => new Part { name = "leg" + i, leg = i, pivot = pivot, boxes = new[] { Bx(-2, 0, -2, 4, h, 4, 0, 16) } };
         static Part SheepLeg(int i, Vector3 pivot) => new Part { name = "leg" + i, leg = i, pivot = pivot, boxes = new[] { Bx(-2, 0, -2, 4, 12, 4, 0, 16), Bx(-2, 0, -2, 4, 6, 4, 0, 16, 0.5f, true) } };
 
@@ -66,6 +74,10 @@ namespace SteveDaysToDie.Mobs
         static readonly Dictionary<Texture2D, Material> _mat = new Dictionary<Texture2D, Material>();
 
         public string AnimalId, TexturePath;
+        /// <summary>Creeper: how swollen (0..1) and whether it flashes white this frame (McCreeper sets them).</summary>
+        public float Swell; public bool Flash;
+        static readonly int ColorId = Shader.PropertyToID("_Color");
+        MaterialPropertyBlock _mpb;
         EntityAlive _e;
         Transform _root;
         readonly List<(Transform t, int leg)> _legs = new List<(Transform, int)>();
@@ -180,6 +192,18 @@ namespace SteveDaysToDie.Mobs
             _root.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
             bool dead = _e.IsDead();
             if (dead) { _root.rotation *= Quaternion.Euler(0f, 0f, 90f); _root.position += Vector3.up * 0.2f; }
+
+            // creeper about to blow: swells and flashes white (Minecraft's CreeperRenderer)
+            if (Swell > 0f)
+            {
+                float f = 1f + Mathf.Sin(Swell * 100f) * Swell * 0.01f;
+                float g = Mathf.Clamp01(Swell); g *= g; g *= g;
+                _root.localScale = new Vector3((1f + g * 0.4f) * f, (1f + g * 0.1f) / f, (1f + g * 0.4f) * f);
+            }
+            else _root.localScale = Vector3.one;
+            if (_mpb == null) _mpb = new MaterialPropertyBlock();
+            _mpb.SetColor(ColorId, Flash ? new Color(3f, 3f, 3f, 1f) : Color.white);
+            foreach (var r in _ours) if (r != null) r.SetPropertyBlock(_mpb);
 
             // Minecraft's leg swing: cos(phase * 0.6662) * 1.4 * amount, opposite legs half a turn apart
             Vector3 p = transform.position;

@@ -28,5 +28,9 @@
             <drop event="Harvest" name="mc_chicken" count="1" tag="allHarvest"/>
             <drop event="Harvest" name="mc_feather" count="2" tag="allHarvest"/>
         </entity_class>
+        <entity_class name="mcCreeper" extends="zombieBoe">
+            <property name="UserSpawnType" value="Menu"/>
+            <drop event="Harvest" name="mc_gunpowder" count="2" tag="allHarvest"/>
+        </entity_class>
     </append>
 </configs>
