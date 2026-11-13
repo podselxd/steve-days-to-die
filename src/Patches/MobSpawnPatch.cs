@@ -28,6 +28,8 @@ namespace SteveDaysToDie.Patches
                 var go = __instance.gameObject;
                 // Minecraft drops on death (host)
                 if (!string.IsNullOrEmpty(mc.drops)) go.AddComponent<McDrops>().Drops = mc.drops;
+                // Minecraft's height: it does not get through gaps lower than itself (flyers move on their own)
+                if (mc.height > 0f && !(mc.ai ?? "").Contains("fly") && mc.id != "phantom") go.AddComponent<McFit>().Height = mc.height;
                 // Minecraft behaviours (sheets/mc_animals.json "ai"): src/Mobs/McMonsters.cs, McFlyers.cs, McCreeper.cs, McPhantom.cs
                 foreach (var ai in (mc.ai ?? "").Split(','))
                     switch (ai)

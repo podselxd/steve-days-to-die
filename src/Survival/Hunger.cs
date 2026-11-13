@@ -78,6 +78,8 @@ namespace SteveDaysToDie.Survival
             {
                 if (!Settings.GetBool("sed", false) && p.Stats.Water != null)
                     p.Stats.Water.Value = p.Stats.Water.Max;
+                // Minecraft has no stamina: 7 Days' runs out while running and leaves you crawling ("no avanza")
+                if (p.Stats.Stamina != null && p.Stats.Stamina.Value < p.Stats.Stamina.Max) p.Stats.Stamina.Value = p.Stats.Stamina.Max;
                 if (!Enabled) { SprintBlocked = false; return; }
 
                 if (!_hooked) { _hooked = true; Combat.AttackCharge.OnHit += () => _exhaustion += SurvivalTable.ExhaustionAttackHit; }
@@ -197,6 +199,8 @@ namespace SteveDaysToDie.Survival
         {
             static void Prefix(EntityPlayerLocal __instance)
             {
+                int tm = Patches.McRun.TestMove;
+                if (tm > 0) { __instance.movementInput.moveForward = 1f; __instance.movementInput.running = tm == 2; __instance.movementInput.down = tm == 3; }
                 if (DoubleTapSprint.Active) __instance.movementInput.running = true;
                 if (SprintBlocked && Enabled)
                 {

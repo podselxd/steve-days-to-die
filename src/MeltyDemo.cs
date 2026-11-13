@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "andar") { yield return WalkTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "velocidad") { yield return SpeedTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "mobs") { yield return MobsTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "lote2") { yield return Batch2(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -835,6 +836,30 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- Steve's own speeds (walk, run, crouch) on flat ground, to match Minecraft's 4.317 / 5.612 / 1.295 m/s
+        static IEnumerator WalkTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("andar");
+            try { p.Buffs.AddBuff("god"); } catch { }
+            string[] names = { "", "walk", "run", "crouch" };
+            for (int mode = 1; mode <= 3; mode++)
+            {
+                for (int turn = 0; turn < 2; turn++)
+                {
+                    try { if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw += 180f; p.vp_FPCamera.Pitch = 0f; } } catch { }
+                    Patches.McRun.TestMove = mode;
+                    yield return Wait(1f);                                   // get up to speed
+                    Vector3 a = p.position; float t0 = Time.time;
+                    yield return Wait(2f);
+                    Vector3 d = p.position - a; d.y = 0f;
+                    Debug.Log("[SVD] steve " + names[mode] + " " + (d.magnitude / (Time.time - t0)).ToString("0.00") + " m/s");
+                    Patches.McRun.TestMove = 0;
+                    yield return Wait(0.5f);
+                }
+            }
+            MeltyTest.Pass("walk-measured");
+        }
+
         // ---- how fast each 7 Days body really moves (m/s) for its MoveSpeed numbers: the hostile ones chase the player,
         // the peaceful ones are hit once and run. Logged as "speed <class> <m/s>" (best 1-second stretch in 6 s).
         static IEnumerator SpeedTest(EntityPlayerLocal p)

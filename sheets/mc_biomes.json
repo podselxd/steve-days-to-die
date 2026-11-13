@@ -1,0 +1,793 @@
+{
+ "_comment": "BIOMAS DE MINECRAFT como sub-biomas de los 5 biomas de 7 Days (usuario 2026-11-13: 'sub biomas... que sea procedural'). Cada uno sale en manchas grandes al azar, decididas por ruido (igual que los sub-biomas de 7 Days): noise = frecuencia, minimo, maximo del ruido; offset = desplazamiento para que cada uno caiga en sitios distintos. Van ANTES de los sub-biomas de 7 Days (el primero que coincide gana). tools/build_config.py genera Config/biomes.xml y src/Generated/McBiomesTable.cs; src/Mobs/McBiomeSpawner.cs pone sus mobs. Solo cambia el terreno que el juego genera por primera vez (zonas sin explorar). Solo recursos de 7 Days (arboles, pastos, flores, hongos, rocas de 7 Days), con el tema de cada bioma de Minecraft (usuario: 'CON RECURSOS DE 7DAYS NO DE MC').",
+ "rows": [
+  {
+   "id": "plains",
+   "name": "Llanura",
+   "parent": "pine_forest",
+   "noise": [
+    0.0035,
+    0.62,
+    1.01
+   ],
+   "offset": [
+    5000,
+    5100
+   ],
+   "layers": [
+    "terrForestGround",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treePlainsTree",
+     0.0008
+    ],
+    [
+     "treePlainsTree2",
+     0.0005
+    ],
+    [
+     "treeOakMed01",
+     0.0004
+    ]
+   ],
+   "plants": [
+    [
+     "treeShortGrass",
+     0.6
+    ],
+    [
+     "treeTallGrassDiagonal",
+     0.1
+    ],
+    [
+     "plantedChrysanthemum3Harvest",
+     0.02
+    ],
+    [
+     "plantedGoldenrod3Harvest",
+     0.02
+    ],
+    [
+     "plantedCotton3Harvest",
+     0.01
+    ]
+   ],
+   "day": [
+    [
+     "mcHorse",
+     3
+    ],
+    [
+     "mcCow",
+     3
+    ],
+    [
+     "mcSheep",
+     3
+    ],
+    [
+     "mcPig",
+     2
+    ],
+    [
+     "mcChicken",
+     2
+    ],
+    [
+     "mcRabbit",
+     1
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "flower_forest",
+   "name": "Bosque de flores",
+   "parent": "pine_forest",
+   "noise": [
+    0.0035,
+    0.66,
+    1.01
+   ],
+   "offset": [
+    6200,
+    6300
+   ],
+   "layers": [
+    "terrForestGround",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treeOakMed01",
+     0.004
+    ],
+    [
+     "treeOakSml01",
+     0.004
+    ],
+    [
+     "treeOakMed02",
+     0.002
+    ],
+    [
+     "treePlainsTree2",
+     0.002
+    ]
+   ],
+   "plants": [
+    [
+     "treeShortGrass",
+     0.3
+    ],
+    [
+     "plantedChrysanthemum3Harvest",
+     0.06
+    ],
+    [
+     "plantedGoldenrod3Harvest",
+     0.06
+    ],
+    [
+     "plantedCotton3Harvest",
+     0.03
+    ],
+    [
+     "plantedBlueberry3Harvest",
+     0.02
+    ]
+   ],
+   "day": [
+    [
+     "mcRabbit",
+     3
+    ],
+    [
+     "mcBee",
+     3
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "swamp",
+   "name": "Pantano",
+   "parent": "pine_forest",
+   "noise": [
+    0.0035,
+    0.66,
+    1.01
+   ],
+   "offset": [
+    7400,
+    7500
+   ],
+   "layers": [
+    "terrDirt",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treeDeadTree01",
+     0.002
+    ],
+    [
+     "treeDeadTree02",
+     0.001
+    ],
+    [
+     "treeAzalea",
+     0.003
+    ],
+    [
+     "treeDeadPineLeaf",
+     0.002
+    ]
+   ],
+   "plants": [
+    [
+     "treeTallGrassDiagonal",
+     0.3
+    ],
+    [
+     "mushroomBiome2",
+     0.01
+    ],
+    [
+     "mushroomBiome4",
+     0.01
+    ],
+    [
+     "plantedMushroom3Harvest",
+     0.01
+    ],
+    [
+     "plantShrub",
+     0.02
+    ]
+   ],
+   "day": [
+    [
+     "mcFrog",
+     4
+    ]
+   ],
+   "night": [
+    [
+     "mcSlime",
+     3
+    ],
+    [
+     "mcWitch",
+     1
+    ]
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "jungle",
+   "name": "Selva",
+   "parent": "pine_forest",
+   "noise": [
+    0.0035,
+    0.68,
+    1.01
+   ],
+   "offset": [
+    8600,
+    8700
+   ],
+   "layers": [
+    "terrForestGround",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treeOakLrg01",
+     0.008
+    ],
+    [
+     "treeOakMed02",
+     0.008
+    ],
+    [
+     "treeAzalea",
+     0.01
+    ]
+   ],
+   "plants": [
+    [
+     "plantShrub",
+     0.08
+    ],
+    [
+     "treeTallGrassDiagonal",
+     0.4
+    ],
+    [
+     "treeForestGrassDiagonal",
+     0.2
+    ],
+    [
+     "plantedCoffee3Harvest",
+     0.01
+    ],
+    [
+     "plantedPumpkin3Harvest",
+     0.002
+    ]
+   ],
+   "day": [
+    [
+     "mcPanda",
+     2
+    ],
+    [
+     "mcOcelot",
+     2
+    ],
+    [
+     "mcParrot",
+     3
+    ],
+    [
+     "mcChicken",
+     1
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "snowy_taiga",
+   "name": "Taiga nevada",
+   "parent": "snow",
+   "noise": [
+    0.0035,
+    0.64,
+    1.01
+   ],
+   "offset": [
+    9800,
+    9900
+   ],
+   "layers": [
+    "terrSnow",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treeWinterPine13m",
+     0.004
+    ],
+    [
+     "treeWinterPine19m",
+     0.003
+    ],
+    [
+     "treeWinterPine28m",
+     0.001
+    ],
+    [
+     "treeWinterEverGreen",
+     0.003
+    ],
+    [
+     "treeWinterEverGreenLarge",
+     0.001
+    ]
+   ],
+   "plants": [
+    [
+     "treeSnowyGrassDiagonal",
+     0.2
+    ],
+    [
+     "plantedSnowberry3Harvest",
+     0.02
+    ],
+    [
+     "plantShrubSnow",
+     0.02
+    ]
+   ],
+   "day": [
+    [
+     "mcFoxSnow",
+     3
+    ],
+    [
+     "mcWolf",
+     2
+    ],
+    [
+     "mcRabbit",
+     2
+    ]
+   ],
+   "night": [
+    [
+     "mcStray",
+     2
+    ]
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "ice_spikes",
+   "name": "Llanura nevada",
+   "parent": "snow",
+   "noise": [
+    0.0035,
+    0.7,
+    1.01
+   ],
+   "offset": [
+    11000,
+    11100
+   ],
+   "layers": [
+    "terrSnow",
+    "terrSnow"
+   ],
+   "trees": [],
+   "plants": [
+    [
+     "treeSnowyDeadBush",
+     0.01
+    ],
+    [
+     "rock05",
+     0.002
+    ],
+    [
+     "rock06",
+     0.002
+    ],
+    [
+     "plantShrubSnow",
+     0.01
+    ]
+   ],
+   "day": [
+    [
+     "mcPolarBear",
+     2
+    ],
+    [
+     "mcRabbit",
+     1
+    ]
+   ],
+   "night": [
+    [
+     "mcStray",
+     3
+    ]
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "savanna",
+   "name": "Sabana",
+   "parent": "desert",
+   "noise": [
+    0.0035,
+    0.62,
+    1.01
+   ],
+   "offset": [
+    12200,
+    12300
+   ],
+   "layers": [
+    "terrDestroyedGrass",
+    "terrDirt"
+   ],
+   "trees": [
+    [
+     "treeJuniper4m",
+     0.004
+    ],
+    [
+     "treeDesertShrub",
+     0.003
+    ]
+   ],
+   "plants": [
+    [
+     "treeBrownGrassDiagonal",
+     0.4
+    ],
+    [
+     "treeGreenBrownGrassDiagonal",
+     0.2
+    ],
+    [
+     "plantedYucca3Harvest",
+     0.01
+    ]
+   ],
+   "day": [
+    [
+     "mcHorse",
+     2
+    ],
+    [
+     "mcLlama",
+     2
+    ],
+    [
+     "mcArmadillo",
+     2
+    ],
+    [
+     "mcCow",
+     2
+    ],
+    [
+     "mcSheep",
+     1
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "beach",
+   "name": "Playa",
+   "parent": "desert",
+   "noise": [
+    0.0035,
+    0.72,
+    1.01
+   ],
+   "offset": [
+    13400,
+    13500
+   ],
+   "layers": [
+    "terrSand",
+    "terrSandStone"
+   ],
+   "trees": [],
+   "plants": [
+    [
+     "driftwood",
+     0.004
+    ],
+    [
+     "driftwood2",
+     0.003
+    ],
+    [
+     "driftwood3",
+     0.003
+    ],
+    [
+     "plantedAloe3Harvest",
+     0.005
+    ]
+   ],
+   "day": [
+    [
+     "mcTurtle",
+     4
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "badlands",
+   "name": "Badlands",
+   "parent": "wasteland",
+   "noise": [
+    0.0035,
+    0.62,
+    1.01
+   ],
+   "offset": [
+    14600,
+    14700
+   ],
+   "layers": [
+    "terrSandStone",
+    "terrSandStone"
+   ],
+   "trees": [
+    [
+     "treeCactus01",
+     0.001
+    ],
+    [
+     "treeCactus03",
+     0.001
+    ],
+    [
+     "treeCactus05",
+     0.001
+    ],
+    [
+     "treeDesertShrub",
+     0.002
+    ]
+   ],
+   "plants": [
+    [
+     "plantShrubDead",
+     0.01
+    ],
+    [
+     "rock01",
+     0.002
+    ],
+    [
+     "rock02",
+     0.002
+    ],
+    [
+     "decoCowSkull",
+     0.001
+    ]
+   ],
+   "day": [
+    [
+     "mcArmadillo",
+     3
+    ],
+    [
+     "mcRabbit",
+     1
+    ]
+   ],
+   "night": [],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "crimson_forest",
+   "name": "Bosque carmesí",
+   "parent": "burnt_forest",
+   "noise": [
+    0.0035,
+    0.62,
+    1.01
+   ],
+   "offset": [
+    15800,
+    15900
+   ],
+   "layers": [
+    "terrBurntForestGround",
+    "terrStone"
+   ],
+   "trees": [
+    [
+     "treeBurntMaple01",
+     0.004
+    ],
+    [
+     "treeBurntMaple03",
+     0.004
+    ]
+   ],
+   "plants": [
+    [
+     "emberPileDeco1",
+     0.005
+    ],
+    [
+     "emberPileDeco2",
+     0.005
+    ],
+    [
+     "mushroomRadiated02",
+     0.01
+    ]
+   ],
+   "day": [
+    [
+     "mcHoglin",
+     3
+    ],
+    [
+     "mcPiglin",
+     3
+    ]
+   ],
+   "night": [
+    [
+     "mcHoglin",
+     3
+    ],
+    [
+     "mcPiglin",
+     3
+    ]
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "warped_forest",
+   "name": "Bosque distorsionado",
+   "parent": "burnt_forest",
+   "noise": [
+    0.0035,
+    0.66,
+    1.01
+   ],
+   "offset": [
+    17000,
+    17100
+   ],
+   "layers": [
+    "terrBurntForestGround",
+    "terrStone"
+   ],
+   "trees": [
+    [
+     "treePineBurntMed",
+     0.004
+    ],
+    [
+     "treePineBurntLrg",
+     0.002
+    ]
+   ],
+   "plants": [
+    [
+     "mushroomRadiated04",
+     0.01
+    ],
+    [
+     "emberPileDeco3",
+     0.004
+    ],
+    [
+     "plantShrubDead",
+     0.01
+    ]
+   ],
+   "day": [
+    [
+     "mcMagmaCube",
+     1
+    ]
+   ],
+   "night": [
+    [
+     "mcMagmaCube",
+     2
+    ]
+   ],
+   "verified": "datos_ok"
+  },
+  {
+   "id": "soul_sand_valley",
+   "name": "Valle de almas",
+   "parent": "wasteland",
+   "noise": [
+    0.0035,
+    0.68,
+    1.01
+   ],
+   "offset": [
+    18200,
+    18300
+   ],
+   "layers": [
+    "terrGravel",
+    "terrStone"
+   ],
+   "trees": [
+    [
+     "treeDeadTree02",
+     0.002
+    ]
+   ],
+   "plants": [
+    [
+     "rock05",
+     0.003
+    ],
+    [
+     "rock06",
+     0.003
+    ],
+    [
+     "rock07",
+     0.003
+    ],
+    [
+     "decoCowSkull",
+     0.003
+    ]
+   ],
+   "day": [
+    [
+     "mcGhast",
+     1
+    ],
+    [
+     "mcSkeleton",
+     2
+    ]
+   ],
+   "night": [
+    [
+     "mcGhast",
+     2
+    ],
+    [
+     "mcSkeleton",
+     3
+    ]
+   ],
+   "verified": "datos_ok"
+  }
+ ]
+}

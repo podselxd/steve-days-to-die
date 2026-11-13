@@ -1,0 +1,237 @@
+<configs>
+    <!-- GENERATED from sheets/mc_biomes.json: Minecraft biomes inside 7 Days' biomes, placed by noise -->
+    <!-- Selva (jungle) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='pine_forest']">
+        <subbiome noise="0.0035, 0.68, 1.01" noiseoffset="8600, 8700">
+            <layers>
+                <layer depth="1" blockname="terrForestGround"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeOakLrg01" prob="0.008" rotatemax="7"/>
+                <decoration type="block" blockname="treeOakMed02" prob="0.008" rotatemax="7"/>
+                <decoration type="block" blockname="treeAzalea" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrub" prob="0.08" rotatemax="7"/>
+                <decoration type="block" blockname="treeTallGrassDiagonal" prob="0.4" rotatemax="7"/>
+                <decoration type="block" blockname="treeForestGrassDiagonal" prob="0.2" rotatemax="7"/>
+                <decoration type="block" blockname="plantedCoffee3Harvest" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="plantedPumpkin3Harvest" prob="0.002" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Pantano (swamp) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='pine_forest']">
+        <subbiome noise="0.0035, 0.66, 1.01" noiseoffset="7400, 7500">
+            <layers>
+                <layer depth="1" blockname="terrDirt"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeDeadTree01" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="treeDeadTree02" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeAzalea" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="treeDeadPineLeaf" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="treeTallGrassDiagonal" prob="0.3" rotatemax="7"/>
+                <decoration type="block" blockname="mushroomBiome2" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="mushroomBiome4" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="plantedMushroom3Harvest" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrub" prob="0.02" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Bosque de flores (flower_forest) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='pine_forest']">
+        <subbiome noise="0.0035, 0.66, 1.01" noiseoffset="6200, 6300">
+            <layers>
+                <layer depth="1" blockname="terrForestGround"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeOakMed01" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treeOakSml01" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treeOakMed02" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="treePlainsTree2" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="treeShortGrass" prob="0.3" rotatemax="7"/>
+                <decoration type="block" blockname="plantedChrysanthemum3Harvest" prob="0.06" rotatemax="7"/>
+                <decoration type="block" blockname="plantedGoldenrod3Harvest" prob="0.06" rotatemax="7"/>
+                <decoration type="block" blockname="plantedCotton3Harvest" prob="0.03" rotatemax="7"/>
+                <decoration type="block" blockname="plantedBlueberry3Harvest" prob="0.02" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Llanura (plains) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='pine_forest']">
+        <subbiome noise="0.0035, 0.62, 1.01" noiseoffset="5000, 5100">
+            <layers>
+                <layer depth="1" blockname="terrForestGround"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treePlainsTree" prob="0.0008" rotatemax="7"/>
+                <decoration type="block" blockname="treePlainsTree2" prob="0.0005" rotatemax="7"/>
+                <decoration type="block" blockname="treeOakMed01" prob="0.0004" rotatemax="7"/>
+                <decoration type="block" blockname="treeShortGrass" prob="0.6" rotatemax="7"/>
+                <decoration type="block" blockname="treeTallGrassDiagonal" prob="0.1" rotatemax="7"/>
+                <decoration type="block" blockname="plantedChrysanthemum3Harvest" prob="0.02" rotatemax="7"/>
+                <decoration type="block" blockname="plantedGoldenrod3Harvest" prob="0.02" rotatemax="7"/>
+                <decoration type="block" blockname="plantedCotton3Harvest" prob="0.01" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Llanura nevada (ice_spikes) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='snow']">
+        <subbiome noise="0.0035, 0.7, 1.01" noiseoffset="11000, 11100">
+            <layers>
+                <layer depth="1" blockname="terrSnow"/>
+                <layer depth="3" blockname="terrSnow"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeSnowyDeadBush" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="rock05" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="rock06" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrubSnow" prob="0.01" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Taiga nevada (snowy_taiga) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='snow']">
+        <subbiome noise="0.0035, 0.64, 1.01" noiseoffset="9800, 9900">
+            <layers>
+                <layer depth="1" blockname="terrSnow"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeWinterPine13m" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treeWinterPine19m" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="treeWinterPine28m" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeWinterEverGreen" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="treeWinterEverGreenLarge" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeSnowyGrassDiagonal" prob="0.2" rotatemax="7"/>
+                <decoration type="block" blockname="plantedSnowberry3Harvest" prob="0.02" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrubSnow" prob="0.02" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Playa (beach) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='desert']">
+        <subbiome noise="0.0035, 0.72, 1.01" noiseoffset="13400, 13500">
+            <layers>
+                <layer depth="1" blockname="terrSand"/>
+                <layer depth="3" blockname="terrSandStone"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="driftwood" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="driftwood2" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="driftwood3" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="plantedAloe3Harvest" prob="0.005" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Sabana (savanna) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='desert']">
+        <subbiome noise="0.0035, 0.62, 1.01" noiseoffset="12200, 12300">
+            <layers>
+                <layer depth="1" blockname="terrDestroyedGrass"/>
+                <layer depth="3" blockname="terrDirt"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeJuniper4m" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treeDesertShrub" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="treeBrownGrassDiagonal" prob="0.4" rotatemax="7"/>
+                <decoration type="block" blockname="treeGreenBrownGrassDiagonal" prob="0.2" rotatemax="7"/>
+                <decoration type="block" blockname="plantedYucca3Harvest" prob="0.01" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Valle de almas (soul_sand_valley) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='wasteland']">
+        <subbiome noise="0.0035, 0.68, 1.01" noiseoffset="18200, 18300">
+            <layers>
+                <layer depth="1" blockname="terrGravel"/>
+                <layer depth="3" blockname="terrStone"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeDeadTree02" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="rock05" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="rock06" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="rock07" prob="0.003" rotatemax="7"/>
+                <decoration type="block" blockname="decoCowSkull" prob="0.003" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Badlands (badlands) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='wasteland']">
+        <subbiome noise="0.0035, 0.62, 1.01" noiseoffset="14600, 14700">
+            <layers>
+                <layer depth="1" blockname="terrSandStone"/>
+                <layer depth="3" blockname="terrSandStone"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeCactus01" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeCactus03" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeCactus05" prob="0.001" rotatemax="7"/>
+                <decoration type="block" blockname="treeDesertShrub" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrubDead" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="rock01" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="rock02" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="decoCowSkull" prob="0.001" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Bosque distorsionado (warped_forest) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='burnt_forest']">
+        <subbiome noise="0.0035, 0.66, 1.01" noiseoffset="17000, 17100">
+            <layers>
+                <layer depth="1" blockname="terrBurntForestGround"/>
+                <layer depth="3" blockname="terrStone"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treePineBurntMed" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treePineBurntLrg" prob="0.002" rotatemax="7"/>
+                <decoration type="block" blockname="mushroomRadiated04" prob="0.01" rotatemax="7"/>
+                <decoration type="block" blockname="emberPileDeco3" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="plantShrubDead" prob="0.01" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+    <!-- Bosque carmesí (crimson_forest) -->
+    <prepend xpath="/worldgeneration/biomes/biome[@name='burnt_forest']">
+        <subbiome noise="0.0035, 0.62, 1.01" noiseoffset="15800, 15900">
+            <layers>
+                <layer depth="1" blockname="terrBurntForestGround"/>
+                <layer depth="3" blockname="terrStone"/>
+                <layer depth="*" blockname="terrStone"/>
+                <layer depth="3" blockname="terrBedrock"/>
+            </layers>
+            <decorations>
+                <decoration type="block" blockname="treeBurntMaple01" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="treeBurntMaple03" prob="0.004" rotatemax="7"/>
+                <decoration type="block" blockname="emberPileDeco1" prob="0.005" rotatemax="7"/>
+                <decoration type="block" blockname="emberPileDeco2" prob="0.005" rotatemax="7"/>
+                <decoration type="block" blockname="mushroomRadiated02" prob="0.01" rotatemax="7"/>
+            </decorations>
+        </subbiome>
+    </prepend>
+</configs>

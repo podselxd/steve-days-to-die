@@ -27,7 +27,8 @@
    "size": 0.87,
    "biomes": [
     "pine_forest"
-   ]
+   ],
+   "height": 1.4
   },
   {
    "id": "pig",
@@ -50,7 +51,8 @@
    "size": 0.56,
    "biomes": [
     "pine_forest"
-   ]
+   ],
+   "height": 0.9
   },
   {
    "id": "sheep",
@@ -78,7 +80,8 @@
    "biomes": [
     "pine_forest",
     "snow"
-   ]
+   ],
+   "height": 1.3
   },
   {
    "id": "chicken",
@@ -105,7 +108,8 @@
    "size": 1.4,
    "biomes": [
     "pine_forest"
-   ]
+   ],
+   "height": 0.7
   },
   {
    "id": "creeper",
@@ -136,7 +140,8 @@
     "pine_forest",
     "snow",
     "desert"
-   ]
+   ],
+   "height": 1.7
   },
   {
    "id": "phantom",
@@ -159,7 +164,8 @@
    "verified": "datos_ok",
    "ai": "phantom",
    "damage": 2,
-   "size": 0.83
+   "size": 0.83,
+   "height": 0.5
   },
   {
    "id": "skeleton",
@@ -192,7 +198,8 @@
    "monster_biomes": [
     "pine_forest",
     "desert"
-   ]
+   ],
+   "height": 1.99
   },
   {
    "id": "spider",
@@ -225,7 +232,8 @@
     "pine_forest",
     "snow",
     "desert"
-   ]
+   ],
+   "height": 0.9
   },
   {
    "id": "cave_spider",
@@ -255,7 +263,8 @@
    "ai": "spider",
    "scale": 0.7,
    "damage": 2,
-   "size": 0.29
+   "size": 0.29,
+   "height": 0.5
   },
   {
    "id": "slime",
@@ -279,7 +288,8 @@
    "size": 1.13,
    "monster_biomes": [
     "pine_forest"
-   ]
+   ],
+   "height": 2.04
   },
   {
    "id": "wolf",
@@ -346,7 +356,8 @@
    },
    "verified": "datos_ok",
    "damage": 4,
-   "size": 1.0
+   "size": 1.0,
+   "height": 0.85
   },
   {
    "id": "slime",
@@ -368,7 +379,8 @@
    "ai": "slime",
    "scale": 2,
    "damage": 2,
-   "size": 0.58
+   "size": 0.58,
+   "height": 1.04
   },
   {
    "id": "slime",
@@ -394,7 +406,8 @@
    "verified": "datos_ok",
    "ai": "slime",
    "damage": 0,
-   "size": 0.29
+   "size": 0.29,
+   "height": 0.52
   },
   {
    "id": "rabbit",
@@ -426,7 +439,8 @@
     "desert"
    ],
    "verified": "datos_ok",
-   "size": 1.43
+   "size": 1.43,
+   "height": 0.5
   },
   {
    "id": "fox",
@@ -447,7 +461,8 @@
    ],
    "verified": "datos_ok",
    "damage": 2,
-   "size": 0.44
+   "size": 0.44,
+   "height": 0.7
   },
   {
    "id": "fox",
@@ -468,7 +483,8 @@
     "snow"
    ],
    "verified": "datos_ok",
-   "size": 0.44
+   "size": 0.44,
+   "height": 0.7
   },
   {
    "id": "goat",
@@ -489,7 +505,8 @@
    ],
    "verified": "datos_ok",
    "damage": 2,
-   "size": 0.81
+   "size": 0.81,
+   "height": 1.3
   },
   {
    "id": "horse",
@@ -515,7 +532,8 @@
     "pine_forest"
    ],
    "verified": "datos_ok",
-   "size": 1.0
+   "size": 1.0,
+   "height": 1.6
   },
   {
    "id": "llama",
@@ -541,7 +559,8 @@
    ],
    "verified": "datos_ok",
    "damage": 1,
-   "size": 1.17
+   "size": 1.17,
+   "height": 1.87
   },
   {
    "id": "camel",
@@ -561,7 +580,8 @@
     "desert"
    ],
    "verified": "datos_ok",
-   "size": 1.48
+   "size": 1.48,
+   "height": 2.375
   },
   {
    "id": "armadillo",
@@ -587,7 +607,8 @@
     "wasteland"
    ],
    "verified": "datos_ok",
-   "size": 1.86
+   "size": 1.86,
+   "height": 0.65
   },
   {
    "id": "sniffer",
@@ -608,7 +629,8 @@
    ],
    "verified": "datos_ok",
    "size": 1.09,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 1.75
   },
   {
    "id": "frog",
@@ -629,7 +651,8 @@
    ],
    "verified": "datos_ok",
    "size": 1.43,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 0.5
   },
   {
    "id": "turtle",
@@ -655,7 +678,8 @@
    ],
    "verified": "datos_ok",
    "size": 1.14,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 0.4
   },
   {
    "id": "panda",
@@ -682,7 +706,8 @@
    "verified": "datos_ok",
    "damage": 6,
    "size": 0.78,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 1.25
   },
   {
    "id": "cat",
@@ -705,7 +730,8 @@
    ],
    "verified": "datos_ok",
    "size": 0.44,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 0.7
   },
   {
    "id": "cat",
@@ -729,7 +755,8 @@
    "scale": 0.8,
    "no_spawn": true,
    "verified": "datos_ok",
-   "size": 2.0
+   "size": 2.0,
+   "height": 0.7
   },
   {
    "id": "villager",
@@ -755,7 +782,8 @@
     "snow"
    ],
    "verified": "datos_ok",
-   "size": 1.22
+   "size": 1.22,
+   "height": 1.95
   },
   {
    "id": "villager",
@@ -781,7 +809,8 @@
     "desert"
    ],
    "verified": "datos_ok",
-   "size": 1.22
+   "size": 1.22,
+   "height": 1.95
   },
   {
    "id": "bat",
@@ -801,7 +830,8 @@
    "ai": "fly",
    "no_spawn": true,
    "verified": "datos_ok",
-   "size": 1.8
+   "size": 1.8,
+   "height": 0.9
   },
   {
    "id": "parrot",
@@ -828,7 +858,8 @@
    ],
    "verified": "datos_ok",
    "size": 1.8,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 0.9
   },
   {
    "id": "bee",
@@ -850,7 +881,8 @@
    ],
    "verified": "datos_ok",
    "damage": 2,
-   "size": 1.2
+   "size": 1.2,
+   "height": 0.6
   },
   {
    "id": "allay",
@@ -869,7 +901,8 @@
    "ai": "fly",
    "no_spawn": true,
    "verified": "datos_ok",
-   "size": 1.2
+   "size": 1.2,
+   "height": 0.6
   },
   {
    "id": "polar_bear",
@@ -947,7 +980,8 @@
    "size": 0.93,
    "biomes": [
     "snow"
-   ]
+   ],
+   "height": 1.4
   },
   {
    "id": "iron_golem",
@@ -1027,7 +1061,8 @@
    ],
    "verified": "datos_ok",
    "damage": 15,
-   "size": 3.18
+   "size": 3.18,
+   "height": 2.7
   },
   {
    "id": "snow_golem",
@@ -1055,7 +1090,8 @@
    "verified": "datos_ok",
    "damage": 0,
    "size": 1.19,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 1.9
   },
   {
    "id": "witch",
@@ -1103,7 +1139,8 @@
     "pine_forest",
     "snow",
     "desert"
-   ]
+   ],
+   "height": 1.95
   },
   {
    "id": "illager",
@@ -1135,7 +1172,8 @@
    "monster_biomes": [
     "pine_forest",
     "desert"
-   ]
+   ],
+   "height": 1.95
   },
   {
    "id": "illager",
@@ -1163,7 +1201,8 @@
    "verified": "datos_ok",
    "damage": 13,
    "size": 1.08,
-   "no_spawn": true
+   "no_spawn": true,
+   "height": 1.95
   },
   {
    "id": "skeleton",
@@ -1197,7 +1236,8 @@
    "monster_weight": 1,
    "verified": "datos_ok",
    "damage": 2,
-   "size": 1.11
+   "size": 1.11,
+   "height": 1.99
   },
   {
    "id": "blaze",
@@ -1224,7 +1264,8 @@
    "verified": "datos_ok",
    "damage": 6,
    "size": 3.0,
-   "nether": true
+   "nether": true,
+   "height": 1.8
   },
   {
    "id": "ghast",
@@ -1256,7 +1297,8 @@
    "verified": "datos_ok",
    "damage": 0,
    "size": 6.67,
-   "nether": true
+   "nether": true,
+   "height": 4.0
   },
   {
    "id": "magma_cube",
@@ -1283,7 +1325,8 @@
    "verified": "datos_ok",
    "damage": 6,
    "size": 1.13,
-   "nether": true
+   "nether": true,
+   "height": 2.04
   },
   {
    "id": "magma_cube",
@@ -1311,7 +1354,8 @@
    "no_spawn": true,
    "verified": "datos_ok",
    "damage": 4,
-   "size": 0.58
+   "size": 0.58,
+   "height": 1.04
   },
   {
    "id": "magma_cube",
@@ -1334,7 +1378,8 @@
    "no_spawn": true,
    "verified": "datos_ok",
    "damage": 3,
-   "size": 0.29
+   "size": 0.29,
+   "height": 0.52
   },
   {
    "id": "hoglin",
@@ -1367,7 +1412,8 @@
    "verified": "datos_ok",
    "damage": 6,
    "size": 0.78,
-   "nether": true
+   "nether": true,
+   "height": 1.4
   },
   {
    "id": "piglin",
@@ -1397,7 +1443,8 @@
    "verified": "datos_ok",
    "damage": 8,
    "size": 1.08,
-   "nether": true
+   "nether": true,
+   "height": 1.95
   },
   {
    "id": "skeleton",
@@ -1433,7 +1480,8 @@
    "verified": "datos_ok",
    "damage": 8,
    "size": 1.33,
-   "nether": true
+   "nether": true,
+   "height": 2.4
   }
  ],
  "biomes": [

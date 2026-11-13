@@ -188,13 +188,20 @@ namespace SteveDaysToDie.Mobs
             if (tex == null) return;
             var go = new GameObject("SVD_held_" + id);
             go.transform.SetParent(_rightArm, false);
-            go.transform.localPosition = new Vector3(1f, -10f, -1f) * Px;
-            go.transform.localRotation = Quaternion.Euler(-90f, 90f, 0f) * Quaternion.Euler(0f, 0f, -45f);
+            // the arm hangs down (-y) with the fist at 10 px; the picture stands in the arm's side plane (seen edge-on from
+            // the front, flat from the side, like Minecraft), its handle corner (bottom-left of the picture) in the fist
+            // and the blade pointing forward (+z) and up: so it points at the target when the arm comes up to strike
+            float h = 6f * Px;
+            go.transform.localPosition = new Vector3(0f, -10f * Px + h * 0.8f, h * 0.8f);
+            go.transform.localRotation = Quaternion.identity;
             var m = new Mesh { name = "SVD_held" };
-            float h = 0.5f;
-            m.SetVertices(new List<Vector3> { new Vector3(0, -h, -h), new Vector3(0, h, -h), new Vector3(0, h, h), new Vector3(0, -h, h) });
-            m.SetUVs(0, new List<Vector2> { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) });
-            m.SetTriangles(new[] { 0, 1, 2, 0, 2, 3, 2, 1, 0, 3, 2, 0 }, 0);
+            // each side its own corners: shared ones made the light cancel out (the weapons looked black)
+            var v = new List<Vector3> { new Vector3(0, -h, -h), new Vector3(0, h, -h), new Vector3(0, h, h), new Vector3(0, -h, h) };
+            v.AddRange(v.ToArray());
+            var uv = new List<Vector2> { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
+            uv.AddRange(uv.ToArray());
+            m.SetVertices(v); m.SetUVs(0, uv);
+            m.SetTriangles(new[] { 0, 1, 2, 0, 2, 3, 6, 5, 4, 7, 6, 4 }, 0);
             m.RecalculateNormals(); m.RecalculateBounds();
             go.AddComponent<MeshFilter>().sharedMesh = m;
             var mr = go.AddComponent<MeshRenderer>();
