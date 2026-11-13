@@ -36,5 +36,13 @@
                 <triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="add" value="-3"/>
             </effect_group>
         </buff>
+        <!-- Minecraft's Regeneration II (golden apple): 5 s, about 0.8 health points a second (x5) -->
+        <buff name="buffMcRegeneration" icon="ui_game_symbol_add" icon_color="205,92,171">
+            <stack_type value="replace"/>
+            <duration value="5"/>
+            <effect_group>
+                <triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="add" value="4"/>
+            </effect_group>
+        </buff>
     </append>
 </configs>

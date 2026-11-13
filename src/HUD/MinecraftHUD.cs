@@ -41,6 +41,7 @@ namespace SteveDaysToDie
             Patches.McControls.Tick(_player);
             Mobs.McPhantom.Spawner.Tick(_player);
             McGuideBook.Tick(_player);
+            Survival.McEat.Tick(_player);
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {

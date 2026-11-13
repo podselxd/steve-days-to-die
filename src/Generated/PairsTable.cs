@@ -102,6 +102,69 @@ namespace SteveDaysToDie.Generated
             { "burntWoodBlock1", "crimson_planks" },   // aproximado
             { "burntWoodBlock2", "warped_planks" },   // aproximado
             { "resourceSilverNugget", "quartz" },   // aproximado
+            { "resourceScrapBrass", "copper_ingot" },   // aproximado
+            { "resourceScrapLead", "raw_copper" },   // aproximado
+            { "resourceOilShale", "charcoal" },   // aproximado
+            { "resourceBrokenGlass", "glass_pane" },   // aproximado
+            { "resourceCement", "clay_ball" },   // aproximado
+            { "resourceConcreteMix", "gray_concrete_powder" },   // aproximado
+            { "resourceAcid", "fermented_spider_eye" },   // aproximado
+            { "resourcePotassiumNitratePowder", "glowstone_dust" },   // aproximado
+            { "resourceCropCoffeeBeans", "cocoa_beans" },   // aproximado
+            { "resourceCropGoldenrodPlant", "yellow_dye" },   // aproximado
+            { "resourceCropAloeLeaf", "cactus" },   // aproximado
+            { "resourceMechanicalParts", "piston" },   // aproximado
+            { "resourceSpring", "tripwire_hook" },   // aproximado
+            { "resourcePaint", "white_dye" },   // aproximado
+            { "resourceArrowHeadIron", "flint" },   // aproximado
+            { "resourceScopeLens", "spyglass" },   // aproximado
+            { "resourceQueenBee", "bee_nest" },   // aproximado
+            { "resourceChickenFeed", "beetroot_seeds" },   // aproximado
+            { "resourceHeadlight", "glowstone" },   // aproximado
+            { "brickShapes:VariantHelper", "bricks" },   // exacto
+            { "concreteShapes:VariantHelper", "gray_concrete" },   // exacto
+            { "steelShapes:VariantHelper", "iron_block" },   // aproximado
+            { "corrugatedMetalShapes:VariantHelper", "copper_block" },   // aproximado
+            { "frameShapes:VariantHelper", "scaffolding" },   // aproximado
+            { "bulletproofShapes:VariantHelper", "tinted_glass" },   // aproximado
+            { "sandbagBlockVariantHelper", "sandstone" },   // aproximado
+            { "terrGravel", "gravel" },   // exacto
+            { "terrSnow", "snow_block" },   // exacto
+            { "terrForestGround", "grass_block" },   // exacto
+            { "terrDesertGround", "red_sand" },   // aproximado
+            { "terrSandStone", "smooth_sandstone" },   // aproximado
+            { "terrDestroyedStone", "cobbled_deepslate" },   // aproximado
+            { "terrDestroyedGrass", "coarse_dirt" },   // aproximado
+            { "terrAsphalt", "black_concrete" },   // aproximado
+            { "terrOreIron", "iron_ore" },   // exacto
+            { "terrOreCoal", "coal_ore" },   // exacto
+            { "terrOreLead", "copper_ore" },   // aproximado
+            { "terrOrePotassiumNitrate", "redstone_ore" },   // aproximado
+            { "foodCanChicken", "cooked_chicken" },   // aproximado
+            { "foodCanSalmon", "cooked_salmon" },   // exacto
+            { "foodCanTuna", "cooked_cod" },   // aproximado
+            { "foodBoiledMeat", "cooked_porkchop" },   // aproximado
+            { "foodCharredMeat", "cooked_mutton" },   // aproximado
+            { "foodCanSoup", "mushroom_stew" },   // aproximado
+            { "foodVegetableStew", "beetroot_soup" },   // aproximado
+            { "foodBlueberryPie", "cake" },   // aproximado
+            { "foodCropYuccaFruit", "apple" },   // aproximado
+            { "foodCropMushroomsRadiated", "red_mushroom" },   // aproximado
+            { "foodPumpkinBread", "cookie" },   // aproximado
+            { "foodCropGraceCorn", "golden_carrot" },   // aproximado
+            { "meleeToolPickT3Auger", "netherite_pickaxe" },   // aproximado
+            { "meleeToolAxeT3Chainsaw", "netherite_axe" },   // aproximado
+            { "meleeWpnSledgeT1IronSledgehammer", "mace" },   // aproximado
+            { "meleeWpnClubT3SteelClub", "netherite_sword" },   // aproximado
+            { "armorNomadHelmet", "netherite_helmet" },   // aproximado
+            { "armorNomadOutfit", "netherite_chestplate" },   // aproximado
+            { "armorNomadGloves", "netherite_leggings" },   // aproximado
+            { "armorNomadBoots", "netherite_boots" },   // aproximado
+            { "armorPreacherHelmet", "golden_helmet" },   // aproximado
+            { "armorPreacherOutfit", "golden_chestplate" },   // aproximado
+            { "armorPreacherGloves", "golden_leggings" },   // aproximado
+            { "armorPreacherBoots", "golden_boots" },   // aproximado
+            { "armorMinerHelmet", "turtle_helmet" },   // aproximado
         };
 
         /// <summary>Pairs whose category may switch game with the toggle key and come back (materials only; tools, weapons and armour stay 7 Days).</summary>
@@ -143,6 +206,44 @@ namespace SteveDaysToDie.Generated
             "burntWoodBlock1",
             "burntWoodBlock2",
             "resourceSilverNugget",
+            "resourceScrapBrass",
+            "resourceScrapLead",
+            "resourceOilShale",
+            "resourceBrokenGlass",
+            "resourceCement",
+            "resourceConcreteMix",
+            "resourceAcid",
+            "resourcePotassiumNitratePowder",
+            "resourceCropCoffeeBeans",
+            "resourceCropGoldenrodPlant",
+            "resourceCropAloeLeaf",
+            "resourceMechanicalParts",
+            "resourceSpring",
+            "resourcePaint",
+            "resourceArrowHeadIron",
+            "resourceScopeLens",
+            "resourceQueenBee",
+            "resourceChickenFeed",
+            "resourceHeadlight",
+            "brickShapes:VariantHelper",
+            "concreteShapes:VariantHelper",
+            "steelShapes:VariantHelper",
+            "corrugatedMetalShapes:VariantHelper",
+            "frameShapes:VariantHelper",
+            "bulletproofShapes:VariantHelper",
+            "sandbagBlockVariantHelper",
+            "terrGravel",
+            "terrSnow",
+            "terrForestGround",
+            "terrDesertGround",
+            "terrSandStone",
+            "terrDestroyedStone",
+            "terrDestroyedGrass",
+            "terrAsphalt",
+            "terrOreIron",
+            "terrOreCoal",
+            "terrOreLead",
+            "terrOrePotassiumNitrate",
         };
     }
 }

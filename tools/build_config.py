@@ -264,8 +264,6 @@ for i in _mcids:
         _mx.append('        <item name="mc_%s"><property name="Extends" value="mcItemBase"/><property name="CustomIcon" value="mc_%s"/>'
                    '<property name="Stacknumber" value="%d"/><property name="DescriptionKey" value="mcItemDesc"/>'
                    '<property name="Tags" value="food"/><property name="HoldType" value="31"/><property name="DisplayType" value="food"/>'
-                   '<property class="Action0"><property name="Class" value="Eat"/><property name="Delay" value="1.6"/>'
-                   '</property>'
                    '<effect_group tiered="false" name="mc_%s"><triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="$foodAmountAdd" operation="add" value="%d"/>'
                    '<triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="buffProcessConsumables"/>'
                    '<display_value name="$foodAmountAdd" value="%d"/></effect_group></item>' % (i, i, _stk, i, _n * 5, _n * 5))

@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "comer") { yield return EatTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "libro") { yield return BookTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "yunque") { yield return AnvilTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "encantar") { yield return EnchantTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -839,6 +840,40 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- eating like Minecraft: hold right click 1.6 s with bread, half hungry
+        static IEnumerator EatTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("comer");
+            var bread = Crafting.McItems.Stack("bread", 3);
+            p.inventory.SetItem(0, bread);
+            p.inventory.SetHoldingItemIdx(0);
+            yield return Wait(0.5f);
+            Debug.Log("[SVD] eat test start: holding " + p.inventory.holdingItemIdx + " " + p.inventory.holdingItem?.Name + " slot0 " + p.inventory.GetItem(0)?.itemValue?.ItemClass?.Name + "x" + p.inventory.GetItem(0)?.count);
+            try { p.Stats.Food.Value = p.Stats.Food.Max * 0.5f; } catch { }
+            yield return Wait(1f);
+            float before = p.Stats.Food.Value;
+            Survival.McEat.TestHold = true;
+            yield return Wait(0.8f);
+            yield return Shot("comer-mordida");
+            yield return Wait(1.2f);
+            Survival.McEat.TestHold = false;
+            yield return Wait(0.5f);
+            float after = p.Stats.Food.Value;
+            string belt = ""; int left = 0;
+            for (int i = 0; i < 10; i++) { var it = p.inventory.GetItem(i); if (it != null && !it.IsEmpty()) { belt += i + ":" + it.itemValue.ItemClass.Name + "x" + it.count + " "; if (it.itemValue.ItemClass.Name == "mc_bread") left += it.count; } }
+            Debug.Log("[SVD] eat test belt: " + belt + " holding " + p.inventory.holdingItemIdx);
+            Debug.Log($"[SVD] eat test: food {before:0.0} -> {after:0.0}, bread left {left}");
+            if (after > before && left == 2) MeltyTest.Pass("eat"); else MeltyTest.Fail("eat", $"food {before}->{after}, left {left}");
+            // full: Minecraft will not let you eat
+            try { p.Stats.Food.Value = p.Stats.Food.Max; } catch { }
+            Survival.McEat.TestHold = true;
+            yield return Wait(2f);
+            Survival.McEat.TestHold = false;
+            int left2 = 0; for (int i = 0; i < 10; i++) { var it = p.inventory.GetItem(i); if (it != null && !it.IsEmpty() && it.itemValue.ItemClass.Name == "mc_bread") left2 += it.count; }
+            Debug.Log($"[SVD] eat test full: bread left {left2}");
+            if (left2 == 2) MeltyTest.Pass("eat-full"); else MeltyTest.Fail("eat-full", "ate while full");
+        }
+
         // ---- the guide book: its index page, its recipe (book + feather), and villagers in their clothes
         static IEnumerator BookTest(EntityPlayerLocal p)
         {

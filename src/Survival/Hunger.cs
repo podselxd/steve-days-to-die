@@ -199,6 +199,7 @@ namespace SteveDaysToDie.Survival
         {
             static void Prefix(EntityPlayerLocal __instance)
             {
+                if (McEat.Eating) { __instance.movementInput.moveForward *= 0.2f; __instance.movementInput.moveStrafe *= 0.2f; __instance.movementInput.running = false; }
                 int tm = Patches.McRun.TestMove;
                 if (tm > 0) { __instance.movementInput.moveForward = 1f; __instance.movementInput.running = tm == 2; __instance.movementInput.down = tm == 3; }
                 if (DoubleTapSprint.Active) __instance.movementInput.running = true;

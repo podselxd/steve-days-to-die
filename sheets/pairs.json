@@ -1,108 +1,1111 @@
 {
-  "_comment": "FUENTE DE VERDAD de los emparejamientos 7 Days <-> Minecraft. Una fila = un par. Se edita aqui; tools/build_items.py genera sheets/items.json a partir de esta hoja y de los datos de los dos juegos.",
-  "_rules": "Conversion SIEMPRE 1 a 1. Cada id aparece en un solo par (biyectivo), para que alternar y volver regrese el mismo objeto. Si dos cosas no valen lo mismo, no se emparejan.",
-  "_columns": "id_7days | id_minecraft | relation (exacto/aproximado) | category | note",
-  "reversible_categories": ["material", "bloque"],
-  "_reversible_note": "REGLA del creador (2026-11-12): solo los MATERIALES (y bloques de construccion) pueden cambiar de juego con la tecla 0 y volver. Armaduras, herramientas (picos, hachas) y armas NO: se quedan como objeto de 7 Days con su icono de 7 Days, para no romper el equilibrio. Comida, semillas, municion y curacion tampoco por ahora; anade su categoria aqui si un dia se quiere.",
-  "pairs": [
-    {"id_7days": "resourceForgedIron", "id_minecraft": "iron_ingot", "relation": "exacto", "category": "material", "note": "lingote de hierro"},
-    {"id_7days": "resourceScrapIron", "id_minecraft": "iron_nugget", "relation": "aproximado", "category": "material", "note": "10 chatarras = 1 hierro forjado; 9 pepitas = 1 lingote"},
-    {"id_7days": "resourceGoldNugget", "id_minecraft": "gold_nugget", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceRawDiamond", "id_minecraft": "emerald", "relation": "aproximado", "category": "material", "note": "equilibrio: en 7 Days es raro (0.5% con Golpe de Suerte) y casi no tiene recetas = la esmeralda"},
-    {"id_7days": "resourceForgedSteel", "id_minecraft": "diamond", "relation": "aproximado", "category": "material", "note": "equilibrio: el acero hace las herramientas top de 7 Days (pico de acero = pico de diamante). Netherite NO tiene material: solo el taladro y la motosierra T3 llegan a ese nivel"},
-    {"id_7days": "resourceCoal", "id_minecraft": "coal", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceLeather", "id_minecraft": "leather", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceFeather", "id_minecraft": "feather", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceBone", "id_minecraft": "bone", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceGunPowder", "id_minecraft": "gunpowder", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourcePaper", "id_minecraft": "paper", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "resourceCloth", "id_minecraft": "white_wool", "relation": "aproximado", "category": "material", "note": "tela = lana"},
-    {"id_7days": "resourceYuccaFibers", "id_minecraft": "string", "relation": "aproximado", "category": "material", "note": "fibra vegetal = hilo"},
-    {"id_7days": "resourceWood", "id_minecraft": "oak_log", "relation": "aproximado", "category": "material", "note": "madera suelta = palo; el bloque de madera es el par de los tablones"},
-    {"id_7days": "resourceClayLump", "id_minecraft": "dirt", "relation": "aproximado", "category": "material", "note": "regla del diseno: version Minecraft = tierra (se coloca); version 7 Days = arcilla (se cocina)"},
-    {"id_7days": "resourceRockSmall", "id_minecraft": "cobblestone", "relation": "aproximado", "category": "material", "note": "piedras sueltas = adoquin (usuario 2026-11-12: la roca no es grava)"},
-    {"id_7days": "resourceCrushedSand", "id_minecraft": "sand", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "cobweb", "id_minecraft": "cobweb", "relation": "exacto", "category": "material", "note": ""},
-    {"id_7days": "drinkJarEmpty", "id_minecraft": "glass_bottle", "relation": "exacto", "category": "material", "note": "frasco vacio"},
-    {"id_7days": "bucketEmpty", "id_minecraft": "bucket", "relation": "exacto", "category": "herramienta", "note": "cubeta"},
-    {"id_7days": "bucketRiverWater", "id_minecraft": "water_bucket", "relation": "exacto", "category": "herramienta", "note": "cubeta con agua"},
-
-    {"id_7days": "woodShapes:VariantHelper", "id_minecraft": "oak_planks", "relation": "aproximado", "category": "bloque", "note": "bloque de madera = tablones"},
-    {"id_7days": "cobblestoneShapes:VariantHelper", "id_minecraft": "stone", "relation": "aproximado", "category": "bloque", "note": "bloque de adoquin de 7 Days = piedra de Minecraft (el adoquin de Minecraft quedo para la roca suelta, usuario 2026-11-12)"},
-    {"id_7days": "glassBlockVariantHelper", "id_minecraft": "glass", "relation": "aproximado", "category": "bloque", "note": ""},
-    {"id_7days": "ironBars", "id_minecraft": "iron_bars", "relation": "exacto", "category": "bloque", "note": ""},
-    {"id_7days": "candle", "id_minecraft": "candle", "relation": "exacto", "category": "bloque", "note": ""},
-    {"id_7days": "ladderWood", "id_minecraft": "ladder", "relation": "exacto", "category": "bloque", "note": ""},
-    {"id_7days": "bedroll", "id_minecraft": "white_bed", "relation": "aproximado", "category": "bloque", "note": "saco de dormir = cama"},
-    {"id_7days": "cntWoodWritableCrate", "id_minecraft": "chest", "relation": "aproximado", "category": "bloque", "note": "caja de madera = cofre"},
-    {"id_7days": "meleeToolTorch", "id_minecraft": "torch", "relation": "exacto", "category": "bloque", "note": ""},
-
-    {"id_7days": "foodRottingFlesh", "id_minecraft": "rotten_flesh", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodRawMeat", "id_minecraft": "beef", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "foodGrilledMeat", "id_minecraft": "cooked_beef", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "foodEgg", "id_minecraft": "egg", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodCropPotato", "id_minecraft": "potato", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodBakedPotato", "id_minecraft": "baked_potato", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodCropPumpkin", "id_minecraft": "pumpkin", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodPumpkinPie", "id_minecraft": "pumpkin_pie", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodCropMushrooms", "id_minecraft": "brown_mushroom", "relation": "exacto", "category": "comida", "note": ""},
-    {"id_7days": "foodCropBlueberries", "id_minecraft": "sweet_berries", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "foodCropCorn", "id_minecraft": "wheat", "relation": "aproximado", "category": "comida", "note": "maiz = trigo (el grano de cada juego)"},
-    {"id_7days": "foodCornBread", "id_minecraft": "bread", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "foodHoney", "id_minecraft": "honey_bottle", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "foodMeatStew", "id_minecraft": "rabbit_stew", "relation": "aproximado", "category": "comida", "note": ""},
-    {"id_7days": "resourceCropChrysanthemumPlant", "id_minecraft": "dandelion", "relation": "aproximado", "category": "comida", "note": "flor amarilla"},
-    {"id_7days": "plantedCorn1", "id_minecraft": "wheat_seeds", "relation": "aproximado", "category": "semilla", "note": ""},
-    {"id_7days": "plantedPumpkin1", "id_minecraft": "pumpkin_seeds", "relation": "aproximado", "category": "semilla", "note": ""},
-
-    {"id_7days": "meleeToolRepairT0StoneAxe", "id_minecraft": "stone_axe", "relation": "aproximado", "category": "herramienta", "note": ""},
-    {"id_7days": "meleeToolAxeT1IronFireaxe", "id_minecraft": "iron_axe", "relation": "exacto", "category": "herramienta", "note": ""},
-    {"id_7days": "meleeToolAxeT2SteelAxe", "id_minecraft": "diamond_axe", "relation": "aproximado", "category": "herramienta", "note": "acero = nivel diamante"},
-    {"id_7days": "meleeToolPickT1IronPickaxe", "id_minecraft": "iron_pickaxe", "relation": "exacto", "category": "herramienta", "note": ""},
-    {"id_7days": "meleeToolPickT2SteelPickaxe", "id_minecraft": "diamond_pickaxe", "relation": "aproximado", "category": "herramienta", "note": "acero = nivel diamante"},
-    {"id_7days": "meleeToolShovelT0StoneShovel", "id_minecraft": "stone_shovel", "relation": "exacto", "category": "herramienta", "note": ""},
-    {"id_7days": "meleeToolShovelT1IronShovel", "id_minecraft": "iron_shovel", "relation": "exacto", "category": "herramienta", "note": ""},
-    {"id_7days": "meleeToolShovelT2SteelShovel", "id_minecraft": "diamond_shovel", "relation": "aproximado", "category": "herramienta", "note": "acero = nivel diamante"},
-
-    {"id_7days": "meleeWpnClubT0WoodenClub", "id_minecraft": "wooden_sword", "relation": "aproximado", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnBladeT0BoneKnife", "id_minecraft": "stone_sword", "relation": "aproximado", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnBladeT1HuntingKnife", "id_minecraft": "iron_sword", "relation": "aproximado", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnBladeT3Machete", "id_minecraft": "diamond_sword", "relation": "aproximado", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnSpearT0StoneSpear", "id_minecraft": "stone_spear", "relation": "exacto", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnSpearT1IronSpear", "id_minecraft": "iron_spear", "relation": "exacto", "category": "arma", "note": ""},
-    {"id_7days": "meleeWpnSpearT3SteelSpear", "id_minecraft": "diamond_spear", "relation": "aproximado", "category": "arma", "note": "acero = nivel diamante"},
-    {"id_7days": "gunBowT1WoodenBow", "id_minecraft": "bow", "relation": "exacto", "category": "arma", "note": ""},
-    {"id_7days": "gunBowT1IronCrossbow", "id_minecraft": "crossbow", "relation": "exacto", "category": "arma", "note": ""},
-    {"id_7days": "ammoArrowStone", "id_minecraft": "arrow", "relation": "aproximado", "category": "municion", "note": ""},
-
-    {"id_7days": "armorPrimitiveHelmet", "id_minecraft": "leather_helmet", "relation": "aproximado", "category": "armadura", "note": "ligera basica = cuero"},
-    {"id_7days": "armorPrimitiveOutfit", "id_minecraft": "leather_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorPrimitiveGloves", "id_minecraft": "leather_leggings", "relation": "aproximado", "category": "armadura", "note": "guantes ocupan la casilla de pantalones"},
-    {"id_7days": "armorPrimitiveBoots", "id_minecraft": "leather_boots", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorLumberjackHelmet", "id_minecraft": "copper_helmet", "relation": "aproximado", "category": "armadura", "note": "ligera = cobre"},
-    {"id_7days": "armorLumberjackOutfit", "id_minecraft": "copper_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorLumberjackGloves", "id_minecraft": "copper_leggings", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorLumberjackBoots", "id_minecraft": "copper_boots", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorScavengerHelmet", "id_minecraft": "chainmail_helmet", "relation": "aproximado", "category": "armadura", "note": "media = cota de malla"},
-    {"id_7days": "armorScavengerOutfit", "id_minecraft": "chainmail_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorScavengerGloves", "id_minecraft": "chainmail_leggings", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorScavengerBoots", "id_minecraft": "chainmail_boots", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorCommandoHelmet", "id_minecraft": "iron_helmet", "relation": "aproximado", "category": "armadura", "note": "media = hierro"},
-    {"id_7days": "armorCommandoOutfit", "id_minecraft": "iron_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorCommandoGloves", "id_minecraft": "iron_leggings", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorCommandoBoots", "id_minecraft": "iron_boots", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorRaiderHelmet", "id_minecraft": "diamond_helmet", "relation": "aproximado", "category": "armadura", "note": "pesada = diamante (nivel maximo)"},
-    {"id_7days": "armorRaiderOutfit", "id_minecraft": "diamond_chestplate", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorRaiderGloves", "id_minecraft": "diamond_leggings", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "armorRaiderBoots", "id_minecraft": "diamond_boots", "relation": "aproximado", "category": "armadura", "note": ""},
-    {"id_7days": "resourceSnowBall", "id_minecraft": "snowball", "relation": "exacto", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "resourceBeeswax", "id_minecraft": "honeycomb", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "resourceElectricParts", "id_minecraft": "redstone", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "resourceGlue", "id_minecraft": "slime_ball", "relation": "aproximado", "category": "material", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "medicalFirstAidKit", "id_minecraft": "golden_apple", "relation": "aproximado", "category": "curacion", "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"},
-    {"id_7days": "terrBurntForestGround", "id_minecraft": "netherrack", "relation": "aproximado", "category": "bloque", "note": "bosque quemado = Nether; pide pico como el netherrack (harvest_tiers.json)"},
-    {"id_7days": "burntWoodBlock1", "id_minecraft": "crimson_planks", "relation": "aproximado", "category": "bloque", "note": "madera quemada = madera del Nether"},
-    {"id_7days": "burntWoodBlock2", "id_minecraft": "warped_planks", "relation": "aproximado", "category": "bloque", "note": "madera quemada = madera del Nether"},
-    {"id_7days": "resourceSilverNugget", "id_minecraft": "quartz", "relation": "aproximado", "category": "material", "note": "mineral blanco y brillante = cuarzo del Nether"}
-  ]
+ "_comment": "FUENTE DE VERDAD de los emparejamientos 7 Days <-> Minecraft. Una fila = un par. Se edita aqui; tools/build_items.py genera sheets/items.json a partir de esta hoja y de los datos de los dos juegos.",
+ "_rules": "Conversion SIEMPRE 1 a 1. Cada id aparece en un solo par (biyectivo), para que alternar y volver regrese el mismo objeto. Si dos cosas no valen lo mismo, no se emparejan.",
+ "_columns": "id_7days | id_minecraft | relation (exacto/aproximado) | category | note",
+ "reversible_categories": [
+  "material",
+  "bloque"
+ ],
+ "_reversible_note": "REGLA del creador (2026-11-12): solo los MATERIALES (y bloques de construccion) pueden cambiar de juego con la tecla 0 y volver. Armaduras, herramientas (picos, hachas) y armas NO: se quedan como objeto de 7 Days con su icono de 7 Days, para no romper el equilibrio. Comida, semillas, municion y curacion tampoco por ahora; anade su categoria aqui si un dia se quiere.",
+ "pairs": [
+  {
+   "id_7days": "resourceForgedIron",
+   "id_minecraft": "iron_ingot",
+   "relation": "exacto",
+   "category": "material",
+   "note": "lingote de hierro"
+  },
+  {
+   "id_7days": "resourceScrapIron",
+   "id_minecraft": "iron_nugget",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "10 chatarras = 1 hierro forjado; 9 pepitas = 1 lingote"
+  },
+  {
+   "id_7days": "resourceGoldNugget",
+   "id_minecraft": "gold_nugget",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceRawDiamond",
+   "id_minecraft": "emerald",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "equilibrio: en 7 Days es raro (0.5% con Golpe de Suerte) y casi no tiene recetas = la esmeralda"
+  },
+  {
+   "id_7days": "resourceForgedSteel",
+   "id_minecraft": "diamond",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "equilibrio: el acero hace las herramientas top de 7 Days (pico de acero = pico de diamante). Netherite NO tiene material: solo el taladro y la motosierra T3 llegan a ese nivel"
+  },
+  {
+   "id_7days": "resourceCoal",
+   "id_minecraft": "coal",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceLeather",
+   "id_minecraft": "leather",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceFeather",
+   "id_minecraft": "feather",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceBone",
+   "id_minecraft": "bone",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceGunPowder",
+   "id_minecraft": "gunpowder",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourcePaper",
+   "id_minecraft": "paper",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCloth",
+   "id_minecraft": "white_wool",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "tela = lana"
+  },
+  {
+   "id_7days": "resourceYuccaFibers",
+   "id_minecraft": "string",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "fibra vegetal = hilo"
+  },
+  {
+   "id_7days": "resourceWood",
+   "id_minecraft": "oak_log",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "madera suelta = palo; el bloque de madera es el par de los tablones"
+  },
+  {
+   "id_7days": "resourceClayLump",
+   "id_minecraft": "dirt",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "regla del diseno: version Minecraft = tierra (se coloca); version 7 Days = arcilla (se cocina)"
+  },
+  {
+   "id_7days": "resourceRockSmall",
+   "id_minecraft": "cobblestone",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "piedras sueltas = adoquin (usuario 2026-11-12: la roca no es grava)"
+  },
+  {
+   "id_7days": "resourceCrushedSand",
+   "id_minecraft": "sand",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "cobweb",
+   "id_minecraft": "cobweb",
+   "relation": "exacto",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkJarEmpty",
+   "id_minecraft": "glass_bottle",
+   "relation": "exacto",
+   "category": "material",
+   "note": "frasco vacio"
+  },
+  {
+   "id_7days": "bucketEmpty",
+   "id_minecraft": "bucket",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": "cubeta"
+  },
+  {
+   "id_7days": "bucketRiverWater",
+   "id_minecraft": "water_bucket",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": "cubeta con agua"
+  },
+  {
+   "id_7days": "woodShapes:VariantHelper",
+   "id_minecraft": "oak_planks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "bloque de madera = tablones"
+  },
+  {
+   "id_7days": "cobblestoneShapes:VariantHelper",
+   "id_minecraft": "stone",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "bloque de adoquin de 7 Days = piedra de Minecraft (el adoquin de Minecraft quedo para la roca suelta, usuario 2026-11-12)"
+  },
+  {
+   "id_7days": "glassBlockVariantHelper",
+   "id_minecraft": "glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "ironBars",
+   "id_minecraft": "iron_bars",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "candle",
+   "id_minecraft": "candle",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "ladderWood",
+   "id_minecraft": "ladder",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "bedroll",
+   "id_minecraft": "white_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "saco de dormir = cama"
+  },
+  {
+   "id_7days": "cntWoodWritableCrate",
+   "id_minecraft": "chest",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja de madera = cofre"
+  },
+  {
+   "id_7days": "meleeToolTorch",
+   "id_minecraft": "torch",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "foodRottingFlesh",
+   "id_minecraft": "rotten_flesh",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodRawMeat",
+   "id_minecraft": "beef",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodGrilledMeat",
+   "id_minecraft": "cooked_beef",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodEgg",
+   "id_minecraft": "egg",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropPotato",
+   "id_minecraft": "potato",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodBakedPotato",
+   "id_minecraft": "baked_potato",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropPumpkin",
+   "id_minecraft": "pumpkin",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodPumpkinPie",
+   "id_minecraft": "pumpkin_pie",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropMushrooms",
+   "id_minecraft": "brown_mushroom",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropBlueberries",
+   "id_minecraft": "sweet_berries",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropCorn",
+   "id_minecraft": "wheat",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "maiz = trigo (el grano de cada juego)"
+  },
+  {
+   "id_7days": "foodCornBread",
+   "id_minecraft": "bread",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodHoney",
+   "id_minecraft": "honey_bottle",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodMeatStew",
+   "id_minecraft": "rabbit_stew",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCropChrysanthemumPlant",
+   "id_minecraft": "dandelion",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "flor amarilla"
+  },
+  {
+   "id_7days": "plantedCorn1",
+   "id_minecraft": "wheat_seeds",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedPumpkin1",
+   "id_minecraft": "pumpkin_seeds",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolRepairT0StoneAxe",
+   "id_minecraft": "stone_axe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolAxeT1IronFireaxe",
+   "id_minecraft": "iron_axe",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolAxeT2SteelAxe",
+   "id_minecraft": "diamond_axe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "acero = nivel diamante"
+  },
+  {
+   "id_7days": "meleeToolPickT1IronPickaxe",
+   "id_minecraft": "iron_pickaxe",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolPickT2SteelPickaxe",
+   "id_minecraft": "diamond_pickaxe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "acero = nivel diamante"
+  },
+  {
+   "id_7days": "meleeToolShovelT0StoneShovel",
+   "id_minecraft": "stone_shovel",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolShovelT1IronShovel",
+   "id_minecraft": "iron_shovel",
+   "relation": "exacto",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolShovelT2SteelShovel",
+   "id_minecraft": "diamond_shovel",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "acero = nivel diamante"
+  },
+  {
+   "id_7days": "meleeWpnClubT0WoodenClub",
+   "id_minecraft": "wooden_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnBladeT0BoneKnife",
+   "id_minecraft": "stone_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnBladeT1HuntingKnife",
+   "id_minecraft": "iron_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnBladeT3Machete",
+   "id_minecraft": "diamond_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSpearT0StoneSpear",
+   "id_minecraft": "stone_spear",
+   "relation": "exacto",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSpearT1IronSpear",
+   "id_minecraft": "iron_spear",
+   "relation": "exacto",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSpearT3SteelSpear",
+   "id_minecraft": "diamond_spear",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": "acero = nivel diamante"
+  },
+  {
+   "id_7days": "gunBowT1WoodenBow",
+   "id_minecraft": "bow",
+   "relation": "exacto",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "gunBowT1IronCrossbow",
+   "id_minecraft": "crossbow",
+   "relation": "exacto",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "ammoArrowStone",
+   "id_minecraft": "arrow",
+   "relation": "aproximado",
+   "category": "municion",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPrimitiveHelmet",
+   "id_minecraft": "leather_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "ligera basica = cuero"
+  },
+  {
+   "id_7days": "armorPrimitiveOutfit",
+   "id_minecraft": "leather_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPrimitiveGloves",
+   "id_minecraft": "leather_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "guantes ocupan la casilla de pantalones"
+  },
+  {
+   "id_7days": "armorPrimitiveBoots",
+   "id_minecraft": "leather_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorLumberjackHelmet",
+   "id_minecraft": "copper_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "ligera = cobre"
+  },
+  {
+   "id_7days": "armorLumberjackOutfit",
+   "id_minecraft": "copper_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorLumberjackGloves",
+   "id_minecraft": "copper_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorLumberjackBoots",
+   "id_minecraft": "copper_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorScavengerHelmet",
+   "id_minecraft": "chainmail_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "media = cota de malla"
+  },
+  {
+   "id_7days": "armorScavengerOutfit",
+   "id_minecraft": "chainmail_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorScavengerGloves",
+   "id_minecraft": "chainmail_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorScavengerBoots",
+   "id_minecraft": "chainmail_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorCommandoHelmet",
+   "id_minecraft": "iron_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "media = hierro"
+  },
+  {
+   "id_7days": "armorCommandoOutfit",
+   "id_minecraft": "iron_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorCommandoGloves",
+   "id_minecraft": "iron_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorCommandoBoots",
+   "id_minecraft": "iron_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorRaiderHelmet",
+   "id_minecraft": "diamond_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": "pesada = diamante (nivel maximo)"
+  },
+  {
+   "id_7days": "armorRaiderOutfit",
+   "id_minecraft": "diamond_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorRaiderGloves",
+   "id_minecraft": "diamond_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorRaiderBoots",
+   "id_minecraft": "diamond_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceSnowBall",
+   "id_minecraft": "snowball",
+   "relation": "exacto",
+   "category": "material",
+   "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"
+  },
+  {
+   "id_7days": "resourceBeeswax",
+   "id_minecraft": "honeycomb",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"
+  },
+  {
+   "id_7days": "resourceElectricParts",
+   "id_minecraft": "redstone",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"
+  },
+  {
+   "id_7days": "resourceGlue",
+   "id_minecraft": "slime_ball",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"
+  },
+  {
+   "id_7days": "medicalFirstAidKit",
+   "id_minecraft": "golden_apple",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": "tomado de Steve Days to Die (Ryan Ussery, MIT)"
+  },
+  {
+   "id_7days": "terrBurntForestGround",
+   "id_minecraft": "netherrack",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "bosque quemado = Nether; pide pico como el netherrack (harvest_tiers.json)"
+  },
+  {
+   "id_7days": "burntWoodBlock1",
+   "id_minecraft": "crimson_planks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "madera quemada = madera del Nether"
+  },
+  {
+   "id_7days": "burntWoodBlock2",
+   "id_minecraft": "warped_planks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "madera quemada = madera del Nether"
+  },
+  {
+   "id_7days": "resourceSilverNugget",
+   "id_minecraft": "quartz",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "mineral blanco y brillante = cuarzo del Nether"
+  },
+  {
+   "id_7days": "resourceScrapBrass",
+   "id_minecraft": "copper_ingot",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "laton = cobre"
+  },
+  {
+   "id_7days": "resourceScrapLead",
+   "id_minecraft": "raw_copper",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "la mena de plomo da cobre en bruto"
+  },
+  {
+   "id_7days": "resourceOilShale",
+   "id_minecraft": "charcoal",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "combustible"
+  },
+  {
+   "id_7days": "resourceBrokenGlass",
+   "id_minecraft": "glass_pane",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCement",
+   "id_minecraft": "clay_ball",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceConcreteMix",
+   "id_minecraft": "gray_concrete_powder",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "mezcla de concreto = concreto en polvo"
+  },
+  {
+   "id_7days": "resourceAcid",
+   "id_minecraft": "fermented_spider_eye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourcePotassiumNitratePowder",
+   "id_minecraft": "glowstone_dust",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCropCoffeeBeans",
+   "id_minecraft": "cocoa_beans",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "granos"
+  },
+  {
+   "id_7days": "resourceCropGoldenrodPlant",
+   "id_minecraft": "yellow_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "flor amarilla = tinte amarillo"
+  },
+  {
+   "id_7days": "resourceCropAloeLeaf",
+   "id_minecraft": "cactus",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceMechanicalParts",
+   "id_minecraft": "piston",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceSpring",
+   "id_minecraft": "tripwire_hook",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourcePaint",
+   "id_minecraft": "white_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceArrowHeadIron",
+   "id_minecraft": "flint",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "la punta de flecha de Minecraft es pedernal"
+  },
+  {
+   "id_7days": "resourceScopeLens",
+   "id_minecraft": "spyglass",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceQueenBee",
+   "id_minecraft": "bee_nest",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceChickenFeed",
+   "id_minecraft": "beetroot_seeds",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceHeadlight",
+   "id_minecraft": "glowstone",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "luz"
+  },
+  {
+   "id_7days": "brickShapes:VariantHelper",
+   "id_minecraft": "bricks",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "concreteShapes:VariantHelper",
+   "id_minecraft": "gray_concrete",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "steelShapes:VariantHelper",
+   "id_minecraft": "iron_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "corrugatedMetalShapes:VariantHelper",
+   "id_minecraft": "copper_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "frameShapes:VariantHelper",
+   "id_minecraft": "scaffolding",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "marco de madera = andamio"
+  },
+  {
+   "id_7days": "bulletproofShapes:VariantHelper",
+   "id_minecraft": "tinted_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "sandbagBlockVariantHelper",
+   "id_minecraft": "sandstone",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrGravel",
+   "id_minecraft": "gravel",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrSnow",
+   "id_minecraft": "snow_block",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrForestGround",
+   "id_minecraft": "grass_block",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrDesertGround",
+   "id_minecraft": "red_sand",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrSandStone",
+   "id_minecraft": "smooth_sandstone",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrDestroyedStone",
+   "id_minecraft": "cobbled_deepslate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrDestroyedGrass",
+   "id_minecraft": "coarse_dirt",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrAsphalt",
+   "id_minecraft": "black_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreIron",
+   "id_minecraft": "iron_ore",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreCoal",
+   "id_minecraft": "coal_ore",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreLead",
+   "id_minecraft": "copper_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOrePotassiumNitrate",
+   "id_minecraft": "redstone_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanChicken",
+   "id_minecraft": "cooked_chicken",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanSalmon",
+   "id_minecraft": "cooked_salmon",
+   "relation": "exacto",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanTuna",
+   "id_minecraft": "cooked_cod",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodBoiledMeat",
+   "id_minecraft": "cooked_porkchop",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCharredMeat",
+   "id_minecraft": "cooked_mutton",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanSoup",
+   "id_minecraft": "mushroom_stew",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodVegetableStew",
+   "id_minecraft": "beetroot_soup",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodBlueberryPie",
+   "id_minecraft": "cake",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropYuccaFruit",
+   "id_minecraft": "apple",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropMushroomsRadiated",
+   "id_minecraft": "red_mushroom",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodPumpkinBread",
+   "id_minecraft": "cookie",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCropGraceCorn",
+   "id_minecraft": "golden_carrot",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "maiz especial = zanahoria dorada"
+  },
+  {
+   "id_7days": "meleeToolPickT3Auger",
+   "id_minecraft": "netherite_pickaxe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolAxeT3Chainsaw",
+   "id_minecraft": "netherite_axe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSledgeT1IronSledgehammer",
+   "id_minecraft": "mace",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": "la maza esta hecha sobre el mazo"
+  },
+  {
+   "id_7days": "meleeWpnClubT3SteelClub",
+   "id_minecraft": "netherite_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "armorNomadHelmet",
+   "id_minecraft": "netherite_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorNomadOutfit",
+   "id_minecraft": "netherite_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorNomadGloves",
+   "id_minecraft": "netherite_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorNomadBoots",
+   "id_minecraft": "netherite_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPreacherHelmet",
+   "id_minecraft": "golden_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPreacherOutfit",
+   "id_minecraft": "golden_chestplate",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPreacherGloves",
+   "id_minecraft": "golden_leggings",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorPreacherBoots",
+   "id_minecraft": "golden_boots",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  },
+  {
+   "id_7days": "armorMinerHelmet",
+   "id_minecraft": "turtle_helmet",
+   "relation": "aproximado",
+   "category": "armadura",
+   "note": ""
+  }
+ ]
 }

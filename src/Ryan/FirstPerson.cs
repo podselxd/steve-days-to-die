@@ -11,6 +11,10 @@ namespace SteveDaysToDie.Ryan;
 /// Minecraft version (guns...) keep 7 Days' own model.</summary>
 public static class FirstPerson
 {
+	/// <summary>Set by Survival.McEat while eating: Minecraft's remaining fraction (1 at the start, 0 when eaten).</summary>
+	public static float EatProgress = 1f;
+	public static bool EatingNow;
+
 	private struct Display
 	{
 		public Vector3 rot;
@@ -443,6 +447,19 @@ public static class FirstPerson
 		}
 		else
 		{
+			if (EatingNow)
+			{
+				// Minecraft's ItemInHandRenderer.applyEatTransform (right hand), then applyItemArmTransform
+				float ticks = EatProgress * 32f;
+				float f1 = EatProgress;
+				if (f1 < 0.8f) mc *= T(0f, Mathf.Abs(Mathf.Cos(ticks / 4f * Mathf.PI) * 0.1f), 0f);
+				float f3 = 1f - Mathf.Pow(f1, 27f);
+				mc *= T(f3 * 0.6f, f3 * -0.5f, 0f);
+				mc *= R(Vector3.up, f3 * 90f) * R(Vector3.right, f3 * 10f) * R(Vector3.forward, f3 * 30f);
+				mc *= T(0.56f, -0.52f + num2 * -0.6f, -0.72f);
+			}
+			else
+			{
 			float x = -0.4f * Mathf.Sin(num3 * Mathf.PI);
 			float y = 0.2f * Mathf.Sin(num3 * 2f * Mathf.PI);
 			float z = -0.2f * Mathf.Sin(num * Mathf.PI);
@@ -451,6 +468,7 @@ public static class FirstPerson
 			float num12 = Mathf.Sin(num * num * Mathf.PI);
 			float num13 = Mathf.Sin(num3 * Mathf.PI);
 			mc *= R(Vector3.up, 45f + num12 * -20f) * R(Vector3.forward, num13 * -20f) * R(Vector3.right, num13 * -80f) * R(Vector3.up, -45f);
+			}
 			Display display = DisplayFor(shownId);
 			mc *= T(display.trans.x, display.trans.y, display.trans.z);
 			mc *= R(Vector3.right, display.rot.x) * R(Vector3.up, display.rot.y) * R(Vector3.forward, display.rot.z);
