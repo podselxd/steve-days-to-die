@@ -21,7 +21,7 @@ namespace SteveDaysToDie.Patches
             {
                 __instance.runToggleActive = false;
                 var p = GameManager.Instance?.World?.GetPrimaryPlayer();
-                if (p == null) return;
+                if (p == null || p.AttachedToEntity != null) return;          // driving: 7 Days' own controls
                 var a = LocalPlayerUI.GetUIForPlayer(p)?.playerInput;
                 if (a == null) return;
                 if (TestMove > 0) { p.movementInput.moveForward = 1f; p.movementInput.down = TestMove == 3; p.movementInput.running = TestMove == 2; return; }

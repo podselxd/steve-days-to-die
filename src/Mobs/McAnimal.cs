@@ -260,7 +260,8 @@ namespace SteveDaysToDie.Mobs
         {
             _built = true;
             var parts = Model(AnimalId) ?? FromTable(AnimalId == "cave_spider" ? "spider" : AnimalId);   // the cave spider is a small spider
-            var tex = Tex(TexturePath);
+            // the villager: body + biome clothes + profession + badge, laid together like Minecraft's layers
+            var tex = _e != null && _e.EntityClass?.entityClassName == "mcVillager" ? McVillagerLook.For(_e, Tex) ?? Tex(TexturePath) : Tex(TexturePath);
             if (parts == null || tex == null) { Debug.LogWarning("[SVD] Minecraft animal " + AnimalId + ": no model or texture"); return; }
             var wool = AnimalId == "sheep" ? Tex("assets/minecraft/textures/entity/sheep/sheep_wool.png") : null;
             _root = new GameObject("SVD_McAnimal_" + AnimalId).transform;

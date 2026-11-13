@@ -85,5 +85,21 @@ namespace SteveDaysToDie.Generated
             ("comida", "{mc_bread} {mc_apple} {mc_cooked_beef} {mc_carrot} {mc_baked_potato}"),
             ("comida rara", "{mc_golden_apple} {mc_cake}"),
         };
+        /// <summary>Minecraft biomes: name, the 7 Days biome it is inside, day mobs, night mobs (names).</summary>
+        public static readonly (string name, string inside, string day, string night)[] Biomes =
+        {
+            ("Llanura", "bosque de pinos", "Caballo, Vaca, Oveja, Cerdo, Gallina, Conejo", ""),
+            ("Bosque de flores", "bosque de pinos", "Conejo, Abeja", ""),
+            ("Pantano", "bosque de pinos", "Rana", "Slime, Bruja"),
+            ("Selva", "bosque de pinos", "Panda, Ocelote, Loro, Gallina", ""),
+            ("Taiga nevada", "nieve", "Zorro de nieve, Lobo, Conejo", "Esqueleto glacial"),
+            ("Llanura nevada", "nieve", "Oso polar, Conejo", "Esqueleto glacial"),
+            ("Sabana", "desierto", "Caballo, Llama, Armadillo, Vaca, Oveja", ""),
+            ("Playa", "desierto", "Tortuga", ""),
+            ("Badlands", "yermo", "Armadillo, Conejo", ""),
+            ("Bosque carmesí", "bosque quemado", "Hoglin, Piglin", "Hoglin, Piglin"),
+            ("Bosque distorsionado", "bosque quemado", "Cubo de magma", "Cubo de magma"),
+            ("Valle de almas", "yermo", "Ghast, Esqueleto", "Ghast, Esqueleto"),
+        };
     }
 }

@@ -64,16 +64,24 @@ namespace SteveDaysToDie.HUD
 
         static string Items(string s) => Regex.Replace(s, @"\{(mc_[a-z0-9_]+)\}", m => Name(m.Groups[1].Value) + ",").TrimEnd(',', ' ').Replace(",", ", ").Replace(",  ", ", ");
 
-        // the whole text, cut into pages that fit Minecraft's page (114 x 128 px)
+        // the sections (title, first page) for the clickable index on page 1
+        static List<(string title, int page)> _sections;
+
+        // the whole text, cut into pages that fit Minecraft's page (114 x 128 px); "\f" + title starts a section on a new page
         void Build(float s)
         {
-            // "\f" = this section starts on a new page
-            var parts = new List<string>
-            {
-                "<b>Guía de Steve Days to Die</b>\n\nSecciones:\n1. Lo básico\n2. Minerales\n3. Bloques\n4. Botín\n5. Mobs pacíficos\n6. Mobs neutrales\n7. Mobs hostiles\n\nFlechas o rueda: cambiar de página. Esc: cerrar.",
-                "\f<b>1. Lo básico</b>\n\nLos bloques de Minecraft se pican como en Minecraft: cada uno con su herramienta.\n\nLa mesa de crafteo y el horno son los de Minecraft. El libro verde del inventario tiene todas las recetas.\n\nÑ cambia lo que tienes en la mano entre Minecraft y 7 Days.",
-                "<b>Dormir</b>\n\nUsa una cama de noche. Si todos los jugadores duermen, se hace de día. Si pasas 3 días sin dormir salen phantoms de noche.",
-            };
+            var parts = new List<string>();
+            void Section(string title, string intro) => parts.Add("\f" + title + "\u0001<b>" + title + "</b>" + (intro != null ? "\n\n" + intro : ""));
+            parts.Add("<b>Guía de Steve Days to Die</b>\n\nToca una sección para ir a ella.\nFlechas o rueda: cambiar de página. Esc: cerrar.");
+            Section("Controles", "Shift: correr (mientras lo mantienes). Doble W: correr.\nControl: agacharse (no te caes de los bordes).\nC: agacharse sin mantener.\nQ: tirar uno; Control+Q: tirar todo.\nRueda: cambiar de casilla.\nClic derecho con armadura: ponértela.\nÑ: cambiar lo que tienes en la mano entre Minecraft y 7 Days.\nF5: ver a Steve desde fuera.");
+            Section("Lo básico", "Los bloques de Minecraft se pican como en Minecraft: cada uno con su herramienta.\n\nLa mesa de crafteo y el horno son los de Minecraft. El libro verde del inventario tiene todas las recetas.\n\nNo hay cansancio: solo el hambre te impide correr.");
+            parts.Add("<b>Dormir</b>\n\nUsa una cama de noche. Si todos los jugadores duermen, se hace de día. Si pasas 3 días sin dormir salen phantoms de noche.");
+            Section("Encantar", "Mesa de encantamientos: pon el objeto y lapislázuli. Las 3 ofertas cuestan 1, 2 o 3 niveles y lapislázuli. Con librerías alrededor (hasta 15) salen encantamientos más fuertes.\n\nExperiencia: la barra verde. Sube al matar mobs (5 por monstruo) y al picar menas.");
+            parts.Add("<b>Yunque</b>\n\nObjeto + libro encantado: le pasa el encantamiento.\nDos iguales: suman sus encantamientos (dos del mismo nivel suben uno).\nObjeto + su material: lo repara 25% cada uno.\nArriba puedes renombrarlo.\nCada uso encarece el siguiente; desde 40 niveles es demasiado caro.\n\nLos libros encantados también salen en el botín raro (ahí sale Reparación).");
+            parts.Add("<b>Encantamientos que funcionan</b>\n\nFilo, Castigo, Perdición de los artrópodos, Aspecto ígneo, Empuje, Botín, Eficiencia, Fortuna, Irrompibilidad, Protección (y contra fuego, explosiones, proyectiles), Caída de pluma, Espinas, Poder, Retroceso, Fuego, Reparación.");
+            Section("Biomas", "Dentro de los biomas de 7 Days salen manchas de biomas de Minecraft, cada una con sus mobs. Solo en las zonas que todavía no has explorado.");
+            foreach (var (name, inside, day, night) in Generated.McGuideTable.Biomes)
+                parts.Add("<b>" + name + "</b> (en " + inside + ")" + (day.Length > 0 ? "\nDe día: " + day + "." : "") + (night.Length > 0 ? "\nDe noche: " + night + "." : ""));
             var ores = new Dictionary<string, List<string>>(); var blocks = new Dictionary<string, List<string>>();
             foreach (var (item, block, chance) in Generated.McGuideTable.Mining)
             {
@@ -81,16 +89,16 @@ namespace SteveDaysToDie.HUD
                 if (!into.TryGetValue(item, out var l)) into[item] = l = new List<string>();
                 l.Add(Block(block) + (chance != null ? " (" + chance + ")" : ""));
             }
-            parts.Add("\f<b>2. Minerales</b>\n\nPica estas menas de 7 Days (con el pico que pide cada una) y sueltan cosas de Minecraft:");
+            Section("Minerales", "Pica estas menas de 7 Days (con el pico que pide cada una) y sueltan cosas de Minecraft:");
             foreach (var kv in ores) parts.Add("<b>" + Name(kv.Key) + "</b>: " + string.Join(", ", kv.Value));
-            parts.Add("\f<b>3. Bloques</b>\n\nEl terreno de 7 Days suelta bloques de Minecraft:");
+            Section("Bloques", "El terreno de 7 Days suelta bloques de Minecraft:");
             foreach (var kv in blocks) parts.Add("<b>" + Name(kv.Key) + "</b>: " + string.Join(", ", kv.Value));
             parts.Add("Los bloques de Minecraft que pones sueltan el mismo bloque al picarlos. Todos los demás bloques (madera, ladrillos, vidrio, lana...) se craftean: búscalos en el libro de recetas.");
-            parts.Add("\f<b>4. Botín</b>\n\nEn los contenedores de 7 Days (cajas, basura, armarios, neveras) también hay cosas de Minecraft. Los cofres y barriles de Minecraft guardan 27 espacios.");
+            Section("Botín", "En los contenedores de 7 Days (cajas, basura, armarios, neveras) también hay cosas de Minecraft. Los cofres y barriles de Minecraft guardan 27 espacios.");
             foreach (var (group, items) in Generated.McGuideTable.Loot) parts.Add("<b>Con " + group + "</b>: " + Items(items));
-            foreach (var (title, kind) in new[] { ("5. Mobs pacíficos", "Pacífico"), ("6. Mobs neutrales", "Neutral"), ("7. Mobs hostiles", "Hostil") })
+            foreach (var (title, kind) in new[] { ("Mobs pacíficos", "Pacífico"), ("Mobs neutrales", "Neutral"), ("Mobs hostiles", "Hostil") })
             {
-                parts.Add("\f<b>" + title + "</b>" + (kind == "Neutral" ? "\n\nSolo atacan si les pegas (el golem de hierro pelea contra los zombis)." : kind == "Hostil" ? "\n\nTe atacan. Los del Nether salen en el bosque quemado y el yermo." : "\n\nHuyen si les pegas. Se cazan para comer."));
+                Section(title, kind == "Neutral" ? "Solo atacan si les pegas (el golem de hierro pelea contra los zombis)." : kind == "Hostil" ? "Te atacan. Los del Nether salen en el bosque quemado y el yermo." : "Huyen si les pegas. Al morir sueltan su comida.");
                 foreach (var (name, k, where, does, drops) in Generated.McGuideTable.Mobs)
                 {
                     if (k != kind) continue;
@@ -102,12 +110,20 @@ namespace SteveDaysToDie.HUD
                 }
             }
             _pages = new List<string>();
+            _sections = new List<(string, int)>();
             float w = 114f * s, h = 128f * s;
             string cur = "";
             foreach (var raw in parts)
             {
                 string part = raw;
-                if (part.StartsWith("\f")) { part = part.Substring(1); if (cur.Length > 0) { _pages.Add(cur); cur = ""; } }
+                if (part.StartsWith("\f"))
+                {
+                    int cut = part.IndexOf('\u0001');
+                    string title = part.Substring(1, cut - 1);
+                    part = part.Substring(cut + 1);
+                    if (cur.Length > 0) { _pages.Add(cur); cur = ""; }
+                    _sections.Add((title, _pages.Count));
+                }
                 string tryText = cur.Length == 0 ? part : cur + "\n\n" + part;
                 if (cur.Length > 0 && _text.CalcHeight(new GUIContent(tryText), w) > h) { _pages.Add(cur); cur = part; }
                 else cur = tryText;
@@ -142,6 +158,20 @@ namespace SteveDaysToDie.HUD
             GUI.DrawTextureWithTexCoords(new Rect(x, y, 192 * s, 192 * s), _book, new Rect(0f, 1f - 192f / 256f, 192f / 256f, 192f / 256f));
             GUI.Label(new Rect(x + 36 * s, y + 16 * s, 114 * s, 10 * s), "Página " + (_page + 1) + " de " + _pages.Count, _num);
             GUI.Label(new Rect(x + 36 * s, y + 30 * s, 114 * s, 128 * s), _pages[_page], _text);
+            if (_page == 0 && _sections != null)
+            {
+                // the index: every section a link (Minecraft's clickable book text), to its first page
+                float top = y + 30 * s + _text.CalcHeight(new GUIContent(_pages[0]), 114 * s) + 4 * s;
+                for (int i = 0; i < _sections.Count; i++)
+                {
+                    var r = new Rect(x + 36 * s, top + i * 9 * s, 114 * s, 9 * s);
+                    bool over = r.Contains(e.mousePosition);
+                    var link = new GUIStyle(_text) { wordWrap = false };
+                    link.normal.textColor = over ? new Color(0.1f, 0.3f, 0.9f) : new Color(0.15f, 0.15f, 0.55f);
+                    GUI.Label(r, (i + 1) + ". " + (over ? "<u>" + _sections[i].title + "</u>" : _sections[i].title) + "  (pág. " + (_sections[i].page + 1) + ")", link);
+                    if (over && e.type == EventType.MouseDown && e.button == 0) { _page = _sections[i].page; Turn(); e.Use(); }
+                }
+            }
             var back = new Rect(x + 43 * s, y + 157 * s, 23 * s, 13 * s);
             var fwd = new Rect(x + 116 * s, y + 157 * s, 23 * s, 13 * s);
             if (_page > 0 && _prev != null) GUI.DrawTexture(back, back.Contains(e.mousePosition) && _prevHi != null ? _prevHi : _prev);

@@ -8,7 +8,7 @@ namespace SteveDaysToDie
     public static class VersionHelper
     {
         public const string MIN_MC_VERSION  = "26.1";
-        public const string LAST_TESTED_VERSION = "26.1";
+        public const string LAST_TESTED_VERSION = "26.2";
 
         public enum VersionStatus { OK, TooOld, NewerThanTested }
 

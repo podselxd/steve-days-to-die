@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "libro") { yield return BookTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "yunque") { yield return AnvilTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "encantar") { yield return EnchantTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "andar") { yield return WalkTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -838,6 +839,44 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- the guide book: its index page, its recipe (book + feather), and villagers in their clothes
+        static IEnumerator BookTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("libro");
+            try { p.Buffs.AddBuff("god"); } catch { }
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcBook", true); } catch { }
+            yield return Wait(1f);
+            yield return Shot("libro-indice");
+            SteveDaysToDie.HUD.McGuideBook.TestPage(3);
+            yield return Wait(0.5f);
+            yield return Shot("libro-pagina");
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Close("mcBook"); } catch { }
+            yield return Wait(0.5f);
+            // the recipe, in the inventory's 2x2 grid
+            var inv = McInv.McInventory.Instance;
+            string made = inv?.TestCraft(new[] { Crafting.McItems.Stack("book", 1), Crafting.McItems.Stack("feather", 1), null, null });
+            Debug.Log("[SVD] guide recipe made: " + (made ?? "nothing"));
+            if (made == "mc_written_book") MeltyTest.Pass("guide-recipe"); else MeltyTest.Fail("guide-recipe", made ?? "nothing");
+            // villagers: each one its profession's clothes over its biome's
+            var world = GameManager.Instance.World;
+            try { if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw += 40f; p.vp_FPCamera.Pitch = 10f; } } catch { }
+            yield return Wait(0.5f);
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            for (int i = 0; i < 4; i++)
+            {
+                try
+                {
+                    var v = EntityFactory.CreateEntity(EntityClass.FromString("mcVillager"), p.position + fwd * 3.5f + side * (i * 1.4f - 2.1f) + Vector3.up * 0.5f) as EntityAlive;
+                    if (v != null) world.SpawnEntityInWorld(v);
+                }
+                catch { }
+            }
+            yield return Wait(2.5f);
+            yield return Shot("aldeanos");
+            MeltyTest.Pass("book-test");
+        }
+
         // ---- Minecraft's anvil: Sharpness III + III = IV
         static IEnumerator AnvilTest(EntityPlayerLocal p)
         {
