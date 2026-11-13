@@ -158,6 +158,9 @@ namespace SteveDaysToDie.Steve
             foreach (var g in _armor) if (g != null) { _renderers.Remove(g.GetComponent<MeshRenderer>()); Destroy(g); }
             _armor.Clear();
             if (_root == null) return;
+            // your own armour is never drawn on you, not even in F5 (user 2026-11-13: "que no sea visible para uno mismo
+            // usar una armadura pero si la ves en otras personas"); other players see it, and the inventory Steve shows it
+            if (_player is EntityPlayerLocal) return;
             try
             {
                 _armor = SteveArmor.Build(h, c, l != null && l.EndsWith("_leggings") ? l : null, f, _px, _root.gameObject.layer,

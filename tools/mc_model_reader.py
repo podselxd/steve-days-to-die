@@ -14,6 +14,8 @@ def disasm(cls):
     out = subprocess.run([JP, "-c", "-p", path], capture_output=True, text=True).stdout
     methods = {}
     cur = None
+    sup = re.search(r" extends ([\w.$]+)", out)
+    methods["__super__"] = [(sup.group(1).replace(".", "/") if sup else None, [])]
     for line in out.splitlines():
         m = re.match(r"\s+(?:[\w.$<>\[\], ]+ )?([\w$<>]+)\(([^)]*)\)[^;]*;$", line)
         if m and not line.strip().startswith(("0:", "1:")) and "Code:" not in line and ": " not in line.strip()[:8]:
@@ -62,6 +64,10 @@ def desc_args(d):
 
 def run(cls, mname, args=(), depth=0, tex=None, warn=None):
     ms = disasm(cls)
+    # a method of a parent class (AdultPiglinModel calls AbstractPiglinModel.addHead without naming it)
+    while ms and mname not in ms and ms.get("__super__", [(None,)])[0][0]:
+        cls = ms["__super__"][0][0]
+        ms = disasm(cls)
     if not ms or mname not in ms: return None
     sig, code = ms[mname][0]
     loc = {}

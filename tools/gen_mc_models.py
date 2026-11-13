@@ -43,11 +43,12 @@ MODELS = {
 }
 TEX = {"wolf": (64, 32), "villager": (64, 64), "cat": (64, 32), "horse": (64, 64)}
 # parts the renderer hides in Minecraft (overlays drawn by other layers, saddles, baby-only parts...)
-SKIP = {"hat", "hat_rim", "jacket", "left_sleeve", "right_sleeve", "left_pants", "right_pants", "saddle", "bridle",
-        "left_saddle_mouth", "right_saddle_mouth", "left_saddle_line", "right_saddle_line", "head_saddle", "mouth_saddle_wrap",
-        "left_chest", "right_chest", "cloak", "ear"}
-KEEP_HAT = {"witch"}   # the witch's "hat" is her real hat (villagers and illagers hide theirs)
-SKIP_BY = {"illager": {"arms", "left_shoulder"}, "turtle": {"egg_belly"}, "frog": {"croaking_body", "tongue"}, "armadillo": {"cube"}}
+# parts the renderer hides in Minecraft: saddles, chests, harness... (NOT the outer layers: hat, jacket, sleeves and
+# trousers are the "3D" over the skin, user 2026-11-13: "les falta ese 3d que te comento a las texturas")
+SKIP = {"saddle", "bridle", "left_saddle_mouth", "right_saddle_mouth", "left_saddle_line", "right_saddle_line", "head_saddle",
+        "mouth_saddle_wrap", "left_chest", "right_chest", "cloak"}
+SKIP_BY = {"illager": {"arms", "left_shoulder", "hat"},          # illagers: crossed arms only when calm; the hat is hidden
+           "turtle": {"egg_belly"}, "frog": {"croaking_body", "tongue"}, "armadillo": {"cube"}}
 
 
 def main():
@@ -73,7 +74,7 @@ def main():
 
         def walk(p, parent):
             nm = p["name"]
-            if (nm in SKIP and not (nm == "hat" and mid in KEEP_HAT)) or nm in SKIP_BY.get(mid, ()): return
+            if nm in SKIP or nm in SKIP_BY.get(mid, ()): return
             idx = len(lines)
             x, y, z, rx, ry, rz = [float(v or 0) for v in p["pose"]]
             boxes = "|".join("%d,%d,%g,%g,%g,%g,%g,%g,%g,%d" % (c["u"], c["v"], *[round(b, 4) for b in c["box"]], round(c["inflate"], 4), 1 if c["mirror"] else 0) for c in p["cubes"])
