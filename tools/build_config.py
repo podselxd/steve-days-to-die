@@ -191,8 +191,17 @@ for i in _mcids:
     if base and base not in sd.items: raise SystemExit("mc tool base %s missing" % base)
     stack = 1 if _S1.search(i) else 16 if _S16.search(i) else 64
     ext = base or "mcItemBase"
+    # 7 Days' "Extends" copies properties but NOT effect groups: without them the tool has no block damage, range
+    # or quality (it did not dig). So the base tool's effect groups are written into the Minecraft tool.
+    _eg = ""
+    if base:
+        import xml.etree.ElementTree as _ET
+        for _g in sd.items[base].findall("effect_group"):
+            _g = _ET.fromstring(_ET.tostring(_g))
+            _g.set("name", "mc_%s" % i)
+            _eg += " ".join(_ET.tostring(_g, encoding="unicode").split())
     _mx.append('        <item name="mc_%s"><property name="Extends" value="%s"/><property name="CustomIcon" value="mc_%s"/>'
-               '<property name="Stacknumber" value="%d"/><property name="DescriptionKey" value="mcItemDesc"/></item>' % (i, ext, i, stack))
+               '<property name="Stacknumber" value="%d"/><property name="DescriptionKey" value="mcItemDesc"/>%s</item>' % (i, ext, i, stack, _eg))
     _rows.append((i, k))
 _mx.append("    </append>")
 _xml_path = os.path.join(ROOT, "SteveDaysToDie", "Config", "items.xml")

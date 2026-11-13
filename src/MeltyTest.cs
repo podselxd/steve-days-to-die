@@ -22,6 +22,8 @@ namespace SteveDaysToDie
         public static bool Active { get; private set; }
         static string _checksPath, _statePath, _logPath;
         static readonly object _lock = new object();
+        /// <summary>Test file "only": run just that part of the demo (e.g. "picar").</summary>
+        public static string Only = "";
         static readonly HashSet<string> _reported = new HashSet<string>();
         static bool _menuSeen;
 
@@ -51,6 +53,8 @@ namespace SteveDaysToDie
                         Active = true;
                         var st = Regex.Match(json, "\"state\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
                         if (st.Success) _statePath = Regex.Unescape(st.Groups[1].Value);
+                        var on = Regex.Match(json, "\"only\"\\s*:\\s*\"([^\"]*)\"");
+                        if (on.Success) Only = on.Groups[1].Value;
                         Debug.Log("[SVD] Melty test mode ON. Test file: " + Regex.Replace(json, "\\s+", " "));
                     }
                 }

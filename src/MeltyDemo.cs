@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only.StartsWith("picar")) { yield return DigRepro(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
 
             // ---- first person ----
             MeltyTest.SetPhase("mano");
@@ -324,6 +325,201 @@ namespace SteveDaysToDie
             Hold(p, 5);
             MeltyTest.SetPhase("fin");
             Debug.Log("[SVD] Melty test: demo done.");
+        }
+
+        // ---- digging the ground next to grass with a Minecraft pickaxe: pictures before and after ----
+        static IEnumerator DigRepro(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("picar");
+            var world = GameManager.Instance.World;
+            yield return Shot("picar-antes");
+            GrassInfo("antes");
+            var pick = ItemClass.GetItem("mc_wooden_pickaxe");
+            if (pick != null && !pick.IsEmpty()) { p.inventory.SetItem(8, SteveDaysToDie.Crafting.McItems.Stack("wooden_pickaxe", 1)); Hold(p, 8); }
+            yield return Wait(1.5f);
+            SteveDaysToDie.Ryan.FirstPerson.DevProbe("pico");
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            int dug = 0;
+            for (int d = 2; d <= 5; d++)
+                for (int s = -2; s <= 2; s += 2)
+                {
+                    Vector3i col = World.worldToBlockPos(p.position + fwd * d + side * s);
+                    for (int y = col.y + 3; y >= col.y - 4; y--)
+                    {
+                        var pos = new Vector3i(col.x, y, col.z);
+                        BlockValue bv = world.GetBlock(pos);
+                        if (bv.isair || !bv.Block.shape.IsTerrain()) continue;
+                        for (int h = 0; h < 4; h++)
+                        {
+                            bv = world.GetBlock(pos);
+                            if (bv.isair) break;
+                            try { bv.Block.DamageBlock(world, new BlockValueRef(pos), bv, bv.Block.MaxDamage / 3 + 1, p.entityId, null, true); }
+                            catch (Exception ex) { Debug.LogWarning("[SVD] demo dig: " + ex.Message); }
+                            AttackCharge.Swing();
+                            yield return Wait(0.2f);
+                        }
+                        dug++;
+                        break;
+                    }
+                }
+            Debug.Log("[SVD] demo dig: " + dug + " ground blocks dug");
+            yield return Wait(4f);
+            yield return Shot("picar-despues");
+            GrassInfo("despues");
+            // unnamed objects around: what are they?
+            try
+            {
+                int shown = 0;
+                foreach (var r in UnityEngine.Object.FindObjectsOfType<MeshRenderer>())
+                {
+                    if (r.name != "New Game Object" || !r.enabled || !r.gameObject.activeInHierarchy) continue;
+                    var mf = r.GetComponent<MeshFilter>(); var m = mf != null ? mf.sharedMesh : null;
+                    var comps = new List<string>(); foreach (var c in r.GetComponents<Component>()) comps.Add(c.GetType().Name);
+                    Vector3 rel = r.bounds.center - p.transform.position;
+                    Debug.Log($"[SVD] unnamed: layer {LayerMask.LayerToName(r.gameObject.layer)} parent '{(r.transform.parent != null ? r.transform.parent.name : "-")}' at {rel.x:0.0},{rel.y:0.0},{rel.z:0.0} size {r.bounds.size.x:0.00},{r.bounds.size.y:0.00},{r.bounds.size.z:0.00} mesh '{(m != null ? m.name : "-")}' verts {(m != null ? m.vertexCount : 0)} material '{(r.sharedMaterial != null ? r.sharedMaterial.name + " / " + r.sharedMaterial.shader.name : "-")}' shadows {r.shadowCastingMode} [{string.Join(",", comps.ToArray())}]");
+                    if (++shown >= 30) break;
+                }
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] unnamed: " + ex.Message); }
+            for (int t = 0; t < 4; t++)
+            {
+                try { if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = t * 90f; p.vp_FPCamera.Pitch = 12f; } } catch { }
+                yield return Wait(0.7f);
+                yield return Shot("picar-vuelta-" + t);
+            }
+            if (MeltyTest.Only == "picar") yield break;
+            // the real thing: look down and swing the pickaxe at the ground, as the player does
+            int swings = 0;
+            for (int i = 0; i < 14; i++)
+            {
+                try
+                {
+                    if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 55f;
+                    var act = p.inventory.holdingItem.Actions[0];
+                    var data = p.inventory.holdingItemData.actionData[0];
+                    act.ExecuteAction(data, false);
+                    swings++;
+                }
+                catch (Exception ex) { Debug.LogWarning("[SVD] demo swing: " + ex.Message); }
+                yield return Wait(0.15f);
+                try { p.inventory.holdingItem.Actions[0].ExecuteAction(p.inventory.holdingItemData.actionData[0], true); } catch { }
+                yield return Wait(0.85f);
+            }
+            Debug.Log("[SVD] demo dig: " + swings + " real swings");
+            NearThings(p, "tras-golpes");
+            yield return Shot("picar-golpes-abajo");
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 10f; } catch { }
+            yield return Wait(1f);
+            yield return Shot("picar-golpes");
+            // wood: a planks column right in front, hit first with a quality-0 pickaxe (as 1.8.4 gave), then a good one
+            SteveDaysToDie.Ryan.FirstPerson.DevProbe("pico70");
+            Vector3 f2 = p.GetLookVector(); f2.y = 0f; f2.Normalize();
+            Vector3i wp = World.worldToBlockPos(p.position + f2 * 2f + Vector3.up * 1f);
+            for (int round = 1; round < 2; round++)
+            {
+                try { world.SetBlockRPC(wp, Block.GetBlockValue("mc_oak_planks")); world.SetBlockRPC(wp + Vector3i.up, Block.GetBlockValue("mc_oak_planks")); } catch { }
+                if (round == 0) p.inventory.SetItem(8, new ItemStack(pick, 1));
+                else p.inventory.SetItem(8, SteveDaysToDie.Crafting.McItems.Stack("wooden_pickaxe", 1));
+                Hold(p, 5); yield return Wait(1f); Hold(p, 8); yield return Wait(1.5f);
+                for (int i = 0; i < 8; i++)
+                {
+                    try
+                    {
+                        if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 0f;
+                        p.inventory.holdingItem.Actions[0].ExecuteAction(p.inventory.holdingItemData.actionData[0], false);
+                    }
+                    catch (Exception ex) { Debug.LogWarning("[SVD] demo swing: " + ex.Message); }
+                    yield return Wait(0.15f);
+                    try { p.inventory.holdingItem.Actions[0].ExecuteAction(p.inventory.holdingItemData.actionData[0], true); } catch { }
+                    yield return Wait(0.85f);
+                }
+                Debug.Log("[SVD] demo wood round " + round + ": quality " + p.inventory.holdingItemItemValue.Quality + ", block damage " + world.GetBlock(wp + Vector3i.up).damage + "/" + world.GetBlock(wp).damage);
+                NearThings(p, "madera" + round);
+                yield return Shot("picar-madera-" + round);
+            }
+            try { world.SetBlockRPC(wp, BlockValue.Air); world.SetBlockRPC(wp + Vector3i.up, BlockValue.Air); } catch { }
+            // a boar: hit it with real swings until it dies, then keep hitting the body (harvest)
+            EntityAlive boar = null;
+            try
+            {
+                boar = EntityFactory.CreateEntity(EntityClass.FromString("animalBoar"), p.position + f2 * 2f + Vector3.up * 0.5f) as EntityAlive;
+                if (boar != null) world.SpawnEntityInWorld(boar);
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo boar: " + ex.Message); }
+            yield return Wait(1.5f);
+            yield return Shot("picar-jabali-vivo");
+            for (int i = 0; i < 24 && boar != null; i++)
+            {
+                try
+                {
+                    Vector3 to = boar.position + Vector3.up * 0.4f - (p.position + Vector3.up * 1.6f);
+                    if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = Mathf.Atan2(to.x, to.z) * Mathf.Rad2Deg; p.vp_FPCamera.Pitch = -Mathf.Atan2(to.y, new Vector2(to.x, to.z).magnitude) * Mathf.Rad2Deg; }
+                    p.inventory.holdingItem.Actions[0].ExecuteAction(p.inventory.holdingItemData.actionData[0], false);
+                }
+                catch (Exception ex) { Debug.LogWarning("[SVD] demo swing: " + ex.Message); }
+                yield return Wait(0.15f);
+                try { p.inventory.holdingItem.Actions[0].ExecuteAction(p.inventory.holdingItemData.actionData[0], true); } catch { }
+                yield return Wait(0.85f);
+                if (i == 8 || i == 16) yield return Shot("picar-jabali-" + i);
+            }
+            Debug.Log("[SVD] demo boar: dead " + (boar != null && boar.IsDead()) + " distance " + (boar != null ? (boar.position - p.position).magnitude.ToString("0.0") : "-"));
+            NearThings(p, "jabali");
+            yield return Shot("picar-jabali-fin");
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 15f; } catch { }
+            yield return Wait(1f);
+            yield return Shot("picar-jabali-fin2");
+            Hold(p, 5);
+            yield return Wait(1.5f);
+            yield return Shot("picar-despues-mano");
+        }
+
+        // what is drawn near the player that is not part of the world's chunks (to find stray objects)
+        static void NearThings(EntityPlayerLocal p, string label)
+        {
+            try
+            {
+                var groups = new Dictionary<string, int>();
+                Vector3 me = p.transform.position;
+                foreach (var r in UnityEngine.Object.FindObjectsOfType<Renderer>())
+                {
+                    if (!r.enabled || !r.gameObject.activeInHierarchy) continue;
+                    if ((r.bounds.center - me).sqrMagnitude > 20f * 20f) continue;
+                    var t = r.transform; string path = t.name;
+                    for (int i = 0; i < 3 && t.parent != null; i++) { t = t.parent; path = t.name + "/" + path; }
+                    if (path.IndexOf("Chunk", StringComparison.OrdinalIgnoreCase) >= 0) continue;
+                    string key = r.GetType().Name + " " + System.Text.RegularExpressions.Regex.Replace(path, "[0-9]+", "#") + " L" + r.gameObject.layer + " size " + r.bounds.size.magnitude.ToString("0.#");
+                    groups[key] = groups.TryGetValue(key, out int n) ? n + 1 : 1;
+                }
+                var list = new List<KeyValuePair<string, int>>(groups);
+                list.Sort((x, y) => y.Value.CompareTo(x.Value));
+                for (int i = 0; i < list.Count && i < 45; i++) Debug.Log($"[SVD] near {label}: x{list[i].Value} {list[i].Key}");
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] near things: " + ex.Message); }
+        }
+
+        static void GrassInfo(string label)
+        {
+            try
+            {
+                var seen = new Dictionary<Material, int>();
+                foreach (var r in UnityEngine.Object.FindObjectsOfType<MeshRenderer>())
+                {
+                    var m = r.sharedMaterial;
+                    if (m == null || m.shader == null) continue;
+                    if (m.name.IndexOf("grass", StringComparison.OrdinalIgnoreCase) < 0 && m.shader.name.IndexOf("grass", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                    seen[m] = seen.TryGetValue(m, out int n) ? n + 1 : 1;
+                }
+                foreach (var kv in seen)
+                {
+                    var m = kv.Key; var t = m.mainTexture; string ti = "no texture";
+                    if (t is Texture2D t2) ti = $"2D {t2.name} {t2.width}x{t2.height} mips {t2.mipmapCount} streaming {t2.streamingMipmaps} loaded {t2.loadedMipmapLevel} requested {t2.requestedMipmapLevel}";
+                    else if (t != null) ti = t.GetType().Name + " " + t.name + " " + t.width + "x" + t.height + " mips " + t.mipmapCount + " bias " + t.mipMapBias;
+                    Debug.Log($"[SVD] grass {label}: material '{m.name}' shader '{m.shader.name}' x{kv.Value} queue {m.renderQueue} cutoff {(m.HasProperty("_Cutoff") ? m.GetFloat("_Cutoff").ToString("0.##") : "-")} keywords [{string.Join(" ", m.shaderKeywords)}] | {ti}");
+                }
+                Debug.Log($"[SVD] grass {label}: {seen.Count} materials; streaming active {QualitySettings.streamingMipmapsActive} budget {QualitySettings.streamingMipmapsMemoryBudget} MB, mip limit {QualitySettings.globalTextureMipmapLimit}, texture memory now {Texture.currentTextureMemory >> 20} desired {Texture.desiredTextureMemory >> 20} target {Texture.targetTextureMemory >> 20} total {Texture.totalTextureMemory >> 20} nonstreaming {Texture.nonStreamingTextureMemory >> 20} MB, lod bias {QualitySettings.lodBias}");
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] grass info: " + ex.Message); }
         }
 
         // ---- the rules as pure numbers ----

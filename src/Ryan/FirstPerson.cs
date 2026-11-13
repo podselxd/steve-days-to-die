@@ -123,6 +123,7 @@ public static class FirstPerson
 	{
 		if (lastPlayer != null && root != null && root.activeSelf)
 		{
+			if (handCam != null) handCam.fieldOfView = 70f;
 			rescan = 0f;
 			HideNativeArms(lastPlayer);
 		}
@@ -531,6 +532,7 @@ public static class FirstPerson
 			handCam.transform.localPosition = Vector3.zero;
 			handCam.transform.localRotation = Quaternion.identity;
 		}
+		handCam.fieldOfView = 70f;   // Minecraft's hand is always drawn at 70; the game resets its child cameras to its own (65)
 		handCam.depth = playerCamera.depth + 0.5f;
 		handCam.rect = playerCamera.rect;
 		return handCam;
