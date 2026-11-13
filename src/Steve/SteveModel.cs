@@ -56,6 +56,8 @@ namespace SteveDaysToDie.Steve
 
         public static bool Enabled => Settings.GetBool("ver_steve", true) && SteveCharacter.SkinTexture != null;
 
+        Texture2D _builtSkin;
+
         void Start()
         {
             _player = GetComponent<EntityPlayer>();
@@ -72,10 +74,14 @@ namespace SteveDaysToDie.Steve
 
             var rig = _model.baseRig;
             if (rig == null) return;
-            if (rig != _rig || _root == null)
+            Texture2D want = _player is EntityPlayerLocal ? null : SkinNet.SkinOf(_player.entityId);
+            if (_player is EntityPlayerLocal lp) SkinNet.Tick(lp);
+            if (rig != _rig || _root == null || want != _builtSkin)
             {
                 _rig = rig;
-                Build();
+                _builtSkin = want;
+                SteveParts.Override = want;
+                try { Build(); } finally { SteveParts.Override = null; }
             }
 
             HideNow();

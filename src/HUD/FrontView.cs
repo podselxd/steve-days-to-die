@@ -87,6 +87,7 @@ namespace SteveDaysToDie.HUD
             }
             catch (System.Exception ex) { if (!_overlayErr) { _overlayErr = true; Debug.LogWarning("[SVD] block overlay: " + ex); } }
             Crafting.McFurnaces.Tick();
+            Patches.OcclusionOff.Tick();
             if (_player == null || !_player.IsAlive()) return;
             if (Mode != 0) return;      // the third person is the game's own camera (ApplyCameraDistance / FrontCamera)
             if (!_on) return;

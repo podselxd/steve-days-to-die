@@ -15,6 +15,8 @@ namespace SteveDaysToDie.Ryan
         static Vector3i _target, _crackPos;
         static float _crackUntil;
         static bool _hooked;
+        /// <summary>Test runs: act as if the left mouse button were held.</summary>
+        public static bool TestMouse;
 
         /// <summary>Every frame for the local player: what block it looks at, and the crack on it.</summary>
         public static void LateUpdate(EntityPlayerLocal p)
@@ -49,7 +51,7 @@ namespace SteveDaysToDie.Ryan
                     BlockValue bv = p.world.GetBlock(_target);
                     int max = bv.Block.MaxDamage;
                     float prog = max > 0 ? Mathf.Clamp01((float)bv.damage / max) : 0f;
-                    if (prog > 0f && Input.GetMouseButton(0)) _crackUntil = Time.time + 1.5f;
+                    if (prog > 0f && (Input.GetMouseButton(0) || TestMouse)) _crackUntil = Time.time + 1.5f;
                     if (prog > 0f && Time.time < _crackUntil) { ShowCrack(_target, prog); return; }
                 }
                 if (Time.time >= _crackUntil) HideCrack();

@@ -10,8 +10,13 @@ namespace SteveDaysToDie.Steve
     public static class SteveParts
     {
         static Material _material;
+        static readonly Dictionary<Texture2D, Material> _others = new Dictionary<Texture2D, Material>();
 
-        public static bool Legacy => SteveCharacter.SkinTexture != null && SteveCharacter.SkinTexture.height < 64;
+        /// <summary>While building ANOTHER player's Steve: their skin (null = ours).</summary>
+        public static Texture2D Override;
+        public static Texture2D Skin => Override != null ? Override : SteveCharacter.SkinTexture;
+
+        public static bool Legacy => Skin != null && Skin.height < 64;
 
         /// <summary>Forget the material so the next part is made with the new skin.</summary>
         public static void ResetMaterial()
@@ -21,6 +26,23 @@ namespace SteveDaysToDie.Steve
         }
 
         public static Material Material
+        {
+            get
+            {
+                if (Override != null && Override != SteveCharacter.SkinTexture)
+                {
+                    if (_others.TryGetValue(Override, out var om) && om != null) return om;
+                    var baseMat = OwnMaterial;
+                    if (baseMat == null) return null;
+                    om = new Material(baseMat) { mainTexture = Override };
+                    _others[Override] = om;
+                    return om;
+                }
+                return OwnMaterial;
+            }
+        }
+
+        static Material OwnMaterial
         {
             get
             {
@@ -94,7 +116,7 @@ namespace SteveDaysToDie.Steve
         {
             get
             {
-                var t = SteveCharacter.SkinTexture;
+                var t = Skin;
                 if (t != _slimFor) { _slimFor = t; _slim = IsSlim(t); }
                 return _slim;
             }
@@ -135,7 +157,7 @@ namespace SteveDaysToDie.Steve
 
         static Mesh Layer(int u, int v, int w, int h, int d, float px, Vector3 centre, float inflate, bool mirror)
         {
-            var tex = SteveCharacter.SkinTexture;
+            var tex = Skin;
             if (tex == null) return null;
             int tw = tex.width, th = tex.height;
             Color32[] pixels;
@@ -194,7 +216,7 @@ namespace SteveDaysToDie.Steve
         /// <summary>A w x h x d box; centre is its centre relative to the pivot, in skin pixels. +z is the front.</summary>
         static Mesh Box(int u, int v, int w, int h, int d, float px, Vector3 centre, bool mirror)
         {
-            var tex = SteveCharacter.SkinTexture;
+            var tex = Skin;
             float tw = tex != null ? tex.width : 64f, th = tex != null ? tex.height : 64f;
             var verts = new List<Vector3>();
             var uvs = new List<Vector2>();

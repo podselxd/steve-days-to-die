@@ -333,6 +333,7 @@ namespace SteveDaysToDie
             MeltyTest.SetPhase("picar");
             var world = GameManager.Instance.World;
             yield return Shot("picar-antes");
+            SteveDaysToDie.Ryan.MiningLook.TestMouse = true;
             GrassInfo("antes");
             var pick = ItemClass.GetItem("mc_wooden_pickaxe");
             if (pick != null && !pick.IsEmpty()) { p.inventory.SetItem(8, SteveDaysToDie.Crafting.McItems.Stack("wooden_pickaxe", 1)); Hold(p, 8); }

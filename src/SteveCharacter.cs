@@ -55,6 +55,7 @@ namespace SteveDaysToDie
             SkinName = name;
             Steve.SteveParts.ResetMaterial();
             Debug.Log($"[SVD] Skin changed to '{name}' ({tex.width}x{tex.height}).");
+            Steve.SkinNet.Resend();
             SkinChanged?.Invoke();
         }
 
