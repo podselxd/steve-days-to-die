@@ -1,0 +1,107 @@
+{
+ "_comment": "ANIMALES DE MINECRAFT en 7 Days (usuario 2026-11-13: 'primero animales, hace falta mucha comida, que tengan la misma tasa de aparicion'). Cada fila = un animal: su clase de 7 Days (cuerpo, IA y vida de un animal de 7 Days que huye), su textura de Minecraft (sacada del jar del jugador) y lo que suelta al despellejarlo. El modelo de cubos de cada uno esta en src/Mobs/McAnimal.cs. tools/build_config.py genera Config/entityclasses.xml, entitygroups.xml y spawning.xml.",
+ "_spawn": "Minecraft: los animales pacificos salen en manadas de 4 en los bosques y praderas, y se quedan. Aqui: grupo 'mcAnimals' en el bosque de pinos (2 entradas de hasta 4, renacen cada medio dia) y menos en la nieve. Los demas biomas de 7 Days (desierto, quemado, yermo) no tienen animales pacificos en Minecraft.",
+ "rows": [
+  {
+   "id": "cow",
+   "class": "mcCow",
+   "base": "animalDoe",
+   "texture": "entity/cow/cow_temperate.png",
+   "drops": [
+    [
+     "beef",
+     3
+    ],
+    [
+     "leather",
+     2
+    ]
+   ],
+   "weight": 30,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "pig",
+   "class": "mcPig",
+   "base": "animalDoe",
+   "texture": "entity/pig/pig_temperate.png",
+   "drops": [
+    [
+     "porkchop",
+     3
+    ]
+   ],
+   "weight": 25,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "sheep",
+   "class": "mcSheep",
+   "base": "animalDoe",
+   "texture": "entity/sheep/sheep.png",
+   "drops": [
+    [
+     "mutton",
+     2
+    ],
+    [
+     "white_wool",
+     1
+    ]
+   ],
+   "weight": 25,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "chicken",
+   "class": "mcChicken",
+   "base": "animalChicken",
+   "texture": "entity/chicken/chicken_temperate.png",
+   "drops": [
+    [
+     "chicken",
+     1
+    ],
+    [
+     "feather",
+     2
+    ]
+   ],
+   "weight": 20,
+   "verified": "datos_ok"
+  }
+ ],
+ "biomes": [
+  [
+   "pine_forest",
+   4,
+   2,
+   "0.5"
+  ],
+  [
+   "snow",
+   2,
+   1,
+   "0.8"
+  ]
+ ],
+ "_replace": "Animales de 7 Days que se parecen a uno de Minecraft: se cambian por el de Minecraft en todos los grupos donde aparecen. El de Minecraft suelta lo del animal de 7 Days en que se basa MAS lo de Minecraft (doble botin, usuario 2026-11-13). El conejo se queda hasta tener su modelo.",
+ "replace": [
+  [
+   "animalStag",
+   "mcCow"
+  ],
+  [
+   "animalDoe",
+   "mcCow"
+  ],
+  [
+   "animalBoar",
+   "mcPig"
+  ],
+  [
+   "animalChicken",
+   "mcChicken"
+  ]
+ ]
+}

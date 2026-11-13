@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "animales") { yield return Animals(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "casa") { yield return HouseTorches(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "acumula") { yield return Accumulate(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only.StartsWith("picar")) { yield return DigRepro(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -563,6 +564,45 @@ namespace SteveDaysToDie
                 yield return Shot("acumula-3-vuelta" + t);
             }
             Census("3-fin");
+        }
+
+        // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        static IEnumerator Animals(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("animales");
+            var world = GameManager.Instance.World;
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            string[] kinds = { "mcCow", "mcPig", "mcSheep", "mcChicken" };
+            var made = new List<EntityAlive>();
+            for (int i = 0; i < kinds.Length; i++)
+            {
+                try
+                {
+                    var e = EntityFactory.CreateEntity(EntityClass.FromString(kinds[i]), p.position + fwd * 4f + side * (i * 2f - 3f) + Vector3.up * 0.5f) as EntityAlive;
+                    if (e != null) { world.SpawnEntityInWorld(e); made.Add(e); }
+                }
+                catch (Exception ex) { Debug.LogWarning("[SVD] demo animal " + kinds[i] + ": " + ex.Message); }
+            }
+            Debug.Log("[SVD] demo animals spawned " + made.Count);
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 15f; } catch { }
+            yield return Wait(2.5f);
+            int built = 0; foreach (var e in made) if (e != null && e.GetComponent<SteveDaysToDie.Mobs.McAnimal>() != null) built++;
+            Debug.Log("[SVD] demo animals with Minecraft look " + built);
+            yield return Shot("animales-0-frente");
+            yield return Wait(3f);
+            yield return Shot("animales-1-caminan");
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 60f; } catch { }
+            yield return Wait(1f);
+            yield return Shot("animales-2-lado");
+            // a dead one lies on its side
+            if (made.Count > 0 && made[0] != null)
+            {
+                try { made[0].DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Bashing, p.entityId), 9999, false, 1f); } catch { }
+                yield return Wait(2f);
+                yield return Shot("animales-3-muerta");
+            }
+            if (made.Count == kinds.Length && built == kinds.Length) MeltyTest.Pass("mc-animals"); else MeltyTest.Fail("mc-animals", "spawned " + made.Count + ", built " + built);
         }
 
         // ---- the user's case: Minecraft torches stuck to a house's walls ----

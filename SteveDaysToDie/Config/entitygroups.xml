@@ -1,0 +1,15 @@
+<configs>
+    <!-- GENERATED from sheets/mc_animals.json -->
+    <append xpath="/entitygroups">
+        <entitygroup name="mcAnimals">
+            <e n="mcCow" p="30"/>
+            <e n="mcPig" p="25"/>
+            <e n="mcSheep" p="25"/>
+            <e n="mcChicken" p="20"/>
+        </entitygroup>
+    </append>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalStag']/@n">mcCow</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalDoe']/@n">mcCow</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalBoar']/@n">mcPig</set>
+    <set xpath="/entitygroups/entitygroup/e[@n='animalChicken']/@n">mcChicken</set>
+</configs>

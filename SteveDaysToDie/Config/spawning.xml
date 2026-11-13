@@ -1,0 +1,6 @@
+<configs>
+    <!-- GENERATED from sheets/mc_animals.json: herds of Minecraft animals, like Minecraft (they come back every half day) -->
+    <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mca1" maxcount="4" respawndelay="0.5" time="Day" entitygroup="mcAnimals"/></append>
+    <append xpath="/spawning/biome[@name='pine_forest']"><spawn id="mca2" maxcount="4" respawndelay="0.5" time="Day" entitygroup="mcAnimals"/></append>
+    <append xpath="/spawning/biome[@name='snow']"><spawn id="mca1" maxcount="2" respawndelay="0.8" time="Day" entitygroup="mcAnimals"/></append>
+</configs>
