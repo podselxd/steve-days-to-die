@@ -39,6 +39,10 @@ namespace SteveDaysToDie.Survival
 
     public static class Hunger
     {
+        // Minecraft food eaten and not yet counted in (the game adds the food a little at a time)
+        static float _mcFoodPending, _mcSatPending, _heldSince;
+        static int _heldSlot = -1, _heldCount;
+        static string _heldName;
         static float _exhaustion, _saturation = SurvivalTable.StartSaturation, _lastFood = -1f, _regenTimer;
         static Vector3 _lastPos;
         static bool _hasPos, _wasAirborneUp, _wasOnGround, _hooked, _errorLogged;
@@ -91,10 +95,39 @@ namespace SteveDaysToDie.Survival
                     _hasPos = false;
                 }
 
+                // a Minecraft food eaten from the hand (its stack went down by one): its own saturation, as in Minecraft
+                try
+                {
+                    int slot = p.inventory.holdingItemIdx;
+                    var st = p.inventory.GetItem(slot);
+                    string held = st != null && !st.IsEmpty() ? st.itemValue.ItemClass?.Name : null;
+                    int count = held != null ? st.count : 0;
+                    if (slot == _heldSlot && _heldName != null && _heldName.StartsWith("mc_") && (held != _heldName || count < _heldCount)
+                        && SteveDaysToDie.Generated.McFoodTable.Foods.TryGetValue(_heldName.Substring(3), out var mf)
+                        && p.inventory.holdingItem != null && Time.time - _heldSince > 0.5f)
+                    {
+                        _mcFoodPending += mf.nutrition;
+                        _mcSatPending += mf.saturation;
+                    }
+                    if (slot != _heldSlot || held != _heldName) _heldSince = Time.time;
+                    _heldSlot = slot; _heldName = held; _heldCount = count;
+                }
+                catch { }
+
                 // eating (the game raised the food stat): fill the saturation reserve too
                 float gained = (food.Value - _lastFood) / point;
                 if (gained > 0.01f)
-                    _saturation = Mathf.Min(_saturation + gained * SurvivalTable.SaturationPerFoodPointEaten, food.Value / point);
+                {
+                    float mcPart = Mathf.Min(gained, _mcFoodPending);       // points that came from a Minecraft food
+                    if (mcPart > 0f)
+                    {
+                        float sat = _mcSatPending * mcPart / _mcFoodPending;
+                        _mcSatPending -= sat; _mcFoodPending -= mcPart;
+                        _saturation = Mathf.Min(_saturation + sat, food.Value / point);
+                    }
+                    if (gained - mcPart > 0.01f)
+                        _saturation = Mathf.Min(_saturation + (gained - mcPart) * SurvivalTable.SaturationPerFoodPointEaten, food.Value / point);
+                }
 
                 // sprinting
                 Vector3 pos = p.position;

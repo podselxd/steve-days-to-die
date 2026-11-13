@@ -1,0 +1,246 @@
+{
+ "_comment": "COMIDA DE MINECRAFT que se puede comer. nutrition = muslitos que llena (1 = medio muslo), saturation = reserva oculta que da. Valores de Minecraft. tools/build_config.py genera de aqui los objetos mc_ comestibles (Config/items.xml) y src/Generated/McFoodTable.cs. 1 punto de Minecraft = 1/20 de la comida de 7 Days.",
+ "_columns": "id | nutrition | saturation",
+ "rows": [
+  {
+   "id": "apple",
+   "nutrition": 4,
+   "saturation": 2.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "baked_potato",
+   "nutrition": 5,
+   "saturation": 6.0,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "beef",
+   "nutrition": 3,
+   "saturation": 1.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "beetroot",
+   "nutrition": 1,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "beetroot_soup",
+   "nutrition": 6,
+   "saturation": 7.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "bread",
+   "nutrition": 5,
+   "saturation": 6.0,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "carrot",
+   "nutrition": 3,
+   "saturation": 3.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "chicken",
+   "nutrition": 2,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cod",
+   "nutrition": 2,
+   "saturation": 0.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_beef",
+   "nutrition": 8,
+   "saturation": 12.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_chicken",
+   "nutrition": 6,
+   "saturation": 7.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_cod",
+   "nutrition": 5,
+   "saturation": 6.0,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_mutton",
+   "nutrition": 6,
+   "saturation": 9.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_porkchop",
+   "nutrition": 8,
+   "saturation": 12.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_rabbit",
+   "nutrition": 5,
+   "saturation": 6.0,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cooked_salmon",
+   "nutrition": 6,
+   "saturation": 9.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "cookie",
+   "nutrition": 2,
+   "saturation": 0.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "dried_kelp",
+   "nutrition": 1,
+   "saturation": 0.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "enchanted_golden_apple",
+   "nutrition": 4,
+   "saturation": 9.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "golden_apple",
+   "nutrition": 4,
+   "saturation": 9.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "golden_carrot",
+   "nutrition": 6,
+   "saturation": 14.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "honey_bottle",
+   "nutrition": 6,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "melon_slice",
+   "nutrition": 2,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "mushroom_stew",
+   "nutrition": 6,
+   "saturation": 7.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "mutton",
+   "nutrition": 2,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "porkchop",
+   "nutrition": 3,
+   "saturation": 1.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "potato",
+   "nutrition": 1,
+   "saturation": 0.6,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "pumpkin_pie",
+   "nutrition": 8,
+   "saturation": 4.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "rabbit",
+   "nutrition": 3,
+   "saturation": 1.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "rabbit_stew",
+   "nutrition": 10,
+   "saturation": 12.0,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "salmon",
+   "nutrition": 2,
+   "saturation": 0.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "suspicious_stew",
+   "nutrition": 6,
+   "saturation": 7.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "sweet_berries",
+   "nutrition": 2,
+   "saturation": 0.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "glow_berries",
+   "nutrition": 2,
+   "saturation": 0.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "rotten_flesh",
+   "nutrition": 4,
+   "saturation": 0.8,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "spider_eye",
+   "nutrition": 2,
+   "saturation": 3.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "poisonous_potato",
+   "nutrition": 2,
+   "saturation": 1.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "chorus_fruit",
+   "nutrition": 4,
+   "saturation": 2.4,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "tropical_fish",
+   "nutrition": 1,
+   "saturation": 0.2,
+   "verified": "datos_ok"
+  },
+  {
+   "id": "pufferfish",
+   "nutrition": 1,
+   "saturation": 0.2,
+   "verified": "datos_ok"
+  }
+ ]
+}

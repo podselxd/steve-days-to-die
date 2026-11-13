@@ -29,6 +29,9 @@ namespace SteveDaysToDie.HUD
         public static Texture2D AttackProgress;
         public static Texture2D AttackFull;
 
+        public static Texture2D XpBackground;
+        public static Texture2D XpProgress;
+
         public static bool Loaded { get; private set; }
 
         public static void Load()
@@ -56,6 +59,9 @@ namespace SteveDaysToDie.HUD
             AttackBackground = MinecraftAssets.LoadTexture("assets/minecraft/textures/gui/sprites/hud/crosshair_attack_indicator_background.png");
             AttackProgress   = MinecraftAssets.LoadTexture("assets/minecraft/textures/gui/sprites/hud/crosshair_attack_indicator_progress.png");
             AttackFull       = MinecraftAssets.LoadTexture("assets/minecraft/textures/gui/sprites/hud/crosshair_attack_indicator_full.png");
+
+            XpBackground     = MinecraftAssets.LoadTexture("assets/minecraft/textures/gui/sprites/hud/experience_bar_background.png");
+            XpProgress       = MinecraftAssets.LoadTexture("assets/minecraft/textures/gui/sprites/hud/experience_bar_progress.png");
 
             int loaded = 0;
             if (HeartFull != null) loaded++;

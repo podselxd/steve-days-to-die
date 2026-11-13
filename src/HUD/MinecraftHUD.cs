@@ -16,6 +16,7 @@ namespace SteveDaysToDie
         EntityPlayerLocal _player;
         GUIStyle _countStyle, _countShadowStyle, _badgeStyle, _nameStyle, _nameShadowStyle;
         int _styleScale;
+        GUIStyle _xpStyle, _xpShadowStyle;
         bool _inventoryErrorLogged;
         int _framesDrawn;
 
@@ -75,7 +76,7 @@ namespace SteveDaysToDie
             int iconH = 9 * S;                          // heart / food / armour icon
             int step = 8 * S;                           // icons overlap by one pixel
             int barW = 9 * step + iconH;
-            int barY = hbY - 2 - iconH;
+            int barY = hbY - 17 * S + (9 * S - iconH);    // Minecraft: hearts 17 px above the hotbar, the experience bar between
 
             float maxHp = Mathf.Max(1, _player.GetMaxHealth());
             float hpNorm = Mathf.Clamp(_player.Health, 0, maxHp) / maxHp * 20f;
@@ -108,6 +109,8 @@ namespace SteveDaysToDie
                 GUI.DrawTexture(new Rect((sw - cw) / 2f, (sh - cw) / 2f, cw, cw), HUDTextures.Crosshair);
             }
             DrawAttackIndicator(sw, sh, S);
+
+            DrawExperience(sw, hbY, S);
 
             if (armor > 0)
                 DrawArmorBar(hbX, barY - iconH - 1, armor, step, iconH);
@@ -158,6 +161,8 @@ namespace SteveDaysToDie
                         DrawGameIcon(p, stack, ic, iconRect);
                     }
 
+                    DrawDurability(stack, iconRect, S);
+
                     if (stack.count > 1)
                     {
                         string s = stack.count.ToString();
@@ -175,6 +180,48 @@ namespace SteveDaysToDie
                     _inventoryErrorLogged = true;
                 }
             }
+        }
+
+        // ---- experience: Minecraft's green bar with the level over it (7 Days' own level and progress) ----
+
+        void DrawExperience(int sw, int hbY, int S)
+        {
+            if (HUDTextures.XpBackground == null || HUDTextures.XpProgress == null) return;
+            int level = 0; float prog = 0f;
+            try
+            {
+                var pr = _player.Progression;
+                if (pr != null) { level = pr.Level; prog = Mathf.Clamp01(pr.GetLevelProgressPercentage()); }
+            }
+            catch { }
+            int x = (sw - 182 * S) / 2, y = hbY - 7 * S;
+            GUI.DrawTexture(new Rect(x, y, 182 * S, 5 * S), HUDTextures.XpBackground);
+            int w = (int)(prog * 183f);
+            if (w > 0) GUI.DrawTextureWithTexCoords(new Rect(x, y, w * S, 5 * S), HUDTextures.XpProgress, new Rect(0f, 0f, w / 182f, 1f));
+            if (level <= 0) return;
+            string t = level.ToString();
+            var r = new Rect(0, y - 7 * S, sw, 9 * S);
+            foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
+                GUI.Label(new Rect(r.x + o.x * S, r.y + o.y * S, r.width, r.height), t, _xpShadowStyle);
+            GUI.Label(r, t, _xpStyle);
+        }
+
+        // ---- durability: Minecraft's bar under a worn tool (green to red), from 7 Days' own wear ----
+
+        public static void DrawDurability(ItemStack stack, Rect icon, int S)
+        {
+            try
+            {
+                var iv = stack.itemValue;
+                int max = iv.MaxUseTimes;
+                if (max <= 0 || iv.UseTimes <= 0f) return;
+                float left = Mathf.Clamp01(1f - iv.UseTimes / max);
+                int w = Mathf.RoundToInt(13f * left);
+                float x = icon.x + 2 * S, y = icon.y + 13 * S;
+                GUI.DrawTexture(new Rect(x, y, 13 * S, 2 * S), Texture2D.whiteTexture, ScaleMode.StretchToFill, false, 0f, Color.black, 0f, 0f);
+                if (w > 0) GUI.DrawTexture(new Rect(x, y, w * S, S), Texture2D.whiteTexture, ScaleMode.StretchToFill, false, 0f, Color.HSVToRGB(left / 3f, 1f, 1f), 0f, 0f);
+            }
+            catch { }
         }
 
         // The item's own 7 Days icon, straight from the game's icon atlas (nothing is copied).
@@ -367,6 +414,8 @@ namespace SteveDaysToDie
         {
             if (_countStyle != null && _styleScale == S) return;
             _styleScale = S;
+            _xpStyle = Text(8 * S, TextAnchor.MiddleCenter, new Color(0.5f, 1f, 0.125f));   // Minecraft's 0x80FF20
+            _xpShadowStyle = Text(8 * S, TextAnchor.MiddleCenter, Color.black);
             var shadow = new Color(0.15f, 0.15f, 0.15f, 0.9f);
             _countStyle = Text(7 * S, TextAnchor.LowerRight, Color.white);
             _countShadowStyle = Text(7 * S, TextAnchor.LowerRight, shadow);
