@@ -135,13 +135,18 @@ namespace SteveDaysToDie.Enchanting
         [HarmonyPatch(typeof(EntityAlive), nameof(EntityAlive.OnEntityDeath))]
         static class KillXp
         {
-            static void Postfix(EntityAlive __instance)
+            // a PREFIX: 7 Days clears entityThatKilledMe at the end of OnEntityDeath (bug: the kill gave nothing)
+            static void Prefix(EntityAlive __instance)
             {
                 try
                 {
-                    var local = GameManager.Instance?.World?.GetPrimaryPlayer();
-                    if (local == null || __instance == local || __instance.entityThatKilledMe != local) return;
-                    McXp.Add(local, McXp.ForKill(__instance));
+                    if (__instance.deathUpdateTime != 0) return;                       // 7 Days runs the death only once
+                    var drops = __instance.GetComponent<Mobs.McDrops>();
+                    if (drops != null && __instance.entityThatKilledMe is EntityPlayer kp) drops.Killer = kp;   // for Looting
+                    // the server decides (it knows every kill); a friend's points go to their game
+                    if (!Mobs.McMobRules.IsHost) return;
+                    if (!(__instance.entityThatKilledMe is EntityPlayer killer) || killer == __instance) return;
+                    McXpNet.Grant(killer, McXp.ForKill(__instance));
                 }
                 catch { }
             }
@@ -155,10 +160,13 @@ namespace SteveDaysToDie.Enchanting
             {
                 try
                 {
+                    string name = __instance.GetBlockName();
+                    // experience: the server gives it to whoever broke the block (a friend's goes to their game)
+                    if (Mobs.McMobRules.IsHost && GameManager.Instance.World.GetEntity(_entityId) is EntityPlayer breaker)
+                        McXpNet.Grant(breaker, McXp.ForBlock(name));
+                    // Fortune and Unbreaking: the player's own tool, in their own game
                     var local = GameManager.Instance?.World?.GetPrimaryPlayer();
                     if (local == null || _entityId != local.entityId) return;
-                    string name = __instance.GetBlockName();
-                    McXp.Add(local, McXp.ForBlock(name));
                     Fortune(local, name, _bvRef);
                     Unbreaking(local);
                 }

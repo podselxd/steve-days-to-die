@@ -1039,6 +1039,18 @@ namespace SteveDaysToDie
             }
             Debug.Log("[SVD] demo mobs: " + okTotal + "/" + all.Count + " drawn; bad: " + string.Join(" ", bad));
             if (okTotal == all.Count) MeltyTest.Pass("mc-mobs"); else MeltyTest.Fail("mc-mobs", string.Join(" ", bad));
+            // experience for a kill (decided by the server, given to whoever killed it)
+            {
+                int before = Enchanting.McXp.Total(p);
+                EntityAlive cow = null;
+                try { cow = EntityFactory.CreateEntity(EntityClass.FromString("mcCow"), p.position + fwd * 3f + Vector3.up * 0.5f) as EntityAlive; if (cow != null) world.SpawnEntityInWorld(cow); } catch { }
+                yield return Wait(1.5f);
+                try { cow?.DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Bashing, p.entityId), 9999, false, 1f); } catch { }
+                yield return Wait(1.5f);
+                int after = Enchanting.McXp.Total(p);
+                Debug.Log($"[SVD] demo kill xp: {before} -> {after}");
+                if (after > before) MeltyTest.Pass("kill-xp"); else MeltyTest.Fail("kill-xp", before + " -> " + after);
+            }
             // the guide book
             MeltyTest.SetPhase("libro");
             bool given = false;

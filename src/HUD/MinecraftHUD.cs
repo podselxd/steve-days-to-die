@@ -40,9 +40,7 @@ namespace SteveDaysToDie
             Crafting.McItems.FixHeld(_player);
             Patches.McControls.Tick(_player);
             Mobs.McPhantom.Spawner.Tick(_player);
-            Crafting.McBeds.Tick();
             McGuideBook.Tick(_player);
-            Mobs.McBiomeSpawner.Tick();
 
             if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(Settings.GetKey("tecla_alternar", DefaultToggleKey)))
             {
@@ -273,6 +271,7 @@ namespace SteveDaysToDie
                 }
             }
             catch { }
+            try { string cn = McInv.McInventory.CustomName(_player.inventory.GetItem(sel)?.itemValue); if (cn != null) id += "|" + cn; } catch { }
             if (sel == _nameSlot && id == _nameItem) return;
             _nameSlot = sel;
             _nameItem = id;
@@ -280,6 +279,7 @@ namespace SteveDaysToDie
             if (ic != null)
             {
                 try { _nameText = ic.GetLocalizedItemName(); } catch { }
+                try { string custom = McInv.McInventory.CustomName(_player.inventory.GetItem(sel)?.itemValue); if (!string.IsNullOrEmpty(custom)) _nameText = custom; } catch { }
                 if (string.IsNullOrEmpty(_nameText)) _nameText = id;
                 _nameUntil = Time.time + 2f;
             }

@@ -10,6 +10,8 @@ namespace SteveDaysToDie.Mobs
     public class McDrops : MonoBehaviour
     {
         public string Drops;
+        /// <summary>Who killed it (set at death by McEnchantEffects: 7 Days forgets it right after).</summary>
+        public EntityPlayer Killer;
         EntityAlive _e; bool _done;
 
         static string Cooked(string id)
@@ -30,7 +32,7 @@ namespace SteveDaysToDie.Mobs
             _done = true;
             if (string.IsNullOrEmpty(Drops) || !McMobRules.IsHost) return;
             int looting = 0;
-            try { if (_e.entityThatKilledMe is EntityPlayer killer) looting = Enchanting.McEnchant.Level(killer.inventory.holdingItemItemValue, "looting"); } catch { }
+            try { var killer = Killer ?? _e.entityThatKilledMe as EntityPlayer; if (killer != null) looting = Enchanting.McEnchant.Level(killer.inventory.holdingItemItemValue, "looting"); } catch { }
             bool burning = false;
             try { burning = GetComponent<McAnimal>()?.Burning == true || _e.Buffs.HasBuff("buffMcOnFire") || _e.Buffs.HasBuff("buffBurningMolotov"); } catch { }
             foreach (var d in Drops.Split(';'))

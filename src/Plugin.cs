@@ -16,7 +16,7 @@ namespace SteveDaysToDie
             ModInstance = _modInstance;
             MeltyTest.Init();
             Settings.Load();
-            Debug.Log("[SVD] SteveDaysToDie v1.14.2 loading...");
+            Debug.Log("[SVD] SteveDaysToDie v1.14.3 loading...");
 
             MinecraftPath = FindMinecraftPath(_modInstance);
 
@@ -77,6 +77,7 @@ namespace SteveDaysToDie
 
             Patches.OcclusionOff.Init();
             Enchanting.McEnchantEffects.Init();
+            ServerTick.Ensure();
             var harmony = new Harmony("com.stevevszombies");
             harmony.PatchAll();
             Debug.Log("[SVD] SteveDaysToDie ready.");
