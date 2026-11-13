@@ -28,6 +28,31 @@ namespace SteveDaysToDie.Generated
             { "armorRaiderOutfit", 8 },   // diamond_chestplate
             { "armorRaiderGloves", 6 },   // diamond_leggings
             { "armorRaiderBoots", 3 },   // diamond_boots
+            { "mc_chainmail_boots", 1 },   // Minecraft piece
+            { "mc_chainmail_chestplate", 5 },   // Minecraft piece
+            { "mc_chainmail_helmet", 2 },   // Minecraft piece
+            { "mc_chainmail_leggings", 4 },   // Minecraft piece
+            { "mc_copper_boots", 1 },   // Minecraft piece
+            { "mc_copper_chestplate", 4 },   // Minecraft piece
+            { "mc_copper_helmet", 2 },   // Minecraft piece
+            { "mc_copper_leggings", 3 },   // Minecraft piece
+            { "mc_diamond_boots", 3 },   // Minecraft piece
+            { "mc_diamond_chestplate", 8 },   // Minecraft piece
+            { "mc_diamond_helmet", 3 },   // Minecraft piece
+            { "mc_diamond_leggings", 6 },   // Minecraft piece
+            { "mc_golden_boots", 1 },   // Minecraft piece
+            { "mc_golden_chestplate", 5 },   // Minecraft piece
+            { "mc_golden_helmet", 2 },   // Minecraft piece
+            { "mc_golden_leggings", 3 },   // Minecraft piece
+            { "mc_iron_boots", 2 },   // Minecraft piece
+            { "mc_iron_chestplate", 6 },   // Minecraft piece
+            { "mc_iron_helmet", 2 },   // Minecraft piece
+            { "mc_iron_leggings", 5 },   // Minecraft piece
+            { "mc_leather_boots", 1 },   // Minecraft piece
+            { "mc_leather_chestplate", 3 },   // Minecraft piece
+            { "mc_leather_helmet", 1 },   // Minecraft piece
+            { "mc_leather_leggings", 2 },   // Minecraft piece
+            { "mc_turtle_helmet", 2 },   // Minecraft piece
         };
     }
 }

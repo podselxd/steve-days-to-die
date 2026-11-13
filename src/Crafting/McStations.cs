@@ -173,7 +173,12 @@ namespace SteveDaysToDie.Crafting
                         _ghost[id] = mat = Ryan.Mats.Blend(Ryan.Atlas.Texture, new Color(1f, 1f, 1f, 0.55f));    // pale and see-through
                     foreach (var mf in __result.GetComponentsInChildren<MeshFilter>(true))
                     {
-                        mf.sharedMesh = mesh;
+                        // a copy of its own: 7 Days writes into the preview's mesh later (moving, turning it);
+                        // writing into our shared mesh broke it ("Mesh.vertices is too small" errors)
+                        if (mf.sharedMesh != null && mf.sharedMesh.name.StartsWith("SVD_preview")) Object.Destroy(mf.sharedMesh);
+                        var own = Object.Instantiate(mesh);
+                        own.name = "SVD_preview_" + id;
+                        mf.sharedMesh = own;
                         var mr = mf.GetComponent<MeshRenderer>();
                         if (mr != null) mr.sharedMaterial = mat;
                     }
@@ -185,7 +190,9 @@ namespace SteveDaysToDie.Crafting
                     go.transform.SetParent(__result, false);
                     go.transform.localPosition = new Vector3(0f, 0.15f, 0f);
                     go.transform.localScale = Vector3.one * 0.25f;                                       // Minecraft's dropped block size
-                    go.AddComponent<MeshFilter>().sharedMesh = Ryan.ItemMeshes.Mesh(id);
+                    var dm = Object.Instantiate(Ryan.ItemMeshes.Mesh(id));     // its own copy, like the preview
+                    dm.name = "SVD_drop_" + id;
+                    go.AddComponent<MeshFilter>().sharedMesh = dm;
                     go.AddComponent<MeshRenderer>().sharedMaterial = Ryan.ItemMeshes.Material(id, litInWorld: true);
                 }
             }
