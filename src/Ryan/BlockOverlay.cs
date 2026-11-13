@@ -621,9 +621,18 @@ public static class BlockOverlay
 				case 3: dmax.z = vector.z + th; break;
 				default: dmin.z = vector.z + 1f - th; break;
 				}
-				for (int f = 0; f < 6; f++) meshKit2.Face(f, dmin, dmax, rBot);
+				// the two big faces show the whole door; its edges a 3 px strip of it, as Minecraft's door model does
+				bool xThin = dside == 4 || dside == 5;
+				Rect Edge(Rect t) => new Rect(t.x, t.y, t.width * 3f / 16f, t.height);
+				Rect Cap(Rect t) => new Rect(t.x, t.y + t.height * 13f / 16f, t.width, t.height * 3f / 16f);
 				Vector3 up1 = new Vector3(0f, 1f, 0f);
-				for (int f = 0; f < 6; f++) meshKit2.Face(f, dmin + up1, dmax + up1, rTop);
+				for (int f = 0; f < 6; f++)
+				{
+					bool big = xThin ? (f == 4 || f == 5) : (f == 2 || f == 3);
+					bool cap = f == 0 || f == 1;
+					if (f != 0) meshKit2.Face(f, dmin, dmax, big ? rBot : cap ? Cap(rBot) : Edge(rBot));
+					if (f != 1) meshKit2.Face(f, dmin + up1, dmax + up1, big ? rTop : cap ? Cap(rTop) : Edge(rTop));
+				}
 				break;
 			}
 			case "model":

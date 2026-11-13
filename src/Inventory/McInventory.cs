@@ -589,7 +589,7 @@ namespace SteveDaysToDie.McInv
             if (e.type == EventType.Repaint)
             {
                 GUI.DrawTextureWithTexCoords(_panel, _tex, new Rect(0, 1f - H / 256f, W / 256f, H / 256f));
-                if (!_table) DrawSteve(px + 26 * s, py + 8 * s, s);
+                if (!_table) InventorySteve.Draw(new Rect(px + 26 * s, py + 8 * s, 51 * s, 72 * s), e.mousePosition, s);     // 3D, follows the mouse
                 string title = InFurnace ? Ryan.Mc.T("container." + _furnaceKind, _furnaceKind) : Ryan.Mc.T("container.crafting", "Crafting");
                 Label(px + (InFurnace ? 60 : _table ? 28 : 97) * s, py + 6 * s, s, title, new Color(0.25f, 0.25f, 0.25f));
                 if (InFurnace && Furnace != null)

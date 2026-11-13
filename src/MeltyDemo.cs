@@ -612,6 +612,21 @@ namespace SteveDaysToDie
             yield return Wait(2f);
             Debug.Log("[SVD] functional: armour points " + MinecraftHUD.GetArmorPoints(p));
             yield return Selfie(p, "funcional-2-armadura", new Vector3(0f, 1.2f, 2.6f));
+            // a Minecraft sign, a backpack worn, the inventory open (3D Steve)
+            try { world.SetBlockRPC(baseP + new Vector3i(Mathf.RoundToInt(side.x * 5), 0, Mathf.RoundToInt(side.z * 5)), Block.GetBlockValue("mc_oak_sign")); } catch (Exception ex) { Debug.LogWarning("[SVD] demo sign: " + ex.Message); }
+            float before = EffectManager.GetValue(PassiveEffects.BagSize, null, 0f, p);
+            var bp = SteveDaysToDie.Crafting.McItems.Stack("sb_iron_backpack", 1);
+            if (bp != null) try { p.equipment.SetSlotItem(1, bp.itemValue.Clone()); } catch (Exception ex) { Debug.LogWarning("[SVD] demo backpack: " + ex.Message); }
+            yield return Wait(1f);
+            float after = EffectManager.GetValue(PassiveEffects.BagSize, null, 0f, p);
+            Debug.Log($"[SVD] functional: bag size {before} -> {after} with the iron backpack (bag slots {p.bag.SlotCount})");
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 40f; } catch { }
+            yield return Wait(1f);
+            yield return Shot("funcional-3-cartel");
+            try { XUiC_WindowSelector.OpenSelectorAndWindow(p, "crafting"); } catch (Exception ex) { Debug.LogWarning("[SVD] demo inventory: " + ex.Message); }
+            for (int i = 0; i < 20 && !SteveDaysToDie.McInv.McInventory.IsOpen; i++) yield return Wait(0.25f);
+            yield return Wait(1f);
+            yield return Shot("funcional-4-inventario");
         }
 
         // ---- Minecraft items thrown on the ground: Minecraft's look, no 7 Days sack ----

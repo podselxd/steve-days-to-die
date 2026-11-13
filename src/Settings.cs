@@ -40,6 +40,8 @@ namespace SteveDaysToDie
             "skin=auto",
             "# tamano_hud: chico / mediano / grande - tamano de la barra, corazones e inventario (chico = como en Minecraft)",
             "tamano_hud=chico",
+            "# inventario: minecraft (27 casillas + la barra; las mochilas dan mas) / 7days (el grande de 7 Days)",
+            "inventario=minecraft",
             "# tecla_vista_frontal: la camara, como F5 en Minecraft: primera persona, tercera por detras, de frente",
             "tecla_vista_frontal=F5",
             "# tecla_alternar: tecla para alternar un objeto entre 7 Days y Minecraft (BackQuote = la Ñ en teclado espanol, ` en ingles)",

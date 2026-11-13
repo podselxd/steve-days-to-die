@@ -77,7 +77,7 @@ namespace SteveDaysToDie.Crafting
                     if (File.Exists(file) && PngWidth(file) <= 160) continue;
                     try
                     {
-                        var icon = Ryan.Icons.Get(r.id);
+                        var icon = r.id.StartsWith("sb_") ? McInv.Backpacks.Icon(r.id) : Ryan.Icons.Get(r.id);
                         if (icon == null) { failed++; continue; }
                         int k = Mathf.Max(1, 128 / Mathf.Max(1, icon.width));
                         File.WriteAllBytes(file, Upscale(icon, k).EncodeToPNG());

@@ -1441,6 +1441,12 @@ namespace SteveDaysToDie.Generated
             ("yellow_terracotta", "block"),
             ("yellow_wool", "block"),
             ("zombie_head", "item"),
+            ("sb_backpack", "backpack"),
+            ("sb_copper_backpack", "backpack"),
+            ("sb_iron_backpack", "backpack"),
+            ("sb_gold_backpack", "backpack"),
+            ("sb_diamond_backpack", "backpack"),
+            ("sb_netherite_backpack", "backpack"),
         };
     }
 }

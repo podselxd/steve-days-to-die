@@ -507,6 +507,29 @@ namespace SteveVsZombiesLauncher
             }
             y += 56;
 
+            // inventory size: Minecraft's (27 + the bar, backpacks give more) or 7 Days' big one
+            p.Controls.Add(Words("Inventario", 11, FontStyle.Regular, Color.White, 30, y + 8));
+            var invs = new[] { ("minecraft", "Minecraft (27 + mochilas)"), ("7days", "Grande (7 Days)") };
+            var invButtons = new List<Button>();
+            string curInv = LauncherSettings.Get("inventario", "minecraft").ToLowerInvariant();
+            for (int i = 0; i < invs.Length; i++)
+            {
+                var (key, label) = invs[i];
+                var ib = Plain(label);
+                ib.SetBounds(400 + i * 175, y, 168, 40);
+                ib.Tag = key;
+                invButtons.Add(ib);
+                ib.Click += (s2, e2) =>
+                {
+                    LauncherSettings.Set("inventario", key);
+                    foreach (var b2 in invButtons) b2.BackColor = (string)b2.Tag == key ? Green : Card;
+                    Status("Inventario: " + label, Ok);
+                };
+                ib.BackColor = key == curInv ? Green : Card;
+                p.Controls.Add(ib);
+            }
+            y += 56;
+
             var reset = Plain("Restablecer teclas"); reset.SetBounds(30, y + 10, 180, 36);
             reset.Click += (s, e) =>
             {

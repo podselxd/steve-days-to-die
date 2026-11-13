@@ -140,6 +140,20 @@ namespace SteveDaysToDie.Crafting
                 }
                 catch (Exception ex) { Debug.LogWarning("[SVD] recipe " + f + ": " + ex.Message); }
             }
+            // Sophisticated Backpacks' recipes (its jar's data/sophisticatedbackpacks/recipe), written here
+            HashSet<string> S(params string[] ids) => new HashSet<string>(ids);
+            void Shaped(string result, string[] pattern, Dictionary<char, HashSet<string>> key)
+            {
+                int h = pattern.Length, w = pattern[0].Length;
+                var r = new Recipe { name = "sophisticatedbackpacks:" + result, shaped = true, w = w, h = h, grid = new HashSet<string>[w * h], result = result, count = 1 };
+                for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) { char c = pattern[y][x]; if (c != ' ') r.grid[y * w + x] = key[c]; }
+                _recipes.Add(r);
+            }
+            Shaped("sb_backpack", new[] { "SLS", "SCS", "LLL" }, new Dictionary<char, HashSet<string>> { { 'S', S("string") }, { 'L', S("leather") }, { 'C', S("chest", "trapped_chest", "barrel") } });
+            foreach (var (res, from, ingot) in new[] { ("sb_copper_backpack", "sb_backpack", "copper_ingot"), ("sb_iron_backpack", "sb_copper_backpack", "iron_ingot"),
+                                                       ("sb_gold_backpack", "sb_iron_backpack", "gold_ingot"), ("sb_diamond_backpack", "sb_gold_backpack", "diamond") })
+                Shaped(res, new[] { "III", "IBI", "III" }, new Dictionary<char, HashSet<string>> { { 'I', S(ingot) }, { 'B', S(from) } });
+            _recipes.Add(new Recipe { name = "sophisticatedbackpacks:netherite_backpack", shaped = false, ingredients = new List<HashSet<string>> { S("sb_diamond_backpack"), S("netherite_ingot") }, result = "sb_netherite_backpack", count = 1 });
             Debug.Log($"[SVD] Minecraft recipes: {_recipes.Count} crafting, {_smelts.Count} furnace");
         }
 
