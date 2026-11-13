@@ -21,9 +21,13 @@
    "verified": "datos_ok",
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
-   }
+    "MoveSpeed": "1.15",
+    "MoveSpeedPanic": "3.59"
+   },
+   "size": 0.87,
+   "biomes": [
+    "pine_forest"
+   ]
   },
   {
    "id": "pig",
@@ -40,9 +44,13 @@
    "verified": "datos_ok",
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
-   }
+    "MoveSpeed": "1.80",
+    "MoveSpeedPanic": "2.81"
+   },
+   "size": 0.56,
+   "biomes": [
+    "pine_forest"
+   ]
   },
   {
    "id": "sheep",
@@ -63,9 +71,14 @@
    "verified": "datos_ok",
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
-   }
+    "MoveSpeed": "1.52",
+    "MoveSpeedPanic": "2.35"
+   },
+   "size": 0.81,
+   "biomes": [
+    "pine_forest",
+    "snow"
+   ]
   },
   {
    "id": "chicken",
@@ -86,9 +99,13 @@
    "verified": "datos_ok",
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.12",
-    "MoveSpeedPanic": "0.7"
-   }
+    "MoveSpeed": "2.67",
+    "MoveSpeedPanic": "5.24"
+   },
+   "size": 1.4,
+   "biomes": [
+    "pine_forest"
+   ]
   },
   {
    "id": "creeper",
@@ -105,15 +122,21 @@
    "hostile": true,
    "verified": "datos_ok",
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.6, 0.6",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.38",
+    "MoveSpeedAggro": "0.76, 0.76",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 100,
    "horde": true,
    "ai": "creeper",
-   "damage": 0
+   "damage": 0,
+   "size": 0.94,
+   "monster_biomes": [
+    "pine_forest",
+    "snow",
+    "desert"
+   ]
   },
   {
    "id": "phantom",
@@ -135,7 +158,8 @@
    "health": 100,
    "verified": "datos_ok",
    "ai": "phantom",
-   "damage": 2
+   "damage": 2,
+   "size": 0.83
   },
   {
    "id": "skeleton",
@@ -155,15 +179,20 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.38",
+    "MoveSpeedAggro": "0.76, 0.76",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 100,
    "verified": "datos_ok",
    "ai": "ranged,sun",
-   "damage": 2
+   "damage": 2,
+   "size": 1.11,
+   "monster_biomes": [
+    "pine_forest",
+    "desert"
+   ]
   },
   {
    "id": "spider",
@@ -183,13 +212,20 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeedAggro": "1.0, 1.0",
+    "MoveSpeed": "1.40",
+    "MoveSpeedAggro": "2.81, 2.81",
     "MoveSpeedRand": "0, 0"
    },
    "health": 80,
    "verified": "datos_ok",
    "ai": "spider",
-   "damage": 2
+   "damage": 2,
+   "size": 0.51,
+   "monster_biomes": [
+    "pine_forest",
+    "snow",
+    "desert"
+   ]
   },
   {
    "id": "cave_spider",
@@ -209,7 +245,8 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeedAggro": "1.0, 1.0",
+    "MoveSpeed": "1.40",
+    "MoveSpeedAggro": "2.81, 2.81",
     "MoveSpeedRand": "0, 0"
    },
    "health": 60,
@@ -217,7 +254,8 @@
    "verified": "datos_ok",
    "ai": "spider",
    "scale": 0.7,
-   "damage": 2
+   "damage": 2,
+   "size": 0.29
   },
   {
    "id": "slime",
@@ -228,8 +266,8 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.45, 0.45",
+    "MoveSpeed": "0.41",
+    "MoveSpeedAggro": "0.69, 0.69",
     "MoveSpeedRand": "0, 0"
    },
    "health": 80,
@@ -237,7 +275,11 @@
    "verified": "datos_ok",
    "ai": "slime",
    "scale": 4,
-   "damage": 4
+   "damage": 4,
+   "size": 1.13,
+   "monster_biomes": [
+    "pine_forest"
+   ]
   },
   {
    "id": "wolf",
@@ -297,10 +339,14 @@
     "AITarget-4": [
      "",
      ""
-    ]
+    ],
+    "MoveSpeed": "1.43",
+    "MoveSpeedAggro": "2.06, 2.06",
+    "MoveSpeedRand": "0, 0"
    },
    "verified": "datos_ok",
-   "damage": 4
+   "damage": 4,
+   "size": 1.0
   },
   {
    "id": "slime",
@@ -313,15 +359,16 @@
    "hostile": true,
    "no_spawn": true,
    "props": {
-    "MoveSpeed": "0.3",
-    "MoveSpeedAggro": "0.55, 0.55",
+    "MoveSpeed": "0.47",
+    "MoveSpeedAggro": "0.77, 0.77",
     "MoveSpeedRand": "0, 0"
    },
    "health": 20,
    "verified": "datos_ok",
    "ai": "slime",
    "scale": 2,
-   "damage": 2
+   "damage": 2,
+   "size": 0.58
   },
   {
    "id": "slime",
@@ -339,14 +386,15 @@
    "hostile": true,
    "no_spawn": true,
    "props": {
-    "MoveSpeed": "0.35",
-    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeed": "0.52",
+    "MoveSpeedAggro": "0.82, 0.82",
     "MoveSpeedRand": "0, 0"
    },
    "health": 5,
    "verified": "datos_ok",
    "ai": "slime",
-   "damage": 0
+   "damage": 0,
+   "size": 0.29
   },
   {
    "id": "rabbit",
@@ -367,8 +415,8 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.2",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "0.43",
+    "MoveSpeedPanic": "1.82"
    },
    "health": 15,
    "scale": 0.6,
@@ -377,7 +425,8 @@
     "snow",
     "desert"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.43
   },
   {
    "id": "fox",
@@ -389,15 +438,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.2",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "1.70",
+    "MoveSpeedPanic": "3.59"
    },
    "health": 50,
    "biomes": [
     "pine_forest"
    ],
    "verified": "datos_ok",
-   "damage": 2
+   "damage": 2,
+   "size": 0.44
   },
   {
    "id": "fox",
@@ -410,14 +460,15 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.2",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "1.70",
+    "MoveSpeedPanic": "3.59"
    },
    "health": 50,
    "biomes": [
     "snow"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 0.44
   },
   {
    "id": "goat",
@@ -429,15 +480,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "1.15",
+    "MoveSpeedPanic": "3.59"
    },
    "health": 50,
    "biomes": [
     "snow"
    ],
    "verified": "datos_ok",
-   "damage": 2
+   "damage": 2,
+   "size": 0.81
   },
   {
    "id": "horse",
@@ -454,15 +506,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.2",
-    "MoveSpeedPanic": "0.9"
+    "MoveSpeed": "0.72",
+    "MoveSpeedPanic": "2.09"
    },
    "health": 110,
    "scale": 1.1,
    "biomes": [
     "pine_forest"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.0
   },
   {
    "id": "llama",
@@ -479,16 +532,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "0.46",
+    "MoveSpeedPanic": "1.31"
    },
    "health": 110,
    "biomes": [
-    "snow",
-    "pine_forest"
+    "snow"
    ],
    "verified": "datos_ok",
-   "damage": 1
+   "damage": 1,
+   "size": 1.17
   },
   {
    "id": "camel",
@@ -500,14 +553,15 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.65",
+    "MoveSpeedPanic": "1.31"
    },
    "health": 160,
    "biomes": [
     "desert"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.48
   },
   {
    "id": "armadillo",
@@ -524,15 +578,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.26",
+    "MoveSpeedPanic": "1.03"
    },
    "health": 60,
    "biomes": [
     "desert",
     "wasteland"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.86
   },
   {
    "id": "sniffer",
@@ -544,14 +599,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.29",
+    "MoveSpeedPanic": "1.18"
    },
    "health": 70,
    "biomes": [
     "pine_forest"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.09,
+   "no_spawn": true
   },
   {
    "id": "frog",
@@ -563,14 +620,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.45",
+    "MoveSpeedPanic": "0.91"
    },
    "health": 50,
    "biomes": [
     "pine_forest"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.43,
+   "no_spawn": true
   },
   {
    "id": "turtle",
@@ -587,14 +646,16 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.30",
+    "MoveSpeedPanic": "0.45"
    },
    "health": 150,
    "biomes": [
     "desert"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.14,
+   "no_spawn": true
   },
   {
    "id": "panda",
@@ -611,15 +672,17 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "0.65",
+    "MoveSpeedPanic": "1.31"
    },
    "health": 100,
    "biomes": [
     "pine_forest"
    ],
    "verified": "datos_ok",
-   "damage": 6
+   "damage": 6,
+   "size": 0.78,
+   "no_spawn": true
   },
   {
    "id": "cat",
@@ -632,15 +695,17 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.2",
-    "MoveSpeedPanic": "1.0"
+    "MoveSpeed": "1.63",
+    "MoveSpeedPanic": "2.94"
    },
    "health": 50,
    "scale": 0.8,
    "biomes": [
     "pine_forest"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 0.44,
+   "no_spawn": true
   },
   {
    "id": "cat",
@@ -657,13 +722,14 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.15",
-    "MoveSpeedPanic": "0.7"
+    "MoveSpeed": "0.76",
+    "MoveSpeedPanic": "1.36"
    },
    "health": 50,
    "scale": 0.8,
    "no_spawn": true,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 2.0
   },
   {
    "id": "villager",
@@ -678,8 +744,8 @@
      "RunawayFromEntity",
      "flags=zombie;safeFlags=timid"
     ],
-    "MoveSpeed": "0.12",
-    "MoveSpeedPanic": "0.6"
+    "MoveSpeed": "1.96",
+    "MoveSpeedPanic": "2.61"
    },
    "health": 100,
    "scale": 0.9375,
@@ -688,7 +754,8 @@
     "desert",
     "snow"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.22
   },
   {
    "id": "villager",
@@ -704,8 +771,8 @@
      "RunawayFromEntity",
      "flags=zombie;safeFlags=timid"
     ],
-    "MoveSpeed": "0.12",
-    "MoveSpeedPanic": "0.6"
+    "MoveSpeed": "1.96",
+    "MoveSpeedPanic": "2.61"
    },
    "health": 100,
    "scale": 0.9375,
@@ -713,7 +780,8 @@
     "pine_forest",
     "desert"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.22
   },
   {
    "id": "bat",
@@ -732,7 +800,8 @@
    "scale": 0.35,
    "ai": "fly",
    "no_spawn": true,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.8
   },
   {
    "id": "parrot",
@@ -757,7 +826,9 @@
    "biomes": [
     "pine_forest"
    ],
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.8,
+   "no_spawn": true
   },
   {
    "id": "bee",
@@ -778,7 +849,8 @@
     "pine_forest"
    ],
    "verified": "datos_ok",
-   "damage": 2
+   "damage": 2,
+   "size": 1.2
   },
   {
    "id": "allay",
@@ -796,7 +868,8 @@
    "health": 100,
    "ai": "fly",
    "no_spawn": true,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "size": 1.2
   },
   {
    "id": "polar_bear",
@@ -813,7 +886,7 @@
      1
     ]
    ],
-   "weight": 0,
+   "weight": 3,
    "hostile": false,
    "props": {
     "AITask-1": [
@@ -863,12 +936,18 @@
     "AITarget-4": [
      "",
      ""
-    ]
+    ],
+    "MoveSpeed": "1.43",
+    "MoveSpeedAggro": "2.24, 2.24",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 150,
-   "no_spawn": true,
    "verified": "datos_ok",
-   "damage": 6
+   "damage": 6,
+   "size": 0.93,
+   "biomes": [
+    "snow"
+   ]
   },
   {
    "id": "iron_golem",
@@ -936,8 +1015,9 @@
      "",
      ""
     ],
-    "MoveSpeed": "0.2",
-    "MoveSpeedAggro": "0.5, 0.5"
+    "MoveSpeed": "0.52",
+    "MoveSpeedAggro": "1.43, 1.43",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 500,
    "biomes": [
@@ -946,7 +1026,8 @@
     "snow"
    ],
    "verified": "datos_ok",
-   "damage": 15
+   "damage": 15,
+   "size": 3.18
   },
   {
    "id": "snow_golem",
@@ -963,8 +1044,8 @@
    "hostile": false,
    "props": {
     "AITask-2": "Look",
-    "MoveSpeed": "0.1",
-    "MoveSpeedPanic": "0.4"
+    "MoveSpeed": "1.15",
+    "MoveSpeedPanic": "1.15"
    },
    "health": 20,
    "ai": "ranged",
@@ -972,7 +1053,9 @@
     "snow"
    ],
    "verified": "datos_ok",
-   "damage": 0
+   "damage": 0,
+   "size": 1.19,
+   "no_spawn": true
   },
   {
    "id": "witch",
@@ -1004,17 +1087,23 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.38",
+    "MoveSpeedAggro": "0.76, 0.76",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 130,
    "scale": 0.9375,
    "ai": "ranged",
    "monster_weight": 0.3,
    "verified": "datos_ok",
-   "damage": 0
+   "damage": 0,
+   "size": 1.08,
+   "monster_biomes": [
+    "pine_forest",
+    "snow",
+    "desert"
+   ]
   },
   {
    "id": "illager",
@@ -1031,17 +1120,22 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.55",
+    "MoveSpeedAggro": "1.10, 1.10",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 120,
    "scale": 0.9375,
    "ai": "ranged",
    "monster_weight": 0.3,
    "verified": "datos_ok",
-   "damage": 0
+   "damage": 0,
+   "size": 1.08,
+   "monster_biomes": [
+    "pine_forest",
+    "desert"
+   ]
   },
   {
    "id": "illager",
@@ -1058,16 +1152,18 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.7, 0.7",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.55",
+    "MoveSpeedAggro": "1.48, 1.48",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 120,
    "scale": 0.9375,
    "monster_weight": 0.2,
    "verified": "datos_ok",
-   "damage": 13
+   "damage": 13,
+   "size": 1.08,
+   "no_spawn": true
   },
   {
    "id": "skeleton",
@@ -1088,10 +1184,10 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.38",
+    "MoveSpeedAggro": "0.76, 0.76",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 100,
    "ai": "ranged,sun",
@@ -1100,7 +1196,8 @@
    ],
    "monster_weight": 1,
    "verified": "datos_ok",
-   "damage": 2
+   "damage": 2,
+   "size": 1.11
   },
   {
    "id": "blaze",
@@ -1121,12 +1218,13 @@
    "health": 100,
    "ai": "fly,ranged",
    "monster_biomes": [
-    "burnt_forest",
-    "wasteland"
+    "burnt_forest"
    ],
    "monster_weight": 0.5,
    "verified": "datos_ok",
-   "damage": 6
+   "damage": 6,
+   "size": 3.0,
+   "nether": true
   },
   {
    "id": "ghast",
@@ -1156,7 +1254,9 @@
    ],
    "monster_weight": 0.2,
    "verified": "datos_ok",
-   "damage": 0
+   "damage": 0,
+   "size": 6.67,
+   "nether": true
   },
   {
    "id": "magma_cube",
@@ -1167,10 +1267,10 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.5, 0.5",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.41",
+    "MoveSpeedAggro": "0.69, 0.69",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 80,
    "scale": 4,
@@ -1181,7 +1281,9 @@
    ],
    "monster_weight": 0.5,
    "verified": "datos_ok",
-   "damage": 6
+   "damage": 6,
+   "size": 1.13,
+   "nether": true
   },
   {
    "id": "magma_cube",
@@ -1198,17 +1300,18 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.47",
+    "MoveSpeedAggro": "0.77, 0.77",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 20,
    "scale": 2,
    "ai": "slime",
    "no_spawn": true,
    "verified": "datos_ok",
-   "damage": 4
+   "damage": 4,
+   "size": 0.58
   },
   {
    "id": "magma_cube",
@@ -1220,17 +1323,18 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.6, 0.6",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.52",
+    "MoveSpeedAggro": "0.82, 0.82",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 5,
    "scale": 1,
    "ai": "slime",
    "no_spawn": true,
    "verified": "datos_ok",
-   "damage": 3
+   "damage": 3,
+   "size": 0.29
   },
   {
    "id": "hoglin",
@@ -1250,10 +1354,10 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.6, 0.6",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.55",
+    "MoveSpeedAggro": "1.09, 1.09",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 200,
    "monster_biomes": [
@@ -1261,7 +1365,9 @@
    ],
    "monster_weight": 0.4,
    "verified": "datos_ok",
-   "damage": 6
+   "damage": 6,
+   "size": 0.78,
+   "nether": true
   },
   {
    "id": "piglin",
@@ -1277,10 +1383,10 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.55, 0.55",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.55",
+    "MoveSpeedAggro": "1.48, 1.48",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 80,
    "monster_biomes": [
@@ -1289,7 +1395,9 @@
    ],
    "monster_weight": 0.5,
    "verified": "datos_ok",
-   "damage": 8
+   "damage": 8,
+   "size": 1.08,
+   "nether": true
   },
   {
    "id": "skeleton",
@@ -1310,10 +1418,10 @@
    "weight": 0,
    "hostile": true,
    "props": {
-    "MoveSpeed": "0.25",
-    "MoveSpeedAggro": "0.6, 0.6",
-    "MoveSpeedRand": "0, 0",
-    "JumpMaxDistance": "1.2, 1.2"
+    "JumpMaxDistance": "1.2, 1.2",
+    "MoveSpeed": "0.38",
+    "MoveSpeedAggro": "0.76, 0.76",
+    "MoveSpeedRand": "0, 0"
    },
    "health": 100,
    "scale": 1.2,
@@ -1323,7 +1431,9 @@
    ],
    "monster_weight": 0.4,
    "verified": "datos_ok",
-   "damage": 8
+   "damage": 8,
+   "size": 1.33,
+   "nether": true
   }
  ],
  "biomes": [
@@ -1388,15 +1498,15 @@
   ],
   [
    "animalMountainLion",
-   "mcOcelot"
+   "mcWolf"
   ],
   [
    "animalBear",
-   "mcPolarBear"
+   "mcWolf"
   ],
   [
    "animalBearSmall",
-   "mcPolarBear"
+   "mcWolf"
   ]
  ],
  "_hostile": "Mobs hostiles (hostile=true): salen de noche en todos los biomas (grupo mcMonsters, 'monsters'; monster_weight = que tan seguido). horde=true: tambien en las hordas (solo el creeper). no_spawn: no salen solos (cave spider: minas; slimes medianos y chicos: al dividirse). Comportamientos de Minecraft en src/Mobs/: McCreeper (mecha y explosion), McSkeleton (dispara flechas, se aleja, se quema al sol), McSpider (tranquila de dia si no le pegas; la de cueva envenena), McSlime (salta y se divide), McPhantom (vuela). Lobo: neutral como en Minecraft, solo muerde si le pegas.",
@@ -1429,5 +1539,7 @@
  ],
  "_props": "props: propiedades de 7 Days que se cambian (velocidad, IA). Animales: ya no huyen de ti (AITask-2 RunawayFromEntity -> Look); solo corren cuando les pegas, como en Minecraft. Creeper: velocidad de Minecraft (como caminar), no salta mas de 1 bloque. health: vida (x5 de Minecraft: 7 Days usa 100 para el jugador).",
  "_biomes": "Cada animal pacifico dice en 'biomes' donde sale (si no dice nada: pine_forest y snow, como los primeros). Cada mob hostil dice en 'monster_biomes' donde sale (si no dice nada: en todos). 'scale' = tamano del modelo; 'ai' = comportamiento de Minecraft (src/Mobs/).",
- "_damage": "damage: el golpe de Minecraft en dificultad Normal, en puntos de vida de Minecraft (1 corazón = 2). tools/build_config.py crea una mano para cada mob (meleeHandMc...) con ese daño x5, un golpe por segundo como en Minecraft, sin heridas ni infección de 7 Days y sin romper bloques. 0 = no pega (dispara, explota o es pacífico)."
+ "_damage": "damage: el golpe de Minecraft en dificultad Normal, en puntos de vida de Minecraft (1 corazón = 2). tools/build_config.py crea una mano para cada mob (meleeHandMc...) con ese daño x5, un golpe por segundo como en Minecraft, sin heridas ni infección de 7 Days y sin romper bloques. 0 = no pega (dispara, explota o es pacífico).",
+ "_size": "size: SizeScale de 7 Days = altura de Minecraft / altura del cuerpo de 7 Days (el hitbox). Los sonidos de 7 Days de cada mob se quitan; los suyos de Minecraft los pone src/Mobs/McAnimal.cs. Las cosas de Minecraft se sueltan al morir (src/Mobs/McDrops.cs), no al despellejar.",
+ "_speed": "Velocidades de Minecraft (bloques/s, de su código: 44 x (velocidad x modificador)^2) pasadas a 7 Days con lo que mide en el juego cada cuerpo por unidad de MoveSpeed (prueba 'velocidad'): zombi 3.64 m/s, araña 1.41, ciervo 1.53, conejo 3.3, gallina 1.03, oso 1.92."
 }

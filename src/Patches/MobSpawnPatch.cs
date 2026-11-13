@@ -26,6 +26,8 @@ namespace SteveDaysToDie.Patches
                     a.Scale = mc.scale;
                 }
                 var go = __instance.gameObject;
+                // Minecraft drops on death (host)
+                if (!string.IsNullOrEmpty(mc.drops)) go.AddComponent<McDrops>().Drops = mc.drops;
                 // Minecraft behaviours (sheets/mc_animals.json "ai"): src/Mobs/McMonsters.cs, McFlyers.cs, McCreeper.cs, McPhantom.cs
                 foreach (var ai in (mc.ai ?? "").Split(','))
                     switch (ai)

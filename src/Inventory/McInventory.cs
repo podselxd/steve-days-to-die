@@ -718,7 +718,7 @@ namespace SteveDaysToDie.McInv
             {
                 if (_dragButton >= 0 && hover.HasValue && !InDrag(hover.Value) && CanDragInto(hover.Value) && _drag.Count < _cursor.count)
                     _drag.Add(hover.Value);
-                if (_shiftDrag && hover.HasValue && Usable(hover.Value))
+                if (_shiftDrag && hover.HasValue && Usable(hover.Value) && hover.Value.kind != Kind.Armor)   // armour just put on must not jump back off
                 {
                     bool done = false; foreach (var d in _shiftDone) if (SameSlot(d, hover.Value)) done = true;
                     if (!done) { _shiftDone.Add(hover.Value); var st = Get(hover.Value).Clone(); if (!st.IsEmpty()) QuickMove(hover.Value, st); }

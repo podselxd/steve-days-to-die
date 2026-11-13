@@ -33,6 +33,8 @@ namespace SteveDaysToDie.Patches
                 }
                 // placing a block swings the arm, like Minecraft
                 if (Input.GetMouseButtonDown(1) && p.inventory.holdingItem is ItemClassBlock) Ryan.FirstPerson.Swing();
+                // right-click with armour in hand: put it on (Minecraft)
+                if (Input.GetMouseButtonDown(1) && McInv.McInventory.EquipFromHand(p)) Ryan.FirstPerson.Swing();
                 // Q: drop
                 if (Input.GetKeyDown(Settings.GetKey("tecla_tirar", KeyCode.Q)))
                 {
@@ -82,24 +84,29 @@ namespace SteveDaysToDie.Patches
         static void Bind(EntityPlayerLocal p)
         {
             _bound = true;
-            if (!Settings.GetBool("agachar_shift", true)) return;
             try
             {
                 var ui = LocalPlayerUI.GetUIForPlayer(p);
                 var a = ui != null ? ui.playerInput : null;
                 if (a == null) return;
-                // Minecraft: Shift = sneak, Ctrl = sprint. 7 Days had Shift = run, C = crouch, Ctrl = toggle crouch:
-                // C takes the toggle crouch, Ctrl becomes sprint (double-tap W sprints too)
                 var shift = new InControl.KeyBindingSource(InControl.Key.LeftShift);
                 var ctrl = new InControl.KeyBindingSource(InControl.Key.LeftControl);
                 var c = new InControl.KeyBindingSource(InControl.Key.C);
-                a.Run.RemoveBinding(shift);
-                if (!a.Crouch.HasBinding(shift)) a.Crouch.AddBinding(shift);
-                a.Crouch.RemoveBinding(c);
-                a.ToggleCrouch.RemoveBinding(ctrl);
-                if (!a.ToggleCrouch.HasBinding(c)) a.ToggleCrouch.AddBinding(c);
-                if (!a.Run.HasBinding(ctrl)) a.Run.AddBinding(ctrl);
-                Debug.Log("[SVD] controls: Shift = sneak, Ctrl = sprint, C = toggle crouch (Minecraft)");
+                // The keys are set EVERY time (not only when changed): 7 Days saves its key bindings, so the old
+                // Minecraft swap (Shift sneak / Ctrl sprint) had stayed saved in the user's game.
+                // Setting "shift_correr" (new name: the old "agachar_shift=si" saved in ajustes.cfg must not count):
+                //   si (default, user 2026-11-13 "intercambia los botones shift y control"): Shift = run, Ctrl = crouch (hold), C = toggle crouch
+                //   no: Minecraft's Shift = sneak, Ctrl = sprint, C = toggle crouch
+                bool shiftRuns = Settings.GetBool("shift_correr", true);
+                var run = shiftRuns ? shift : ctrl;
+                var crouch = shiftRuns ? ctrl : shift;
+                a.Run.RemoveBinding(shift); a.Run.RemoveBinding(ctrl);
+                a.Crouch.RemoveBinding(shift); a.Crouch.RemoveBinding(ctrl); a.Crouch.RemoveBinding(c);
+                a.ToggleCrouch.RemoveBinding(shift); a.ToggleCrouch.RemoveBinding(ctrl); a.ToggleCrouch.RemoveBinding(c);
+                a.Run.AddBinding(run);
+                a.Crouch.AddBinding(crouch);
+                a.ToggleCrouch.AddBinding(c);
+                Debug.Log(shiftRuns ? "[SVD] controls: Shift = run, Ctrl = crouch, C = toggle crouch" : "[SVD] controls: Shift = sneak, Ctrl = sprint, C = toggle crouch (Minecraft)");
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] shift binding: " + ex.Message); }
         }

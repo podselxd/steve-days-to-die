@@ -162,7 +162,13 @@ namespace SteveDaysToDie.Steve
             {
                 _armor = SteveArmor.Build(h, c, l != null && l.EndsWith("_leggings") ? l : null, f, _px, _root.gameObject.layer,
                                           _head, _upper, _armR, _armL, _legR, _legL);
-                foreach (var g in _armor) { var r = g.GetComponent<MeshRenderer>(); if (r != null) _renderers.Add(r); }
+                foreach (var g in _armor)
+                {
+                    var r = g.GetComponent<MeshRenderer>();
+                    if (r == null) continue;
+                    _renderers.Add(r);
+                    if (_shadowOnly) r.shadowCastingMode = ShadowCastingMode.ShadowsOnly;   // first person: not seen by yourself
+                }
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] armour look: " + ex.Message); }
         }

@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "velocidad") { yield return SpeedTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "mobs") { yield return MobsTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "lote2") { yield return Batch2(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "funcional") { yield return Functional(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -834,6 +835,54 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- how fast each 7 Days body really moves (m/s) for its MoveSpeed numbers: the hostile ones chase the player,
+        // the peaceful ones are hit once and run. Logged as "speed <class> <m/s>" (best 1-second stretch in 6 s).
+        static IEnumerator SpeedTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("velocidad");
+            var world = GameManager.Instance.World;
+            try { SdtdConsole.Instance.ExecuteSync("settime " + (world.worldTime / 24000UL + 1) + " 12 0", null); } catch { }
+            try { p.Buffs.AddBuff("god"); } catch { }
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 40f; } catch { }
+            yield return Wait(1f);
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            string[] kinds = { "mcSkeleton", "mcSpider", "mcWolf", "mcPolarBear", "mcCow", "mcRabbit", "mcChicken", "mcBlaze" };
+            foreach (var cls in kinds)
+            {
+                EntityAlive e = null;
+                try
+                {
+                    e = EntityFactory.CreateEntity(EntityClass.FromString(cls), p.position + fwd * 9f + Vector3.up * 0.5f) as EntityAlive;
+                    if (e != null) world.SpawnEntityInWorld(e);
+                }
+                catch (Exception ex) { Debug.LogWarning("[SVD] speed test " + cls + ": " + ex.Message); }
+                if (e == null) continue;
+                yield return Wait(1.5f);
+                try { e.DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Bashing, p.entityId), 1, false, 1f); } catch { }
+                var pos = new List<(float t, Vector3 at)>();
+                float t0 = Time.time;
+                while (Time.time - t0 < 6f && e != null && !e.IsDead())
+                {
+                    pos.Add((Time.time, e.position));
+                    try { p.Health = p.GetMaxHealth(); } catch { }
+                    yield return null;
+                }
+                float best = 0f;
+                for (int i = 0; i < pos.Count; i++)
+                    for (int j = i + 1; j < pos.Count; j++)
+                        if (pos[j].t - pos[i].t >= 1f)
+                        {
+                            var d = pos[j].at - pos[i].at; d.y = 0f;
+                            best = Mathf.Max(best, d.magnitude / (pos[j].t - pos[i].t));
+                            break;
+                        }
+                Debug.Log("[SVD] speed " + cls + " " + best.ToString("0.00") + " m/s");
+                try { world.RemoveEntity(e.entityId, EnumRemoveEntityReason.Despawned); } catch { }
+                yield return Wait(0.5f);
+            }
+            MeltyTest.Pass("speed-measured");
+        }
+
         // ---- v1.12: every Minecraft mob in front of the player, 6 at a time; then the guide book and the recipe book ----
         static IEnumerator MobsTest(EntityPlayerLocal p)
         {

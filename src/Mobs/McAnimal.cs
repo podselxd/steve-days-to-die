@@ -13,7 +13,7 @@ namespace SteveDaysToDie.Mobs
     {
         // one box: offset (from the part's pivot) and size, Minecraft model space (y down, -z = front), texture u,v
         struct B { public float x, y, z, w, h, d; public int u, v; public float grow; public bool wool, mirror; }
-        class Part { public string name; public Vector3 pivot; public float rotX, rotY, rotZ; public B[] boxes; public int leg = -1; public bool head; public int wing; public Part[] kids; public bool glass; public int spiderLeg; }
+        class Part { public string name; public Vector3 pivot; public float rotX, rotY, rotZ; public B[] boxes; public int leg = -1; public bool head; public int wing; public Part[] kids; public bool glass; public int spiderLeg; public int arm; }
 
         static B Bx(float x, float y, float z, int w, int h, int d, int u, int v, float grow = 0f, bool wool = false)
             => new B { x = x, y = y, z = z, w = w, h = h, d = d, u = u, v = v, grow = grow, wool = wool };
@@ -108,8 +108,10 @@ namespace SteveDaysToDie.Mobs
                 // Minecraft's walk: right hind + left front together, the other two half a turn later; arms against legs
                 switch (n)
                 {
-                    case "right_hind_leg": case "right_leg": case "left_arm": part.leg = 0; break;
-                    case "left_hind_leg": case "left_leg": case "right_arm": part.leg = 1; break;
+                    case "right_hind_leg": case "right_leg": part.leg = 0; break;
+                    case "left_arm": part.leg = 0; part.arm = -1; break;
+                    case "left_hind_leg": case "left_leg": part.leg = 1; break;
+                    case "right_arm": part.leg = 1; part.arm = 1; break;
                     case "right_front_leg": part.leg = id == "spider" ? -1 : 2; break;
                     case "left_front_leg": part.leg = id == "spider" ? -1 : 3; break;
                     case "right_wing": case "right_wing_base": part.wing = -1; break;
@@ -157,6 +159,48 @@ namespace SteveDaysToDie.Mobs
         readonly List<(Transform t, int side, Vector3 r)> _wings = new List<(Transform, int, Vector3)>();
         readonly List<(Transform t, int leg, float ry, float rz)> _spiderLegs = new List<(Transform, int, float, float)>();
         float _hop;
+        readonly List<(Transform t, int side, Vector3 r)> _arms = new List<(Transform, int, Vector3)>();
+        Transform _rightArm;
+        /// <summary>Set when the mob swings at something (Patches: EntityAlive.Attack): Minecraft's attack swing.</summary>
+        public float SwingAt = -10f;
+
+        // what each one holds in its right hand in Minecraft
+        static string HeldId(string cls)
+        {
+            switch (cls)
+            {
+                case "mcSkeleton": case "mcStray": return "bow";
+                case "mcPillager": return "crossbow_standby";
+                case "mcVindicator": return "iron_axe";
+                case "mcPiglin": return "golden_sword";
+                case "mcWitherSkeleton": return "stone_sword";
+                default: return null;
+            }
+        }
+
+        // the item in hand: Minecraft's flat item picture, seen from both sides, at the hand (12 px down the arm)
+        void HeldItem()
+        {
+            if (_rightArm == null) return;
+            string id = HeldId(_e?.EntityClass?.entityClassName ?? "");
+            if (id == null) return;
+            var tex = Tex("assets/minecraft/textures/item/" + id + ".png");
+            if (tex == null) return;
+            var go = new GameObject("SVD_held_" + id);
+            go.transform.SetParent(_rightArm, false);
+            go.transform.localPosition = new Vector3(1f, -10f, -1f) * Px;
+            go.transform.localRotation = Quaternion.Euler(-90f, 90f, 0f) * Quaternion.Euler(0f, 0f, -45f);
+            var m = new Mesh { name = "SVD_held" };
+            float h = 0.5f;
+            m.SetVertices(new List<Vector3> { new Vector3(0, -h, -h), new Vector3(0, h, -h), new Vector3(0, h, h), new Vector3(0, -h, h) });
+            m.SetUVs(0, new List<Vector2> { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) });
+            m.SetTriangles(new[] { 0, 1, 2, 0, 2, 3, 2, 1, 0, 3, 2, 0 }, 0);
+            m.RecalculateNormals(); m.RecalculateBounds();
+            go.AddComponent<MeshFilter>().sharedMesh = m;
+            var mr = go.AddComponent<MeshRenderer>();
+            mr.sharedMaterial = Mat(tex);
+            _ours.Add(mr);
+        }
         readonly List<(Transform t, Vector3 p, Quaternion r, int i)> _spin = new List<(Transform, Vector3, Quaternion, int)>();
         readonly List<Renderer> _ours = new List<Renderer>();
         readonly List<Renderer> _scan = new List<Renderer>();
@@ -237,9 +281,12 @@ namespace SteveDaysToDie.Mobs
                 if (part.wing != 0) _wings.Add((go.transform, part.wing, baseRot));
                 if (part.leg >= 0) _legs.Add((go.transform, part.leg, baseRot));
                 if (part.spiderLeg != 0) _spiderLegs.Add((go.transform, part.spiderLeg, part.rotY, part.rotZ));
+                if (part.arm != 0) _arms.Add((go.transform, part.arm, baseRot));
+                if (part.arm == 1) _rightArm = go.transform;
                 if (part.kids != null) foreach (var k in part.kids) Add(k, go.transform, true);
             }
             foreach (var part in parts) Add(part, _root, false);
+            HeldItem();
             if (AnimalId == "blaze" || AnimalId == "ghast")
                 foreach (Transform t in _root)
                     if (t.name.StartsWith("SVD_part")) _spin.Add((t, t.localPosition, t.localRotation, int.Parse(t.name.Substring(8))));
@@ -323,6 +370,8 @@ namespace SteveDaysToDie.Mobs
                 _root.position += Vector3.up * up * 0.45f * Scale;
                 _root.localScale = new Vector3(Scale / Mathf.Sqrt(sq), Scale * sq, Scale / Mathf.Sqrt(sq));
             }
+            float ent = transform.lossyScale.y;
+            if (ent > 0.01f && Mathf.Abs(ent - 1f) > 0.001f) _root.localScale /= ent;
             if (_mpb == null) _mpb = new MaterialPropertyBlock();
             // Minecraft: red for half a second when hurt (and red while dead); the creeper's white flash
             bool red = Time.time < _hurtUntil || dead;
@@ -366,6 +415,26 @@ namespace SteveDaysToDie.Mobs
             {
                 float a = Mathf.Cos(_phase * 0.6662f + ((leg == 0 || leg == 3) ? 0f : Mathf.PI)) * 1.4f * _amount;
                 t.localRotation = Rot(r.x + a * Mathf.Rad2Deg, r.y, r.z);
+            }
+            // Minecraft's fighting pose: aiming with both arms forward (skeleton's bow, pillager's crossbow), the
+            // vindicator / piglin / wither skeleton / iron golem raise the weapon arm and swing it down on each hit
+            if (_arms.Count > 0 && !dead)
+            {
+                bool angry = false;
+                try { angry = _e.GetAttackTargetLocal() != null || _e.GetAttackTarget() != null; } catch { }
+                float sw = Time.time - SwingAt;
+                float swing = sw < 0.4f ? Mathf.Sin(sw / 0.4f * Mathf.PI) : 0f;      // Minecraft's attack animation, 0..1..0
+                string cls = _e.EntityClass?.entityClassName ?? "";
+                bool archer = cls == "mcSkeleton" || cls == "mcStray" || cls == "mcPillager";
+                foreach (var (t, side, r) in _arms)
+                {
+                    float x;
+                    if (archer && angry) x = -90f + (side == -1 ? -10f : 0f);
+                    else if (angry || swing > 0f)
+                        x = side == 1 ? -110f + swing * 100f : (cls == "mcIronGolem" ? -110f + swing * 100f : -40f + Mathf.Cos(_phase * 0.6662f) * 20f * _amount);
+                    else continue;
+                    t.localRotation = Rot(r.x + x, r.y, r.z + (archer && angry ? side * -5f : 0f));
+                }
             }
         }
 

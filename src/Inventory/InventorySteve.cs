@@ -15,6 +15,29 @@ namespace SteveDaysToDie.McInv
         static Camera _cam;
         static Transform _root, _body, _head;
         static Texture2D _skin;
+        static Transform _upper, _armR, _armL, _legR, _legL;
+        static string _armorKey;
+        static readonly System.Collections.Generic.List<GameObject> _armor = new System.Collections.Generic.List<GameObject>();
+
+        // the armour you wear, on the inventory Steve (rebuilt when the 4 armour slots change)
+        static void Armor()
+        {
+            var p = GameManager.Instance?.World?.GetPrimaryPlayer();
+            if (p == null || _head == null) return;
+            string Slot(int i)
+            {
+                try { var v = p.equipment.GetSlotItem(i); string n = v?.ItemClass?.Name; return n != null && n.StartsWith("mc_") ? n.Substring(3) : null; }
+                catch { return null; }
+            }
+            string h = Slot(0), c = Slot(1), l = Slot(2), f = Slot(3);
+            string key = h + "|" + c + "|" + l + "|" + f + "|" + _root.GetInstanceID();
+            if (key == _armorKey) return;
+            _armorKey = key;
+            foreach (var g in _armor) if (g != null) Object.Destroy(g);
+            _armor.Clear();
+            try { _armor.AddRange(Steve.SteveArmor.Build(h, c, l != null && l.EndsWith("_leggings") ? l : null, f, 1f / 16f, Layer, _head, _upper, _armR, _armL, _legR, _legL)); }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] inventory armour: " + ex.Message); }
+        }
 
         static Transform Part(string name, Mesh m, Mesh layer, Transform parent, Vector3 pos, Material mat)
         {
@@ -47,13 +70,14 @@ namespace SteveDaysToDie.McInv
             _body = new GameObject("body") { layer = Layer }.transform;
             _body.SetParent(_root, false);
             var upper = new GameObject("upper") { layer = Layer }.transform;
+            _upper = upper; _armorKey = null; _armor.Clear();
             upper.SetParent(_body, false);
             upper.localPosition = new Vector3(0f, 24f * px, 0f);
-            Part("legR", Steve.SteveParts.RightLeg(px), Steve.SteveParts.RightLegLayer(px), _body, new Vector3(2f, 12f, 0f) * px, mat);
-            Part("legL", Steve.SteveParts.LeftLeg(px), Steve.SteveParts.LeftLegLayer(px), _body, new Vector3(-2f, 12f, 0f) * px, mat);
+            _legR = Part("legR", Steve.SteveParts.RightLeg(px), Steve.SteveParts.RightLegLayer(px), _body, new Vector3(2f, 12f, 0f) * px, mat);
+            _legL = Part("legL", Steve.SteveParts.LeftLeg(px), Steve.SteveParts.LeftLegLayer(px), _body, new Vector3(-2f, 12f, 0f) * px, mat);
             Part("body", Steve.SteveParts.Body(px), Steve.SteveParts.BodyLayer(px), upper, Vector3.zero, mat);
-            Part("armR", Steve.SteveParts.RightArm(px), Steve.SteveParts.RightArmLayer(px), upper, new Vector3(6f, -1f, 0f) * px, mat);
-            Part("armL", Steve.SteveParts.LeftArm(px), Steve.SteveParts.LeftArmLayer(px), upper, new Vector3(-6f, -1f, 0f) * px, mat);
+            _armR = Part("armR", Steve.SteveParts.RightArm(px), Steve.SteveParts.RightArmLayer(px), upper, new Vector3(6f, -1f, 0f) * px, mat);
+            _armL = Part("armL", Steve.SteveParts.LeftArm(px), Steve.SteveParts.LeftArmLayer(px), upper, new Vector3(-6f, -1f, 0f) * px, mat);
             _head = Part("head", Steve.SteveParts.Head(px), Steve.SteveParts.HeadLayer(px), upper, Vector3.zero, mat);
             if (_cam == null)
             {
@@ -77,6 +101,7 @@ namespace SteveDaysToDie.McInv
             if (Event.current.type != EventType.Repaint) return;
             if (_root == null || _skin != SteveCharacter.SkinTexture) Build();
             if (_root == null) return;
+            Armor();
             int w = Mathf.Max(16, Mathf.RoundToInt(r.width)), h = Mathf.Max(16, Mathf.RoundToInt(r.height));
             if (_rt == null || _rt.width != w || _rt.height != h)
             {
