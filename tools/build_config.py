@@ -488,13 +488,17 @@ ec += ["</configs>", ""]
 _eg = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json -->", '    <append xpath="/entitygroups">',
        ]
 _BIOMES = ["pine_forest", "burnt_forest", "desert", "snow", "wasteland"]
+_groups_made = set()     # 7 Days refuses an empty entity group (and then loads NO groups and NO spawning at all)
 for _b in _BIOMES:
     # Minecraft animals of this biome (rows without "biomes": the forest and the snow)
-    _eg += ['        <entitygroup name="mcAnimals_%s">' % _b] + ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"]
-            if not r.get("hostile") and not r.get("no_spawn") and r["weight"] > 0 and _b in r.get("biomes", ["pine_forest", "snow"])] + ['        </entitygroup>']
-    _eg += ['        <entitygroup name="mcMonsters_%s">' % _b] + ['            <e n="%s" p="%s"/>' % (r["class"], r.get("monster_weight", 1)) for r in _an["rows"]
-            if r.get("hostile") and not r.get("night") and not r.get("no_spawn") and _b in r.get("monster_biomes", _BIOMES)] + ['        </entitygroup>']
-_eg += ['        <entitygroup name="mcNight">'] + ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("night")] + ['        </entitygroup>', "    </append>"]
+    _ga = ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"]
+           if not r.get("hostile") and not r.get("no_spawn") and r["weight"] > 0 and _b in r.get("biomes", ["pine_forest", "snow"])]
+    if _ga: _eg += ['        <entitygroup name="mcAnimals_%s">' % _b] + _ga + ['        </entitygroup>']; _groups_made.add("mcAnimals_" + _b)
+    _gm = ['            <e n="%s" p="%s"/>' % (r["class"], r.get("monster_weight", 1)) for r in _an["rows"]
+           if r.get("hostile") and not r.get("night") and not r.get("no_spawn") and _b in r.get("monster_biomes", _BIOMES)]
+    if _gm: _eg += ['        <entitygroup name="mcMonsters_%s">' % _b] + _gm + ['        </entitygroup>']; _groups_made.add("mcMonsters_" + _b)
+_gn = ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("night")]
+_eg += (['        <entitygroup name="mcNight">'] + _gn + ['        </entitygroup>'] if _gn else []) + ["    </append>"]
 # 7 Days animals that look like a Minecraft one are replaced by it everywhere they spawn (user 2026-11-13)
 for _old, _new in _an["replace"]:
     _eg.append("    <set xpath=\"/entitygroups/entitygroup/e[@n='%s']/@n\">%s</set>" % (_old, _new))
@@ -506,9 +510,11 @@ _eg += ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "entitygroups.xml"), "w", encoding="utf-8").write(chr(10).join(_eg))
 _sp = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json: herds of Minecraft animals, like Minecraft (they come back every half day) -->"]
 for b, mx, n, delay in _an["biomes"]:
+    if "mcAnimals_" + b not in _groups_made: continue
     for k in range(n):
         _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mca%d\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Day\" entitygroup=\"mcAnimals_%s\"/></append>" % (b, k + 1, mx, delay, b))
 for b, mx, delay in _an.get("monsters", []):
+    if "mcMonsters_" + b not in _groups_made: continue
     _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mcm1\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Any\" entitygroup=\"mcMonsters_%s\"/></append>" % (b, mx, delay, b))
     # (phantoms are not spawned here: src/Mobs/McPhantom.cs Spawner, after 3 nights without sleeping)
 _sp += ["</configs>", ""]

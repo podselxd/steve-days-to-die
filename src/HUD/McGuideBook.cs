@@ -45,6 +45,9 @@ namespace SteveDaysToDie.HUD
             try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcBook", true); } catch (System.Exception ex) { Debug.LogWarning("[SVD] guide: " + ex.Message); }
         }
 
+        /// <summary>Test hook (MeltyDemo): turn to a page.</summary>
+        public static void TestPage(int page) { if (_inst != null) _inst._page = page; }
+
         bool Open() { try { return _p != null && LocalPlayerUI.GetUIForPlayer(_p).windowManager.IsWindowOpen("mcBook"); } catch { return false; } }
 
         static string Name(string id)

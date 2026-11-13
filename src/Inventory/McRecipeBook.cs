@@ -20,6 +20,9 @@ namespace SteveDaysToDie.McInv
         readonly List<(Crafting.McRecipes.Recipe r, bool can)> _bookList = new List<(Crafting.McRecipes.Recipe, bool)>();
         const int BookW = 147, BookH = 166;
 
+        /// <summary>Test hook (MeltyDemo): open or close the recipe book.</summary>
+        public void TestRecipeBook(bool open) { _bookOpen = open; _bookRefresh = 0f; }
+
         static Texture2D T(string sprite) => Ryan.Mc.Tex("assets/minecraft/textures/gui/sprites/recipe_book/" + sprite + ".png");
 
         Rect BookButton(float px, float py, int s) => _table ? new Rect(px + 5 * s, py + 34 * s, 20 * s, 18 * s) : new Rect(px + 104 * s, py + 61 * s, 20 * s, 18 * s);

@@ -1397,14 +1397,6 @@
   [
    "animalBearSmall",
    "mcPolarBear"
-  ],
-  [
-   "animalPig",
-   "mcPig"
-  ],
-  [
-   "animalBeeSwarm",
-   "mcBee"
   ]
  ],
  "_hostile": "Mobs hostiles (hostile=true): salen de noche en todos los biomas (grupo mcMonsters, 'monsters'; monster_weight = que tan seguido). horde=true: tambien en las hordas (solo el creeper). no_spawn: no salen solos (cave spider: minas; slimes medianos y chicos: al dividirse). Comportamientos de Minecraft en src/Mobs/: McCreeper (mecha y explosion), McSkeleton (dispara flechas, se aleja, se quema al sol), McSpider (tranquila de dia si no le pegas; la de cueva envenena), McSlime (salta y se divide), McPhantom (vuela). Lobo: neutral como en Minecraft, solo muerde si le pegas.",

@@ -37,7 +37,7 @@ namespace SteveDaysToDie.Generated
             ("Comerciante", "Pacífico", "de día en: bosque de pinos, desierto", "Huye de los zombis.", ""),
             ("Murciélago", "Pacífico", "todavía no sale solo", "Vuela de un lado a otro.", ""),
             ("Loro", "Pacífico", "de día en: bosque de pinos", "Vuela.", "{mc_feather}"),
-            ("Abeja", "Pacífico", "de día en: bosque de pinos. Sale donde salían los de 7 Days que reemplaza", "Vuela. Si le pegas te pica una vez, con veneno.", ""),
+            ("Abeja", "Pacífico", "de día en: bosque de pinos", "Vuela. Si le pegas te pica una vez, con veneno.", ""),
             ("Allay", "Pacífico", "todavía no sale solo", "Vuela.", ""),
             ("Oso polar", "Neutral", "Sale donde salían los de 7 Days que reemplaza", "Neutral: solo ataca si le pegas.", "{mc_cod} {mc_salmon}"),
             ("Golem de hierro", "Neutral", "de día en: bosque de pinos, desierto, nieve", "Pelea contra los zombis.", "{mc_iron_ingot} {mc_poppy}"),

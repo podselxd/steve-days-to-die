@@ -29,8 +29,6 @@
             <e n="mcPillager" p="0.3"/>
             <e n="mcVindicator" p="0.2"/>
         </entitygroup>
-        <entitygroup name="mcAnimals_burnt_forest">
-        </entitygroup>
         <entitygroup name="mcMonsters_burnt_forest">
             <e n="mcCreeper" p="1"/>
             <e n="mcSkeleton" p="1"/>
@@ -117,7 +115,5 @@
     <set xpath="/entitygroups/entitygroup/e[@n='animalMountainLion']/@n">mcOcelot</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalBear']/@n">mcPolarBear</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalBearSmall']/@n">mcPolarBear</set>
-    <set xpath="/entitygroups/entitygroup/e[@n='animalPig']/@n">mcPig</set>
-    <set xpath="/entitygroups/entitygroup/e[@n='animalBeeSwarm']/@n">mcBee</set>
     <append xpath="/entitygroups/entitygroup[contains(@name,'Horde')]"><e n="mcCreeper"/></append>
 </configs>

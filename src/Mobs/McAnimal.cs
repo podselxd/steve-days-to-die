@@ -208,7 +208,7 @@ namespace SteveDaysToDie.Mobs
         void Build()
         {
             _built = true;
-            var parts = Model(AnimalId) ?? FromTable(AnimalId);
+            var parts = Model(AnimalId) ?? FromTable(AnimalId == "cave_spider" ? "spider" : AnimalId);   // the cave spider is a small spider
             var tex = Tex(TexturePath);
             if (parts == null || tex == null) { Debug.LogWarning("[SVD] Minecraft animal " + AnimalId + ": no model or texture"); return; }
             var wool = AnimalId == "sheep" ? Tex("assets/minecraft/textures/entity/sheep/sheep_wool.png") : null;

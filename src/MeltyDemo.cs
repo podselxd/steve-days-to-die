@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "mobs") { yield return MobsTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "lote2") { yield return Batch2(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "funcional") { yield return Functional(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "tirar") { yield return DropTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -833,6 +834,79 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- v1.12: every Minecraft mob in front of the player, 6 at a time; then the guide book and the recipe book ----
+        static IEnumerator MobsTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("mobs");
+            var world = GameManager.Instance.World;
+            try { SdtdConsole.Instance.ExecuteSync("settime " + (world.worldTime / 24000UL + 1) + " 12 0", null); } catch { }
+            yield return Wait(1f);
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Yaw += 40f; } catch { }
+            yield return Wait(0.5f);
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();   // turned to the open part of the roof
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 10f; } catch { }
+            var all = new List<string>();
+            foreach (var kv in SteveDaysToDie.Generated.McAnimalsTable.Animals) if (kv.Key != "mcPhantom" && kv.Key != "mcCreeper") all.Add(kv.Key);
+            try { p.Buffs.AddBuff("god"); } catch { }      // the hostile ones must not kill the test player
+            int okTotal = 0, group = 0;
+            var bad = new List<string>();
+            for (int g = 0; g < all.Count; g += 6, group++)
+            {
+                var made = new List<(string cls, EntityAlive e)>();
+                for (int i = g; i < Mathf.Min(g + 6, all.Count); i++)
+                {
+                    int k = i - g;
+                    try
+                    {
+                        var at = p.position + fwd * (3.5f + (k / 3) * 2.5f) + side * ((k % 3) * 2.2f - 2.2f) + Vector3.up * 0.5f;
+                        var e = EntityFactory.CreateEntity(EntityClass.FromString(all[i]), at) as EntityAlive;
+                        if (e != null) { world.SpawnEntityInWorld(e); made.Add((all[i], e)); }
+                        else bad.Add(all[i] + ":nocreate");
+                    }
+                    catch (Exception ex) { bad.Add(all[i] + ":" + ex.Message); }
+                }
+                yield return Wait(2.5f);
+                try { p.Health = p.GetMaxHealth(); } catch { }
+                var names = new List<string>();
+                foreach (var (cls, e) in made)
+                {
+                    var look = e != null ? e.GetComponent<SteveDaysToDie.Mobs.McAnimal>() : null;
+                    bool ok = look != null && e.transform.Find("SVD_McAnimal_" + look.AnimalId) != null;
+                    if (ok) okTotal++; else bad.Add(cls + ":nolook");
+                    names.Add(cls);
+                }
+                Debug.Log("[SVD] demo mobs group " + group + ": " + string.Join(", ", names));
+                yield return Shot("mobs-" + group);
+                foreach (var (cls, e) in made) try { if (e != null) world.RemoveEntity(e.entityId, EnumRemoveEntityReason.Despawned); } catch { }
+                yield return Wait(0.5f);
+            }
+            Debug.Log("[SVD] demo mobs: " + okTotal + "/" + all.Count + " drawn; bad: " + string.Join(" ", bad));
+            if (okTotal == all.Count) MeltyTest.Pass("mc-mobs"); else MeltyTest.Fail("mc-mobs", string.Join(" ", bad));
+            // the guide book
+            MeltyTest.SetPhase("libro");
+            bool given = false;
+            try { given = p.Buffs.HasCustomVar("mcGuideGiven"); } catch { }
+            Debug.Log("[SVD] demo guide given " + given);
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Open("mcBook", true); } catch (Exception ex) { Debug.LogWarning("[SVD] demo book: " + ex.Message); }
+            yield return Wait(1f);
+            yield return Shot("libro-0");
+            SteveDaysToDie.HUD.McGuideBook.TestPage(20);
+            yield return Wait(0.5f);
+            yield return Shot("libro-1");
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Close("mcBook"); } catch { }
+            yield return Wait(0.5f);
+            // the recipe book on the crafting table
+            MeltyTest.SetPhase("recetas");
+            McInv.McInventory.OpenTable(p);
+            yield return Wait(1f);
+            McInv.McInventory.Instance?.TestRecipeBook(true);
+            yield return Wait(1f);
+            yield return Shot("recetas-0");
+            try { LocalPlayerUI.GetUIForPlayer(p).windowManager.Close("mcScreen"); } catch { }
+            if (given) MeltyTest.Pass("guide-given"); else MeltyTest.Fail("guide-given", "no cvar");
+        }
+
         static IEnumerator Animals(EntityPlayerLocal p)
         {
             MeltyTest.SetPhase("animales");
