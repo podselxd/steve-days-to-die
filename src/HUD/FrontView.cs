@@ -124,7 +124,14 @@ namespace SteveDaysToDie.HUD
         public class FrontCamera : MonoBehaviour
         {
             EntityPlayerLocal _p;
+            static Quaternion _real;
+            static Camera _cam;
+            static bool _hooked;
             void Start() { _p = GetComponent<EntityPlayerLocal>(); }
+            static void Restore(Camera c)
+            {
+                if (Mode == 2 && c != null && c == _cam) c.transform.rotation = _real;
+            }
 
             void LateUpdate()
             {
@@ -139,6 +146,11 @@ namespace SteveDaysToDie.HUD
                     if (!hit.collider.isTrigger && !hit.collider.transform.IsChildOf(_p.transform) && hit.distance - 0.3f < dist)
                         dist = Mathf.Max(0.5f, hit.distance - 0.3f);
                 t.position = eye + dir * dist;
+                // the front view looks back at Steve only while drawing: the game moves you along the camera's
+                // facing, so its real rotation is put back after each frame is drawn (F5 while running turned you round)
+                _real = t.rotation;
+                _cam = _p.playerCamera;
+                if (!_hooked) { _hooked = true; Camera.onPostRender += Restore; }
                 t.rotation = Mode == 1 ? Quaternion.LookRotation(look, Vector3.up) : Quaternion.LookRotation(-look, Vector3.up);
             }
         }

@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "lote2") { yield return Batch2(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "funcional") { yield return Functional(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "tirar") { yield return DropTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "todos") { yield return AllBlocks(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -568,6 +569,61 @@ namespace SteveDaysToDie
                 yield return Shot("acumula-3-vuelta" + t);
             }
             Census("3-fin");
+        }
+
+        // ---- this batch's checks: Ñ on mined dirt, zombies vs Minecraft blocks, armour from the inventory, red cow, creeper ----
+        static IEnumerator Batch2(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("lote2");
+            var world = GameManager.Instance.World;
+            try { p.Stats.Health.Value = p.Stats.Health.Max; } catch { }
+            Vector3 fwd = p.GetLookVector(); fwd.y = 0f; fwd.Normalize();
+            Vector3 side = Vector3.Cross(Vector3.up, fwd);
+            // 1. the Ñ on a stack of mined dirt
+            var dirt = SteveDaysToDie.Crafting.McItems.Stack("dirt", 5);
+            p.inventory.SetItem(8, dirt); Hold(p, 8);
+            yield return Wait(0.5f);
+            string msg = SteveDaysToDie.Crafting.RealToggle.Toggle(p, 8);
+            Debug.Log($"[SVD] lote2: mined dirt + toggle -> {p.inventory.GetItem(8).itemValue.ItemClass?.Name} x{p.inventory.GetItem(8).count} ({msg ?? "ok"})");
+            // 2. a zombie hitting a Minecraft block
+            var bpos = World.worldToBlockPos(p.position + fwd * 3f + side * 3f);
+            world.SetBlockRPC(bpos, Block.GetBlockValue("mc_cobblestone"));
+            EntityAlive z = null;
+            try { z = EntityFactory.CreateEntity(EntityClass.FromString("zombieBoe"), p.position + fwd * 8f) as EntityAlive; if (z != null) world.SpawnEntityInWorld(z); } catch { }
+            yield return Wait(1f);
+            if (z != null)
+            {
+                var bv = world.GetBlock(bpos);
+                try { bv.Block.DamageBlock(world, new BlockValueRef(bpos), bv, 50, z.entityId, null, false); } catch (Exception ex) { Debug.LogWarning("[SVD] demo zombie block: " + ex.Message); }
+                yield return Wait(0.5f);
+                Debug.Log($"[SVD] lote2: zombie hit Minecraft cobblestone -> damage {world.GetBlock(bpos).damage} (0 = cannot break it)");
+                world.RemoveEntity(z.entityId, EnumRemoveEntityReason.Despawned);
+            }
+            // 3. armour put on from the Minecraft inventory
+            var inv = SteveDaysToDie.McInv.McInventory.Instance;
+            if (inv != null)
+                foreach (var (id, slot) in new[] { ("iron_helmet", 0), ("iron_chestplate", 1), ("iron_leggings", 2), ("iron_boots", 3) })
+                {
+                    try { p.equipment.SetSlotItem(slot, ItemValue.None.Clone()); } catch { }
+                    var st = SteveDaysToDie.Crafting.McItems.Stack(id, 1);
+                    Debug.Log($"[SVD] lote2: inventory armour {id} -> slot {slot}: {inv.TestEquip(st, slot)}");
+                }
+            // 4. a Minecraft cow hit: red, no blood
+            EntityAlive cow = null;
+            try { cow = EntityFactory.CreateEntity(EntityClass.FromString("mcCow"), p.position + fwd * 3f + Vector3.up * 0.5f) as EntityAlive; if (cow != null) world.SpawnEntityInWorld(cow); } catch { }
+            try { if (p.vp_FPCamera != null) p.vp_FPCamera.Pitch = 15f; } catch { }
+            yield return Wait(2f);
+            if (cow != null) try { cow.DamageEntity(new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Bashing, p.entityId), 5, false, 1f); } catch { }
+            yield return Wait(0.15f);
+            yield return Shot("lote2-0-vaca-roja");
+            // 5. creeper explodes next to a spot: gone, no zombie pieces
+            EntityAlive c = null;
+            try { c = EntityFactory.CreateEntity(EntityClass.FromString("mcCreeper"), p.position + fwd * 2.5f - side * 2f) as EntityAlive; if (c != null) world.SpawnEntityInWorld(c); } catch { }
+            float hp = p.Health;
+            for (int i = 0; i < 12 && c != null && world.GetEntity(c.entityId) != null; i++) yield return Wait(0.5f);
+            yield return Wait(1.5f);
+            Debug.Log($"[SVD] lote2: creeper gone {(c == null || world.GetEntity(c.entityId) == null)}, player health {hp:0} -> {p.Health:0}");
+            yield return Shot("lote2-1-tras-creeper");
         }
 
         // ---- Minecraft door, chest and barrel, and a dropped block ----

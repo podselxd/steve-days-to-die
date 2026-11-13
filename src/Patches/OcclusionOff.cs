@@ -12,7 +12,7 @@ namespace SteveDaysToDie.Patches
     {
         static bool _logged;
 
-        public static bool Wanted => !Settings.GetBool("oclusion_juego", false);
+        public static bool Wanted => !Settings.GetBool("oclusion_juego", true);     // on again (faster); =no switches it off
 
         /// <summary>At game start: the game reads this option when a world loads.</summary>
         public static void Init()

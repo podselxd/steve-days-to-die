@@ -18,7 +18,12 @@
     ]
    ],
    "weight": 30,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   }
   },
   {
    "id": "pig",
@@ -32,7 +37,12 @@
     ]
    ],
    "weight": 25,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   }
   },
   {
    "id": "sheep",
@@ -50,7 +60,12 @@
     ]
    ],
    "weight": 25,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.15",
+    "MoveSpeedPanic": "0.7"
+   }
   },
   {
    "id": "chicken",
@@ -68,7 +83,12 @@
     ]
    ],
    "weight": 20,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "props": {
+    "AITask-2": "Look",
+    "MoveSpeed": "0.12",
+    "MoveSpeedPanic": "0.7"
+   }
   },
   {
    "id": "creeper",
@@ -83,14 +103,21 @@
    ],
    "weight": 0,
    "hostile": true,
-   "verified": "datos_ok"
+   "verified": "datos_ok",
+   "props": {
+    "MoveSpeed": "0.25",
+    "MoveSpeedAggro": "0.6, 0.6",
+    "MoveSpeedRand": "0, 0",
+    "JumpMaxDistance": "1.2, 1.2"
+   },
+   "health": 100
   }
  ],
  "biomes": [
   [
    "pine_forest",
    4,
-   2,
+   1,
    "0.5"
   ],
   [
@@ -123,28 +150,29 @@
  "monsters": [
   [
    "pine_forest",
-   2,
-   "0.25"
+   1,
+   "0.5"
   ],
   [
    "burnt_forest",
-   2,
-   "0.25"
+   1,
+   "0.5"
   ],
   [
    "desert",
-   2,
-   "0.25"
+   1,
+   "0.5"
   ],
   [
    "snow",
-   2,
-   "0.25"
+   1,
+   "0.5"
   ],
   [
    "wasteland",
-   2,
-   "0.25"
+   1,
+   "0.5"
   ]
- ]
+ ],
+ "_props": "props: propiedades de 7 Days que se cambian (velocidad, IA). Animales: ya no huyen de ti (AITask-2 RunawayFromEntity -> Look); solo corren cuando les pegas, como en Minecraft. Creeper: velocidad de Minecraft (como caminar), no salta mas de 1 bloque. health: vida (x5 de Minecraft: 7 Days usa 100 para el jugador)."
 }

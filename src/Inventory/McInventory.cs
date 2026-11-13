@@ -124,6 +124,19 @@ namespace SteveDaysToDie.McInv
             _dragButton = -1;
         }
 
+        /// <summary>Test runs: a left click with this stack on the cursor on armour slot idx; returns what the slot holds after.</summary>
+        public string TestEquip(ItemStack st, int idx)
+        {
+            _cursor = st.Clone();
+            var slot = new Slot { kind = Kind.Armor, idx = idx };
+            string why = Accepts(slot, _cursor) ? "accepted" : "refused (preferred slot " + _p.equipment.PreferredItemSlot(_cursor) + ")";
+            Click(slot, 0, false);
+            var now = Get(slot);
+            string r = (now.IsEmpty() ? "empty" : now.itemValue.ItemClass?.Name) + ", " + why;
+            _cursor = ItemStack.Empty.Clone();
+            return r;
+        }
+
         // double click: every stack of the same item comes onto the cursor (up to a full stack)
         void Collect()
         {
@@ -313,7 +326,28 @@ namespace SteveDaysToDie.McInv
             if (s.kind == Kind.FFuel) return Crafting.McFurnaces.BurnSeconds(st) > 0f;          // only what burns
             if (s.kind != Kind.Armor) return true;
             var ic = st.itemValue.ItemClass;
-            try { return ic is ItemClassArmor && _p.equipment.PreferredItemSlot(st) == s.idx; } catch { return false; }
+            return ArmorSlot(st) == s.idx;
+        }
+
+        /// <summary>Which armour slot (0 head, 1 chest, 2 legs/hands, 3 feet) a piece goes in, or -1. 7 Days' own
+        /// PreferredItemSlot answered -1 for Minecraft pieces (they could not be put on from this inventory).</summary>
+        int ArmorSlot(ItemStack st)
+        {
+            try
+            {
+                string n = st?.itemValue?.ItemClass?.Name ?? "";
+                if (n.StartsWith("mc_"))
+                {
+                    if (n.EndsWith("_helmet") || n.EndsWith("_head") || n.EndsWith("carved_pumpkin")) return 0;
+                    if (n.EndsWith("_chestplate") || n.Contains("_backpack") || n.EndsWith("elytra")) return 1;
+                    if (n.EndsWith("_leggings")) return 2;
+                    if (n.EndsWith("_boots")) return 3;
+                }
+                if (st.itemValue.ItemClass is ItemClassArmor a && (int)a.EquipSlot < 4) return (int)a.EquipSlot;
+                int pref = _p.equipment.PreferredItemSlot(st);
+                return pref >= 0 && pref < 4 ? pref : -1;
+            }
+            catch { return -1; }
         }
 
         static int Max(ItemStack st)
@@ -379,7 +413,7 @@ namespace SteveDaysToDie.McInv
             if (from.kind != Kind.Armor)
             {
                 int pref = -1;
-                try { if (st.itemValue.ItemClass is ItemClassArmor) pref = _p.equipment.PreferredItemSlot(st); } catch { }
+                pref = ArmorSlot(st);
                 if (pref >= 0 && pref < 4 && Get(new Slot { kind = Kind.Armor, idx = pref }).IsEmpty() && st.count == 1)
                     targets.Add(new Slot { kind = Kind.Armor, idx = pref });
             }
@@ -456,7 +490,12 @@ namespace SteveDaysToDie.McInv
             return Crafting.McRecipes.Match(ids, GridSize);
         }
 
-        ItemStack ResultStack() => _recipe != null ? Crafting.McItems.Stack(_recipe.result, _recipe.count) : null;
+        ItemStack ResultStack()
+        {
+            var st = _recipe != null ? Crafting.McItems.Stack(_recipe.result, _recipe.count) : null;
+            if (st != null) st.itemValue.SetMetadata(Crafting.RealToggle.Crafted, 1);      // made by a Minecraft recipe: stays Minecraft
+            return st;
+        }
 
         // Minecraft: a click takes the result (onto what you carry, if it fits); shift crafts all you can into the bag
         void TakeResult(bool shift)

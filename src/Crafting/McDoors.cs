@@ -15,6 +15,7 @@ namespace SteveDaysToDie.Crafting
         static readonly List<Transform> _doors = new List<Transform>();
         static readonly HashSet<int> _seen = new HashSet<int>();
         public static int Dressed;
+        static readonly List<Vector3i> _pos = new List<Vector3i>();
 
         /// <summary>Is the 7 Days door at this block open?</summary>
         public static bool Open(World world, Vector3i pos)
@@ -39,16 +40,16 @@ namespace SteveDaysToDie.Crafting
             if (world == null) return;
             try
             {
-                foreach (var tr in Object.FindObjectsOfType<Transform>())
+                // the doors the overlay knows (no scene-wide search: it slowed the game down)
+                Ryan.BlockOverlay.PositionsOf("door7d", _pos);
+                foreach (var pos in _pos)
                 {
-                    if (tr.parent == null || !tr.name.StartsWith(Prefab) || _seen.Contains(tr.GetInstanceID())) continue;
+                    var chunk = world.GetChunkFromWorldPos(pos) as Chunk;
+                    var be = chunk?.GetBlockEntity(pos);
+                    var tr = be?.transform;
+                    if (tr == null || _seen.Contains(tr.GetInstanceID())) continue;
                     _seen.Add(tr.GetInstanceID());
-                    Vector3 w = tr.position + Origin.position;
-                    foreach (var off in new[] { Vector3.zero, new Vector3(0.5f, 0.1f, 0.5f), new Vector3(-0.5f, 0.1f, -0.5f), new Vector3(0.5f, 0.1f, -0.5f), new Vector3(-0.5f, 0.1f, 0.5f) })
-                    {
-                        string n = world.GetBlock(World.worldToBlockPos(w + off)).Block?.GetBlockName();
-                        if (n != null && n.StartsWith("mc_") && n.EndsWith("_door")) { _doors.Add(tr); Dressed++; break; }
-                    }
+                    _doors.Add(tr); Dressed++;
                 }
                 _doors.RemoveAll(t => t == null);
                 foreach (var d in _doors)

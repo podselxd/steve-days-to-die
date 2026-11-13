@@ -314,6 +314,13 @@ public static class BlockOverlay
 		chunkEvents.Enqueue(new KeyValuePair<long, bool>(key, displayed));
 	}
 
+	/// <summary>Every known block drawn with this render kind (e.g. "door7d").</summary>
+	public static void PositionsOf(string render, List<Vector3i> into)
+	{
+		into.Clear();
+		foreach (var kv in blocks) if (Sheets.Blocks[kv.Value].render == render) into.Add(kv.Key);
+	}
+
 	public static int RowAt(Vector3i p)
 	{
 		if (!blocks.TryGetValue(p, out var value))

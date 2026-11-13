@@ -13,6 +13,7 @@ namespace SteveDaysToDie.Crafting
     public static class RealToggle
     {
         const string Mark = "from7d";
+        public const string Crafted = "mcCrafted";
         static Dictionary<string, string> _back;
 
         /// <summary>Returns a message for the player, or null when nothing changed.</summary>
@@ -41,8 +42,10 @@ namespace SteveDaysToDie.Crafting
             {
                 // Minecraft -> 7 Days: only if it came from 7 Days
                 string mcId = McItems.IdOf(name);
-                if (!st.itemValue.TryGetMetadata(Mark, out int from7d) || from7d != 1 || !_back.TryGetValue(mcId, out var sd))
-                    return "Lo hecho con Minecraft no vuelve a 7 Days.";
+                // only things MADE by Minecraft's recipes stay Minecraft (no duplicating: 1 log -> 4 planks);
+                // what was mined, dropped by animals or converted can go back
+                if (st.itemValue.TryGetMetadata(Crafted, out int made) && made == 1) return "Lo hecho con recetas de Minecraft no vuelve a 7 Days.";
+                if (!_back.TryGetValue(mcId, out var sd)) return "Este objeto no tiene versión de 7 Days.";
                 var iv = ItemClass.GetItem(sd);
                 if (iv == null || iv.IsEmpty()) return null;
                 to = new ItemStack(iv, st.count);

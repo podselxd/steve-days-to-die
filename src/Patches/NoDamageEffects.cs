@@ -20,6 +20,13 @@ namespace SteveDaysToDie.Patches
             static bool Prefix() => !Off;
         }
 
+        // the red, bloody screen when you are about to die ("Dying"): not in Minecraft
+        [HarmonyPatch(typeof(ScreenEffects), "SetScreenEffect")]
+        static class DyingPatch
+        {
+            static bool Prefix(string _name) => !(Off && _name == "Dying");
+        }
+
         [HarmonyPatch(typeof(ParticleEffect), "SpawnParticleEffect")]
         static class HitOnPlayerPatch
         {
@@ -30,7 +37,11 @@ namespace SteveDaysToDie.Patches
                     if (!Off || _pe == null) return true;
                     var world = GameManager.Instance?.World;
                     var me = world?.GetPrimaryPlayer();
-                    if (me == null || _entityThatCausedIt == me.entityId) return true;
+                    if (me == null) return true;
+                    // a hit on a Minecraft mob: no 7 Days blood (it goes red instead, like Minecraft)
+                    foreach (var a in Mobs.McAnimal.All)
+                        if (a != null && ((a.transform.position + Vector3.up * 0.6f - _pe.pos).sqrMagnitude < 2.25f || (a.transform.position + Origin.position + Vector3.up * 0.6f - _pe.pos).sqrMagnitude < 2.25f)) return false;
+                    if (_entityThatCausedIt == me.entityId) return true;
                     if (!(world.GetEntity(_entityThatCausedIt) is EntityEnemy)) return true;
                     // the hit lands on me: no 7 Days impact sound or blood
                     Vector3 body = me.position + Vector3.up * 1f;

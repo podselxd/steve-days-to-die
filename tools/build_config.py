@@ -425,6 +425,9 @@ for r in _an["rows"]:
     if not r.get("hostile"):    # a hostile one keeps its zombie's tags (its AI needs them)
         ec.append('            <property name="Tags" value="entity,animal,minecraft,mc%s"/>' % r["id"])
     ec.append('            <property name="UserSpawnType" value="Menu"/>')
+    ec += ['            <property name="%s" value="%s"/>' % kv for kv in (r.get("props") or {}).items()]
+    if r.get("health"):
+        ec.append('            <effect_group name="%s health"><passive_effect name="HealthMax" operation="base_set" value="%d"/></effect_group>' % (r["class"], r["health"]))
     ec += ['            <drop event="Harvest" name="mc_%s" count="%d" tag="allHarvest"/>' % (d, c) for d, c in r["drops"]]
     ec.append('        </entity_class>')
 ec += ["    </append>"]

@@ -69,7 +69,10 @@ namespace SteveDaysToDie.Patches
                 try
                 {
                     if (_damagePoints <= 0 || _entityIdThatDamaged < 0) return;
-                    var who = GameManager.Instance?.World?.GetEntity(_entityIdThatDamaged) as EntityPlayer;
+                    var ent = GameManager.Instance?.World?.GetEntity(_entityIdThatDamaged);
+                    // 7 Days' zombies cannot break Minecraft blocks (user 2026-11-13), day or night
+                    if (ent is EntityEnemy && _blockValue.Block?.GetBlockName()?.StartsWith("mc_") == true) { _damagePoints = 0; return; }
+                    var who = ent as EntityPlayer;
                     if (who == null) return;
                     int d = SwingDamage(_blockValue, who);
                     if (d > 0)

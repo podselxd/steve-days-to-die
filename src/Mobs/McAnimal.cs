@@ -83,6 +83,12 @@ namespace SteveDaysToDie.Mobs
         readonly List<(Transform t, int leg)> _legs = new List<(Transform, int)>();
         readonly List<Renderer> _ours = new List<Renderer>();
         readonly List<Renderer> _scan = new List<Renderer>();
+        readonly List<Renderer> _hide = new List<Renderer>();
+        float _nextScan;
+        /// <summary>All Minecraft mobs alive in this game (for "no blood on them").</summary>
+        public static readonly List<McAnimal> All = new List<McAnimal>();
+        void OnEnable() { All.Add(this); }
+        void OnDisable() { All.Remove(this); }
         float _phase, _amount;
         Vector3 _lastPos;
         bool _built;
@@ -183,9 +189,15 @@ namespace SteveDaysToDie.Mobs
             if (!_built) Build();
             if (_root == null) return;
             // hide 7 Days' own animal (its meshes come and go: ragdoll, LOD)
-            GetComponentsInChildren(true, _scan);
-            foreach (var r in _scan) if (r != null && r.enabled && !_ours.Contains(r)) r.enabled = false;
-            _scan.Clear();
+            if (Time.time >= _nextScan)
+            {
+                _nextScan = Time.time + 0.5f;          // was every frame for every animal: slow with many of them
+                GetComponentsInChildren(true, _scan);
+                _hide.Clear();
+                foreach (var r in _scan) if (r != null && !_ours.Contains(r)) _hide.Add(r);
+                _scan.Clear();
+            }
+            foreach (var r in _hide) if (r != null && r.enabled) r.enabled = false;
 
             // keep upright on the animal's spot, turned with it
             _root.position = transform.position;
@@ -205,7 +217,9 @@ namespace SteveDaysToDie.Mobs
             }
             else _root.localScale = Vector3.one;
             if (_mpb == null) _mpb = new MaterialPropertyBlock();
-            _mpb.SetColor(ColorId, Flash ? new Color(3f, 3f, 3f, 1f) : Color.white);
+            // Minecraft: red for half a second when hurt (and red while dead); the creeper's white flash
+            bool red = Time.time < _hurtUntil || dead;
+            _mpb.SetColor(ColorId, Flash ? new Color(3f, 3f, 3f, 1f) : red ? new Color(1f, 0.45f, 0.45f, 1f) : Color.white);
             foreach (var r in _ours) if (r != null) r.SetPropertyBlock(_mpb);
 
             // Minecraft's leg swing: cos(phase * 0.6662) * 1.4 * amount, opposite legs half a turn apart
@@ -214,7 +228,7 @@ namespace SteveDaysToDie.Mobs
             _lastPos = p;
             float speed = Time.deltaTime > 0f ? moved / Time.deltaTime : 0f;
             _amount = Mathf.MoveTowards(_amount, dead ? 0f : Mathf.Clamp01(speed / 3f), Time.deltaTime * 4f);
-            _phase += moved * 6f;
+            _phase += moved * 4f;          // Minecraft: limb swing grows 4 per block walked
             foreach (var (t, leg) in _legs)
             {
                 float a = Mathf.Cos(_phase * 0.6662f + ((leg == 0 || leg == 3) ? 0f : Mathf.PI)) * 1.4f * _amount;
@@ -222,7 +236,7 @@ namespace SteveDaysToDie.Mobs
             }
         }
 
-        float _nextSay = -1f, _lastHp = -1f; bool _saidDeath;
+        float _nextSay = -1f, _lastHp = -1f, _hurtUntil; bool _saidDeath;
         void Voices(bool dead)
         {
             string say = AnimalId == "cow" ? "mob/cow/say" : AnimalId == "pig" ? "mob/pig/say" : AnimalId == "sheep" ? "mob/sheep/say" : AnimalId == "chicken" ? "mob/chicken/say" : null;
@@ -235,7 +249,7 @@ namespace SteveDaysToDie.Mobs
                 return;
             }
             float hp = _e.Health;
-            if (_lastHp >= 0f && hp < _lastHp) Sound.MinecraftSounds.PlayGroup(hurt, at, 16f, 1f, 1f + (Random.value - Random.value) * 0.2f);
+            if (_lastHp >= 0f && hp < _lastHp) { Sound.MinecraftSounds.PlayGroup(hurt, at, 16f, 1f, 1f + (Random.value - Random.value) * 0.2f); _hurtUntil = Time.time + 0.5f; }
             _lastHp = hp;
             if (_nextSay < 0f) _nextSay = Time.time + Random.Range(4f, 16f);
             if (Time.time >= _nextSay) { _nextSay = Time.time + Random.Range(8f, 20f); Sound.MinecraftSounds.PlayGroup(say, at, 16f, 0.8f, 1f + (Random.value - Random.value) * 0.2f); }

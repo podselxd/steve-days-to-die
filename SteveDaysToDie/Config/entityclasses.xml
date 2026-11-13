@@ -9,28 +9,45 @@
         <entity_class name="mcCow" extends="animalDoe">
             <property name="Tags" value="entity,animal,minecraft,mccow"/>
             <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
             <drop event="Harvest" name="mc_beef" count="3" tag="allHarvest"/>
             <drop event="Harvest" name="mc_leather" count="2" tag="allHarvest"/>
         </entity_class>
         <entity_class name="mcPig" extends="animalDoe">
             <property name="Tags" value="entity,animal,minecraft,mcpig"/>
             <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
             <drop event="Harvest" name="mc_porkchop" count="3" tag="allHarvest"/>
         </entity_class>
         <entity_class name="mcSheep" extends="animalDoe">
             <property name="Tags" value="entity,animal,minecraft,mcsheep"/>
             <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.15"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
             <drop event="Harvest" name="mc_mutton" count="2" tag="allHarvest"/>
             <drop event="Harvest" name="mc_white_wool" count="1" tag="allHarvest"/>
         </entity_class>
         <entity_class name="mcChicken" extends="animalChicken">
             <property name="Tags" value="entity,animal,minecraft,mcchicken"/>
             <property name="UserSpawnType" value="Menu"/>
+            <property name="AITask-2" value="Look"/>
+            <property name="MoveSpeed" value="0.12"/>
+            <property name="MoveSpeedPanic" value="0.7"/>
             <drop event="Harvest" name="mc_chicken" count="1" tag="allHarvest"/>
             <drop event="Harvest" name="mc_feather" count="2" tag="allHarvest"/>
         </entity_class>
         <entity_class name="mcCreeper" extends="zombieBoe">
             <property name="UserSpawnType" value="Menu"/>
+            <property name="MoveSpeed" value="0.25"/>
+            <property name="MoveSpeedAggro" value="0.6, 0.6"/>
+            <property name="MoveSpeedRand" value="0, 0"/>
+            <property name="JumpMaxDistance" value="1.2, 1.2"/>
+            <effect_group name="mcCreeper health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
             <drop event="Harvest" name="mc_gunpowder" count="2" tag="allHarvest"/>
         </entity_class>
     </append>

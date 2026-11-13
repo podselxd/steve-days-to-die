@@ -58,14 +58,18 @@ namespace SteveDaysToDie.Mobs
                 var props = new DynamicProperties();
                 var ex = new DynamicProperties();
                 ex.Values["ParticleIndex"] = "7";
-                ex.Values["RadiusBlocks"] = "4";
+                // Minecraft's creeper: power 3 - about 3 blocks of blocks, hurts up to ~6 blocks away, ~21 hearts
+                // point blank (x5 for 7 Days' 100 health = 200, less with distance and armour)
+                ex.Values["RadiusBlocks"] = "3";
                 ex.Values["BlockDamage"] = "700";      // breaks Minecraft blocks too (they take 300-400)
                 ex.Values["RadiusEntities"] = "6";
-                ex.Values["EntityDamage"] = "140";
+                ex.Values["EntityDamage"] = "200";
                 props.Classes["Explosion"] = ex;
                 var data = new ExplosionData(props);
-                GameManager.Instance.ExplosionServer(pos, World.worldToBlockPos(pos), Quaternion.identity, data, _e.entityId, 0f, false);
-                GameManager.Instance.World.RemoveEntity(_e.entityId, EnumRemoveEntityReason.Killed);
+                // gone first: its own blast tore the 7 Days zombie inside into pieces that stayed on the ground
+                int id = _e.entityId;
+                GameManager.Instance.World.RemoveEntity(id, EnumRemoveEntityReason.Killed);
+                GameManager.Instance.ExplosionServer(pos, World.worldToBlockPos(pos), Quaternion.identity, data, -1, 0f, false);
             }
             catch (System.Exception e) { Debug.LogWarning("[SVD] creeper explosion: " + e.Message); }
         }

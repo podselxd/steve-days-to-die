@@ -49,6 +49,10 @@
       <HintPath>$(GAME7DTD)\7DaysToDie_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="InControl">
+      <HintPath>$(GAME7DTD)\7DaysToDie_Data\Managed\InControl.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="NGUI">
       <HintPath>$(GAME7DTD)\7DaysToDie_Data\Managed\NGUI.dll</HintPath>
       <Private>false</Private>
