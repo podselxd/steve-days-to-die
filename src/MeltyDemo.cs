@@ -608,6 +608,23 @@ namespace SteveDaysToDie
                     var st = SteveDaysToDie.Crafting.McItems.Stack(id, 1);
                     Debug.Log($"[SVD] lote2: inventory armour {id} -> slot {slot}: {inv.TestEquip(st, slot)}");
                 }
+            // 3b. armour: a 20-point zombie hit with the iron set on, and without
+            try
+            {
+                var zsrc = new DamageSourceEntity(EnumDamageSource.External, EnumDamageTypes.Bashing, -1);
+                p.Stats.Health.Value = p.Stats.Health.Max; float h0 = p.Health;
+                p.DamageEntity(zsrc, 20, false, 1f); float withArmour = h0 - p.Health;
+                for (int i = 0; i < 4; i++) p.equipment.SetSlotItem(i, ItemValue.None.Clone());
+                p.Stats.Health.Value = p.Stats.Health.Max; h0 = p.Health;
+                p.DamageEntity(zsrc, 20, false, 1f); float without = h0 - p.Health;
+                p.Stats.Health.Value = p.Stats.Health.Max;
+                Debug.Log($"[SVD] lote2: a 20 hit takes {withArmour:0} with the iron set, {without:0} without (Minecraft formula: about 9 with)");
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo armour hit: " + ex.Message); }
+            // frames per second over 5 s (960x540 window)
+            int frames = 0; float t0 = Time.realtimeSinceStartup;
+            while (Time.realtimeSinceStartup - t0 < 5f) { frames++; yield return null; }
+            Debug.Log($"[SVD] lote2: fps {frames / 5f:0}");
             // 4. a Minecraft cow hit: red, no blood
             EntityAlive cow = null;
             try { cow = EntityFactory.CreateEntity(EntityClass.FromString("mcCow"), p.position + fwd * 3f + Vector3.up * 0.5f) as EntityAlive; if (cow != null) world.SpawnEntityInWorld(cow); } catch { }
@@ -624,6 +641,26 @@ namespace SteveDaysToDie
             yield return Wait(1.5f);
             Debug.Log($"[SVD] lote2: creeper gone {(c == null || world.GetEntity(c.entityId) == null)}, player health {hp:0} -> {p.Health:0}");
             yield return Shot("lote2-1-tras-creeper");
+            // leaves and glass next to each other (see-through holes), and a phantom
+            var lp = World.worldToBlockPos(p.position + fwd * 3f + Vector3.up);
+            try
+            {
+                world.SetBlockRPC(lp, Block.GetBlockValue("mc_oak_leaves"));
+                world.SetBlockRPC(lp + new Vector3i(Mathf.RoundToInt(side.x), 0, Mathf.RoundToInt(side.z)), Block.GetBlockValue("mc_glass"));
+                world.SetBlockRPC(lp - new Vector3i(Mathf.RoundToInt(side.x), 0, Mathf.RoundToInt(side.z)), Block.GetBlockValue("mc_birch_leaves"));
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo leaves: " + ex.Message); }
+            EntityAlive ph = null;
+            try { ph = EntityFactory.CreateEntity(EntityClass.FromString("mcPhantom"), p.position + fwd * 5f + Vector3.up * 3f) as EntityAlive; if (ph != null) world.SpawnEntityInWorld(ph); } catch (Exception ex) { Debug.LogWarning("[SVD] demo phantom: " + ex.Message); }
+            try { if (p.vp_FPCamera != null) { p.vp_FPCamera.Yaw = Quaternion.LookRotation(fwd).eulerAngles.y; p.vp_FPCamera.Pitch = -5f; } } catch { }
+            yield return Wait(4f);
+            Debug.Log("[SVD] lote2: phantom built " + (ph != null && ph.GetComponent<SteveDaysToDie.Mobs.McAnimal>() != null) + ", flying " + (ph != null && ph.GetComponent<SteveDaysToDie.Mobs.McPhantom>() != null) + ", height above player " + (ph != null ? (ph.position.y - p.position.y).ToString("0.0") : "-"));
+            foreach (var w in new[] { "mc_bow", "mc_crossbow", "mc_arrow", "mc_trident", "mc_mace" })
+            {
+                var ic = ItemClass.GetItemClass(w);
+                Debug.Log($"[SVD] lote2: weapon {w}: {(ic == null ? "missing" : ic.Actions[0]?.GetType().Name ?? "no action")}");
+            }
+            yield return Shot("lote2-2-hojas-phantom");
         }
 
         // ---- Minecraft door, chest and barrel, and a dropped block ----

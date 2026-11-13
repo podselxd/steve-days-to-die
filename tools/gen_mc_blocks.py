@@ -60,6 +60,13 @@ def png_has_alpha(path):
         d = z.read("assets/minecraft/textures/%s.png" % path.replace("minecraft:", ""))
     except KeyError:
         return False
+    if d[25] == 3:                     # palette PNG: see-through when it has a tRNS chunk with some alpha < 255
+        pos = 8
+        while pos < len(d):
+            ln, typ = struct.unpack(">I4s", d[pos:pos + 8])
+            if typ == b"tRNS": return any(b < 250 for b in d[pos + 8:pos + 8 + ln])
+            pos += 12 + ln
+        return False
     if d[25] not in (4, 6):            # colour type: 4 = grey+alpha, 6 = RGBA
         return False
     w, h = struct.unpack(">II", d[16:24])
@@ -225,7 +232,7 @@ for b in states:
         skipped["texture"] = skipped.get("texture", 0) + 1
         continue
     tinted = any("tintindex" in f for f in e["faces"].values())
-    see_through = any(png_has_alpha(f) for f in set(faces))
+    see_through = any(png_has_alpha(f) for f in set(faces)) or "leaves" in b
     mat, dmg = material(b)
     tint = "-"
     if tinted:

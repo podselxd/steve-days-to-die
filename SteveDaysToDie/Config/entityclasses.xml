@@ -50,5 +50,11 @@
             <effect_group name="mcCreeper health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
             <drop event="Harvest" name="mc_gunpowder" count="2" tag="allHarvest"/>
         </entity_class>
+        <entity_class name="mcPhantom" extends="animalZombieVulture">
+            <property name="UserSpawnType" value="Menu"/>
+            <property name="MoveSpeed" value="0.5"/>
+            <effect_group name="mcPhantom health"><passive_effect name="HealthMax" operation="base_set" value="100"/></effect_group>
+            <drop event="Harvest" name="mc_phantom_membrane" count="1" tag="allHarvest"/>
+        </entity_class>
     </append>
 </configs>

@@ -31,6 +31,8 @@ namespace SteveDaysToDie.Patches
                     p.inventory.SetFocusedItemIdx(next);
                     p.inventory.SetHoldingItemIdxNoHolsterTime(next);
                 }
+                // placing a block swings the arm, like Minecraft
+                if (Input.GetMouseButtonDown(1) && p.inventory.holdingItem is ItemClassBlock) Ryan.FirstPerson.Swing();
                 // Q: drop
                 if (Input.GetKeyDown(Settings.GetKey("tecla_tirar", KeyCode.Q)))
                 {
@@ -86,10 +88,18 @@ namespace SteveDaysToDie.Patches
                 var ui = LocalPlayerUI.GetUIForPlayer(p);
                 var a = ui != null ? ui.playerInput : null;
                 if (a == null) return;
+                // Minecraft: Shift = sneak, Ctrl = sprint. 7 Days had Shift = run, C = crouch, Ctrl = toggle crouch:
+                // C takes the toggle crouch, Ctrl becomes sprint (double-tap W sprints too)
                 var shift = new InControl.KeyBindingSource(InControl.Key.LeftShift);
+                var ctrl = new InControl.KeyBindingSource(InControl.Key.LeftControl);
+                var c = new InControl.KeyBindingSource(InControl.Key.C);
                 a.Run.RemoveBinding(shift);
                 if (!a.Crouch.HasBinding(shift)) a.Crouch.AddBinding(shift);
-                Debug.Log("[SVD] controls: Shift = sneak (Minecraft); sprint = double-tap W");
+                a.Crouch.RemoveBinding(c);
+                a.ToggleCrouch.RemoveBinding(ctrl);
+                if (!a.ToggleCrouch.HasBinding(c)) a.ToggleCrouch.AddBinding(c);
+                if (!a.Run.HasBinding(ctrl)) a.Run.AddBinding(ctrl);
+                Debug.Log("[SVD] controls: Shift = sneak, Ctrl = sprint, C = toggle crouch (Minecraft)");
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] shift binding: " + ex.Message); }
         }

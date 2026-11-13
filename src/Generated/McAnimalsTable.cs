@@ -11,6 +11,7 @@ namespace SteveDaysToDie.Generated
             ["mcSheep"] = ("sheep", "assets/minecraft/textures/entity/sheep/sheep.png"),
             ["mcChicken"] = ("chicken", "assets/minecraft/textures/entity/chicken/chicken_temperate.png"),
             ["mcCreeper"] = ("creeper", "assets/minecraft/textures/entity/creeper/creeper.png"),
+            ["mcPhantom"] = ("phantom", "assets/minecraft/textures/entity/phantom/phantom.png"),
         };
     }
 }

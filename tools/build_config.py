@@ -206,6 +206,25 @@ for i in _mcids:
     if i in _MCBLOCKS:
         _rows.append((i, "block"))
         continue
+    # Minecraft's ranged and special weapons on 7 Days' own (user 2026-11-13: bows, arrows, crossbow, trident, mace)
+    _WPN = {"bow": ("gunBowT1WoodenBow", "mc_arrow,mc_spectral_arrow,mc_tipped_arrow,ammoArrowStone,ammoArrowIron,ammoArrowSteelAP,ammoArrowFlaming,ammoArrowExploding"),
+            "crossbow": ("gunBowT1IronCrossbow", "mc_arrow,mc_spectral_arrow,mc_tipped_arrow,ammoCrossbowBoltStone,ammoCrossbowBoltIron,ammoCrossbowBoltSteelAP"),
+            "arrow": ("ammoArrowIron", None), "spectral_arrow": ("ammoArrowSteelAP", None), "tipped_arrow": ("ammoArrowIron", None),
+            "trident": ("meleeWpnSpearT1IronSpear", None), "mace": ("meleeWpnSledgeT1IronSledgehammer", None)}
+    if i in _WPN and _WPN[i][0] in sd.items:
+        import xml.etree.ElementTree as _ET
+        _base, _mag = _WPN[i]
+        _eg = ""
+        for _g in sd.items[_base].findall("effect_group"):
+            _g = _ET.fromstring(_ET.tostring(_g)); _g.set("name", "mc_%s" % i)
+            _eg += " ".join(_ET.tostring(_g, encoding="unicode").split())
+        _act = '<property class="Action0"><property name="Magazine_items" value="%s"/></property>' % _mag if _mag else ""
+        _stk = 64 if i.endswith("arrow") else 1
+        _mx.append('        <item name="mc_%s"><property name="Extends" value="%s"/><property name="CustomIcon" value="mc_%s"/>'
+                   '<property name="CustomIconTint" value="ffffff"/><property name="Stacknumber" value="%d"/><property name="DescriptionKey" value="mcItemDesc"/>%s%s</item>'
+                   % (i, _base, i, _stk, _act, _eg))
+        _rows.append((i, k))
+        continue
     if i in ("bucket", "water_bucket"):
         # Minecraft's bucket on 7 Days' bucket: right click takes water (7 Days' water too) and puts it back
         _base, _to = ("bucketEmpty", "mc_water_bucket") if i == "bucket" else ("bucketRiverWater", "mc_bucket")
@@ -225,11 +244,11 @@ for i in _mcids:
         _mx.append('        <item name="mc_%s"><property name="Extends" value="%s"/><property name="CustomIcon" value="mc_%s"/>'
                    '<property name="CustomIconTint" value="ffffff"/><property name="Stacknumber" value="1"/><property name="DescriptionKey" value="mcItemDesc"/>'
                    '<effect_group name="mc_%s"><passive_effect name="ModSlots" operation="base_set" value="0"/>'
-                   '<passive_effect name="PhysicalDamageResist" operation="base_add" value="%d"/>'
+                   '<passive_effect name="PhysicalDamageResist" operation="base_set" value="0"/>'     # Minecraft's formula: Patches.McArmor
                    '<passive_effect name="ElementalDamageResist" operation="base_add" value="%d"/>'
                    '<passive_effect name="DegradationMax" operation="base_set" value="%d"/>'
                    '<passive_effect name="DegradationPerUse" operation="base_set" value="1"/></effect_group></item>'
-                   % (i, _base, i, i, _pts * 4, _pts * 2, _dur))
+                   % (i, _base, i, i, _pts * 2, _dur))
         _rows.append((i, k))
         continue
     if i in _FOODS:
@@ -325,8 +344,9 @@ for r in _mcb_rows:
     elif i in _CLASS: _bx.append('            <property name="Class" value="%s"/>' % _CLASS[i])
     _sp = dict(kv.split("=", 1) for kv in (r.get("special") or "").split(";") if "=" in kv)
     _hid = (("Shape", "ModelEntity"), ("Model", "@:Entities/Misc/block_missingPrefab.prefab"), ("LightOpacity", "0"))
-    if r["render"] == "model" and _sp.get("shape") != "slab": _bx.append('            <property name="Class" value="McHidden, SteveDaysToDie"/>')
-    _shape = (("Shape", "ModelEntity"), ("Model", "@:Entities/Lighting/torch_wallPrefab.prefab"), ("LightOpacity", "0")) if _thin         else (("Shape", "New"), ("Model", "@:Shapes/cube_half.fbx"), ("Texture", "14"), ("LightOpacity", "0")) if _sp.get("shape") == "slab"         else _hid + (("Place", "TowardsPlacerInverted"),) if _sp.get("shape") == "solid"         else _hid + (("Place", "TowardsPlacerInverted"), ("Collide", "melee,bullet,arrow,rocket")) if r["render"] == "model"         else (("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"))
+    if (r["render"] == "model" and _sp.get("shape") != "slab") or (r["render"] == "cutout" and i not in _CLASS):
+        _bx.append('            <property name="Class" value="McHidden, SteveDaysToDie"/>')
+    _shape = (("Shape", "ModelEntity"), ("Model", "@:Entities/Lighting/torch_wallPrefab.prefab"), ("LightOpacity", "0")) if _thin         else (("Shape", "New"), ("Model", "@:Shapes/cube_half.fbx"), ("Texture", "14"), ("LightOpacity", "0")) if _sp.get("shape") == "slab"         else _hid if r["render"] == "cutout"         else _hid + (("Place", "TowardsPlacerInverted"),) if _sp.get("shape") == "solid"         else _hid + (("Place", "TowardsPlacerInverted"), ("Collide", "melee,bullet,arrow,rocket")) if r["render"] == "model"         else (("Shape", "New"), ("Model", "@:Shapes/Cube.fbx"), ("Texture", "14"))
     for k, v in (("Material", r["material7d"]),) + _shape + (
                  ("MaxDamage", str(r["maxDamage7d"])), ("StabilityIgnore", "true"), ("DisplayType", "blockHardened"),
                  ("Tags", "stevedays"), ("Group", "Building,Minecraft"), ("CreativeMode", "Player"),
@@ -343,10 +363,23 @@ for i in _SIGNS:
         ("Group", "Building,Minecraft"), ("DescriptionKey", "mcItemDesc"), ("Stacknumber", "16"))] +            ['            <drop event="Destroy" name="mc_%s" count="1"/>' % i, '        </block>']
 _bx.append("    </append>")
 _bpath = os.path.join(ROOT, "SteveDaysToDie", "Config", "blocks.xml")
+_lootadd = {
+    "groupCraftingCommon": [("mc_string", "1,4"), ("mc_stick", "2,8"), ("mc_coal", "1,6"), ("mc_iron_nugget", "2,9"), ("mc_leather", "1,3"), ("mc_paper", "1,4")],
+    "groupCraftingUncommon": [("mc_iron_ingot", "1,3"), ("mc_gold_ingot", "1,2"), ("mc_redstone", "1,6"), ("mc_gunpowder", "1,3"), ("mc_book", "1")],
+    "groupCraftingRare": [("mc_diamond", "1"), ("mc_emerald", "1,2"), ("mc_ender_pearl", "1"), ("mc_name_tag", "1"), ("mc_saddle", "1")],
+    "cannedfood": [("mc_bread", "1,3"), ("mc_apple", "1,3"), ("mc_cooked_beef", "1,2"), ("mc_carrot", "1,4"), ("mc_baked_potato", "1,3")],
+    "rareFoodDrink": [("mc_golden_apple", "1"), ("mc_cake", "1")],
+}
+_loot_extra = []
+for _g, _its in _lootadd.items():
+    _its = [(n, c) for n, c in _its if n[3:] in _ids_all]
+    if _its:
+        _loot_extra.append('    <append xpath="/lootcontainers/lootgroup[@name=\'%s\']">%s</append>' % (_g, "".join('<item name="%s" count="%s"/>' % ic for ic in _its)))
 _loot = ["<configs>", "    <!-- GENERATED by tools/build_config.py: Minecraft's chest and barrel hold 27 stacks (9 x 3) -->",
          '    <append xpath="/lootcontainers">',
          '        <lootcontainer name="mcChestStorage" count="0" size="9,3" sound_open="UseActions/crate_wood_open" sound_close="UseActions/crate_wood_close" loot_quality_template="qualBaseTemplate">',
-         '            <item name="cobweb" count="0"/>', "        </lootcontainer>", "    </append>", "</configs>", ""]
+         '            <item name="cobweb" count="0"/>', "        </lootcontainer>", "    </append>",
+         "    <!-- Minecraft things in 7 Days' loot (user 2026-11-13) -->"] + _loot_extra + ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "loot.xml"), "w", encoding="utf-8").write(chr(10).join(_loot))
 _b = open(_bpath, encoding="utf-8").read()
 _s0, _s1 = "<!-- BEGIN GENERATED MC BLOCKS -->", "<!-- END GENERATED MC BLOCKS -->"
@@ -434,13 +467,13 @@ ec += ["    </append>"]
 # DOUBLE LOOT (user 2026-11-13): the 7 Days drops of the base animal are inherited AND Minecraft's are added
 ec += ["</configs>", ""]
 _eg = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json -->", '    <append xpath="/entitygroups">',
-       '        <entitygroup name="mcAnimals">'] + ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"] if not r.get("hostile")] +       ['        </entitygroup>', '        <entitygroup name="mcMonsters">'] + ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("hostile")] +       ['        </entitygroup>', "    </append>"]
+       '        <entitygroup name="mcAnimals">'] + ['            <e n="%s" p="%d"/>' % (r["class"], r["weight"]) for r in _an["rows"] if not r.get("hostile")] +       ['        </entitygroup>', '        <entitygroup name="mcMonsters">'] + ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("hostile") and not r.get("night")] +       ['        </entitygroup>', '        <entitygroup name="mcNight">'] + ['            <e n="%s" p="1"/>' % r["class"] for r in _an["rows"] if r.get("night")] + ['        </entitygroup>', "    </append>"]
 # 7 Days animals that look like a Minecraft one are replaced by it everywhere they spawn (user 2026-11-13)
 for _old, _new in _an["replace"]:
     _eg.append("    <set xpath=\"/entitygroups/entitygroup/e[@n='%s']/@n\">%s</set>" % (_old, _new))
 # creepers in every horde (wandering hordes and blood moon), one more member of the list (user 2026-11-13)
 for r in _an["rows"]:
-    if r.get("hostile"):
+    if r.get("hostile") and not r.get("night"):
         _eg.append("    <append xpath=\"/entitygroups/entitygroup[contains(@name,'Horde')]\"><e n=\"%s\"/></append>" % r["class"])
 _eg += ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "entitygroups.xml"), "w", encoding="utf-8").write(chr(10).join(_eg))
@@ -450,6 +483,7 @@ for b, mx, n, delay in _an["biomes"]:
         _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mca%d\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Day\" entitygroup=\"mcAnimals\"/></append>" % (b, k + 1, mx, delay))
 for b, mx, delay in _an.get("monsters", []):
     _sp.append("    <append xpath=\"/spawning/biome[@name='%s']\"><spawn id=\"mcm1\" maxcount=\"%d\" respawndelay=\"%s\" time=\"Any\" entitygroup=\"mcMonsters\"/></append>" % (b, mx, delay))
+    # (phantoms are not spawned here: src/Mobs/McPhantom.cs Spawner, after 3 nights without sleeping)
 _sp += ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "spawning.xml"), "w", encoding="utf-8").write(chr(10).join(_sp))
 _at = ["// GENERATED by tools/build_config.py from sheets/mc_animals.json. Do not edit by hand.", "namespace SteveDaysToDie.Generated", "{",

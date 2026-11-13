@@ -118,13 +118,16 @@ public static class FirstPerson
 
 	private static bool hooked;
 
+	private static float lastScan;
+
 	// right before the frame is drawn: hide any 7 Days held model made after our LateUpdate (no flash)
 	private static void BeforeRender()
 	{
 		if (lastPlayer != null && root != null && root.activeSelf)
 		{
 			if (handCam != null) handCam.fieldOfView = 70f;
-			rescan = 0f;
+			// a full search at most every 0.1 s (it ran twice a frame); the known ones are hidden every frame
+			if (Time.time - lastScan >= 0.1f) { lastScan = Time.time; rescan = 0f; }
 			HideNativeArms(lastPlayer);
 		}
 	}
@@ -235,7 +238,7 @@ public static class FirstPerson
 		rescan -= Time.deltaTime;
 		if (rescan <= 0f)
 		{
-			rescan = 0f;   // every frame: a new 7 Days model (the sack) showed for a moment otherwise
+			rescan = 0.1f;   // a new 7 Days model (the sack) is caught within 0.1 s (BeforeRender checks too)
 			// keep everything hidden so far (the game pools its models; dropping them here left them hidden for good)
 			hiddenRenderers.RemoveAll((Renderer r) => r == null);
 			GameObject gameObject = ((p.emodel != null) ? (p.emodel.avatarController as AvatarLocalPlayerController) : null)?.FPSArms?.Parts?.BodyObj;

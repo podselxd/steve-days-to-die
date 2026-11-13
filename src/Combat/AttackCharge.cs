@@ -146,6 +146,14 @@ namespace SteveDaysToDie.Combat
                     bool crit = _chargeAtPress > 0.9f && IsFalling(local) && !local.MovementRunning;
                     int before = _strength;
                     _strength = Damage(before, _chargeAtPress, crit, ItemModifiers.ExtraDamage(_damageSource.AttackingItem));
+                    // Minecraft's mace smash: +4 per block fallen for the first 3, +2 per block for the next 5, +1 after
+                    // (Minecraft health; x5 for 7 Days), and the fall itself is forgiven
+                    if (local.inventory?.holdingItem?.Name == "mc_mace" && local.fallDistance > 1.5f)
+                    {
+                        float f = local.fallDistance, bonus = Mathf.Min(f, 3f) * 4f + Mathf.Clamp(f - 3f, 0f, 5f) * 2f + Mathf.Max(0f, f - 8f);
+                        _strength += Mathf.RoundToInt(bonus * 5f);
+                        local.fallDistance = 0f;
+                    }
                     if (crit) LastCritTime = Time.time;
                     HitCount++;
                     LastHitBefore = before; LastHitAfter = _strength; LastHitCrit = crit;

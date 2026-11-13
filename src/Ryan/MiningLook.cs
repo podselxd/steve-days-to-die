@@ -37,7 +37,8 @@ namespace SteveDaysToDie.Ryan
                 if (Voxel.Raycast(p.world, ray, 4.5f, -538750989, 128, 0f))
                 {
                     var hit = Voxel.voxelRayHitInfo;
-                    if (hit.tag != null && GameUtils.IsBlockOrTerrain(hit.tag) && !p.world.GetBlock(hit.hit.blockPos).isair)
+                    bool blockHit = hit.tag != null && (GameUtils.IsBlockOrTerrain(hit.tag) || !hit.tag.StartsWith("E_"));
+                    if (blockHit && !p.world.GetBlock(hit.hit.blockPos).isair)
                     {
                         _hasTarget = true;
                         _target = hit.hit.blockPos;

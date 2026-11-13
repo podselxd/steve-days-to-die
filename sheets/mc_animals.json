@@ -111,6 +111,26 @@
     "JumpMaxDistance": "1.2, 1.2"
    },
    "health": 100
+  },
+  {
+   "id": "phantom",
+   "class": "mcPhantom",
+   "base": "animalZombieVulture",
+   "texture": "entity/phantom/phantom.png",
+   "drops": [
+    [
+     "phantom_membrane",
+     1
+    ]
+   ],
+   "weight": 0,
+   "hostile": true,
+   "night": true,
+   "props": {
+    "MoveSpeed": "0.5"
+   },
+   "health": 100,
+   "verified": "datos_ok"
   }
  ],
  "biomes": [

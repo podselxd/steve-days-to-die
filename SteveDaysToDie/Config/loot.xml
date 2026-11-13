@@ -5,4 +5,10 @@
             <item name="cobweb" count="0"/>
         </lootcontainer>
     </append>
+    <!-- Minecraft things in 7 Days' loot (user 2026-11-13) -->
+    <append xpath="/lootcontainers/lootgroup[@name='groupCraftingCommon']"><item name="mc_string" count="1,4"/><item name="mc_stick" count="2,8"/><item name="mc_coal" count="1,6"/><item name="mc_iron_nugget" count="2,9"/><item name="mc_leather" count="1,3"/><item name="mc_paper" count="1,4"/></append>
+    <append xpath="/lootcontainers/lootgroup[@name='groupCraftingUncommon']"><item name="mc_iron_ingot" count="1,3"/><item name="mc_gold_ingot" count="1,2"/><item name="mc_redstone" count="1,6"/><item name="mc_gunpowder" count="1,3"/><item name="mc_book" count="1"/></append>
+    <append xpath="/lootcontainers/lootgroup[@name='groupCraftingRare']"><item name="mc_diamond" count="1"/><item name="mc_emerald" count="1,2"/><item name="mc_ender_pearl" count="1"/><item name="mc_name_tag" count="1"/><item name="mc_saddle" count="1"/></append>
+    <append xpath="/lootcontainers/lootgroup[@name='cannedfood']"><item name="mc_bread" count="1,3"/><item name="mc_apple" count="1,3"/><item name="mc_cooked_beef" count="1,2"/><item name="mc_carrot" count="1,4"/><item name="mc_baked_potato" count="1,3"/></append>
+    <append xpath="/lootcontainers/lootgroup[@name='rareFoodDrink']"><item name="mc_golden_apple" count="1"/><item name="mc_cake" count="1"/></append>
 </configs>

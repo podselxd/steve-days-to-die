@@ -19,6 +19,7 @@ namespace SteveDaysToDie.Patches
                 a.AnimalId = mc.id;
                 a.TexturePath = mc.texture;
                 if (mc.id == "creeper" && __instance.GetComponent<McCreeper>() == null) __instance.gameObject.AddComponent<McCreeper>();
+                if (mc.id == "phantom" && __instance.GetComponent<McPhantom>() == null) __instance.gameObject.AddComponent<McPhantom>();
                 return;
             }
             // 7 Days animals keep their own look: the old texture swap (Minecraft skins on 7 Days bodies) is gone

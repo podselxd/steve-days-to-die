@@ -51,6 +51,18 @@ namespace SteveDaysToDie.Crafting
                     _seen.Add(tr.GetInstanceID());
                     _doors.Add(tr); Dressed++;
                 }
+                // every Minecraft block whose 7 Days shape must not show (hidden prefab: the blue "?" cube)
+                foreach (var kind in new[] { "model", "cutout", "torch" })
+                {
+                    Ryan.BlockOverlay.PositionsOf(kind, _pos);
+                    foreach (var pos in _pos)
+                    {
+                        if (!(world.GetBlock(pos).Block is BlockMcHidden)) continue;
+                        var tr = (world.GetChunkFromWorldPos(pos) as Chunk)?.GetBlockEntity(pos)?.transform;
+                        if (tr == null) continue;
+                        foreach (var r in tr.GetComponentsInChildren<Renderer>(true)) if (r.enabled) r.enabled = false;
+                    }
+                }
                 _doors.RemoveAll(t => t == null);
                 foreach (var d in _doors)
                     foreach (var r in d.GetComponentsInChildren<Renderer>(true)) if (r.enabled) r.enabled = false;

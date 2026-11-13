@@ -13,7 +13,7 @@ namespace SteveDaysToDie.Mobs
     {
         // one box: offset (from the part's pivot) and size, Minecraft model space (y down, -z = front), texture u,v
         struct B { public float x, y, z; public int w, h, d, u, v; public float grow; public bool wool; }
-        class Part { public string name; public Vector3 pivot; public float rotX; public B[] boxes; public int leg = -1; public bool head; }
+        class Part { public string name; public Vector3 pivot; public float rotX; public B[] boxes; public int leg = -1; public bool head; public int wing; public Part[] kids; }
 
         static B Bx(float x, float y, float z, int w, int h, int d, int u, int v, float grow = 0f, bool wool = false)
             => new B { x = x, y = y, z = z, w = w, h = h, d = d, u = u, v = v, grow = grow, wool = wool };
@@ -51,6 +51,18 @@ namespace SteveDaysToDie.Mobs
                         new Part { name = "body", pivot = new Vector3(0, 6, 0), boxes = new[] { Bx(-4, 0, -2, 8, 12, 4, 16, 16) } },
                         Leg4(0, new Vector3(-2, 18, 4)), Leg4(1, new Vector3(2, 18, 4)), Leg4(2, new Vector3(-2, 18, -4)), Leg4(3, new Vector3(2, 18, -4)),
                     };
+                case "phantom":
+                    // Minecraft's PhantomModel (texture 64x64): body, head, two-part wings that flap, two-part tail
+                    return new[]
+                    {
+                        new Part { name = "body", pivot = new Vector3(0, 12, 0), rotX = -6, boxes = new[] { Bx(-3, -2, -8, 5, 3, 9, 0, 8) },
+                                   kids = new[] {
+                                       new Part { name = "head", head = true, pivot = new Vector3(0, 1, -7), rotX = 11, boxes = new[] { Bx(-4, -2, -5, 7, 3, 5, 0, 0) } },
+                                       new Part { name = "tail", pivot = new Vector3(0, -2, 1), boxes = new[] { Bx(-2, 0, 0, 3, 2, 6, 3, 20), Bx(-1, 0.5f, 6, 1, 1, 6, 4, 29) } },
+                                       new Part { name = "wingL", wing = 1, pivot = new Vector3(2, -2, -8), boxes = new[] { Bx(0, 0, 0, 6, 2, 9, 23, 12), Bx(6, 0, 0, 13, 1, 9, 16, 24) } },
+                                       new Part { name = "wingR", wing = -1, pivot = new Vector3(-3, -2, -8), boxes = new[] { Bx(-6, 0, 0, 6, 2, 9, 23, 12), Bx(-19, 0, 0, 13, 1, 9, 16, 24) } },
+                                   } },
+                    };
                 case "chicken":
                     return new[]
                     {
@@ -81,6 +93,7 @@ namespace SteveDaysToDie.Mobs
         EntityAlive _e;
         Transform _root;
         readonly List<(Transform t, int leg)> _legs = new List<(Transform, int)>();
+        readonly List<(Transform t, int side)> _wings = new List<(Transform, int)>();
         readonly List<Renderer> _ours = new List<Renderer>();
         readonly List<Renderer> _scan = new List<Renderer>();
         readonly List<Renderer> _hide = new List<Renderer>();
@@ -127,8 +140,28 @@ namespace SteveDaysToDie.Mobs
             var wool = AnimalId == "sheep" ? Tex("assets/minecraft/textures/entity/sheep/sheep_wool.png") : null;
             _root = new GameObject("SVD_McAnimal_" + AnimalId).transform;
             _root.SetParent(transform, false);
+            void Add(Part part, Transform parent, bool child)
+            {
+                var go = new GameObject("SVD_" + part.name);
+                go.transform.SetParent(parent, false);
+                go.transform.localPosition = child ? new Vector3(-part.pivot.x, -part.pivot.y, -part.pivot.z) * Px
+                                                   : new Vector3(-part.pivot.x, 24f - part.pivot.y, -part.pivot.z) * Px;
+                go.transform.localRotation = Quaternion.Euler(part.rotX, 0f, 0f);
+                foreach (var b in part.boxes)
+                {
+                    var c = new GameObject("box");
+                    c.transform.SetParent(go.transform, false);
+                    c.AddComponent<MeshFilter>().sharedMesh = Box(b, tex);
+                    var mr = c.AddComponent<MeshRenderer>();
+                    mr.sharedMaterial = Mat(tex);
+                    _ours.Add(mr);
+                }
+                if (part.wing != 0) _wings.Add((go.transform, part.wing));
+                if (part.kids != null) foreach (var k in part.kids) Add(k, go.transform, true);
+            }
             foreach (var part in parts)
             {
+                if (part.kids != null) { Add(part, _root, false); continue; }
                 // Minecraft model space -> ours: x and z turned round, y up from the ground (24 px = the feet)
                 var go = new GameObject("SVD_" + part.name);
                 go.transform.SetParent(_root, false);
@@ -229,6 +262,9 @@ namespace SteveDaysToDie.Mobs
             float speed = Time.deltaTime > 0f ? moved / Time.deltaTime : 0f;
             _amount = Mathf.MoveTowards(_amount, dead ? 0f : Mathf.Clamp01(speed / 3f), Time.deltaTime * 4f);
             _phase += moved * 4f;          // Minecraft: limb swing grows 4 per block walked
+            // phantom wings: Minecraft flaps them all the time (about 16 degrees up and down)
+            foreach (var (t, side) in _wings)
+                t.localRotation = Quaternion.Euler(0f, 0f, side * Mathf.Cos(Time.time * 7.5f) * 16f);
             foreach (var (t, leg) in _legs)
             {
                 float a = Mathf.Cos(_phase * 0.6662f + ((leg == 0 || leg == 3) ? 0f : Mathf.PI)) * 1.4f * _amount;
