@@ -79,6 +79,67 @@ namespace SteveDaysToDie.McInv
         Crafting.McRecipes.Recipe _recipe;
         struct Slot { public Kind kind; public int idx; public float x, y; }
         readonly List<Slot> _slots = new List<Slot>();
+        // Minecraft's "quick craft" drag: press with something on the cursor, move over slots, release
+        int _dragButton = -1;                                   // 0 = share evenly, 1 = one each
+        readonly List<Slot> _drag = new List<Slot>();
+        bool _shiftDrag;                                        // shift + left held: quick-move every slot passed over
+        readonly List<Slot> _shiftDone = new List<Slot>();
+        static bool SameSlot(Slot a, Slot b) => a.kind == b.kind && a.idx == b.idx;
+        bool InDrag(Slot s) { foreach (var d in _drag) if (SameSlot(d, s)) return true; return false; }
+        bool Usable(Slot s) => s.kind != Kind.Result && !(s.kind == Kind.Bag && s.idx >= BagCount);
+
+        bool CanDragInto(Slot s)
+        {
+            if (!Usable(s) || !Accepts(s, _cursor) || s.kind == Kind.FOut) return false;
+            var here = Get(s);
+            return here.IsEmpty() || (Same(here, _cursor) && here.count < Max(here));
+        }
+
+        // what each dragged slot gets (Minecraft: left = cursor / slots, right = 1 each)
+        int DragShare(int n) => _dragButton == 1 ? 1 : Mathf.Max(1, _cursor.count / Mathf.Max(1, n));
+
+        int Room(Slot sl) { var h = Get(sl); return h.IsEmpty() ? Max(_cursor) : Max(h) - h.count; }
+
+        void FinishDrag()
+        {
+            int n = _drag.Count;
+            if (n == 1) Click(_drag[0], _dragButton, false);
+            else if (n > 1)
+            {
+                int share = DragShare(n);
+                foreach (var sl in _drag)
+                {
+                    if (_cursor.IsEmpty()) break;
+                    var here = Get(sl).Clone();
+                    int put = Mathf.Min(share, Mathf.Min(Room(sl), _cursor.count));
+                    if (put <= 0) continue;
+                    var st = here.IsEmpty() ? _cursor.Clone() : here;
+                    st.count = (here.IsEmpty() ? 0 : here.count) + put;
+                    Set(sl, st);
+                    _cursor.count -= put;
+                    if (_cursor.count <= 0) _cursor = ItemStack.Empty.Clone();
+                }
+            }
+            _drag.Clear();
+            _dragButton = -1;
+        }
+
+        // double click: every stack of the same item comes onto the cursor (up to a full stack)
+        void Collect()
+        {
+            if (_cursor.IsEmpty() || Max(_cursor) <= 1) return;
+            for (int pass = 0; pass < 2 && _cursor.count < Max(_cursor); pass++)          // small stacks first
+                foreach (var sl in _slots)
+                {
+                    if (!Usable(sl) || sl.kind == Kind.FOut || sl.kind == Kind.Armor) continue;
+                    var here = Get(sl).Clone();
+                    if (!Same(here, _cursor) || (pass == 0 && here.count >= Max(here))) continue;
+                    int take = Mathf.Min(here.count, Max(_cursor) - _cursor.count);
+                    here.count -= take; _cursor.count += take;
+                    Set(sl, here);
+                    if (_cursor.count >= Max(_cursor)) break;
+                }
+        }
 
         public static McInventory Instance { get; private set; }
         void Start() { _p = GetComponent<EntityPlayerLocal>(); Instance = this; }
@@ -574,14 +635,32 @@ namespace SteveDaysToDie.McInv
                         Fill(r, new Color(0.35f, 0.35f, 0.35f, 0.9f));     // a slot 7 Days doesn't give you (yet)
                         continue;
                     }
-                    DrawStack(Get(sl), r, s);
-                    if (isHover) Fill(r, new Color(1f, 1f, 1f, 0.5f));
+                    var shown = Get(sl);
+                    if (_drag.Count > 1 && InDrag(sl))
+                    {
+                        // Minecraft shows how it will be shared while you drag
+                        var pre = shown.IsEmpty() ? _cursor.Clone() : shown.Clone();
+                        pre.count = (shown.IsEmpty() ? 0 : shown.count) + Mathf.Min(DragShare(_drag.Count), Room(sl));
+                        shown = pre;
+                    }
+                    DrawStack(shown, r, s);
+                    if (isHover || InDrag(sl)) Fill(r, new Color(1f, 1f, 1f, 0.5f));
                 }
             }
 
             if (e.type == EventType.Repaint)
             {
-                if (!_cursor.IsEmpty()) DrawStack(_cursor, new Rect(e.mousePosition.x - 8 * s, e.mousePosition.y - 8 * s, 16 * s, 16 * s), s);
+                if (!_cursor.IsEmpty())
+                {
+                    var left = _cursor;
+                    if (_drag.Count > 1)
+                    {
+                        left = _cursor.Clone(); int share = DragShare(_drag.Count), used = 0;
+                        foreach (var d in _drag) used += Mathf.Min(share, Room(d));
+                        left.count = Mathf.Max(0, _cursor.count - used);
+                    }
+                    if (left.count > 0) DrawStack(left, new Rect(e.mousePosition.x - 8 * s, e.mousePosition.y - 8 * s, 16 * s, 16 * s), s);
+                }
                 else if (hover.HasValue)
                 {
                     var st = Get(hover.Value);
@@ -592,11 +671,41 @@ namespace SteveDaysToDie.McInv
             if (Time.time - _openedAt < 0.15f) return;
             if (_table && e.type == EventType.KeyDown && (e.keyCode == KeyCode.E || e.keyCode == KeyCode.Escape || e.keyCode == KeyCode.Tab)) { e.Use(); OnClose(); return; }
             if (e.type == EventType.MouseDown && e.button == 0 && !_table && PageClick(px, py, s, e.mousePosition)) { e.Use(); return; }
+            // Minecraft's drag: moving with a button held over slots
+            if (e.type == EventType.MouseDrag)
+            {
+                if (_dragButton >= 0 && hover.HasValue && !InDrag(hover.Value) && CanDragInto(hover.Value) && _drag.Count < _cursor.count)
+                    _drag.Add(hover.Value);
+                if (_shiftDrag && hover.HasValue && Usable(hover.Value))
+                {
+                    bool done = false; foreach (var d in _shiftDone) if (SameSlot(d, hover.Value)) done = true;
+                    if (!done) { _shiftDone.Add(hover.Value); var st = Get(hover.Value).Clone(); if (!st.IsEmpty()) QuickMove(hover.Value, st); }
+                }
+                if (_dragButton >= 0 || _shiftDrag) { e.Use(); return; }
+            }
+            if (e.type == EventType.MouseUp)
+            {
+                if (_dragButton >= 0 && e.button == _dragButton) { FinishDrag(); e.Use(); return; }
+                if (e.button == 0) { _shiftDrag = false; _shiftDone.Clear(); }
+            }
             if (e.type == EventType.MouseDown && (e.button == 0 || e.button == 1))
             {
                 if (hover.HasValue)
                 {
-                    if (!(hover.Value.kind == Kind.Bag && hover.Value.idx >= BagCount)) Click(hover.Value, e.button, e.shift);
+                    var hv = hover.Value;
+                    if (Usable(hv) || hv.kind == Kind.Result)
+                    {
+                        if (e.button == 0 && e.clickCount >= 2 && !_cursor.IsEmpty() && hv.kind != Kind.Result) Collect();   // double click: gather
+                        else if (!_cursor.IsEmpty() && !e.shift && hv.kind != Kind.Result && _dragButton < 0)
+                        {
+                            _dragButton = e.button; _drag.Clear(); _drag.Add(hv);                                       // start a drag
+                        }
+                        else
+                        {
+                            Click(hv, e.button, e.shift);
+                            if (e.shift && e.button == 0) { _shiftDrag = true; _shiftDone.Clear(); _shiftDone.Add(hv); }
+                        }
+                    }
                     e.Use();
                 }
                 else if (!_panel.Contains(e.mousePosition) && !_cursor.IsEmpty())

@@ -192,11 +192,23 @@ _ARMOR_POINTS.update({"golden_helmet": 2, "golden_chestplate": 5, "golden_leggin
                       "netherite_helmet": 3, "netherite_chestplate": 8, "netherite_leggings": 6, "netherite_boots": 3})
 _ARMOR_DUR = {"leather": 5, "golden": 7, "copper": 11, "chainmail": 15, "iron": 15, "turtle": 25, "diamond": 33, "netherite": 37}
 _FOODS = {r["id"]: r for r in json.load(open(os.path.join(ROOT, "sheets", "mc_foods.json"), encoding="utf-8"))["rows"]}
-_mcids = sorted(set(_mcids) | {r["id"] for r in _mcb_rows})
+# EVERY Minecraft item (user 2026-11-13), not only the ones recipes use: all of the jar's items/ but spawn eggs and
+# creative/developer ones (command blocks, structure blocks, barrier, light, debug stick...)
+_DEV = {"command_block", "chain_command_block", "repeating_command_block", "command_block_minecart", "structure_block",
+        "structure_void", "jigsaw", "barrier", "light", "debug_stick", "knowledge_book", "test_block", "test_instance_block", "air"}
+_mcids = sorted(set(_mcids) | {r["id"] for r in _mcb_rows} | {i for i in _mcitems if not i.endswith("_spawn_egg") and i not in _DEV})
 for i in _mcids:
     k = _kind(i)
     if i in _MCBLOCKS:
         _rows.append((i, "block"))
+        continue
+    if i in ("bucket", "water_bucket"):
+        # Minecraft's bucket on 7 Days' bucket: right click takes water (7 Days' water too) and puts it back
+        _base, _to = ("bucketEmpty", "mc_water_bucket") if i == "bucket" else ("bucketRiverWater", "mc_bucket")
+        _mx.append('        <item name="mc_%s"><property name="Extends" value="%s"/><property name="CustomIcon" value="mc_%s"/>'
+                   '<property name="CustomIconTint" value="ffffff"/><property name="DescriptionKey" value="mcItemDesc"/>'
+                   '<property class="Action1"><property name="Change_item_to" value="%s"/></property></item>' % (i, _base, i, _to))
+        _rows.append((i, k))
         continue
     if k == "armor" and _ARMOR_POINTS.get(i):
         # Minecraft armour you can WEAR: built on the 7 Days primitive piece of that slot (7 Days has no legs slot:
@@ -287,7 +299,7 @@ for r in _mcb_rows:
     _thin = r["render"] == "torch"
     # doors: everything from 7 Days' wooden door (opening, collision, saving); Minecraft's look from McDoors
     if (r.get("special") or "").startswith("door;"):
-        for k, v in (("Extends", "oldWoodDoor"), ("CreativeMode", "Player"), ("CustomIcon", "mc_" + i), ("CustomIconTint", "ffffff"),
+        for k, v in (("Extends", "exteriorHouseDoorWhite"), ("CreativeMode", "Player"), ("CustomIcon", "mc_" + i), ("CustomIconTint", "ffffff"),
                      ("Group", "Building,Minecraft"), ("DescriptionKey", "mcItemDesc"), ("Stacknumber", "64"), ("Tags", "stevedays,mcdoor")):
             _bx.append('            <property name="%s" value="%s"/>' % (k, v))
         _bx.append('            <drop event="Destroy" name="mc_%s" count="1"/>' % i)
@@ -406,6 +418,10 @@ _eg = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json -->", '    <
 # 7 Days animals that look like a Minecraft one are replaced by it everywhere they spawn (user 2026-11-13)
 for _old, _new in _an["replace"]:
     _eg.append("    <set xpath=\"/entitygroups/entitygroup/e[@n='%s']/@n\">%s</set>" % (_old, _new))
+# creepers in every horde (wandering hordes and blood moon), one more member of the list (user 2026-11-13)
+for r in _an["rows"]:
+    if r.get("hostile"):
+        _eg.append("    <append xpath=\"/entitygroups/entitygroup[contains(@name,'Horde')]\"><e n=\"%s\"/></append>" % r["class"])
 _eg += ["</configs>", ""]
 open(os.path.join(ROOT, "SteveDaysToDie", "Config", "entitygroups.xml"), "w", encoding="utf-8").write(chr(10).join(_eg))
 _sp = ["<configs>", "    <!-- GENERATED from sheets/mc_animals.json: herds of Minecraft animals, like Minecraft (they come back every half day) -->"]

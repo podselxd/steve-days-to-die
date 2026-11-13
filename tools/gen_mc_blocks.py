@@ -166,7 +166,7 @@ def generic(b, parts):
     if b.endswith("_door") and "trapdoor" not in b:
         # doors: 7 Days' own wooden door does the opening (src/Crafting/McDoors.cs puts Minecraft's look on it)
         tex, _ = resolve(parts[0][0])
-        rows.append({"id": b, "block7d": "mc_" + b, "model": parts[0][0].split("/")[-1], "render": "native", "material7d": "Mwood_regular",
+        rows.append({"id": b, "block7d": "mc_" + b, "model": parts[0][0].split("/")[-1], "render": "door7d", "material7d": "Mwood_regular",
                      "maxDamage7d": 300, "hardness": 3, "tool": "axe" if "iron" not in b else "pickaxe", "minTier": -1 if "iron" not in b else 0,
                      "drop": "self", "dropCount": 1, "sound": "wood", "tint": "-", "light": 0, "verified": "auto",
                      "special": "door;top=%s;bottom=%s" % (ref(tex, "#top"), ref(tex, "#bottom"))})

@@ -594,6 +594,38 @@ public static class BlockOverlay
 				}
 				break;
 			}
+			case "door7d":
+			{
+				// a Minecraft door on a 7 Days door: drawn from its lower block, two blocks high, 3 px thick, swung open
+				// or shut as the 7 Days door is (Crafting.McDoors.Open)
+				BlockValue dbv = world.GetBlock(member);
+				if (dbv.ischild) break;
+				string dtop = null, dbot = null;
+				foreach (string kv in (blockRow.special ?? "").Split(';'))
+				{
+					if (kv.StartsWith("top=")) dtop = kv.Substring(4);
+					if (kv.StartsWith("bottom=")) dbot = kv.Substring(7);
+				}
+				if (dtop == null || dbot == null) break;
+				Color32 dw = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+				Rect rTop = Atlas.Uv(new List<FaceLayer> { new FaceLayer { tex = dtop } }, dw);
+				Rect rBot = Atlas.Uv(new List<FaceLayer> { new FaceLayer { tex = dbot } }, dw);
+				bool dOpen = SteveDaysToDie.Crafting.McDoors.Open(world, member);
+				int dside = Face.Ring[((dbv.rotation & 3) + (dOpen ? 1 : 0)) % 4];
+				float th = 0.1875f;
+				Vector3 dmin = vector, dmax = vector + new Vector3(1f, 1f, 1f);
+				switch (dside)
+				{
+				case 4: dmax.x = vector.x + th; break;
+				case 5: dmin.x = vector.x + 1f - th; break;
+				case 3: dmax.z = vector.z + th; break;
+				default: dmin.z = vector.z + 1f - th; break;
+				}
+				for (int f = 0; f < 6; f++) meshKit2.Face(f, dmin, dmax, rBot);
+				Vector3 up1 = new Vector3(0f, 1f, 0f);
+				for (int f = 0; f < 6; f++) meshKit2.Face(f, dmin + up1, dmax + up1, rTop);
+				break;
+			}
 			case "model":
 				// any other Minecraft shape: its own model boxes (src/Ryan/ModelBoxes.cs), see-through parts allowed
 				ModelBoxes.Append(meshKit2, vector, blockRow.special, num3);
@@ -710,9 +742,9 @@ public static class BlockOverlay
 			{
 				int count = meshKit3.v.Count;
 				float num4 = 0.0625f;
-				meshKit3.McBox(vector + new Vector3(num4, 0f, num4), vector + new Vector3(15f * num4, 10f * num4, 15f * num4), 0f, 19f, 14f, 10f, 14f, 64f, 64f);
-				meshKit3.McBox(vector + new Vector3(num4, 9f * num4, num4), vector + new Vector3(15f * num4, 14f * num4, 15f * num4), 0f, 0f, 14f, 5f, 14f, 64f, 64f);
-				meshKit3.McBox(vector + new Vector3(7f * num4, 7f * num4, 0f), vector + new Vector3(9f * num4, 11f * num4, num4), 0f, 0f, 2f, 4f, 1f, 64f, 64f);
+				meshKit3.McBoxYUp(vector + new Vector3(num4, 0f, num4), vector + new Vector3(15f * num4, 10f * num4, 15f * num4), 0f, 19f, 14f, 10f, 14f, 64f, 64f);
+				meshKit3.McBoxYUp(vector + new Vector3(num4, 9f * num4, num4), vector + new Vector3(15f * num4, 14f * num4, 15f * num4), 0f, 0f, 14f, 5f, 14f, 64f, 64f);
+				meshKit3.McBoxYUp(vector + new Vector3(7f * num4, 7f * num4, 0f), vector + new Vector3(9f * num4, 11f * num4, num4), 0f, 0f, 2f, 4f, 1f, 64f, 64f);
 				float y = num3 switch
 				{
 					0 => 180, 
@@ -729,6 +761,11 @@ public static class BlockOverlay
 		}
 		meshKit.ToMesh(s.opaque.sharedMesh);
 		meshKit2.ToMesh(s.cutout.sharedMesh);
+		// the chest's faces from both sides: some of its boxes came out turned inside (the lid showed its inside)
+		for (int ti = meshKit3.t.Count - 3; ti >= 0; ti -= 3)
+		{
+			meshKit3.t.Add(meshKit3.t[ti]); meshKit3.t.Add(meshKit3.t[ti + 2]); meshKit3.t.Add(meshKit3.t[ti + 1]);
+		}
 		meshKit3.ToMesh(s.chest.sharedMesh);
 	}
 

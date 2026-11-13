@@ -4,36 +4,31 @@ using UnityEngine;
 namespace SteveDaysToDie.Crafting
 {
     /// <summary>
-    /// Minecraft doors: each mc_*_door block extends 7 Days' wooden door (oldWoodDoor), so opening, closing, collision,
-    /// saving and multiplayer are 7 Days' own. Here its model is hidden and Minecraft's door (the top and bottom door
-    /// textures from the player's Minecraft) is put on the 7 Days door leaf, so it swings with 7 Days' animation.
-    /// Doors are found every second (block entities have no event we can use cheaply).
+    /// Minecraft doors: each mc_*_door block extends a 7 Days door (opening, closing, collision, saving, multiplayer are
+    /// 7 Days' own). Its 7 Days model is hidden here (every second: block entities have no cheap event), and Ryan's
+    /// BlockOverlay draws Minecraft's door ("door7d" rows), open or closed as the 7 Days door is (Open below).
     /// </summary>
     public static class McDoors
     {
-        const string Prefab = "oldWoodDoorPrefab";
+        const string Prefab = "exteriorHouseDoorPrefab";
         static float _next;
-        static readonly HashSet<int> _done = new HashSet<int>();
-        static readonly Dictionary<string, (string top, string bottom)> _tex = new Dictionary<string, (string, string)>();
-        static Material _mat;
+        static readonly List<Transform> _doors = new List<Transform>();
+        static readonly HashSet<int> _seen = new HashSet<int>();
         public static int Dressed;
 
-        static bool TexFor(string blockName, out (string top, string bottom) t)
+        /// <summary>Is the 7 Days door at this block open?</summary>
+        public static bool Open(World world, Vector3i pos)
         {
-            if (_tex.TryGetValue(blockName, out t)) return t.top != null;
-            t = (null, null);
-            foreach (var r in Ryan.Sheets.Blocks)
-                if (r.block7d == blockName && r.special != null && r.special.StartsWith("door;"))
+            try
+            {
+                if (world.GetTileEntity(pos) is TileEntityComposite te)
                 {
-                    foreach (var kv in r.special.Split(';'))
-                    {
-                        if (kv.StartsWith("top=")) t.top = kv.Substring(4);
-                        if (kv.StartsWith("bottom=")) t.bottom = kv.Substring(7);
-                    }
-                    break;
+                    var d = te.GetFeature<TEFeatureDoor>();
+                    return d != null && d.IsOpen();
                 }
-            _tex[blockName] = t;
-            return t.top != null;
+            }
+            catch { }
+            return false;
         }
 
         public static void Tick()
@@ -46,52 +41,20 @@ namespace SteveDaysToDie.Crafting
             {
                 foreach (var tr in Object.FindObjectsOfType<Transform>())
                 {
-                    if (tr.parent == null || !tr.name.StartsWith(Prefab) || _done.Contains(tr.GetInstanceID())) continue;
-                    // which block is it? (the door spans two blocks; its pivot sits near the bottom one)
+                    if (tr.parent == null || !tr.name.StartsWith(Prefab) || _seen.Contains(tr.GetInstanceID())) continue;
+                    _seen.Add(tr.GetInstanceID());
                     Vector3 w = tr.position + Origin.position;
-                    string name = null;
                     foreach (var off in new[] { Vector3.zero, new Vector3(0.5f, 0.1f, 0.5f), new Vector3(-0.5f, 0.1f, -0.5f), new Vector3(0.5f, 0.1f, -0.5f), new Vector3(-0.5f, 0.1f, 0.5f) })
                     {
-                        var b = world.GetBlock(World.worldToBlockPos(w + off)).Block;
-                        string n = b?.GetBlockName();
-                        if (n != null && n.StartsWith("mc_") && n.EndsWith("_door")) { name = n; break; }
+                        string n = world.GetBlock(World.worldToBlockPos(w + off)).Block?.GetBlockName();
+                        if (n != null && n.StartsWith("mc_") && n.EndsWith("_door")) { _doors.Add(tr); Dressed++; break; }
                     }
-                    if (name == null) { _done.Add(tr.GetInstanceID()); continue; }      // a 7 Days door: left alone
-                    if (!TexFor(name, out var t)) continue;
-                    Dress(tr, t.top, t.bottom);
-                    Dressed++;
-                    _done.Add(tr.GetInstanceID());
                 }
+                _doors.RemoveAll(t => t == null);
+                foreach (var d in _doors)
+                    foreach (var r in d.GetComponentsInChildren<Renderer>(true)) if (r.enabled) r.enabled = false;
             }
             catch (System.Exception ex) { Debug.LogWarning("[SVD] doors: " + ex.Message); }
-        }
-
-        // hides 7 Days' door and puts Minecraft's on its biggest moving part (the leaf)
-        static void Dress(Transform door, string top, string bottom)
-        {
-            MeshFilter leaf = null; float best = 0f;
-            foreach (var mf in door.GetComponentsInChildren<MeshFilter>(true))
-            {
-                if (mf.sharedMesh == null) continue;
-                float v = mf.sharedMesh.bounds.size.x * mf.sharedMesh.bounds.size.y + mf.sharedMesh.bounds.size.y * mf.sharedMesh.bounds.size.z + mf.sharedMesh.bounds.size.x * mf.sharedMesh.bounds.size.z;
-                if (v > best) { best = v; leaf = mf; }
-            }
-            foreach (var r in door.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
-            if (leaf == null) return;
-            var bnd = leaf.sharedMesh.bounds;
-            Rect rTop = Ryan.Atlas.Uv(new List<Ryan.FaceLayer> { new Ryan.FaceLayer { tex = top } }, new Color32(255, 255, 255, 255));
-            Rect rBot = Ryan.Atlas.Uv(new List<Ryan.FaceLayer> { new Ryan.FaceLayer { tex = bottom } }, new Color32(255, 255, 255, 255));
-            Ryan.Atlas.Flush();
-            if (_mat == null) _mat = Ryan.Mats.Cutout(Ryan.Atlas.Texture);
-            var k = new Ryan.MeshKit { shade = true };
-            Vector3 min = bnd.min, max = bnd.max, mid = new Vector3(max.x, (min.y + max.y) * 0.5f, max.z);
-            for (int f = 0; f < 6; f++) k.Face(f, min, new Vector3(max.x, mid.y, max.z), rBot);
-            for (int f = 0; f < 6; f++) k.Face(f, new Vector3(min.x, mid.y, min.z), max, rTop);
-            var go = new GameObject("SVD_McDoor");
-            go.layer = leaf.gameObject.layer;
-            go.transform.SetParent(leaf.transform, false);
-            go.AddComponent<MeshFilter>().sharedMesh = k.ToMesh();
-            go.AddComponent<MeshRenderer>().sharedMaterial = _mat;
         }
     }
 }

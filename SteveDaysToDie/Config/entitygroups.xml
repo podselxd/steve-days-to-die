@@ -15,4 +15,5 @@
     <set xpath="/entitygroups/entitygroup/e[@n='animalDoe']/@n">mcCow</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalBoar']/@n">mcPig</set>
     <set xpath="/entitygroups/entitygroup/e[@n='animalChicken']/@n">mcChicken</set>
+    <append xpath="/entitygroups/entitygroup[contains(@name,'Horde')]"><e n="mcCreeper"/></append>
 </configs>

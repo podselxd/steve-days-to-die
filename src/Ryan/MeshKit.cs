@@ -114,6 +114,20 @@ public class MeshKit
 		Face(2, min, max, Px(u + d + w + d, vv + d, w, h, texW, texH));
 	}
 
+	/// <summary>Like McBox, for block-entity models (the chest) whose model space has y UP: Minecraft's cube faces
+	/// "down"/"up" come out the other way round and the sides upside down compared with mobs (y down).</summary>
+	public void McBoxYUp(Vector3 min, Vector3 max, float u, float vv, float w, float h, float d, float texW, float texH)
+	{
+		Face(0, min, max, Px(u + d + w, vv, w, d, texW, texH));
+		Face(1, min, max, Px(u + d, vv, w, d, texW, texH));
+		Face(4, min, max, FlipV(Px(u, vv + d, d, h, texW, texH)));
+		Face(3, min, max, FlipV(Px(u + d, vv + d, w, h, texW, texH)));
+		Face(5, min, max, FlipV(Px(u + d + w, vv + d, d, h, texW, texH)));
+		Face(2, min, max, FlipV(Px(u + d + w + d, vv + d, w, h, texW, texH)));
+	}
+
+	static Rect FlipV(Rect r) => new Rect(r.x, r.yMax, r.width, -r.height);
+
 	public void Rotate(int fromVertex, Quaternion q, Vector3 pivot)
 	{
 		for (int i = fromVertex; i < v.Count; i++)

@@ -73,12 +73,14 @@ namespace SteveDaysToDie.Crafting
                 foreach (var r in McItemsTable.Items)
                 {
                     string file = Path.Combine(dir, Prefix + r.id + ".png");
-                    if (File.Exists(file)) continue;
+                    // icons are 128 px at most: 1,400 icons of 640 px overflowed 7 Days' icon atlas (its own icons broke)
+                    if (File.Exists(file) && PngWidth(file) <= 160) continue;
                     try
                     {
                         var icon = Ryan.Icons.Get(r.id);
                         if (icon == null) { failed++; continue; }
-                        File.WriteAllBytes(file, Upscale(icon, 10).EncodeToPNG());
+                        int k = Mathf.Max(1, 128 / Mathf.Max(1, icon.width));
+                        File.WriteAllBytes(file, Upscale(icon, k).EncodeToPNG());
                         made++;
                     }
                     catch { failed++; }
@@ -89,6 +91,20 @@ namespace SteveDaysToDie.Crafting
             try { WriteNames(modPath, mcPath, mcVersion); }
             catch (Exception ex) { Debug.LogWarning("[SVD] Minecraft item names: " + ex.Message); }
             Debug.Log($"[SVD] Minecraft items: {McItemsTable.Items.Length} ({made} new icons, {failed} without icon) in {Time.realtimeSinceStartup - t0:0.0}s");
+        }
+
+        static int PngWidth(string file)
+        {
+            try
+            {
+                using (var f = File.OpenRead(file))
+                {
+                    var b = new byte[24];
+                    if (f.Read(b, 0, 24) < 24) return 0;
+                    return (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
+                }
+            }
+            catch { return 0; }
         }
 
         // the game's icons are 160 px; Minecraft's are 16: keep the pixels sharp

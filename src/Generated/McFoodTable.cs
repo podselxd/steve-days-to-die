@@ -38,8 +38,14 @@ namespace SteveDaysToDie.Generated
             ["rabbit_stew"] = (10, 12.0f),
             ["salmon"] = (2, 0.4f),
             ["suspicious_stew"] = (6, 7.2f),
+            ["sweet_berries"] = (2, 0.4f),
+            ["glow_berries"] = (2, 0.4f),
+            ["rotten_flesh"] = (4, 0.8f),
             ["spider_eye"] = (2, 3.2f),
+            ["poisonous_potato"] = (2, 1.2f),
             ["chorus_fruit"] = (4, 2.4f),
+            ["tropical_fish"] = (1, 0.2f),
+            ["pufferfish"] = (1, 0.2f),
         };
     }
 }

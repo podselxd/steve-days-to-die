@@ -52,6 +52,10 @@ namespace SteveDaysToDie.Generated
             { "mc_leather_chestplate", 3 },   // Minecraft piece
             { "mc_leather_helmet", 1 },   // Minecraft piece
             { "mc_leather_leggings", 2 },   // Minecraft piece
+            { "mc_netherite_boots", 3 },   // Minecraft piece
+            { "mc_netherite_chestplate", 8 },   // Minecraft piece
+            { "mc_netherite_helmet", 3 },   // Minecraft piece
+            { "mc_netherite_leggings", 6 },   // Minecraft piece
             { "mc_turtle_helmet", 2 },   // Minecraft piece
         };
     }

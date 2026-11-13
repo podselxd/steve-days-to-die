@@ -591,6 +591,27 @@ namespace SteveDaysToDie
             var chestBv = world.GetBlock(baseP + new Vector3i(Mathf.RoundToInt(side.x * -1), 0, Mathf.RoundToInt(side.z * -1)));
             Debug.Log($"[SVD] functional: doors dressed {SteveDaysToDie.Crafting.McDoors.Dressed}, chest block {chestBv.Block.GetBlockName()} class {chestBv.Block.GetType().Name}");
             yield return Shot("funcional-0");
+            // the door opened, as 7 Days opens it
+            try
+            {
+                var doorPos = baseP + new Vector3i(Mathf.RoundToInt(side.x * -3), 0, Mathf.RoundToInt(side.z * -3));
+                if (world.GetTileEntity(doorPos) is TileEntityComposite te) te.GetFeature<TEFeatureDoor>()?.SetOpen(true, true);
+                Debug.Log("[SVD] functional: door open now " + SteveDaysToDie.Crafting.McDoors.Open(world, doorPos));
+            }
+            catch (Exception ex) { Debug.LogWarning("[SVD] demo door: " + ex.Message); }
+            yield return Wait(2f);
+            yield return Shot("funcional-1-puerta-abierta");
+            // armour on Steve, seen from the front
+            foreach (var (slot, id) in new[] { (0, "diamond_helmet"), (1, "iron_chestplate"), (2, "golden_leggings"), (3, "leather_boots") })
+            {
+                var ar = SteveDaysToDie.Crafting.McItems.Stack(id, 1);
+                if (ar != null) try { p.equipment.SetSlotItem(slot, ar.itemValue.Clone()); } catch (Exception ex) { Debug.LogWarning("[SVD] demo armour: " + ex.Message); }
+            }
+            var sword = SteveDaysToDie.Crafting.McItems.Stack("iron_sword", 1);
+            if (sword != null) { p.inventory.SetItem(7, sword); Hold(p, 7); }
+            yield return Wait(2f);
+            Debug.Log("[SVD] functional: armour points " + MinecraftHUD.GetArmorPoints(p));
+            yield return Selfie(p, "funcional-2-armadura", new Vector3(0f, 1.2f, 2.6f));
         }
 
         // ---- Minecraft items thrown on the ground: Minecraft's look, no 7 Days sack ----

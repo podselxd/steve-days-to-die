@@ -128,6 +128,7 @@ namespace SteveDaysToDie.Steve
                 if (_hidden[i] != null) _hidden[i].forceRenderingOff = true;
             PlaceHeldItem();
             McHeld();
+            Armor();
         }
 
         bool HoldingSomething()
@@ -138,6 +139,32 @@ namespace SteveDaysToDie.Steve
                 return ic != null && !ic.Name.StartsWith("meleeHand");
             }
             catch { return false; }
+        }
+
+        // Minecraft armour worn: rebuilt when the 4 armour slots change (also for other players: equipment is synced)
+        string _armorKey;
+        List<GameObject> _armor = new List<GameObject>();
+        void Armor()
+        {
+            string Slot(int i)
+            {
+                try { var v = _player.equipment.GetSlotItem(i); string n = v?.ItemClass?.Name; return n != null && n.StartsWith("mc_") ? n.Substring(3) : null; }
+                catch { return null; }
+            }
+            string h = Slot(0), c = Slot(1), l = Slot(2), f = Slot(3);
+            string key = h + "|" + c + "|" + l + "|" + f + "|" + (_root != null ? _root.GetInstanceID() : 0);
+            if (key == _armorKey) return;
+            _armorKey = key;
+            foreach (var g in _armor) if (g != null) { _renderers.Remove(g.GetComponent<MeshRenderer>()); Destroy(g); }
+            _armor.Clear();
+            if (_root == null) return;
+            try
+            {
+                _armor = SteveArmor.Build(h, c, l != null && l.EndsWith("_leggings") ? l : null, f, _px, _root.gameObject.layer,
+                                          _head, _upper, _armR, _armL, _legR, _legL);
+                foreach (var g in _armor) { var r = g.GetComponent<MeshRenderer>(); if (r != null) _renderers.Add(r); }
+            }
+            catch (System.Exception ex) { Debug.LogWarning("[SVD] armour look: " + ex.Message); }
         }
 
         // A Minecraft item (mc_) in Steve's fist, seen by everybody (third person, other players): the 7 Days model it is
