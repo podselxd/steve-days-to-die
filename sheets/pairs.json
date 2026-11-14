@@ -1106,6 +1106,2527 @@
    "relation": "aproximado",
    "category": "armadura",
    "note": ""
+  },
+  {
+   "id_7days": "curtainDrapesFullTileOrange",
+   "id_minecraft": "orange_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileYellow",
+   "id_minecraft": "yellow_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTilePink",
+   "id_minecraft": "pink_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileGrey",
+   "id_minecraft": "gray_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTilePurple",
+   "id_minecraft": "purple_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileBlue",
+   "id_minecraft": "blue_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileBrown",
+   "id_minecraft": "brown_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileGreen",
+   "id_minecraft": "green_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileRed",
+   "id_minecraft": "red_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileBlack",
+   "id_minecraft": "black_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileDirtyPurple",
+   "id_minecraft": "magenta_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileDirtyBlue",
+   "id_minecraft": "light_blue_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileDirtyYellow",
+   "id_minecraft": "lime_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileDirtyGrey",
+   "id_minecraft": "light_gray_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTileDirtyGreen",
+   "id_minecraft": "cyan_wool",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomWhite",
+   "id_minecraft": "white_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomOrange",
+   "id_minecraft": "orange_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomYellow",
+   "id_minecraft": "yellow_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomPink",
+   "id_minecraft": "pink_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomGrey",
+   "id_minecraft": "gray_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomPurple",
+   "id_minecraft": "purple_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomBlue",
+   "id_minecraft": "blue_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomBrown",
+   "id_minecraft": "brown_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomGreen",
+   "id_minecraft": "green_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomRed",
+   "id_minecraft": "red_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomBlack",
+   "id_minecraft": "black_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomDirtyPurple",
+   "id_minecraft": "magenta_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomDirtyBlue",
+   "id_minecraft": "light_blue_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomDirtyYellow",
+   "id_minecraft": "lime_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomDirtyGrey",
+   "id_minecraft": "light_gray_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullBottomDirtyGreen",
+   "id_minecraft": "cyan_carpet",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopWhite",
+   "id_minecraft": "white_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopOrange",
+   "id_minecraft": "orange_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopYellow",
+   "id_minecraft": "yellow_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopPink",
+   "id_minecraft": "pink_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopGrey",
+   "id_minecraft": "gray_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopPurple",
+   "id_minecraft": "purple_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopBlue",
+   "id_minecraft": "blue_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopBrown",
+   "id_minecraft": "brown_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopGreen",
+   "id_minecraft": "green_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopRed",
+   "id_minecraft": "red_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopBlack",
+   "id_minecraft": "black_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopDirtyPurple",
+   "id_minecraft": "magenta_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopDirtyBlue",
+   "id_minecraft": "light_blue_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopDirtyYellow",
+   "id_minecraft": "lime_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopDirtyGrey",
+   "id_minecraft": "light_gray_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "curtainDrapesFullTopDirtyGreen",
+   "id_minecraft": "cyan_banner",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tela colgada (tono de 7 Days mas cercano)"
+  },
+  {
+   "id_7days": "bedrollOrange",
+   "id_minecraft": "orange_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollYellow",
+   "id_minecraft": "yellow_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollPink",
+   "id_minecraft": "pink_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollGrey",
+   "id_minecraft": "gray_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollPurple",
+   "id_minecraft": "purple_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollBlue",
+   "id_minecraft": "blue_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollGreen",
+   "id_minecraft": "green_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "bedrollRed",
+   "id_minecraft": "red_bed",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "cama de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightWhite_player",
+   "id_minecraft": "white_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightYellow_player",
+   "id_minecraft": "yellow_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightGrey_player",
+   "id_minecraft": "gray_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightBlue_player",
+   "id_minecraft": "blue_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightGreen_player",
+   "id_minecraft": "green_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightRed_player",
+   "id_minecraft": "red_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "lanternDecorLightBlack_player",
+   "id_minecraft": "black_candle",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz de su color"
+  },
+  {
+   "id_7days": "plantHousePottedWhite",
+   "id_minecraft": "white_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedOrange",
+   "id_minecraft": "orange_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedYellow",
+   "id_minecraft": "yellow_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedPink",
+   "id_minecraft": "pink_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedGrey",
+   "id_minecraft": "gray_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedPurple",
+   "id_minecraft": "purple_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedBlue",
+   "id_minecraft": "blue_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedBrown",
+   "id_minecraft": "brown_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedGreen",
+   "id_minecraft": "green_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedRed",
+   "id_minecraft": "red_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantHousePottedBlack",
+   "id_minecraft": "black_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "barro cocido = maceta"
+  },
+  {
+   "id_7days": "plantAloePottedWhite",
+   "id_minecraft": "white_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedOrange",
+   "id_minecraft": "orange_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedYellow",
+   "id_minecraft": "yellow_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedPink",
+   "id_minecraft": "pink_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedGrey",
+   "id_minecraft": "gray_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedPurple",
+   "id_minecraft": "purple_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedBlue",
+   "id_minecraft": "blue_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedBrown",
+   "id_minecraft": "brown_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedGreen",
+   "id_minecraft": "green_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "plantAloePottedRed",
+   "id_minecraft": "red_glazed_terracotta",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta esmaltada"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullWhite",
+   "id_minecraft": "white_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullOrange",
+   "id_minecraft": "orange_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullYellow",
+   "id_minecraft": "yellow_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullPink",
+   "id_minecraft": "pink_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullPurple",
+   "id_minecraft": "purple_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullBlue",
+   "id_minecraft": "blue_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullBrown",
+   "id_minecraft": "brown_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullGreen",
+   "id_minecraft": "green_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullRed",
+   "id_minecraft": "red_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankBaseFullBlack",
+   "id_minecraft": "black_concrete_powder",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "sacos de polvo"
+  },
+  {
+   "id_7days": "palletBagBlankTileWhite",
+   "id_minecraft": "white_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileOrange",
+   "id_minecraft": "orange_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileYellow",
+   "id_minecraft": "yellow_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTilePink",
+   "id_minecraft": "pink_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTilePurple",
+   "id_minecraft": "purple_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileBlue",
+   "id_minecraft": "blue_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileBrown",
+   "id_minecraft": "brown_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileGreen",
+   "id_minecraft": "green_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBagBlankTileRed",
+   "id_minecraft": "red_concrete",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntMailBox01White_Player",
+   "id_minecraft": "white_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Orange_Player",
+   "id_minecraft": "orange_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Yellow_Player",
+   "id_minecraft": "yellow_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Pink_Player",
+   "id_minecraft": "pink_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Grey_Player",
+   "id_minecraft": "gray_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Purple_Player",
+   "id_minecraft": "purple_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Blue_Player",
+   "id_minecraft": "blue_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Brown_Player",
+   "id_minecraft": "brown_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Green_Player",
+   "id_minecraft": "green_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Red_Player",
+   "id_minecraft": "red_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "cntMailBox01Black_Player",
+   "id_minecraft": "black_shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja para guardar"
+  },
+  {
+   "id_7days": "awningFullWhite",
+   "id_minecraft": "white_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullOrange",
+   "id_minecraft": "orange_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullYellow",
+   "id_minecraft": "yellow_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullPink",
+   "id_minecraft": "pink_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullGrey",
+   "id_minecraft": "gray_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullPurple",
+   "id_minecraft": "purple_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullBlue",
+   "id_minecraft": "blue_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullBrown",
+   "id_minecraft": "brown_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullGreen",
+   "id_minecraft": "green_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullRed",
+   "id_minecraft": "red_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningFullBlack",
+   "id_minecraft": "black_stained_glass",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightWhite",
+   "id_minecraft": "white_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightOrange",
+   "id_minecraft": "orange_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightYellow",
+   "id_minecraft": "yellow_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightPink",
+   "id_minecraft": "pink_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightGrey",
+   "id_minecraft": "gray_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightPurple",
+   "id_minecraft": "purple_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightBlue",
+   "id_minecraft": "blue_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightBrown",
+   "id_minecraft": "brown_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightGreen",
+   "id_minecraft": "green_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightRed",
+   "id_minecraft": "red_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "awningStraightBlack",
+   "id_minecraft": "black_stained_glass_pane",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileOrange",
+   "id_minecraft": "orange_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTilePink",
+   "id_minecraft": "pink_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileGrey",
+   "id_minecraft": "gray_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTilePurple",
+   "id_minecraft": "purple_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileBlue",
+   "id_minecraft": "blue_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileBrown",
+   "id_minecraft": "brown_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileGreen",
+   "id_minecraft": "green_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileRed",
+   "id_minecraft": "red_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "palletTarpTileBlack",
+   "id_minecraft": "black_dye",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorBrown",
+   "id_minecraft": "oak_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchBrown",
+   "id_minecraft": "oak_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorBrown",
+   "id_minecraft": "oak_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorBrown",
+   "id_minecraft": "oak_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorGrey",
+   "id_minecraft": "spruce_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchGrey",
+   "id_minecraft": "spruce_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorGrey",
+   "id_minecraft": "spruce_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorGrey",
+   "id_minecraft": "spruce_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorWhite",
+   "id_minecraft": "birch_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchWhite",
+   "id_minecraft": "birch_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorWhite",
+   "id_minecraft": "birch_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorWhite",
+   "id_minecraft": "birch_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorOrange",
+   "id_minecraft": "jungle_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchOrange",
+   "id_minecraft": "jungle_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorOrange",
+   "id_minecraft": "jungle_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorOrange",
+   "id_minecraft": "jungle_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorYellow",
+   "id_minecraft": "acacia_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchYellow",
+   "id_minecraft": "acacia_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorYellow",
+   "id_minecraft": "acacia_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorYellow",
+   "id_minecraft": "acacia_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorPurple",
+   "id_minecraft": "dark_oak_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchPurple",
+   "id_minecraft": "dark_oak_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorPurple",
+   "id_minecraft": "dark_oak_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorPurple",
+   "id_minecraft": "dark_oak_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorRed",
+   "id_minecraft": "mangrove_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchRed",
+   "id_minecraft": "mangrove_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorRed",
+   "id_minecraft": "mangrove_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorRed",
+   "id_minecraft": "mangrove_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorPink",
+   "id_minecraft": "cherry_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchPink",
+   "id_minecraft": "cherry_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorPink",
+   "id_minecraft": "cherry_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorPink",
+   "id_minecraft": "cherry_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorGreen",
+   "id_minecraft": "bamboo_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchGreen",
+   "id_minecraft": "bamboo_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorGreen",
+   "id_minecraft": "bamboo_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorGreen",
+   "id_minecraft": "bamboo_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorBlue",
+   "id_minecraft": "warped_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de madera"
+  },
+  {
+   "id_7days": "ironHatchBlue",
+   "id_minecraft": "warped_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "trampilla"
+  },
+  {
+   "id_7days": "woodenFenceDoorBlue",
+   "id_minecraft": "warped_fence_gate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "puerta de valla"
+  },
+  {
+   "id_7days": "tallCabinetDoorBlue",
+   "id_minecraft": "warped_shelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorOldRed",
+   "id_minecraft": "crimson_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "exteriorHouseDoorOldWhite",
+   "id_minecraft": "pale_oak_door",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "ironHatchBlack",
+   "id_minecraft": "crimson_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "ironDoorGrey",
+   "id_minecraft": "iron_door",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "woodHatch",
+   "id_minecraft": "iron_trapdoor",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "workbench",
+   "id_minecraft": "crafting_table",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": "mesa de trabajo"
+  },
+  {
+   "id_7days": "forge",
+   "id_minecraft": "furnace",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "la forja funde"
+  },
+  {
+   "id_7days": "campfire",
+   "id_minecraft": "campfire",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "chemistryStation",
+   "id_minecraft": "brewing_stand",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "quimica = pociones"
+  },
+  {
+   "id_7days": "cementMixer",
+   "id_minecraft": "stonecutter",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntBookcaseFull",
+   "id_minecraft": "bookshelf",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntBookcaseEmpty",
+   "id_minecraft": "chiseled_bookshelf",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntIronWritableCrate",
+   "id_minecraft": "barrel",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "guardar cosas"
+  },
+  {
+   "id_7days": "cntSteelWritableCrate",
+   "id_minecraft": "trapped_chest",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "hayBaleSquare",
+   "id_minecraft": "hay_block",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "decoPumpkinJackOLantern",
+   "id_minecraft": "jack_o_lantern",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "mushroom01",
+   "id_minecraft": "brown_mushroom_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "mushroom02",
+   "id_minecraft": "red_mushroom_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "goreHumanSkull",
+   "id_minecraft": "skeleton_skull",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "goreBlockHumanBones",
+   "id_minecraft": "bone_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "paintingBen",
+   "id_minecraft": "painting",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "pictureFrame_01a",
+   "id_minecraft": "item_frame",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "pictureFrame_01b",
+   "id_minecraft": "glow_item_frame",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "pressureplate",
+   "id_minecraft": "stone_pressure_plate",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "pressureplateLong",
+   "id_minecraft": "heavy_weighted_pressure_plate",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "powerSwitch01",
+   "id_minecraft": "lever",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "powerSwitch02",
+   "id_minecraft": "stone_button",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "dartTrap",
+   "id_minecraft": "dispenser",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "dispara"
+  },
+  {
+   "id_7days": "spotlightPlayer",
+   "id_minecraft": "redstone_lamp",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "luz"
+  },
+  {
+   "id_7days": "candleWallLightPlayer",
+   "id_minecraft": "soul_torch",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "candleTableLightPlayer",
+   "id_minecraft": "lantern",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treeShortGrass",
+   "id_minecraft": "short_grass",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treeTallGrassDiagonal",
+   "id_minecraft": "tall_grass",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treeForestGrassDiagonal",
+   "id_minecraft": "fern",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantShrub",
+   "id_minecraft": "bush",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treeSnowyDeadBush",
+   "id_minecraft": "dead_bush",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantShrubDead",
+   "id_minecraft": "firefly_bush",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treePlantedOak1m",
+   "id_minecraft": "oak_sapling",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": "arbol pequeño"
+  },
+  {
+   "id_7days": "treePlantedMountainPine1m",
+   "id_minecraft": "spruce_sapling",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "treePlantedWinterPine1m",
+   "id_minecraft": "pale_oak_sapling",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntStoreProduceBasketMelons1_Player",
+   "id_minecraft": "melon",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantFernGreen",
+   "id_minecraft": "large_fern",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantCherryBlossomPink",
+   "id_minecraft": "cherry_sapling",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "hayBaleRound",
+   "id_minecraft": "dried_ghast",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedChrysanthemum1",
+   "id_minecraft": "oxeye_daisy",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": "flor"
+  },
+  {
+   "id_7days": "plantedGoldenrod1",
+   "id_minecraft": "sunflower",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": "flor amarilla"
+  },
+  {
+   "id_7days": "plantedCotton1",
+   "id_minecraft": "lily_of_the_valley",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": "flor blanca"
+  },
+  {
+   "id_7days": "resourceCropCottonPlant",
+   "id_minecraft": "white_tulip",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCropHopsFlower",
+   "id_minecraft": "allium",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedHop1",
+   "id_minecraft": "pink_tulip",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedAloe1",
+   "id_minecraft": "azure_bluet",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedYucca1",
+   "id_minecraft": "orange_tulip",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedCoffee1",
+   "id_minecraft": "red_tulip",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedBlueberry1",
+   "id_minecraft": "cornflower",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedSnowberry1",
+   "id_minecraft": "blue_orchid",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedMushroom1",
+   "id_minecraft": "crimson_fungus",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedPotato1",
+   "id_minecraft": "torchflower_seeds",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "plantedGraceCorn1",
+   "id_minecraft": "pitcher_pod",
+   "relation": "aproximado",
+   "category": "semilla",
+   "note": ""
+  },
+  {
+   "id_7days": "foodRoadrunnerChickenJerky",
+   "id_minecraft": "dried_kelp",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "seco"
+  },
+  {
+   "id_7days": "foodCanPeas",
+   "id_minecraft": "beetroot",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanPears",
+   "id_minecraft": "melon_slice",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanMiso",
+   "id_minecraft": "suspicious_stew",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanBeef",
+   "id_minecraft": "cooked_rabbit",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanLamb",
+   "id_minecraft": "mutton",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodChickenNuggets",
+   "id_minecraft": "chicken",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCornOnTheCob",
+   "id_minecraft": "carrot",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodEggBoiled",
+   "id_minecraft": "glow_berries",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanPasta",
+   "id_minecraft": "poisonous_potato",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodShamSandwich",
+   "id_minecraft": "porkchop",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodHoneyBrisket",
+   "id_minecraft": "rabbit",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkJarRiverWater",
+   "id_minecraft": "potion",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "botella de agua"
+  },
+  {
+   "id_7days": "drinkJarBoiledWater",
+   "id_minecraft": "splash_potion",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkJarBeer",
+   "id_minecraft": "experience_bottle",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkCanMegaCrush",
+   "id_minecraft": "lingering_potion",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "medicalBandage",
+   "id_minecraft": "milk_bucket",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "cura"
+  },
+  {
+   "id_7days": "medicalAloeCream",
+   "id_minecraft": "honey_block",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "ammoArrowIron",
+   "id_minecraft": "spectral_arrow",
+   "relation": "aproximado",
+   "category": "municion",
+   "note": ""
+  },
+  {
+   "id_7days": "ammoArrowSteelAP",
+   "id_minecraft": "tipped_arrow",
+   "relation": "aproximado",
+   "category": "municion",
+   "note": ""
+  },
+  {
+   "id_7days": "ammoRocketHE",
+   "id_minecraft": "firework_rocket",
+   "relation": "aproximado",
+   "category": "municion",
+   "note": "la ballesta dispara cohetes"
+  },
+  {
+   "id_7days": "thrownTimedCharge",
+   "id_minecraft": "tnt",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": "explosivo"
+  },
+  {
+   "id_7days": "thrownDynamite",
+   "id_minecraft": "tnt_minecart",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "thrownAmmoMolotovCocktail",
+   "id_minecraft": "fire_charge",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": "fuego"
+  },
+  {
+   "id_7days": "thrownGrenade",
+   "id_minecraft": "wind_charge",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolSalvageT1Wrench",
+   "id_minecraft": "shears",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolPaintTool",
+   "id_minecraft": "brush",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "pincel"
+  },
+  {
+   "id_7days": "toolAnvil",
+   "id_minecraft": "anvil",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "toolForgeCrucible",
+   "id_minecraft": "cauldron",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "toolBellows",
+   "id_minecraft": "flint_and_steel",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "aviva el fuego"
+  },
+  {
+   "id_7days": "meleeToolRepairT1ClawHammer",
+   "id_minecraft": "golden_axe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnClubT1BaseballBat",
+   "id_minecraft": "golden_sword",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSledgeT0StoneSledgehammer",
+   "id_minecraft": "stone_pickaxe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnKnucklesT0LeatherKnuckles",
+   "id_minecraft": "wooden_pickaxe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnBatonT0PipeBaton",
+   "id_minecraft": "wooden_axe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "terrStone",
+   "id_minecraft": "smooth_stone",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrDirt",
+   "id_minecraft": "rooted_dirt",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrTopSoil",
+   "id_minecraft": "farmland",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "tierra de cultivo"
+  },
+  {
+   "id_7days": "terrBedrock",
+   "id_minecraft": "bedrock",
+   "relation": "exacto",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrSand",
+   "id_minecraft": "suspicious_sand",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreStoneIronRandom",
+   "id_minecraft": "deepslate_iron_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreStoneLeadRandom",
+   "id_minecraft": "deepslate_copper_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreStoneCoalRandom",
+   "id_minecraft": "deepslate_coal_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreStonePotassiumRandom",
+   "id_minecraft": "deepslate_redstone_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreOilDeposit",
+   "id_minecraft": "deepslate_lapis_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "terrOreStoneOilRandom",
+   "id_minecraft": "lapis_ore",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "palletBricksBase",
+   "id_minecraft": "brick",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "ladrillos sueltos"
+  },
+  {
+   "id_7days": "graveStone01",
+   "id_minecraft": "chiseled_stone_bricks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "lapida"
+  },
+  {
+   "id_7days": "graveStone02",
+   "id_minecraft": "mossy_stone_bricks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "graveStone03",
+   "id_minecraft": "cracked_stone_bricks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "graveStone04",
+   "id_minecraft": "stone_bricks",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntwallOvenEmptyWhite",
+   "id_minecraft": "smoker",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "horno de cocina"
+  },
+  {
+   "id_7days": "cntwallOvenEmptyGrey",
+   "id_minecraft": "blast_furnace",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntDomedTrashCanEmpty",
+   "id_minecraft": "composter",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntVendingMachine",
+   "id_minecraft": "crafter",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntDeskWoodEmpty",
+   "id_minecraft": "cartography_table",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "mesa"
+  },
+  {
+   "id_7days": "rustyIronTable",
+   "id_minecraft": "smithing_table",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "mesa de metal"
+  },
+  {
+   "id_7days": "decoPicnicTable",
+   "id_minecraft": "fletching_table",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntFridgeStainlessSteel",
+   "id_minecraft": "ender_chest",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntWallSafe_Player",
+   "id_minecraft": "vault",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "caja fuerte"
+  },
+  {
+   "id_7days": "cntbasketLaundryEmptyWhite",
+   "id_minecraft": "shulker_box",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntDeskSafe_Player",
+   "id_minecraft": "lectern",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntGunSafe_Player",
+   "id_minecraft": "chest_minecart",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "modularFireWoodStackA",
+   "id_minecraft": "soul_campfire",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "leña"
+  },
+  {
+   "id_7days": "emberPileDeco1",
+   "id_minecraft": "magma_block",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "brasas"
+  },
+  {
+   "id_7days": "emberPileDeco2",
+   "id_minecraft": "shroomlight",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "plantHouseTallPottedGreen",
+   "id_minecraft": "flower_pot",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": "maceta"
+  },
+  {
+   "id_7days": "plantFernHangingGreen",
+   "id_minecraft": "hanging_roots",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "birdBathPlanter",
+   "id_minecraft": "decorated_pot",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntStoreProduceBasketApples1_Player",
+   "id_minecraft": "beehive",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "cntStoreProduceBasketGourds1_Player",
+   "id_minecraft": "carved_pumpkin",
+   "relation": "aproximado",
+   "category": "bloque",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceOil",
+   "id_minecraft": "ink_sac",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "liquido negro"
+  },
+  {
+   "id_7days": "foodCornMeal",
+   "id_minecraft": "sugar",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "polvo"
+  },
+  {
+   "id_7days": "resourceLegendaryParts",
+   "id_minecraft": "netherite_ingot",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "lo mejor que hay"
+  },
+  {
+   "id_7days": "resourceArmorCraftingKit",
+   "id_minecraft": "netherite_scrap",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceDuctTape",
+   "id_minecraft": "phantom_membrane",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "repara"
+  },
+  {
+   "id_7days": "resourceRepairKit",
+   "id_minecraft": "nautilus_shell",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "medicalBloodBag",
+   "id_minecraft": "totem_of_undying",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": "segunda vida"
+  },
+  {
+   "id_7days": "resourceSewingKit",
+   "id_minecraft": "lead",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "hilo y aguja = correa"
+  },
+  {
+   "id_7days": "resourceAnimalFat",
+   "id_minecraft": "magma_cream",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceWaterFilter",
+   "id_minecraft": "sponge",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "absorbe agua"
+  },
+  {
+   "id_7days": "resourceNail",
+   "id_minecraft": "stick",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceCandleStick",
+   "id_minecraft": "end_rod",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceRadiator",
+   "id_minecraft": "observer",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceFishingWeight",
+   "id_minecraft": "fishing_rod",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceTrophy1",
+   "id_minecraft": "name_tag",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceTrophy2",
+   "id_minecraft": "goat_horn",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceLockPick",
+   "id_minecraft": "trial_key",
+   "relation": "aproximado",
+   "category": "material",
+   "note": "abre cerraduras"
+  },
+  {
+   "id_7days": "resourceBuckshot",
+   "id_minecraft": "sulfur",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceBulletCasing",
+   "id_minecraft": "amethyst_shard",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceBulletTip",
+   "id_minecraft": "prismarine_shard",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceRocketTip",
+   "id_minecraft": "firework_star",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "resourceTestosteroneExtract",
+   "id_minecraft": "blaze_powder",
+   "relation": "aproximado",
+   "category": "material",
+   "note": ""
+  },
+  {
+   "id_7days": "drugSteroids",
+   "id_minecraft": "enchanted_golden_apple",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": ""
+  },
+  {
+   "id_7days": "drugVitamins",
+   "id_minecraft": "glistering_melon_slice",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": ""
+  },
+  {
+   "id_7days": "drugPainkillers",
+   "id_minecraft": "rabbit_foot",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": ""
+  },
+  {
+   "id_7days": "drugHerbalAntibiotics",
+   "id_minecraft": "spider_eye",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": ""
+  },
+  {
+   "id_7days": "drugAntibiotics",
+   "id_minecraft": "ghast_tear",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": "cura"
+  },
+  {
+   "id_7days": "medicalPlasterCast",
+   "id_minecraft": "bone_meal",
+   "relation": "aproximado",
+   "category": "curacion",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolWireTool",
+   "id_minecraft": "lightning_rod",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": "electricidad"
+  },
+  {
+   "id_7days": "meleeToolSalvageT2Ratchet",
+   "id_minecraft": "golden_pickaxe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolSalvageT3ImpactDriver",
+   "id_minecraft": "netherite_shovel",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolRepairT3Nailgun",
+   "id_minecraft": "netherite_hoe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeToolRepairT0TazasStoneAxe",
+   "id_minecraft": "stone_hoe",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnKnucklesT1IronKnuckles",
+   "id_minecraft": "iron_hoe",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnKnucklesT3SteelKnuckles",
+   "id_minecraft": "diamond_hoe",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnBatonT2StunBaton",
+   "id_minecraft": "trident",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": "electricidad = tridente del rayo"
+  },
+  {
+   "id_7days": "meleeWpnBladeT1CandyKnife",
+   "id_minecraft": "golden_spear",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnClubT1CandyClub",
+   "id_minecraft": "golden_shovel",
+   "relation": "aproximado",
+   "category": "herramienta",
+   "note": ""
+  },
+  {
+   "id_7days": "meleeWpnSledgeT3SteelSledgehammer",
+   "id_minecraft": "wooden_spear",
+   "relation": "aproximado",
+   "category": "arma",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkJarCoffee",
+   "id_minecraft": "ominous_bottle",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "drinkJarYuccaJuice",
+   "id_minecraft": "dragon_breath",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodFishTacos",
+   "id_minecraft": "cod",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "pescado"
+  },
+  {
+   "id_7days": "foodTunaFishGravyToast",
+   "id_minecraft": "salmon",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": "pescado"
+  },
+  {
+   "id_7days": "foodCanCatfood",
+   "id_minecraft": "tropical_fish",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodCanDogfood",
+   "id_minecraft": "pufferfish",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodSpaghetti",
+   "id_minecraft": "chorus_fruit",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
+  },
+  {
+   "id_7days": "foodShamChowder",
+   "id_minecraft": "popped_chorus_fruit",
+   "relation": "aproximado",
+   "category": "comida",
+   "note": ""
   }
- ]
+ ],
+ "_completeness": "Tabla lo mas completa posible (usuario 2026-11-13: 'priorizar por completo la tabla de conversion'). No llega a los 1441 objetos de Minecraft porque es 1 a 1 y muchos no tienen nada parecido en 7 Days (escaleras y losas son el mismo objeto en 7 Days; colores magenta, cian, lima, celeste y gris claro solo existen en las cortinas sucias)."
 }

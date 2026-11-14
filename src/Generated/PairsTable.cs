@@ -165,6 +165,366 @@ namespace SteveDaysToDie.Generated
             { "armorPreacherGloves", "golden_leggings" },   // aproximado
             { "armorPreacherBoots", "golden_boots" },   // aproximado
             { "armorMinerHelmet", "turtle_helmet" },   // aproximado
+            { "curtainDrapesFullTileOrange", "orange_wool" },   // aproximado
+            { "curtainDrapesFullTileYellow", "yellow_wool" },   // aproximado
+            { "curtainDrapesFullTilePink", "pink_wool" },   // aproximado
+            { "curtainDrapesFullTileGrey", "gray_wool" },   // aproximado
+            { "curtainDrapesFullTilePurple", "purple_wool" },   // aproximado
+            { "curtainDrapesFullTileBlue", "blue_wool" },   // aproximado
+            { "curtainDrapesFullTileBrown", "brown_wool" },   // aproximado
+            { "curtainDrapesFullTileGreen", "green_wool" },   // aproximado
+            { "curtainDrapesFullTileRed", "red_wool" },   // aproximado
+            { "curtainDrapesFullTileBlack", "black_wool" },   // aproximado
+            { "curtainDrapesFullTileDirtyPurple", "magenta_wool" },   // aproximado
+            { "curtainDrapesFullTileDirtyBlue", "light_blue_wool" },   // aproximado
+            { "curtainDrapesFullTileDirtyYellow", "lime_wool" },   // aproximado
+            { "curtainDrapesFullTileDirtyGrey", "light_gray_wool" },   // aproximado
+            { "curtainDrapesFullTileDirtyGreen", "cyan_wool" },   // aproximado
+            { "curtainDrapesFullBottomWhite", "white_carpet" },   // aproximado
+            { "curtainDrapesFullBottomOrange", "orange_carpet" },   // aproximado
+            { "curtainDrapesFullBottomYellow", "yellow_carpet" },   // aproximado
+            { "curtainDrapesFullBottomPink", "pink_carpet" },   // aproximado
+            { "curtainDrapesFullBottomGrey", "gray_carpet" },   // aproximado
+            { "curtainDrapesFullBottomPurple", "purple_carpet" },   // aproximado
+            { "curtainDrapesFullBottomBlue", "blue_carpet" },   // aproximado
+            { "curtainDrapesFullBottomBrown", "brown_carpet" },   // aproximado
+            { "curtainDrapesFullBottomGreen", "green_carpet" },   // aproximado
+            { "curtainDrapesFullBottomRed", "red_carpet" },   // aproximado
+            { "curtainDrapesFullBottomBlack", "black_carpet" },   // aproximado
+            { "curtainDrapesFullBottomDirtyPurple", "magenta_carpet" },   // aproximado
+            { "curtainDrapesFullBottomDirtyBlue", "light_blue_carpet" },   // aproximado
+            { "curtainDrapesFullBottomDirtyYellow", "lime_carpet" },   // aproximado
+            { "curtainDrapesFullBottomDirtyGrey", "light_gray_carpet" },   // aproximado
+            { "curtainDrapesFullBottomDirtyGreen", "cyan_carpet" },   // aproximado
+            { "curtainDrapesFullTopWhite", "white_banner" },   // aproximado
+            { "curtainDrapesFullTopOrange", "orange_banner" },   // aproximado
+            { "curtainDrapesFullTopYellow", "yellow_banner" },   // aproximado
+            { "curtainDrapesFullTopPink", "pink_banner" },   // aproximado
+            { "curtainDrapesFullTopGrey", "gray_banner" },   // aproximado
+            { "curtainDrapesFullTopPurple", "purple_banner" },   // aproximado
+            { "curtainDrapesFullTopBlue", "blue_banner" },   // aproximado
+            { "curtainDrapesFullTopBrown", "brown_banner" },   // aproximado
+            { "curtainDrapesFullTopGreen", "green_banner" },   // aproximado
+            { "curtainDrapesFullTopRed", "red_banner" },   // aproximado
+            { "curtainDrapesFullTopBlack", "black_banner" },   // aproximado
+            { "curtainDrapesFullTopDirtyPurple", "magenta_banner" },   // aproximado
+            { "curtainDrapesFullTopDirtyBlue", "light_blue_banner" },   // aproximado
+            { "curtainDrapesFullTopDirtyYellow", "lime_banner" },   // aproximado
+            { "curtainDrapesFullTopDirtyGrey", "light_gray_banner" },   // aproximado
+            { "curtainDrapesFullTopDirtyGreen", "cyan_banner" },   // aproximado
+            { "bedrollOrange", "orange_bed" },   // aproximado
+            { "bedrollYellow", "yellow_bed" },   // aproximado
+            { "bedrollPink", "pink_bed" },   // aproximado
+            { "bedrollGrey", "gray_bed" },   // aproximado
+            { "bedrollPurple", "purple_bed" },   // aproximado
+            { "bedrollBlue", "blue_bed" },   // aproximado
+            { "bedrollGreen", "green_bed" },   // aproximado
+            { "bedrollRed", "red_bed" },   // aproximado
+            { "lanternDecorLightWhite_player", "white_candle" },   // aproximado
+            { "lanternDecorLightYellow_player", "yellow_candle" },   // aproximado
+            { "lanternDecorLightGrey_player", "gray_candle" },   // aproximado
+            { "lanternDecorLightBlue_player", "blue_candle" },   // aproximado
+            { "lanternDecorLightGreen_player", "green_candle" },   // aproximado
+            { "lanternDecorLightRed_player", "red_candle" },   // aproximado
+            { "lanternDecorLightBlack_player", "black_candle" },   // aproximado
+            { "plantHousePottedWhite", "white_terracotta" },   // aproximado
+            { "plantHousePottedOrange", "orange_terracotta" },   // aproximado
+            { "plantHousePottedYellow", "yellow_terracotta" },   // aproximado
+            { "plantHousePottedPink", "pink_terracotta" },   // aproximado
+            { "plantHousePottedGrey", "gray_terracotta" },   // aproximado
+            { "plantHousePottedPurple", "purple_terracotta" },   // aproximado
+            { "plantHousePottedBlue", "blue_terracotta" },   // aproximado
+            { "plantHousePottedBrown", "brown_terracotta" },   // aproximado
+            { "plantHousePottedGreen", "green_terracotta" },   // aproximado
+            { "plantHousePottedRed", "red_terracotta" },   // aproximado
+            { "plantHousePottedBlack", "black_terracotta" },   // aproximado
+            { "plantAloePottedWhite", "white_glazed_terracotta" },   // aproximado
+            { "plantAloePottedOrange", "orange_glazed_terracotta" },   // aproximado
+            { "plantAloePottedYellow", "yellow_glazed_terracotta" },   // aproximado
+            { "plantAloePottedPink", "pink_glazed_terracotta" },   // aproximado
+            { "plantAloePottedGrey", "gray_glazed_terracotta" },   // aproximado
+            { "plantAloePottedPurple", "purple_glazed_terracotta" },   // aproximado
+            { "plantAloePottedBlue", "blue_glazed_terracotta" },   // aproximado
+            { "plantAloePottedBrown", "brown_glazed_terracotta" },   // aproximado
+            { "plantAloePottedGreen", "green_glazed_terracotta" },   // aproximado
+            { "plantAloePottedRed", "red_glazed_terracotta" },   // aproximado
+            { "palletBagBlankBaseFullWhite", "white_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullOrange", "orange_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullYellow", "yellow_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullPink", "pink_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullPurple", "purple_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullBlue", "blue_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullBrown", "brown_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullGreen", "green_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullRed", "red_concrete_powder" },   // aproximado
+            { "palletBagBlankBaseFullBlack", "black_concrete_powder" },   // aproximado
+            { "palletBagBlankTileWhite", "white_concrete" },   // aproximado
+            { "palletBagBlankTileOrange", "orange_concrete" },   // aproximado
+            { "palletBagBlankTileYellow", "yellow_concrete" },   // aproximado
+            { "palletBagBlankTilePink", "pink_concrete" },   // aproximado
+            { "palletBagBlankTilePurple", "purple_concrete" },   // aproximado
+            { "palletBagBlankTileBlue", "blue_concrete" },   // aproximado
+            { "palletBagBlankTileBrown", "brown_concrete" },   // aproximado
+            { "palletBagBlankTileGreen", "green_concrete" },   // aproximado
+            { "palletBagBlankTileRed", "red_concrete" },   // aproximado
+            { "cntMailBox01White_Player", "white_shulker_box" },   // aproximado
+            { "cntMailBox01Orange_Player", "orange_shulker_box" },   // aproximado
+            { "cntMailBox01Yellow_Player", "yellow_shulker_box" },   // aproximado
+            { "cntMailBox01Pink_Player", "pink_shulker_box" },   // aproximado
+            { "cntMailBox01Grey_Player", "gray_shulker_box" },   // aproximado
+            { "cntMailBox01Purple_Player", "purple_shulker_box" },   // aproximado
+            { "cntMailBox01Blue_Player", "blue_shulker_box" },   // aproximado
+            { "cntMailBox01Brown_Player", "brown_shulker_box" },   // aproximado
+            { "cntMailBox01Green_Player", "green_shulker_box" },   // aproximado
+            { "cntMailBox01Red_Player", "red_shulker_box" },   // aproximado
+            { "cntMailBox01Black_Player", "black_shulker_box" },   // aproximado
+            { "awningFullWhite", "white_stained_glass" },   // aproximado
+            { "awningFullOrange", "orange_stained_glass" },   // aproximado
+            { "awningFullYellow", "yellow_stained_glass" },   // aproximado
+            { "awningFullPink", "pink_stained_glass" },   // aproximado
+            { "awningFullGrey", "gray_stained_glass" },   // aproximado
+            { "awningFullPurple", "purple_stained_glass" },   // aproximado
+            { "awningFullBlue", "blue_stained_glass" },   // aproximado
+            { "awningFullBrown", "brown_stained_glass" },   // aproximado
+            { "awningFullGreen", "green_stained_glass" },   // aproximado
+            { "awningFullRed", "red_stained_glass" },   // aproximado
+            { "awningFullBlack", "black_stained_glass" },   // aproximado
+            { "awningStraightWhite", "white_stained_glass_pane" },   // aproximado
+            { "awningStraightOrange", "orange_stained_glass_pane" },   // aproximado
+            { "awningStraightYellow", "yellow_stained_glass_pane" },   // aproximado
+            { "awningStraightPink", "pink_stained_glass_pane" },   // aproximado
+            { "awningStraightGrey", "gray_stained_glass_pane" },   // aproximado
+            { "awningStraightPurple", "purple_stained_glass_pane" },   // aproximado
+            { "awningStraightBlue", "blue_stained_glass_pane" },   // aproximado
+            { "awningStraightBrown", "brown_stained_glass_pane" },   // aproximado
+            { "awningStraightGreen", "green_stained_glass_pane" },   // aproximado
+            { "awningStraightRed", "red_stained_glass_pane" },   // aproximado
+            { "awningStraightBlack", "black_stained_glass_pane" },   // aproximado
+            { "palletTarpTileOrange", "orange_dye" },   // aproximado
+            { "palletTarpTilePink", "pink_dye" },   // aproximado
+            { "palletTarpTileGrey", "gray_dye" },   // aproximado
+            { "palletTarpTilePurple", "purple_dye" },   // aproximado
+            { "palletTarpTileBlue", "blue_dye" },   // aproximado
+            { "palletTarpTileBrown", "brown_dye" },   // aproximado
+            { "palletTarpTileGreen", "green_dye" },   // aproximado
+            { "palletTarpTileRed", "red_dye" },   // aproximado
+            { "palletTarpTileBlack", "black_dye" },   // aproximado
+            { "exteriorHouseDoorBrown", "oak_door" },   // aproximado
+            { "ironHatchBrown", "oak_trapdoor" },   // aproximado
+            { "woodenFenceDoorBrown", "oak_fence_gate" },   // aproximado
+            { "tallCabinetDoorBrown", "oak_shelf" },   // aproximado
+            { "exteriorHouseDoorGrey", "spruce_door" },   // aproximado
+            { "ironHatchGrey", "spruce_trapdoor" },   // aproximado
+            { "woodenFenceDoorGrey", "spruce_fence_gate" },   // aproximado
+            { "tallCabinetDoorGrey", "spruce_shelf" },   // aproximado
+            { "exteriorHouseDoorWhite", "birch_door" },   // aproximado
+            { "ironHatchWhite", "birch_trapdoor" },   // aproximado
+            { "woodenFenceDoorWhite", "birch_fence_gate" },   // aproximado
+            { "tallCabinetDoorWhite", "birch_shelf" },   // aproximado
+            { "exteriorHouseDoorOrange", "jungle_door" },   // aproximado
+            { "ironHatchOrange", "jungle_trapdoor" },   // aproximado
+            { "woodenFenceDoorOrange", "jungle_fence_gate" },   // aproximado
+            { "tallCabinetDoorOrange", "jungle_shelf" },   // aproximado
+            { "exteriorHouseDoorYellow", "acacia_door" },   // aproximado
+            { "ironHatchYellow", "acacia_trapdoor" },   // aproximado
+            { "woodenFenceDoorYellow", "acacia_fence_gate" },   // aproximado
+            { "tallCabinetDoorYellow", "acacia_shelf" },   // aproximado
+            { "exteriorHouseDoorPurple", "dark_oak_door" },   // aproximado
+            { "ironHatchPurple", "dark_oak_trapdoor" },   // aproximado
+            { "woodenFenceDoorPurple", "dark_oak_fence_gate" },   // aproximado
+            { "tallCabinetDoorPurple", "dark_oak_shelf" },   // aproximado
+            { "exteriorHouseDoorRed", "mangrove_door" },   // aproximado
+            { "ironHatchRed", "mangrove_trapdoor" },   // aproximado
+            { "woodenFenceDoorRed", "mangrove_fence_gate" },   // aproximado
+            { "tallCabinetDoorRed", "mangrove_shelf" },   // aproximado
+            { "exteriorHouseDoorPink", "cherry_door" },   // aproximado
+            { "ironHatchPink", "cherry_trapdoor" },   // aproximado
+            { "woodenFenceDoorPink", "cherry_fence_gate" },   // aproximado
+            { "tallCabinetDoorPink", "cherry_shelf" },   // aproximado
+            { "exteriorHouseDoorGreen", "bamboo_door" },   // aproximado
+            { "ironHatchGreen", "bamboo_trapdoor" },   // aproximado
+            { "woodenFenceDoorGreen", "bamboo_fence_gate" },   // aproximado
+            { "tallCabinetDoorGreen", "bamboo_shelf" },   // aproximado
+            { "exteriorHouseDoorBlue", "warped_door" },   // aproximado
+            { "ironHatchBlue", "warped_trapdoor" },   // aproximado
+            { "woodenFenceDoorBlue", "warped_fence_gate" },   // aproximado
+            { "tallCabinetDoorBlue", "warped_shelf" },   // aproximado
+            { "exteriorHouseDoorOldRed", "crimson_door" },   // aproximado
+            { "exteriorHouseDoorOldWhite", "pale_oak_door" },   // aproximado
+            { "ironHatchBlack", "crimson_trapdoor" },   // aproximado
+            { "ironDoorGrey", "iron_door" },   // exacto
+            { "woodHatch", "iron_trapdoor" },   // aproximado
+            { "workbench", "crafting_table" },   // exacto
+            { "forge", "furnace" },   // aproximado
+            { "campfire", "campfire" },   // exacto
+            { "chemistryStation", "brewing_stand" },   // aproximado
+            { "cementMixer", "stonecutter" },   // aproximado
+            { "cntBookcaseFull", "bookshelf" },   // exacto
+            { "cntBookcaseEmpty", "chiseled_bookshelf" },   // aproximado
+            { "cntIronWritableCrate", "barrel" },   // aproximado
+            { "cntSteelWritableCrate", "trapped_chest" },   // aproximado
+            { "hayBaleSquare", "hay_block" },   // exacto
+            { "decoPumpkinJackOLantern", "jack_o_lantern" },   // exacto
+            { "mushroom01", "brown_mushroom_block" },   // aproximado
+            { "mushroom02", "red_mushroom_block" },   // aproximado
+            { "goreHumanSkull", "skeleton_skull" },   // aproximado
+            { "goreBlockHumanBones", "bone_block" },   // aproximado
+            { "paintingBen", "painting" },   // exacto
+            { "pictureFrame_01a", "item_frame" },   // aproximado
+            { "pictureFrame_01b", "glow_item_frame" },   // aproximado
+            { "pressureplate", "stone_pressure_plate" },   // exacto
+            { "pressureplateLong", "heavy_weighted_pressure_plate" },   // aproximado
+            { "powerSwitch01", "lever" },   // aproximado
+            { "powerSwitch02", "stone_button" },   // aproximado
+            { "dartTrap", "dispenser" },   // aproximado
+            { "spotlightPlayer", "redstone_lamp" },   // aproximado
+            { "candleWallLightPlayer", "soul_torch" },   // aproximado
+            { "candleTableLightPlayer", "lantern" },   // aproximado
+            { "treeShortGrass", "short_grass" },   // exacto
+            { "treeTallGrassDiagonal", "tall_grass" },   // exacto
+            { "treeForestGrassDiagonal", "fern" },   // aproximado
+            { "plantShrub", "bush" },   // aproximado
+            { "treeSnowyDeadBush", "dead_bush" },   // aproximado
+            { "plantShrubDead", "firefly_bush" },   // aproximado
+            { "treePlantedOak1m", "oak_sapling" },   // exacto
+            { "treePlantedMountainPine1m", "spruce_sapling" },   // exacto
+            { "treePlantedWinterPine1m", "pale_oak_sapling" },   // aproximado
+            { "cntStoreProduceBasketMelons1_Player", "melon" },   // aproximado
+            { "plantFernGreen", "large_fern" },   // aproximado
+            { "plantCherryBlossomPink", "cherry_sapling" },   // aproximado
+            { "hayBaleRound", "dried_ghast" },   // aproximado
+            { "plantedChrysanthemum1", "oxeye_daisy" },   // aproximado
+            { "plantedGoldenrod1", "sunflower" },   // aproximado
+            { "plantedCotton1", "lily_of_the_valley" },   // aproximado
+            { "resourceCropCottonPlant", "white_tulip" },   // aproximado
+            { "resourceCropHopsFlower", "allium" },   // aproximado
+            { "plantedHop1", "pink_tulip" },   // aproximado
+            { "plantedAloe1", "azure_bluet" },   // aproximado
+            { "plantedYucca1", "orange_tulip" },   // aproximado
+            { "plantedCoffee1", "red_tulip" },   // aproximado
+            { "plantedBlueberry1", "cornflower" },   // aproximado
+            { "plantedSnowberry1", "blue_orchid" },   // aproximado
+            { "plantedMushroom1", "crimson_fungus" },   // aproximado
+            { "plantedPotato1", "torchflower_seeds" },   // aproximado
+            { "plantedGraceCorn1", "pitcher_pod" },   // aproximado
+            { "foodRoadrunnerChickenJerky", "dried_kelp" },   // aproximado
+            { "foodCanPeas", "beetroot" },   // aproximado
+            { "foodCanPears", "melon_slice" },   // aproximado
+            { "foodCanMiso", "suspicious_stew" },   // aproximado
+            { "foodCanBeef", "cooked_rabbit" },   // aproximado
+            { "foodCanLamb", "mutton" },   // aproximado
+            { "foodChickenNuggets", "chicken" },   // aproximado
+            { "foodCornOnTheCob", "carrot" },   // aproximado
+            { "foodEggBoiled", "glow_berries" },   // aproximado
+            { "foodCanPasta", "poisonous_potato" },   // aproximado
+            { "foodShamSandwich", "porkchop" },   // aproximado
+            { "foodHoneyBrisket", "rabbit" },   // aproximado
+            { "drinkJarRiverWater", "potion" },   // aproximado
+            { "drinkJarBoiledWater", "splash_potion" },   // aproximado
+            { "drinkJarBeer", "experience_bottle" },   // aproximado
+            { "drinkCanMegaCrush", "lingering_potion" },   // aproximado
+            { "medicalBandage", "milk_bucket" },   // aproximado
+            { "medicalAloeCream", "honey_block" },   // aproximado
+            { "ammoArrowIron", "spectral_arrow" },   // aproximado
+            { "ammoArrowSteelAP", "tipped_arrow" },   // aproximado
+            { "ammoRocketHE", "firework_rocket" },   // aproximado
+            { "thrownTimedCharge", "tnt" },   // aproximado
+            { "thrownDynamite", "tnt_minecart" },   // aproximado
+            { "thrownAmmoMolotovCocktail", "fire_charge" },   // aproximado
+            { "thrownGrenade", "wind_charge" },   // aproximado
+            { "meleeToolSalvageT1Wrench", "shears" },   // aproximado
+            { "meleeToolPaintTool", "brush" },   // aproximado
+            { "toolAnvil", "anvil" },   // aproximado
+            { "toolForgeCrucible", "cauldron" },   // aproximado
+            { "toolBellows", "flint_and_steel" },   // aproximado
+            { "meleeToolRepairT1ClawHammer", "golden_axe" },   // aproximado
+            { "meleeWpnClubT1BaseballBat", "golden_sword" },   // aproximado
+            { "meleeWpnSledgeT0StoneSledgehammer", "stone_pickaxe" },   // aproximado
+            { "meleeWpnKnucklesT0LeatherKnuckles", "wooden_pickaxe" },   // aproximado
+            { "meleeWpnBatonT0PipeBaton", "wooden_axe" },   // aproximado
+            { "terrStone", "smooth_stone" },   // aproximado
+            { "terrDirt", "rooted_dirt" },   // aproximado
+            { "terrTopSoil", "farmland" },   // aproximado
+            { "terrBedrock", "bedrock" },   // exacto
+            { "terrSand", "suspicious_sand" },   // aproximado
+            { "terrOreStoneIronRandom", "deepslate_iron_ore" },   // aproximado
+            { "terrOreStoneLeadRandom", "deepslate_copper_ore" },   // aproximado
+            { "terrOreStoneCoalRandom", "deepslate_coal_ore" },   // aproximado
+            { "terrOreStonePotassiumRandom", "deepslate_redstone_ore" },   // aproximado
+            { "terrOreOilDeposit", "deepslate_lapis_ore" },   // aproximado
+            { "terrOreStoneOilRandom", "lapis_ore" },   // aproximado
+            { "palletBricksBase", "brick" },   // aproximado
+            { "graveStone01", "chiseled_stone_bricks" },   // aproximado
+            { "graveStone02", "mossy_stone_bricks" },   // aproximado
+            { "graveStone03", "cracked_stone_bricks" },   // aproximado
+            { "graveStone04", "stone_bricks" },   // aproximado
+            { "cntwallOvenEmptyWhite", "smoker" },   // aproximado
+            { "cntwallOvenEmptyGrey", "blast_furnace" },   // aproximado
+            { "cntDomedTrashCanEmpty", "composter" },   // aproximado
+            { "cntVendingMachine", "crafter" },   // aproximado
+            { "cntDeskWoodEmpty", "cartography_table" },   // aproximado
+            { "rustyIronTable", "smithing_table" },   // aproximado
+            { "decoPicnicTable", "fletching_table" },   // aproximado
+            { "cntFridgeStainlessSteel", "ender_chest" },   // aproximado
+            { "cntWallSafe_Player", "vault" },   // aproximado
+            { "cntbasketLaundryEmptyWhite", "shulker_box" },   // aproximado
+            { "cntDeskSafe_Player", "lectern" },   // aproximado
+            { "cntGunSafe_Player", "chest_minecart" },   // aproximado
+            { "modularFireWoodStackA", "soul_campfire" },   // aproximado
+            { "emberPileDeco1", "magma_block" },   // aproximado
+            { "emberPileDeco2", "shroomlight" },   // aproximado
+            { "plantHouseTallPottedGreen", "flower_pot" },   // aproximado
+            { "plantFernHangingGreen", "hanging_roots" },   // aproximado
+            { "birdBathPlanter", "decorated_pot" },   // aproximado
+            { "cntStoreProduceBasketApples1_Player", "beehive" },   // aproximado
+            { "cntStoreProduceBasketGourds1_Player", "carved_pumpkin" },   // aproximado
+            { "resourceOil", "ink_sac" },   // aproximado
+            { "foodCornMeal", "sugar" },   // aproximado
+            { "resourceLegendaryParts", "netherite_ingot" },   // aproximado
+            { "resourceArmorCraftingKit", "netherite_scrap" },   // aproximado
+            { "resourceDuctTape", "phantom_membrane" },   // aproximado
+            { "resourceRepairKit", "nautilus_shell" },   // aproximado
+            { "medicalBloodBag", "totem_of_undying" },   // aproximado
+            { "resourceSewingKit", "lead" },   // aproximado
+            { "resourceAnimalFat", "magma_cream" },   // aproximado
+            { "resourceWaterFilter", "sponge" },   // aproximado
+            { "resourceNail", "stick" },   // aproximado
+            { "resourceCandleStick", "end_rod" },   // aproximado
+            { "resourceRadiator", "observer" },   // aproximado
+            { "resourceFishingWeight", "fishing_rod" },   // aproximado
+            { "resourceTrophy1", "name_tag" },   // aproximado
+            { "resourceTrophy2", "goat_horn" },   // aproximado
+            { "resourceLockPick", "trial_key" },   // aproximado
+            { "resourceBuckshot", "sulfur" },   // aproximado
+            { "resourceBulletCasing", "amethyst_shard" },   // aproximado
+            { "resourceBulletTip", "prismarine_shard" },   // aproximado
+            { "resourceRocketTip", "firework_star" },   // aproximado
+            { "resourceTestosteroneExtract", "blaze_powder" },   // aproximado
+            { "drugSteroids", "enchanted_golden_apple" },   // aproximado
+            { "drugVitamins", "glistering_melon_slice" },   // aproximado
+            { "drugPainkillers", "rabbit_foot" },   // aproximado
+            { "drugHerbalAntibiotics", "spider_eye" },   // aproximado
+            { "drugAntibiotics", "ghast_tear" },   // aproximado
+            { "medicalPlasterCast", "bone_meal" },   // aproximado
+            { "meleeToolWireTool", "lightning_rod" },   // aproximado
+            { "meleeToolSalvageT2Ratchet", "golden_pickaxe" },   // aproximado
+            { "meleeToolSalvageT3ImpactDriver", "netherite_shovel" },   // aproximado
+            { "meleeToolRepairT3Nailgun", "netherite_hoe" },   // aproximado
+            { "meleeToolRepairT0TazasStoneAxe", "stone_hoe" },   // aproximado
+            { "meleeWpnKnucklesT1IronKnuckles", "iron_hoe" },   // aproximado
+            { "meleeWpnKnucklesT3SteelKnuckles", "diamond_hoe" },   // aproximado
+            { "meleeWpnBatonT2StunBaton", "trident" },   // aproximado
+            { "meleeWpnBladeT1CandyKnife", "golden_spear" },   // aproximado
+            { "meleeWpnClubT1CandyClub", "golden_shovel" },   // aproximado
+            { "meleeWpnSledgeT3SteelSledgehammer", "wooden_spear" },   // aproximado
+            { "drinkJarCoffee", "ominous_bottle" },   // aproximado
+            { "drinkJarYuccaJuice", "dragon_breath" },   // aproximado
+            { "foodFishTacos", "cod" },   // aproximado
+            { "foodTunaFishGravyToast", "salmon" },   // aproximado
+            { "foodCanCatfood", "tropical_fish" },   // aproximado
+            { "foodCanDogfood", "pufferfish" },   // aproximado
+            { "foodSpaghetti", "chorus_fruit" },   // aproximado
+            { "foodShamChowder", "popped_chorus_fruit" },   // aproximado
         };
 
         /// <summary>Pairs whose category may switch game with the toggle key and come back (materials only; tools, weapons and armour stay 7 Days).</summary>
@@ -244,6 +604,290 @@ namespace SteveDaysToDie.Generated
             "terrOreCoal",
             "terrOreLead",
             "terrOrePotassiumNitrate",
+            "curtainDrapesFullTileOrange",
+            "curtainDrapesFullTileYellow",
+            "curtainDrapesFullTilePink",
+            "curtainDrapesFullTileGrey",
+            "curtainDrapesFullTilePurple",
+            "curtainDrapesFullTileBlue",
+            "curtainDrapesFullTileBrown",
+            "curtainDrapesFullTileGreen",
+            "curtainDrapesFullTileRed",
+            "curtainDrapesFullTileBlack",
+            "curtainDrapesFullTileDirtyPurple",
+            "curtainDrapesFullTileDirtyBlue",
+            "curtainDrapesFullTileDirtyYellow",
+            "curtainDrapesFullTileDirtyGrey",
+            "curtainDrapesFullTileDirtyGreen",
+            "curtainDrapesFullBottomWhite",
+            "curtainDrapesFullBottomOrange",
+            "curtainDrapesFullBottomYellow",
+            "curtainDrapesFullBottomPink",
+            "curtainDrapesFullBottomGrey",
+            "curtainDrapesFullBottomPurple",
+            "curtainDrapesFullBottomBlue",
+            "curtainDrapesFullBottomBrown",
+            "curtainDrapesFullBottomGreen",
+            "curtainDrapesFullBottomRed",
+            "curtainDrapesFullBottomBlack",
+            "curtainDrapesFullBottomDirtyPurple",
+            "curtainDrapesFullBottomDirtyBlue",
+            "curtainDrapesFullBottomDirtyYellow",
+            "curtainDrapesFullBottomDirtyGrey",
+            "curtainDrapesFullBottomDirtyGreen",
+            "curtainDrapesFullTopWhite",
+            "curtainDrapesFullTopOrange",
+            "curtainDrapesFullTopYellow",
+            "curtainDrapesFullTopPink",
+            "curtainDrapesFullTopGrey",
+            "curtainDrapesFullTopPurple",
+            "curtainDrapesFullTopBlue",
+            "curtainDrapesFullTopBrown",
+            "curtainDrapesFullTopGreen",
+            "curtainDrapesFullTopRed",
+            "curtainDrapesFullTopBlack",
+            "curtainDrapesFullTopDirtyPurple",
+            "curtainDrapesFullTopDirtyBlue",
+            "curtainDrapesFullTopDirtyYellow",
+            "curtainDrapesFullTopDirtyGrey",
+            "curtainDrapesFullTopDirtyGreen",
+            "bedrollOrange",
+            "bedrollYellow",
+            "bedrollPink",
+            "bedrollGrey",
+            "bedrollPurple",
+            "bedrollBlue",
+            "bedrollGreen",
+            "bedrollRed",
+            "lanternDecorLightWhite_player",
+            "lanternDecorLightYellow_player",
+            "lanternDecorLightGrey_player",
+            "lanternDecorLightBlue_player",
+            "lanternDecorLightGreen_player",
+            "lanternDecorLightRed_player",
+            "lanternDecorLightBlack_player",
+            "plantHousePottedWhite",
+            "plantHousePottedOrange",
+            "plantHousePottedYellow",
+            "plantHousePottedPink",
+            "plantHousePottedGrey",
+            "plantHousePottedPurple",
+            "plantHousePottedBlue",
+            "plantHousePottedBrown",
+            "plantHousePottedGreen",
+            "plantHousePottedRed",
+            "plantHousePottedBlack",
+            "plantAloePottedWhite",
+            "plantAloePottedOrange",
+            "plantAloePottedYellow",
+            "plantAloePottedPink",
+            "plantAloePottedGrey",
+            "plantAloePottedPurple",
+            "plantAloePottedBlue",
+            "plantAloePottedBrown",
+            "plantAloePottedGreen",
+            "plantAloePottedRed",
+            "palletBagBlankBaseFullWhite",
+            "palletBagBlankBaseFullOrange",
+            "palletBagBlankBaseFullYellow",
+            "palletBagBlankBaseFullPink",
+            "palletBagBlankBaseFullPurple",
+            "palletBagBlankBaseFullBlue",
+            "palletBagBlankBaseFullBrown",
+            "palletBagBlankBaseFullGreen",
+            "palletBagBlankBaseFullRed",
+            "palletBagBlankBaseFullBlack",
+            "palletBagBlankTileWhite",
+            "palletBagBlankTileOrange",
+            "palletBagBlankTileYellow",
+            "palletBagBlankTilePink",
+            "palletBagBlankTilePurple",
+            "palletBagBlankTileBlue",
+            "palletBagBlankTileBrown",
+            "palletBagBlankTileGreen",
+            "palletBagBlankTileRed",
+            "cntMailBox01White_Player",
+            "cntMailBox01Orange_Player",
+            "cntMailBox01Yellow_Player",
+            "cntMailBox01Pink_Player",
+            "cntMailBox01Grey_Player",
+            "cntMailBox01Purple_Player",
+            "cntMailBox01Blue_Player",
+            "cntMailBox01Brown_Player",
+            "cntMailBox01Green_Player",
+            "cntMailBox01Red_Player",
+            "cntMailBox01Black_Player",
+            "awningFullWhite",
+            "awningFullOrange",
+            "awningFullYellow",
+            "awningFullPink",
+            "awningFullGrey",
+            "awningFullPurple",
+            "awningFullBlue",
+            "awningFullBrown",
+            "awningFullGreen",
+            "awningFullRed",
+            "awningFullBlack",
+            "awningStraightWhite",
+            "awningStraightOrange",
+            "awningStraightYellow",
+            "awningStraightPink",
+            "awningStraightGrey",
+            "awningStraightPurple",
+            "awningStraightBlue",
+            "awningStraightBrown",
+            "awningStraightGreen",
+            "awningStraightRed",
+            "awningStraightBlack",
+            "palletTarpTileOrange",
+            "palletTarpTilePink",
+            "palletTarpTileGrey",
+            "palletTarpTilePurple",
+            "palletTarpTileBlue",
+            "palletTarpTileBrown",
+            "palletTarpTileGreen",
+            "palletTarpTileRed",
+            "palletTarpTileBlack",
+            "exteriorHouseDoorBrown",
+            "ironHatchBrown",
+            "woodenFenceDoorBrown",
+            "tallCabinetDoorBrown",
+            "exteriorHouseDoorGrey",
+            "ironHatchGrey",
+            "woodenFenceDoorGrey",
+            "tallCabinetDoorGrey",
+            "exteriorHouseDoorWhite",
+            "ironHatchWhite",
+            "woodenFenceDoorWhite",
+            "tallCabinetDoorWhite",
+            "exteriorHouseDoorOrange",
+            "ironHatchOrange",
+            "woodenFenceDoorOrange",
+            "tallCabinetDoorOrange",
+            "exteriorHouseDoorYellow",
+            "ironHatchYellow",
+            "woodenFenceDoorYellow",
+            "tallCabinetDoorYellow",
+            "exteriorHouseDoorPurple",
+            "ironHatchPurple",
+            "woodenFenceDoorPurple",
+            "tallCabinetDoorPurple",
+            "exteriorHouseDoorRed",
+            "ironHatchRed",
+            "woodenFenceDoorRed",
+            "tallCabinetDoorRed",
+            "exteriorHouseDoorPink",
+            "ironHatchPink",
+            "woodenFenceDoorPink",
+            "tallCabinetDoorPink",
+            "exteriorHouseDoorGreen",
+            "ironHatchGreen",
+            "woodenFenceDoorGreen",
+            "tallCabinetDoorGreen",
+            "exteriorHouseDoorBlue",
+            "ironHatchBlue",
+            "woodenFenceDoorBlue",
+            "tallCabinetDoorBlue",
+            "exteriorHouseDoorOldRed",
+            "exteriorHouseDoorOldWhite",
+            "ironHatchBlack",
+            "ironDoorGrey",
+            "woodHatch",
+            "workbench",
+            "forge",
+            "campfire",
+            "chemistryStation",
+            "cementMixer",
+            "cntBookcaseFull",
+            "cntBookcaseEmpty",
+            "cntIronWritableCrate",
+            "cntSteelWritableCrate",
+            "hayBaleSquare",
+            "decoPumpkinJackOLantern",
+            "mushroom01",
+            "mushroom02",
+            "goreHumanSkull",
+            "goreBlockHumanBones",
+            "paintingBen",
+            "pictureFrame_01a",
+            "pictureFrame_01b",
+            "pressureplate",
+            "pressureplateLong",
+            "powerSwitch01",
+            "powerSwitch02",
+            "dartTrap",
+            "spotlightPlayer",
+            "candleWallLightPlayer",
+            "candleTableLightPlayer",
+            "treeShortGrass",
+            "treeTallGrassDiagonal",
+            "treeForestGrassDiagonal",
+            "plantShrub",
+            "treeSnowyDeadBush",
+            "plantShrubDead",
+            "treePlantedOak1m",
+            "treePlantedMountainPine1m",
+            "treePlantedWinterPine1m",
+            "cntStoreProduceBasketMelons1_Player",
+            "plantFernGreen",
+            "plantCherryBlossomPink",
+            "hayBaleRound",
+            "terrStone",
+            "terrDirt",
+            "terrTopSoil",
+            "terrBedrock",
+            "terrSand",
+            "terrOreStoneIronRandom",
+            "terrOreStoneLeadRandom",
+            "terrOreStoneCoalRandom",
+            "terrOreStonePotassiumRandom",
+            "terrOreOilDeposit",
+            "terrOreStoneOilRandom",
+            "palletBricksBase",
+            "graveStone01",
+            "graveStone02",
+            "graveStone03",
+            "graveStone04",
+            "cntwallOvenEmptyWhite",
+            "cntwallOvenEmptyGrey",
+            "cntDomedTrashCanEmpty",
+            "cntVendingMachine",
+            "cntDeskWoodEmpty",
+            "rustyIronTable",
+            "decoPicnicTable",
+            "cntFridgeStainlessSteel",
+            "cntWallSafe_Player",
+            "cntbasketLaundryEmptyWhite",
+            "cntDeskSafe_Player",
+            "cntGunSafe_Player",
+            "modularFireWoodStackA",
+            "emberPileDeco1",
+            "emberPileDeco2",
+            "plantHouseTallPottedGreen",
+            "plantFernHangingGreen",
+            "birdBathPlanter",
+            "cntStoreProduceBasketApples1_Player",
+            "cntStoreProduceBasketGourds1_Player",
+            "resourceOil",
+            "foodCornMeal",
+            "resourceLegendaryParts",
+            "resourceArmorCraftingKit",
+            "resourceDuctTape",
+            "resourceRepairKit",
+            "resourceSewingKit",
+            "resourceAnimalFat",
+            "resourceWaterFilter",
+            "resourceNail",
+            "resourceCandleStick",
+            "resourceRadiator",
+            "resourceTrophy1",
+            "resourceTrophy2",
+            "resourceLockPick",
+            "resourceBuckshot",
+            "resourceBulletCasing",
+            "resourceBulletTip",
+            "resourceRocketTip",
+            "resourceTestosteroneExtract",
         };
     }
 }

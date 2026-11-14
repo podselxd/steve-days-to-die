@@ -51,6 +51,7 @@ namespace SteveDaysToDie
             }
             yield return Wait(3f);
             if (p == null) yield break;
+            if (MeltyTest.Only == "conversion") { yield return ConversionTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "comer") { yield return EatTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "libro") { yield return BookTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
             if (MeltyTest.Only == "yunque") { yield return AnvilTest(p); Debug.Log("[SVD] Melty test: demo done."); yield break; }
@@ -840,6 +841,32 @@ namespace SteveDaysToDie
         }
 
         // ---- Minecraft animals: one of each in front of Steve, pictures from the front and the side ----
+        // ---- the conversion table: new pairs switch with the toggle key and come back (red curtain <-> red wool, ...)
+        static IEnumerator ConversionTest(EntityPlayerLocal p)
+        {
+            MeltyTest.SetPhase("conversion");
+            string[] tests = { "curtainDrapesFullTileRed", "terrForestGround", "resourceScrapBrass", "brickShapes:VariantHelper", "bedrollBlue", "palletBagBlankTileYellow" };
+            int ok = 0;
+            foreach (var id in tests)
+            {
+                var iv = ItemClass.GetItem(id, true);
+                if (iv == null || iv.IsEmpty()) { Debug.Log("[SVD] conversion: no item " + id); continue; }
+                p.inventory.SetItem(6, new ItemStack(iv, 4));
+                yield return null;
+                string r1 = Crafting.RealToggle.Toggle(p, 6);
+                string mid = p.inventory.GetItem(6)?.itemValue?.ItemClass?.Name;
+                yield return null;
+                string r2 = Crafting.RealToggle.Toggle(p, 6);
+                string back = p.inventory.GetItem(6)?.itemValue?.ItemClass?.Name;
+                int n = p.inventory.GetItem(6)?.count ?? 0;
+                bool good = mid != null && mid.StartsWith("mc_") && back == id && n == 4;
+                if (good) ok++;
+                Debug.Log($"[SVD] conversion: {id} -> {mid} -> {back} x{n} {(good ? "OK" : "FAIL")} ({r1} / {r2})");
+            }
+            p.inventory.SetItem(6, ItemStack.Empty.Clone());
+            if (ok == tests.Length) MeltyTest.Pass("conversion"); else MeltyTest.Fail("conversion", ok + "/" + tests.Length);
+        }
+
         // ---- eating like Minecraft: hold right click 1.6 s with bread, half hungry
         static IEnumerator EatTest(EntityPlayerLocal p)
         {
