@@ -423,7 +423,6 @@ namespace SteveDaysToDie.Generated
             { "drinkJarBoiledWater", "splash_potion" },   // aproximado
             { "drinkJarBeer", "experience_bottle" },   // aproximado
             { "drinkCanMegaCrush", "lingering_potion" },   // aproximado
-            { "medicalBandage", "milk_bucket" },   // aproximado
             { "medicalAloeCream", "honey_block" },   // aproximado
             { "ammoArrowIron", "spectral_arrow" },   // aproximado
             { "ammoArrowSteelAP", "tipped_arrow" },   // aproximado
@@ -437,11 +436,7 @@ namespace SteveDaysToDie.Generated
             { "toolAnvil", "anvil" },   // aproximado
             { "toolForgeCrucible", "cauldron" },   // aproximado
             { "toolBellows", "flint_and_steel" },   // aproximado
-            { "meleeToolRepairT1ClawHammer", "golden_axe" },   // aproximado
             { "meleeWpnClubT1BaseballBat", "golden_sword" },   // aproximado
-            { "meleeWpnSledgeT0StoneSledgehammer", "stone_pickaxe" },   // aproximado
-            { "meleeWpnKnucklesT0LeatherKnuckles", "wooden_pickaxe" },   // aproximado
-            { "meleeWpnBatonT0PipeBaton", "wooden_axe" },   // aproximado
             { "terrStone", "smooth_stone" },   // aproximado
             { "terrDirt", "rooted_dirt" },   // aproximado
             { "terrTopSoil", "farmland" },   // aproximado
@@ -488,7 +483,6 @@ namespace SteveDaysToDie.Generated
             { "resourceSewingKit", "lead" },   // aproximado
             { "resourceAnimalFat", "magma_cream" },   // aproximado
             { "resourceWaterFilter", "sponge" },   // aproximado
-            { "resourceNail", "stick" },   // aproximado
             { "resourceCandleStick", "end_rod" },   // aproximado
             { "resourceRadiator", "observer" },   // aproximado
             { "resourceFishingWeight", "fishing_rod" },   // aproximado
@@ -507,16 +501,7 @@ namespace SteveDaysToDie.Generated
             { "drugAntibiotics", "ghast_tear" },   // aproximado
             { "medicalPlasterCast", "bone_meal" },   // aproximado
             { "meleeToolWireTool", "lightning_rod" },   // aproximado
-            { "meleeToolSalvageT2Ratchet", "golden_pickaxe" },   // aproximado
-            { "meleeToolSalvageT3ImpactDriver", "netherite_shovel" },   // aproximado
-            { "meleeToolRepairT3Nailgun", "netherite_hoe" },   // aproximado
-            { "meleeToolRepairT0TazasStoneAxe", "stone_hoe" },   // aproximado
-            { "meleeWpnKnucklesT1IronKnuckles", "iron_hoe" },   // aproximado
-            { "meleeWpnKnucklesT3SteelKnuckles", "diamond_hoe" },   // aproximado
             { "meleeWpnBatonT2StunBaton", "trident" },   // aproximado
-            { "meleeWpnBladeT1CandyKnife", "golden_spear" },   // aproximado
-            { "meleeWpnClubT1CandyClub", "golden_shovel" },   // aproximado
-            { "meleeWpnSledgeT3SteelSledgehammer", "wooden_spear" },   // aproximado
             { "drinkJarCoffee", "ominous_bottle" },   // aproximado
             { "drinkJarYuccaJuice", "dragon_breath" },   // aproximado
             { "foodFishTacos", "cod" },   // aproximado
@@ -877,7 +862,6 @@ namespace SteveDaysToDie.Generated
             "resourceSewingKit",
             "resourceAnimalFat",
             "resourceWaterFilter",
-            "resourceNail",
             "resourceCandleStick",
             "resourceRadiator",
             "resourceTrophy1",

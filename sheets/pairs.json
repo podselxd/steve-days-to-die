@@ -1,6 +1,6 @@
 {
  "_comment": "FUENTE DE VERDAD de los emparejamientos 7 Days <-> Minecraft. Una fila = un par. Se edita aqui; tools/build_items.py genera sheets/items.json a partir de esta hoja y de los datos de los dos juegos.",
- "_rules": "Conversion SIEMPRE 1 a 1. Cada id aparece en un solo par (biyectivo), para que alternar y volver regrese el mismo objeto. Si dos cosas no valen lo mismo, no se emparejan.",
+ "_rules": "Conversion SIEMPRE 1 a 1. Cada id aparece en un solo par (biyectivo), para que alternar y volver regrese el mismo objeto. Si dos cosas no valen lo mismo, no se emparejan. Un par de herramienta solo si el objeto de 7 Days ES esa herramienta (los pares tambien deciden que puede picar cada herramienta y que cuenta en las recetas de Minecraft).",
  "_columns": "id_7days | id_minecraft | relation (exacto/aproximado) | category | note",
  "reversible_categories": [
   "material",
@@ -2914,13 +2914,6 @@
    "note": ""
   },
   {
-   "id_7days": "medicalBandage",
-   "id_minecraft": "milk_bucket",
-   "relation": "aproximado",
-   "category": "comida",
-   "note": "cura"
-  },
-  {
    "id_7days": "medicalAloeCream",
    "id_minecraft": "honey_block",
    "relation": "aproximado",
@@ -3012,38 +3005,10 @@
    "note": "aviva el fuego"
   },
   {
-   "id_7days": "meleeToolRepairT1ClawHammer",
-   "id_minecraft": "golden_axe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
    "id_7days": "meleeWpnClubT1BaseballBat",
    "id_minecraft": "golden_sword",
    "relation": "aproximado",
    "category": "arma",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnSledgeT0StoneSledgehammer",
-   "id_minecraft": "stone_pickaxe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnKnucklesT0LeatherKnuckles",
-   "id_minecraft": "wooden_pickaxe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnBatonT0PipeBaton",
-   "id_minecraft": "wooden_axe",
-   "relation": "aproximado",
-   "category": "herramienta",
    "note": ""
   },
   {
@@ -3369,13 +3334,6 @@
    "note": "absorbe agua"
   },
   {
-   "id_7days": "resourceNail",
-   "id_minecraft": "stick",
-   "relation": "aproximado",
-   "category": "material",
-   "note": ""
-  },
-  {
    "id_7days": "resourceCandleStick",
    "id_minecraft": "end_rod",
    "relation": "aproximado",
@@ -3502,74 +3460,11 @@
    "note": "electricidad"
   },
   {
-   "id_7days": "meleeToolSalvageT2Ratchet",
-   "id_minecraft": "golden_pickaxe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeToolSalvageT3ImpactDriver",
-   "id_minecraft": "netherite_shovel",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeToolRepairT3Nailgun",
-   "id_minecraft": "netherite_hoe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeToolRepairT0TazasStoneAxe",
-   "id_minecraft": "stone_hoe",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnKnucklesT1IronKnuckles",
-   "id_minecraft": "iron_hoe",
-   "relation": "aproximado",
-   "category": "arma",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnKnucklesT3SteelKnuckles",
-   "id_minecraft": "diamond_hoe",
-   "relation": "aproximado",
-   "category": "arma",
-   "note": ""
-  },
-  {
    "id_7days": "meleeWpnBatonT2StunBaton",
    "id_minecraft": "trident",
    "relation": "aproximado",
    "category": "arma",
    "note": "electricidad = tridente del rayo"
-  },
-  {
-   "id_7days": "meleeWpnBladeT1CandyKnife",
-   "id_minecraft": "golden_spear",
-   "relation": "aproximado",
-   "category": "arma",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnClubT1CandyClub",
-   "id_minecraft": "golden_shovel",
-   "relation": "aproximado",
-   "category": "herramienta",
-   "note": ""
-  },
-  {
-   "id_7days": "meleeWpnSledgeT3SteelSledgehammer",
-   "id_minecraft": "wooden_spear",
-   "relation": "aproximado",
-   "category": "arma",
-   "note": ""
   },
   {
    "id_7days": "drinkJarCoffee",

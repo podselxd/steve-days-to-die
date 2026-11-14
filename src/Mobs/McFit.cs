@@ -29,7 +29,8 @@ namespace SteveDaysToDie.Mobs
                 var bv = world.GetBlock(feet + new Vector3i(0, i, 0));
                 if (bv.isair) continue;
                 var b = bv.Block;
-                if (b != null && b.IsCollideMovement) return false;
+                // only buildings count (doors, ceilings): smooth terrain on a slope sits above the feet and would stop tall mobs on hills
+                if (b != null && b.IsCollideMovement && !(b.shape != null && b.shape.IsTerrain())) return false;
             }
             return true;
         }
